@@ -56,8 +56,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->webView->setPage(context->getWebPage());
 
+    // connect contextmenu signals for treeviews
     connect(ui->genreView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-
+    connect(ui->artistView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(ui->albumView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(ui->songView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
 }
 
 MainWindow::~MainWindow()
@@ -336,7 +339,27 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 {
     QMenu* menu = new QMenu();
 
-    QModelIndex index = this->ui->genreView->indexAt(pos);
+
+    qDebug() << "huhu";
+    QTreeView *treeView;
+
+    switch (ui->tabWidget->currentIndex())
+    {
+        case 0:
+            treeView = this->ui->genreView;
+            break;
+        case 1:
+            treeView = this->ui->artistView;
+            break;
+        case 2:
+            treeView = this->ui->albumView;
+            break;
+        case 3:
+            treeView = this->ui->songView;
+            break;
+    }
+
+    QModelIndex index = treeView->indexAt(pos);
 
     BaseDTO *dto = static_cast<BaseDTO*>(index.internalPointer());
 
@@ -345,7 +368,7 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
     DTOChanger *changer = new DTOChanger(dto_copy, index);
 
-    connect(changer, SIGNAL(ModelIndexDataChanged(QModelIndex)), this->ui->genreView, SLOT(update(QModelIndex)));
+    connect(changer, SIGNAL(ModelIndexDataChanged(QModelIndex)), treeView, SLOT(update(QModelIndex)));
 
     switch (dto_copy->getType() )
     {
@@ -356,6 +379,7 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
             break;
     }
+
 
 }
 
