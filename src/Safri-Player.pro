@@ -6,12 +6,22 @@
 
 QT       += core gui sql phonon webkit mysql
 
-TARGET = SafriPlayer0-2
+TARGET = SafriPlayer
 TEMPLATE = app
 
-INCLUDEPATH += C:\taglib\include
-LIBS += -L"C:\taglib\lib"
-LIBS += -llibtag
+win32 {
+    INCLUDEPATH += C:\taglib\include
+    LIBS += -L"C:\taglib\lib"
+    LIBS += -llibtag
+}
+
+unix {
+	CONFIG += link_pkgconfig
+	PKGCONFIG += taglib
+
+	target.path += ../bin/
+	INSTALLS += target
+}
 
 HEADERS += \
     taginserter.h \

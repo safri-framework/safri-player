@@ -18,7 +18,7 @@ QSqlDatabase &DatabaseDAO::getDatabase()
         // otherwise open a new database connection
 
         database = QSqlDatabase::addDatabase("QSQLITE");
-        database.setDatabaseName("sqlitedatabaseV2.db");
+        database.setDatabaseName("sqlitedatabasev2.db");
 
         /*
         database = QSqlDatabase::addDatabase("QMYSQL");

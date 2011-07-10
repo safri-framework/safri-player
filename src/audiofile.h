@@ -1,7 +1,7 @@
 #ifndef AUDIOFILE_H
 #define AUDIOFILE_H
 
-#include <phonon/mediasource>
+#include <phonon/mediasource.h>
 #include <QFileInfo>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
