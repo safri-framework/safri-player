@@ -23,6 +23,7 @@ public:
     Playlist *getPlaylist();
 
     void playSongAt(int value);
+    void mouseDoubleClickEvent(QMouseEvent * event);
 
 
 private:
@@ -70,7 +71,7 @@ public slots:
 
  signals:
 
-
+    void viewModeChanged();
     void currentSourceChanged(AudioFile*);
 };
 

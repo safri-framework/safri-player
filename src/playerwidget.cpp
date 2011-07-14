@@ -107,6 +107,12 @@ void PlayerWidget::playSongAt(int value)
 
 }
 
+void PlayerWidget::mouseDoubleClickEvent(QMouseEvent * event)
+{
+
+    Q_EMIT viewModeChanged();
+
+}
 
 
 

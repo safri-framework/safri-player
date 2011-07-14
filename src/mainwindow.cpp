@@ -1,15 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasecleaner.h"
-
+#include "playlist.h"
 #include "dtochanger.h"
-
 #include <QStringList>
+#include <QMdiSubWindow>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+
+
+    DatabaseDAO::getPathlistBySearchString("Metzger");
+
+
     click = false;
     ui->setupUi(this);
 
@@ -61,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->artistView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->albumView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->songView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -470,3 +477,61 @@ void MainWindow::songTree_doubleClicked(QModelIndex index)
     }
 
 }
+
+void MainWindow::on_lineEdit_textChanged(QString text)
+{
+    QList<QString>* searchResult;
+    searchResult = DatabaseDAO::getPathlistBySearchString(text);
+
+    QList<AudioFile*>* AFList = new QList<AudioFile*>;
+
+    foreach (QString string, *searchResult)
+    {
+        AFList->append(new AudioFile(string));
+    }
+
+Playlist* pl = new Playlist(AFList);
+playlistModel->setPlaylist(pl);
+
+
+}
+
+bool view = true;
+QMainWindow* testwindow;
+
+
+void MainWindow::on_toggleView_clicked()
+{
+
+    if ( view)
+    {
+
+        testwindow = new QMainWindow(0,Qt::Window);
+        //testwindow = new QMdiSubWindow(0, Qt::Window);
+
+        testwindow->setCentralWidget(ui->playerWidget);
+
+        //testwindow->setWidget(ui->playerWidget);
+
+        testwindow->show();
+        connect(testwindow,SIGNAL(destroyed()),this, SLOT(on_toggleView_clicked()));
+        view = false;
+        this->hide();
+}
+    else
+    {
+
+
+       testwindow->close();
+
+       ui->widget_2->layout()->addWidget(ui->playerWidget);
+       view = true;
+       this->show();
+    }
+}
+
+
+
+
+
+
