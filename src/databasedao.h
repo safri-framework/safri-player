@@ -115,7 +115,8 @@ class DatabaseDAO
         static void createCoverPreviewImage(QString coverFile, int albumID);
         static void changeAlbumCover(QString filename, int album_id);
 
-
+        static QList<QString>* getPathlistBySearchString(QString searchString);
+        static void resetSearchMap();
 
     };
 

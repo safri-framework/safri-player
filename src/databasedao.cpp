@@ -18,7 +18,7 @@ QSqlDatabase &DatabaseDAO::getDatabase()
         // otherwise open a new database connection
 
         database = QSqlDatabase::addDatabase("QSQLITE");
-        database.setDatabaseName("sqlitedatabasev2.db");
+        database.setDatabaseName("sqlitedatabaseV2.db");
 
         /*
         database = QSqlDatabase::addDatabase("QMYSQL");
@@ -1048,4 +1048,70 @@ void DatabaseDAO::changeAlbumCover(QString filename, int album_id)
     {
         DatabaseDAO::createCoverPreviewImage(filename, album_id);
     }
+}
+QMap<QString, QString>* searchMap = 0;
+
+QList<QString>* DatabaseDAO::getPathlistBySearchString(QString searchString)
+{
+    QList<QString>* result = new QList<QString>;
+
+
+    if (!searchMap)
+    {
+        qDebug()<<"nur einmal!";
+        QSqlQuery query(getDatabase());
+
+        QString queryString = "SELECT filename,  song, artist, album FROM song, artist, album WHERE (song.album_id = album.id) AND (song.artist_id = artist.id)";
+        //                              0         1       2       3
+
+        searchMap = new QMap<QString, QString>;
+
+        query.prepare(queryString);
+
+        if ( !query.exec())
+        {
+            qDebug() << "ERROR: " << queryString;
+            qDebug() << query.lastError();
+        }
+
+        while ( query.next() )
+        {
+            QString searchIndex;
+            searchIndex = query.value(1).toString()+" ";
+            searchIndex.append(query.value(2).toString()+" ");
+            searchIndex.append(query.value(3).toString());
+
+            searchMap->insert(searchIndex, query.value(0).toString());
+
+        }
+
+
+    }
+
+    QMapIterator<QString, QString> i(*searchMap);
+        while (i.hasNext())
+    {
+        i.next();
+        if (i.key().toLower().contains(searchString.toLower()))
+        {
+            result->append(i.value());
+
+        }
+
+
+    }
+
+return result;
+
+}
+
+
+
+void DatabaseDAO::resetSearchMap()
+{
+
+    delete searchMap;
+
+    searchMap = 0;
+
 }
