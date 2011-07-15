@@ -54,6 +54,7 @@ public:
     int getSongCount();
 
     void readTagsAtPosition(int position);
+    void disconnectPlaylist();
 
 private:
 

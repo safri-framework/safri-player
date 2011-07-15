@@ -1,5 +1,15 @@
 #include "playerwidget.h"
 #include "ui_playerwidget.h"
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
+#include <QDrag>
+#include <QDragMoveEvent>
+#include <QUrl>
+#include <QDir>
+#include <QDirIterator>
+#include <audiofile.h>
+#include <playlist.h>
+#include <QFileInfo>
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::PlayerWidget), playlist(0)
@@ -79,7 +89,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(updateInfo()));
 
     mediaObject->setTickInterval(10);
-
+this->setAcceptDrops(true);
   }
 
 PlayerWidget::~PlayerWidget()
@@ -263,4 +273,100 @@ void PlayerWidget::currentSourceChanged(Phonon::MediaSource source)
     Q_EMIT currentSourceChanged(this->currentSong);
 
     updateInfo();
+}
+
+
+
+
+void PlayerWidget::dragEnterEvent(QDragEnterEvent *event)
+ {
+    bool accepted = true;
+    const QMimeData *mimeData = event->mimeData();
+event->acceptProposedAction();
+    if (mimeData->hasUrls())
+    {
+
+        QList<QUrl> urllist = mimeData->urls();
+        foreach (QUrl i, urllist)
+        {
+
+
+        }
+
+    }
+
+ }
+
+void PlayerWidget::dragMoveEvent(QDragMoveEvent *event)
+{
+    //event->acceptProposedAction();
+    //qDebug()<<"dragmove";
+}
+
+void PlayerWidget::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+
+    if (mimeData->hasUrls())
+    {
+
+        QList<QUrl> urllist = mimeData->urls();
+        QList<AudioFile*>* songlist = new QList<AudioFile*>;
+
+
+        foreach (QUrl i, urllist)
+        {
+
+            if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+            {
+                AudioFile* song = new AudioFile(i.toLocalFile());
+                songlist->append(song);
+
+            }
+
+            else
+            {
+
+
+                if (!i.isEmpty())
+                {
+
+                    QDir dir(i.toLocalFile());
+                    QStringList filters;
+                    filters << "*.mp3" << "*.wma" << "*.ogg";
+                    dir.setNameFilters(filters);
+
+                    QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+                    while (lukeFileWalker.hasNext())
+                    {
+                        lukeFileWalker.next();
+                        AudioFile* af = new AudioFile(lukeFileWalker.fileInfo().absoluteFilePath());
+                        songlist->append(af);
+                    }
+
+
+                }
+            }
+
+        }
+
+        if (songlist->size()>0)
+        {
+              this->playlist->setCurrentPlayingSong(-1);
+              Playlist* pl = new Playlist(songlist);
+              this->setPlaylist(pl);
+              this->playSongAt(0);
+        }
+
+
+
+    }
+}
+
+void PlayerWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+
+    //event->accept();
 }

@@ -145,14 +145,24 @@ bool Playlist::isSongPlaying(int value)
 
 void Playlist::setCurrentPlayingSong(int value)
 {
-    if(actualPlayingSong != value)
+    if (value < 0)
     {
         int oldPlayingSong = actualPlayingSong;
+        this->actualPlayingSong = -1;
+        Q_EMIT(songDataChanged(oldPlayingSong));
 
-        actualPlayingSong = value;
-        actualPlayingSongTransactionRequested = false;
+    }
+    else
+    {
+        if(actualPlayingSong != value)
+        {
+            int oldPlayingSong = actualPlayingSong;
 
-        Q_EMIT positionOfActuallyPlayingSongChanged(oldPlayingSong, actualPlayingSong);
+            actualPlayingSong = value;
+            actualPlayingSongTransactionRequested = false;
+
+            Q_EMIT positionOfActuallyPlayingSongChanged(oldPlayingSong, actualPlayingSong);
+        }
     }
 }
 
@@ -489,5 +499,17 @@ void Playlist::sortByTrack(Qt::SortOrder order)
             qSort(SongList->begin(), SongList->end(), Playlist::TrackXto0);
         }
     }
+
+
 }
+
+void Playlist::disconnectPlaylist()
+{
+    this->setCurrentPlayingSong(-1);
+
+
+}
+
+
+
 
