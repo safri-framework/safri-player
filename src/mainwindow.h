@@ -60,6 +60,7 @@ private slots:
 
 
 
+
     void on_toggleView_clicked();
     void on_lineEdit_textChanged(QString );
     void on_actionBereinigen_triggered();

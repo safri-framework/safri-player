@@ -354,7 +354,7 @@ void PlayerWidget::dropEvent(QDropEvent *event)
 
         if (songlist->size()>0)
         {
-              this->playlist->setCurrentPlayingSong(-1);
+            if (playlist) this->playlist->setCurrentPlayingSong(-1);
               Playlist* pl = new Playlist(songlist);
               this->setPlaylist(pl);
               this->playSongAt(0);

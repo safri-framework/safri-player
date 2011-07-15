@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
 
-
+    lastPlaylist  = 0;
     DatabaseDAO::getPathlistBySearchString("Metzger");
 
 
@@ -419,7 +419,7 @@ void MainWindow::EnablePlaylistViewSorting()
 
 void MainWindow::on_actionRestorePlaylist_triggered()
 {
-    this->playlistModel->setPlaylist(lastPlaylist);
+    if (lastPlaylist) this->playlistModel->setPlaylist(lastPlaylist);
 }
 
 void MainWindow::on_action_about_SaFri_Player_triggered()
@@ -529,6 +529,8 @@ void MainWindow::on_toggleView_clicked()
        this->show();
     }
 }
+
+
 
 
 
