@@ -42,7 +42,7 @@
             <string notr="true">background-image:url();</string>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="tab">
             <attribute name="title">
@@ -60,8 +60,11 @@
                <property name="dragEnabled">
                 <bool>true</bool>
                </property>
+               <property name="dragDropOverwriteMode">
+                <bool>false</bool>
+               </property>
                <property name="dragDropMode">
-                <enum>QAbstractItemView::DragOnly</enum>
+                <enum>QAbstractItemView::DragDrop</enum>
                </property>
                <property name="sortingEnabled">
                 <bool>false</bool>

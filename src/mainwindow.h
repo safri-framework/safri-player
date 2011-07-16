@@ -12,6 +12,8 @@
 #include <QStringListModel>
 #include <QIcon>
 #include <QSplitter>
+#include <QSystemTrayIcon>
+
 
 #include "basedto.h"
 #include "songtreemodel.h"
@@ -36,6 +38,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
+
 private:
     bool click;
     Ui::MainWindow *ui;
@@ -50,10 +54,10 @@ private:
     Playlist* lastPlaylist;
 
     PlayerContext *context;
-
-
-
     void insertSongs(QStringList *files);
+
+    QSystemTrayIcon *trayIcon;
+
 
 private slots:
 
@@ -97,6 +101,7 @@ public slots:
     void updateProgressBar(int value);
     void setProgressBarRange(int min, int max);
     void setProgressBarText(QString text);
+    void showTrayIconSongInfoMessage(AudioFile* af);
 
 };
 

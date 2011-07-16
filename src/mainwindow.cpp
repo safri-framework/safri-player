@@ -6,10 +6,24 @@
 #include <QStringList>
 #include <QMdiSubWindow>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        const QIcon* icon = new QIcon("img/sf_icon.png");
+        trayIcon = new QSystemTrayIcon();
+        trayIcon->setIcon(*icon);
+        trayIcon->setVisible(true);
+    }
+    else
+    {
+
+        trayIcon = 0;
+    }
 
 
     lastPlaylist  = 0;
@@ -68,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->albumView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->songView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
+     connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 }
 
 MainWindow::~MainWindow()
@@ -177,6 +192,9 @@ void MainWindow::insertSongs(QStringList *files)
 
     thread->start();
 }
+
+
+
 
 
 void MainWindow::on_actionSongs_hinzufuegen_triggered()
@@ -490,8 +508,8 @@ void MainWindow::on_lineEdit_textChanged(QString text)
         AFList->append(new AudioFile(string));
     }
 
-Playlist* pl = new Playlist(AFList);
-playlistModel->setPlaylist(pl);
+    Playlist* pl = new Playlist(AFList);
+    playlistModel->setPlaylist(pl);
 
 
 }
@@ -517,7 +535,7 @@ void MainWindow::on_toggleView_clicked()
         connect(testwindow,SIGNAL(destroyed()),this, SLOT(on_toggleView_clicked()));
         view = false;
         this->hide();
-}
+    }
     else
     {
 
@@ -531,6 +549,19 @@ void MainWindow::on_toggleView_clicked()
 }
 
 
+void MainWindow::showTrayIconSongInfoMessage(AudioFile* af)
+{
+
+    if (trayIcon)
+    {
+        QString artist = af->getArtist();
+        QString title = af->getTitle();
+
+        QString message = artist+" - "+title;
+        this->trayIcon->showMessage("aktueller Song:", message);
+    }
+
+}
 
 
 

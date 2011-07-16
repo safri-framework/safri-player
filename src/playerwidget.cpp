@@ -111,6 +111,10 @@ void PlayerWidget::playSongAt(int value)
     if (!stopped) stopAction->trigger();
 
     playlist->setCurrentPlayingSong(value);
+    AudioFile* af = playlist->getAudioFileAt(value);
+
+    af->ReadTags();
+
     mediaObject->setCurrentSource(*playlist->getAudioFileAt(value));
     playAction->trigger();
 
@@ -174,7 +178,7 @@ void PlayerWidget::currentSongFinished()
      if (!stopped)
      {
         AudioFile *nextSong = playlist->getNextSong();
-
+        nextSong->ReadTags();
         if (nextSong != currentSong)
         {
             mediaObject->setCurrentSource(*nextSong);
@@ -192,6 +196,7 @@ void PlayerWidget::nextActionSlot()
     stopAction->trigger();
 
     AudioFile *nextSong = playlist->getNextSong();
+    nextSong->ReadTags();
 
     if (nextSong != 0)
     {
@@ -297,11 +302,7 @@ event->acceptProposedAction();
 
  }
 
-void PlayerWidget::dragMoveEvent(QDragMoveEvent *event)
-{
-    //event->acceptProposedAction();
-    //qDebug()<<"dragmove";
-}
+
 
 void PlayerWidget::dropEvent(QDropEvent *event)
 {
@@ -356,6 +357,7 @@ void PlayerWidget::dropEvent(QDropEvent *event)
         {
             if (playlist) this->playlist->setCurrentPlayingSong(-1);
               Playlist* pl = new Playlist(songlist);
+
               this->setPlaylist(pl);
               this->playSongAt(0);
         }
@@ -365,8 +367,4 @@ void PlayerWidget::dropEvent(QDropEvent *event)
     }
 }
 
-void PlayerWidget::dragLeaveEvent(QDragLeaveEvent *event)
-{
 
-    //event->accept();
-}

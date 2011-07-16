@@ -10,6 +10,7 @@
 #include <QMimeData>
 #include <QIcon>
 #include <QImage>
+#include <QDragEnterEvent>
 
 #include "databasedao.h"
 
@@ -46,6 +47,10 @@ class SongTreeModel : public QAbstractItemModel
 
         Qt::ItemFlags flags(const QModelIndex &index) const;
         QMimeData *mimeData(const QModelIndexList &indexes) const;
+        void dragEnterEvent(QDragEnterEvent *event);
+        //void dragLeaveEvent(QDragLeaveEvent *event);
+        void dropEvent(QDropEvent *event);
+
 
 
 };

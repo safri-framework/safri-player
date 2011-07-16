@@ -1,9 +1,11 @@
 #include "songtreemodel.h"
-
+#include <QDirIterator>
+#include <mainwindow.h>
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, QObject *parent) :
             QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy)
 {
+
 
     rootDTO = new BaseDTO(0, "", treeHierarchy->at(0));
 
@@ -237,3 +239,66 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 
 
 
+void SongTreeModel::dragEnterEvent(QDragEnterEvent *event)
+ {
+
+    event->acceptProposedAction();
+
+ }
+
+
+
+void SongTreeModel::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+
+    if (mimeData->hasUrls())
+    {
+
+        QList<QUrl> urllist = mimeData->urls();
+        QStringList* files = new QStringList();
+
+
+        foreach (QUrl i, urllist)
+        {
+
+            if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+            {
+
+                files->append(QFileInfo(i.toLocalFile()).absoluteFilePath());
+
+            }
+
+            else if(QFileInfo(i.toLocalFile()).isDir())
+            {
+
+
+                if (!i.isEmpty())
+                {
+
+                    QDir dir(i.toLocalFile());
+                    QStringList filters;
+                    filters << "*.mp3" << "*.wma" << "*.ogg";
+                    dir.setNameFilters(filters);
+
+                    QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+                    while (lukeFileWalker.hasNext())
+                    {
+                        lukeFileWalker.next();
+                        files->append(lukeFileWalker.fileInfo().absoluteFilePath());
+                    }
+
+
+
+                }
+                if (!files->isEmpty())
+                {
+                qDebug()<<"einügen";
+                }
+            }
+
+        }
+    }
+}
