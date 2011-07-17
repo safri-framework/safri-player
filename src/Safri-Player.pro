@@ -8,11 +8,20 @@ QT       += core gui sql phonon webkit mysql
 
 TARGET = SafriPlayer
 TEMPLATE = app
+CONFIG  += qxt
+QXT     += core gui
+
 
 win32 {
     INCLUDEPATH += C:\taglib\include
+
+
+
+
     LIBS += -L"C:\taglib\lib"
     LIBS += -llibtag
+
+
 }
 
 unix {

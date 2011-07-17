@@ -1,6 +1,6 @@
 #include "songtreemodel.h"
 #include <QDirIterator>
-#include <mainwindow.h>
+
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, QObject *parent) :
             QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy)

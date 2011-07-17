@@ -15,6 +15,15 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::PlayerWidget), playlist(0)
 
 {
+
+    shortcut_next = new QxtGlobalShortcut(QKeySequence("Media Next"));
+    shortcut_play = new QxtGlobalShortcut(QKeySequence("Media Play"));
+    shortcut_previous = new QxtGlobalShortcut(QKeySequence("Media Previous"));
+
+    shortcut_next->setEnabled(true);
+    shortcut_play->setEnabled(true);
+    shortcut_previous->setEnabled(true);
+
     ui->setupUi(this);
     this->setStyleSheet("background-image:url();");
 
@@ -88,6 +97,13 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(currentSourceChanged(Phonon::MediaSource)));
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(updateInfo()));
 
+
+    connect(this->shortcut_next, SIGNAL(activated()), this, SLOT(nextActionSlot()));
+    connect(this->shortcut_play, SIGNAL(activated()), this->playAction, SLOT(trigger()));
+    connect(this->shortcut_previous, SIGNAL(activated()), this, SLOT(previousActionSlot()));
+    //connect(this->shortcut_pause, SIGNAL(activated()), this, SLOT(pauseStateSlot()));
+
+
     mediaObject->setTickInterval(10);
 this->setAcceptDrops(true);
   }
@@ -145,6 +161,11 @@ void PlayerWidget::setupActions()
     previousAction = new QAction(style()->standardIcon(QStyle::SP_MediaSkipBackward), tr("Previous"), this);
     previousAction->setShortcut(tr("Ctrl+R"));
 }
+
+
+
+
+
 
 void PlayerWidget::playStateSlot()
 {

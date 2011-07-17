@@ -12,6 +12,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
+
+
+
+
+
+
+
+
+
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         const QIcon* icon = new QIcon("img/sf_icon.png");
@@ -83,7 +92,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->songView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
-}
+
+
+
+ }
 
 MainWindow::~MainWindow()
 {
@@ -142,7 +154,6 @@ void MainWindow::SetupSongTreeModels()
 
     ui->albumView->setModel(model);
 
-    filters[3]->append(BaseDTO::DECADE);
     filters[3]->append(BaseDTO::SONG);
 
     model = new SongTreeModel(filters[3]);
@@ -515,7 +526,7 @@ void MainWindow::on_lineEdit_textChanged(QString text)
 }
 
 bool view = true;
-QMainWindow* testwindow;
+QMainWindow* testwindow = 0;
 
 
 void MainWindow::on_toggleView_clicked()
@@ -542,6 +553,7 @@ void MainWindow::on_toggleView_clicked()
 
        testwindow->close();
 
+       testwindow = 0;
        ui->widget_2->layout()->addWidget(ui->playerWidget);
        view = true;
        this->show();
@@ -558,9 +570,14 @@ void MainWindow::showTrayIconSongInfoMessage(AudioFile* af)
         QString title = af->getTitle();
 
         QString message = artist+" - "+title;
-        this->trayIcon->showMessage("aktueller Song:", message);
-    }
+        if (this->isMinimized() || (testwindow && testwindow->isMinimized()))
+        {
 
+            this->trayIcon->showMessage("aktueller Song:", message);
+
+        }
+
+    }
 }
 
 

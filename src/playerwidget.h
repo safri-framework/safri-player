@@ -7,6 +7,7 @@
 #include <QStyle>
 #include <QToolBar>
 #include <QTime>
+#include <QxtGlobalShortcut>
 
 namespace Ui {
     class PlayerWidget;
@@ -41,6 +42,14 @@ private:
 
     AudioFile *currentSong;
 
+    QxtGlobalShortcut* shortcut_play;
+    QxtGlobalShortcut* shortcut_next;
+    QxtGlobalShortcut* shortcut_previous;
+
+
+
+
+
 
     bool stopped;
     QStateMachine *machine;
@@ -49,7 +58,7 @@ private:
     QState *stop ;
     QState *noData;
 
-     QToolBar *bar;
+    QToolBar *bar;
     QAction *playAction;
 
     QAction *stopAction;
