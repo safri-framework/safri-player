@@ -6,27 +6,7 @@ SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, QObject *
             QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy)
 {
 
-
-    rootDTO = new BaseDTO(0, "", treeHierarchy->at(0));
-
-    //DatabaseDAO::fillDTO(rootDTO, treeHierarchy);
-
-    DatabaseDAO::LoadSongTree(rootDTO, treeHierarchy);
-
-    // preload data for second tree level
-    /*
-    if (rootDTO->getChildren() != 0)
-    {
-        int size = rootDTO->getChildren()->size();
-
-        for (int i = 0; i < size; i++)
-        {
-            DatabaseDAO::fillDTO(rootDTO->getChildren()->at(i), treeHierarchy);
-        }
-
-    }
-    */
-
+    rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy);
 }
 
 
@@ -153,10 +133,6 @@ QModelIndex SongTreeModel::index(int row, int column, const QModelIndex& parent)
         // the DTO which the new ModelIndex will represent ist the children
         // from the parentDTO at the requested row
         BaseDTO *dtoForIndex = parentDTO->getChildren()->at(row);
-
-        // For all DTOs which will be stored in a ModelIndex, we load
-        // it's children so i.e. the rowCount for this index is determined
-        //DatabaseDAO::fillDTO(dtoForIndex, treeHierarchy);
 
         return createIndex(row, column, dtoForIndex);
     }

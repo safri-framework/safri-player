@@ -36,8 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     lastPlaylist  = 0;
-    DatabaseDAO::getPathlistBySearchString("Metzger");
-
 
     click = false;
     ui->setupUi(this);
@@ -537,27 +535,9 @@ void MainWindow::songTree_doubleClicked(QModelIndex index)
 
 }
 
-void MainWindow::on_lineEdit_textChanged(QString text)
-{
-    QList<QString>* searchResult;
-    searchResult = DatabaseDAO::getPathlistBySearchString(text);
-
-    QList<AudioFile*>* AFList = new QList<AudioFile*>;
-
-    foreach (QString string, *searchResult)
-    {
-        AFList->append(new AudioFile(string));
-    }
-
-    Playlist* pl = new Playlist(AFList);
-    playlistModel->setPlaylist(pl);
-
-
-}
 
 bool view = true;
 QMainWindow* testwindow = 0;
-
 
 void MainWindow::on_toggleView_clicked()
 {

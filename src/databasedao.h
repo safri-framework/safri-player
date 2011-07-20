@@ -33,6 +33,11 @@ class DatabaseDAO
         static QSqlDatabase database;
         static QStringList albumCoverFilePatterns;
 
+        typedef QMap<QString, QString> ColumnData;
+        typedef QList< ColumnData* > DataTable;
+
+        static DataTable* dataTable;
+
     protected:
 
         /**
@@ -104,19 +109,17 @@ class DatabaseDAO
         static void getSongDTO(BaseDTO* dto, QList<BaseDTO*>*);
         static int deleteSongByID(QList<int>* id);
 
-        static void LoadSongTree(BaseDTO *root, QList<BaseDTO::DTO_TYPE> *treeHierarchy);
+        static BaseDTO* BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, DataTable* dataTable = 0);
 
         static QMap<QUrl, int> *getAllSongsAsUrl();
         static int cleanDatabase();
         static void deleteDoubleDatabaseEntries();
         static void sortTree(BaseDTO *root);
 
-
         static void createCoverPreviewImage(QString coverFile, int albumID);
         static void changeAlbumCover(QString filename, int album_id);
 
-        static QList<QString>* getPathlistBySearchString(QString searchString);
-        static void resetSearchMap();
+        static void loadDataTable();
 
     };
 

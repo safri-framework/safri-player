@@ -3,6 +3,8 @@
 QSqlDatabase DatabaseDAO::database;
 QStringList DatabaseDAO::albumCoverFilePatterns;
 
+DatabaseDAO::DataTable* DatabaseDAO::dataTable = 0;
+
 DatabaseDAO::DatabaseDAO()
 {
 }
@@ -518,48 +520,15 @@ QList<QUrl> DatabaseDAO::getUrlsByBaseDTO(BaseDTO *dto)
 
     if (dto->getType() != BaseDTO::SONG)
     {
-
         songs = new QList<BaseDTO*>();
         getSongDTO(dto, songs);
-
-//        QList<BaseDTO::DTO_TYPE> *songFilter = new QList<BaseDTO::DTO_TYPE>();
-//        while (dto != 0)
-//        {
-//           songFilter->insert(0, dto->getType());
-//           dto = dto->getParentDTO();
-//        }
-
-
-//        int filterIndex = songFilter->indexOf(dto_copy->getType()) + 1;
-
-//        songFilter->insert(filterIndex, BaseDTO::SONG);
-
-
-//         songs = DatabaseDAO::loadDTOChildren(dto_copy, songFilter);
 
     }
     else
     {
         songs = new QList<BaseDTO*>();
         songs->append(dto);
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     QString filename;
     QString queryString = "SELECT filename FROM Song WHERE ID IN (";
@@ -576,15 +545,14 @@ QList<QUrl> DatabaseDAO::getUrlsByBaseDTO(BaseDTO *dto)
         }
 
     }
-
-
     queryString.append(" ) ORDER BY filename");
-    // qDebug() << queryString;
+
 
     if ( !query.exec(queryString))
     {
-        // qDebug() << "ERROR: " << queryString;
+        qDebug() << "ERROR: " << queryString;
     }
+
     while ( query.next() )
     {
        filename  = query.value( query.record().indexOf("FILENAME") ).toString();
@@ -592,34 +560,24 @@ QList<QUrl> DatabaseDAO::getUrlsByBaseDTO(BaseDTO *dto)
 
     }
 
-
     return urlCollection;
-
 }
 
 
 void DatabaseDAO::getSongDTO(BaseDTO* dtos, QList<BaseDTO*>* list)
 {
-if (dtos->getChildren())
+    if (dtos->getChildren())
     {
-    for (int i = 0; i < dtos->getChildren()->length(); i++)
-    {
-
-
-        getSongDTO(dtos->getChildren()->at(i), list);
-
-
+        for (int i = 0; i < dtos->getChildren()->length(); i++)
+        {
+            getSongDTO(dtos->getChildren()->at(i), list);
+        }
 
     }
-
-
-
-}
-if (dtos->getType() == BaseDTO::SONG)
-{
-    list->append(dtos);
-}
-
+    if (dtos->getType() == BaseDTO::SONG)
+    {
+        list->append(dtos);
+    }
 }
 
 
@@ -780,125 +738,6 @@ void DatabaseDAO::insertSetting(QString setting, QString value)
 
 }
 
-
-
-
-
-
-
-
-void DatabaseDAO::LoadSongTree(BaseDTO *rootDTO, QList<BaseDTO::DTO_TYPE> *treeHierarchy)
-{
-    QSqlQuery query(getDatabase());
-
-    QString queryString = "SELECT song.year, song, song.id AS SongID, genre, genre.id AS GenreID, album, album.id AS AlbumID, artist, artist.id AS ArtistID FROM song, genre, album, artist WHERE (song.album_id = album.id) AND song.genre_id = genre.id AND song.artist_id = artist.id  ;";
-    QMap<int, DTOMapEntry*> *rootMap = new QMap<int, DTOMapEntry*>();
-
-    query.prepare(queryString);
-
-    if ( !query.exec())
-    {
-        qDebug() << "ERROR: " << queryString;
-        qDebug() << query.lastError();
-    }
-
-    while ( query.next() )
-    {
-
-        QMap<int, DTOMapEntry*> *currentMap = rootMap;
-        BaseDTO *currentDTO = rootDTO;
-
-        for (int i = 0; i < treeHierarchy->length(); i++)
-        {
-
-            int id ;
-            QString text;
-
-
-
-            BaseDTO::DTO_TYPE currentType = treeHierarchy->at(i);
-
-            int year;
-
-
-            switch (currentType)
-            {
-                case BaseDTO::DECADE:
-
-                    year  = query.value( query.record().indexOf("year" ) ).toInt();
-                    if (year != 0)
-                    {
-                        id = year - (year % 10);
-                        text = QString::number(id);
-
-                    }
-                    else
-                    {
-                        id = 0;
-                        text = "Unbekannt";
-                    }
-                    break;
-
-                case BaseDTO::YEAR:
-
-                    year  = query.value( query.record().indexOf("year" ) ).toInt();
-                    if (year != 0)
-                    {
-                        id = year;
-                        text = QString::number(id);
-
-                    }
-                    else
-                    {
-                        id = 0;
-                        text = "Unbekannt";
-                    }
-
-                    break;
-
-                default:
-
-                    id = query.value( query.record().indexOf( BaseDTO::typeToString(currentType) + "ID" ) ).toInt();
-                    text = query.value( query.record().indexOf( BaseDTO::typeToString(currentType)) ).toString();
-
-
-                    break;
-            }
-
-
-            const DTOMapEntry *mapEntry = currentMap->value(id);
-
-            if ( !mapEntry )
-            {
-                BaseDTO *newDTO = new BaseDTO(id, text, currentType);
-                newDTO->setParent(currentDTO);
-                currentDTO->getChildren()->append(newDTO);
-
-                QMap<int, DTOMapEntry*> *newMap = new QMap<int, DTOMapEntry*>();
-
-                DTOMapEntry *newMapEntry = new DTOMapEntry(newMap, newDTO);
-                currentMap->insert(id, newMapEntry);
-
-                currentMap = newMap;
-                currentDTO = newDTO;
-            }
-            else
-            {
-                currentMap = mapEntry->getChildren();
-                currentDTO = mapEntry->getDTO();
-
-            }
-
-
-
-        }
-
-
-    }
-
-    sortTree(rootDTO);
-}
-
 QMap<QUrl, int> *DatabaseDAO::getAllSongsAsUrl()
 {
     QSqlQuery query(getDatabase());
@@ -1049,69 +888,151 @@ void DatabaseDAO::changeAlbumCover(QString filename, int album_id)
         DatabaseDAO::createCoverPreviewImage(filename, album_id);
     }
 }
-QMap<QString, QString>* searchMap = 0;
 
-QList<QString>* DatabaseDAO::getPathlistBySearchString(QString searchString)
+void DatabaseDAO::loadDataTable()
 {
-    QList<QString>* result = new QList<QString>;
+    dataTable = new QList< ColumnData* >();
 
+    QSqlQuery query(getDatabase());
+    QString queryString = "SELECT song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id)";
 
-    if (!searchMap)
+    query.prepare(queryString);
+
+    if ( !query.exec())
     {
-        qDebug()<<"nur einmal!";
-        QSqlQuery query(getDatabase());
-
-        QString queryString = "SELECT filename,  song, artist, album FROM song, artist, album WHERE (song.album_id = album.id) AND (song.artist_id = artist.id)";
-        //                              0         1       2       3
-
-        searchMap = new QMap<QString, QString>;
-
-        query.prepare(queryString);
-
-        if ( !query.exec())
-        {
-            qDebug() << "ERROR: " << queryString;
-            qDebug() << query.lastError();
-        }
-
-        while ( query.next() )
-        {
-            QString searchIndex;
-            searchIndex = query.value(1).toString()+" ";
-            searchIndex.append(query.value(2).toString()+" ");
-            searchIndex.append(query.value(3).toString());
-
-            searchMap->insert(searchIndex, query.value(0).toString());
-
-        }
-
-
+        qDebug() << "ERROR: " << queryString;
+        qDebug() << query.lastError();
     }
 
-    QMapIterator<QString, QString> i(*searchMap);
-        while (i.hasNext())
+    while ( query.next() )
     {
-        i.next();
-        if (i.key().toLower().contains(searchString.toLower()))
-        {
-            result->append(i.value());
+        QString searchIndex = query.value( query.record().indexOf("song") ).toString() + " " + query.value( query.record().indexOf("album") ).toString() + " " + query.value( query.record().indexOf("artist") ).toString();
+        ColumnData* row = new ColumnData();
 
-        }
+        row->insert("SONG", query.value( query.record().indexOf("song") ).toString());
+        row->insert("SONGID", query.value( query.record().indexOf("songID") ).toString());
+        row->insert("ARTIST", query.value( query.record().indexOf("artist") ).toString());
+        row->insert("ARTISTID", query.value( query.record().indexOf("artistID") ).toString());
+        row->insert("ALBUM", query.value( query.record().indexOf("album") ).toString());
+        row->insert("ALBUMID", query.value( query.record().indexOf("albumID") ).toString());
+        row->insert("GENRE", query.value( query.record().indexOf("genre") ).toString());
+        row->insert("GENREID", query.value( query.record().indexOf("genreID") ).toString());
+        row->insert("YEAR", query.value( query.record().indexOf("year") ).toString());
+        row->insert("INDEX", searchIndex);
 
-
+        dataTable->append(row);
     }
-
-return result;
-
 }
 
-
-
-void DatabaseDAO::resetSearchMap()
+BaseDTO* DatabaseDAO::BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, DataTable* useDataTable)
 {
+    BaseDTO* rootDTO = new BaseDTO(0, "", treeHierarchy->at(0));
+    QMap<int, DTOMapEntry*> *rootMap = new QMap<int, DTOMapEntry*>();
 
-    delete searchMap;
+    // if no special dataTable is given, eg. dataTable with search-results
+    if (useDataTable == 0)
+    {
+        // use default dataTable (all songs)
+        useDataTable = DatabaseDAO::dataTable;
 
-    searchMap = 0;
+        // should not happen -> loadDataTable() have to be called at least
+        // once at startup
+        if (useDataTable == 0)
+        {
+            DatabaseDAO::loadDataTable();
+            useDataTable = DatabaseDAO::dataTable;
+        }
+    }
 
+
+    int len = useDataTable->length();
+
+    for (int row = 0; row < len; row++)
+    {
+
+        QMap<int, DTOMapEntry*> *currentMap = rootMap;
+        BaseDTO *currentDTO = rootDTO;
+
+        for (int i = 0; i < treeHierarchy->length(); i++)
+        {
+            int id ;
+            QString text;
+
+            BaseDTO::DTO_TYPE currentType = treeHierarchy->at(i);
+
+            int year;
+
+            switch (currentType)
+            {
+                case BaseDTO::DECADE:
+
+                    year  = useDataTable->at(row)->value("YEAR").toInt();
+                    if (year != 0)
+                    {
+                        id = year - (year % 10);
+                        text = QString::number(id);
+
+                    }
+                    else
+                    {
+                        id = 0;
+                        text = "Unbekannt";
+                    }
+                    break;
+
+                case BaseDTO::YEAR:
+
+                    year  = useDataTable->at(row)->value("YEAR").toInt();
+                    if (year != 0)
+                    {
+                        id = year;
+                        text = QString::number(id);
+
+                    }
+                    else
+                    {
+                        id = 0;
+                        text = "Unbekannt";
+                    }
+
+                    break;
+
+                default:
+
+                    id = useDataTable->at(row)->value(BaseDTO::typeToString(currentType) + "ID").toInt();
+                    text = useDataTable->at(row)->value(BaseDTO::typeToString(currentType));
+
+                    break;
+            }
+
+
+            const DTOMapEntry *mapEntry = currentMap->value(id);
+
+            if ( !mapEntry )
+            {
+                BaseDTO *newDTO = new BaseDTO(id, text, currentType);
+                newDTO->setParent(currentDTO);
+                currentDTO->getChildren()->append(newDTO);
+
+                QMap<int, DTOMapEntry*> *newMap = new QMap<int, DTOMapEntry*>();
+
+                DTOMapEntry *newMapEntry = new DTOMapEntry(newMap, newDTO);
+                currentMap->insert(id, newMapEntry);
+
+                currentMap = newMap;
+                currentDTO = newDTO;
+            }
+            else
+            {
+                currentMap = mapEntry->getChildren();
+                currentDTO = mapEntry->getDTO();
+
+            }
+        }
+    }
+
+    sortTree(rootDTO);
+
+
+    return rootDTO;
 }
