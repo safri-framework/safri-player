@@ -28,13 +28,15 @@
 class DatabaseDAO
 {
 
+    public:
+
+        typedef QMap<QString, QString> ColumnData;
+        typedef QList< ColumnData* > DataTable;
+
     private:
 
         static QSqlDatabase database;
         static QStringList albumCoverFilePatterns;
-
-        typedef QMap<QString, QString> ColumnData;
-        typedef QList< ColumnData* > DataTable;
 
         static DataTable* dataTable;
 
@@ -120,6 +122,8 @@ class DatabaseDAO
         static void changeAlbumCover(QString filename, int album_id);
 
         static void loadDataTable();
+
+        static DataTable* searchDataTable(QString searchString);
 
     };
 

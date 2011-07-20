@@ -1036,3 +1036,20 @@ BaseDTO* DatabaseDAO::BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, Dat
 
     return rootDTO;
 }
+
+
+DatabaseDAO::DataTable* DatabaseDAO::searchDataTable(QString searchString)
+{
+    DataTable* results = new DataTable();
+
+    int length = dataTable->length();
+    for (int row = 0; row < length; row++)
+    {
+        if (dataTable->at(row)->value("INDEX").toLower().contains(searchString.toLower()))
+        {
+            results->append(dataTable->at(row));
+        }
+    }
+
+    return results;
+}

@@ -116,6 +116,7 @@ void MainWindow::setupTreeViewTabs()
         QTreeView* treeView = new QTreeView();
 
         searchEdit->setPlaceholderText("Suche...");
+        connect(searchEdit, SIGNAL(textChanged(QString)), this, SLOT(searchEditTextChanged(QString)));
 
         treeView->setDragEnabled(true);
         treeView->setDragDropMode(QAbstractItemView::DragOnly);
@@ -591,7 +592,23 @@ void MainWindow::showTrayIconSongInfoMessage(AudioFile* af)
 }
 
 
+void MainWindow::searchEditTextChanged(const QString &searchString)
+{
+    int index = ui->treeViewTabWidget->currentIndex();
 
+    if ( searchString.isEmpty() )
+    {
+        SongTreeModel *model = new SongTreeModel(filters[index]);
 
+        this->treeViews->at(index)->setModel(model);
+    }
+    else
+    {
+        DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
 
+        SongTreeModel *model = new SongTreeModel(filters[index], results);
 
+        this->treeViews->at(index)->setModel(model);
+        this->treeViews->at(index)->expandAll();
+    }
+}

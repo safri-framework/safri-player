@@ -112,6 +112,8 @@ public slots:
     void setProgressBarText(QString text);
     void showTrayIconSongInfoMessage(AudioFile* af);
 
+    void searchEditTextChanged(const QString &searchString);
+
 };
 
 #endif // MAINWINDOW_H

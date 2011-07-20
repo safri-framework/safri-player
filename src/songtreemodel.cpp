@@ -2,11 +2,10 @@
 #include <QDirIterator>
 
 
-SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, QObject *parent) :
+SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
             QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy)
 {
-
-    rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy);
+    rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy, useDataTable);
 }
 
 
