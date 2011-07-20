@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->horizontalLayout->addWidget(splitter);
 
+    setupTreeViewTabs();
+
     SetupSongTreeModels();
     setupPlaylistModel();
 
@@ -69,13 +71,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    connect(ui->genreView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
-    connect(ui->artistView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
-    connect(ui->albumView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
+    connect(treeViews->at(0), SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
+    connect(treeViews->at(1), SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
+    connect(treeViews->at(2), SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)));
 
-    connect(ui->genreView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
-    connect(ui->artistView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
-    connect(ui->albumView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
+    connect(treeViews->at(0), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
+    connect(treeViews->at(1), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
+    connect(treeViews->at(2), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
     //ui->webView->setUrl(QUrl("test.htm"));
 
     context = new PlayerContext();
@@ -86,16 +88,60 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->webView->setPage(context->getWebPage());
 
     // connect contextmenu signals for treeviews
-    connect(ui->genreView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-    connect(ui->artistView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-    connect(ui->albumView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-    connect(ui->songView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(0), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
 
 
  }
+
+void MainWindow::setupTreeViewTabs()
+{
+    this->treeViewTabs = new QList<QWidget*>();
+    this->searchEdits = new QList<QLineEdit*>();
+    this->treeViews = new QList<QTreeView*>();
+
+    QStringList captions;
+
+    captions << "Genre" << "Interpret" << "Album" << "Song";
+
+    for (int i = 3; i >= 0; i--)
+    {
+        QWidget* currentTabWidget = new QWidget(this->ui->treeViewTabWidget);
+        QLayout* layout = new QVBoxLayout();
+
+        QLineEdit* searchEdit = new QLineEdit();
+        QTreeView* treeView = new QTreeView();
+
+        searchEdit->setPlaceholderText("Suche...");
+
+        treeView->setDragEnabled(true);
+        treeView->setDragDropMode(QAbstractItemView::DragOnly);
+        treeView->setSortingEnabled(false);
+        treeView->setAnimated(true);
+        treeView->setExpandsOnDoubleClick(false);
+        treeView->setHeaderHidden(true);
+        treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+        layout->addWidget(searchEdit);
+        layout->addWidget(treeView);
+
+        currentTabWidget->setLayout(layout);
+
+        treeViewTabs->push_front(currentTabWidget);
+        searchEdits->push_front(searchEdit);
+        treeViews->push_front(treeView);
+
+        this->ui->treeViewTabWidget->insertTab(0, currentTabWidget, captions.at(i));
+    }
+
+    this->ui->treeViewTabWidget->setCurrentIndex(0);
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -136,7 +182,7 @@ void MainWindow::SetupSongTreeModels()
 
     model = new SongTreeModel(filters[0]);
 
-    ui->genreView->setModel(model);
+    treeViews->at(0)->setModel(model);
 
     filters[1]->append(BaseDTO::ARTIST);
     filters[1]->append(BaseDTO::ALBUM);
@@ -144,7 +190,7 @@ void MainWindow::SetupSongTreeModels()
 
     model = new SongTreeModel(filters[1]);
 
-    ui->artistView->setModel(model);
+    treeViews->at(1)->setModel(model);
 
 
     filters[2]->append(BaseDTO::ALBUM);
@@ -152,13 +198,13 @@ void MainWindow::SetupSongTreeModels()
 
     model = new SongTreeModel(filters[2]);
 
-    ui->albumView->setModel(model);
+    treeViews->at(2)->setModel(model);
 
     filters[3]->append(BaseDTO::SONG);
 
     model = new SongTreeModel(filters[3]);
 
-    ui->songView->setModel(model);
+    treeViews->at(3)->setModel(model);
 
 }
 
@@ -377,23 +423,7 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
 
     qDebug() << "huhu";
-    QTreeView *treeView;
-
-    switch (ui->tabWidget->currentIndex())
-    {
-        case 0:
-            treeView = this->ui->genreView;
-            break;
-        case 1:
-            treeView = this->ui->artistView;
-            break;
-        case 2:
-            treeView = this->ui->albumView;
-            break;
-        case 3:
-            treeView = this->ui->songView;
-            break;
-    }
+    QTreeView *treeView = treeViews->at(ui->treeViewTabWidget->currentIndex());
 
     QModelIndex index = treeView->indexAt(pos);
 

@@ -13,7 +13,7 @@
 #include <QIcon>
 #include <QSplitter>
 #include <QSystemTrayIcon>
-
+#include <QTreeView>
 #include<QxtGlobalShortcut>
 
 
@@ -61,6 +61,12 @@ private:
     void insertSongs(QStringList *files);
 
     QSystemTrayIcon *trayIcon;
+
+    void setupTreeViewTabs();
+
+    QList<QWidget*> *treeViewTabs;
+    QList<QTreeView*> *treeViews;
+    QList<QLineEdit*> *searchEdits;
 
 
 private slots:
