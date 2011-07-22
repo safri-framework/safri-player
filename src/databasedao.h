@@ -124,6 +124,7 @@ class DatabaseDAO
         static void loadDataTable();
 
         static DataTable* searchDataTable(QString searchString);
+        static DataTable* getDataTableCopy();
 
     };
 

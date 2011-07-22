@@ -894,7 +894,7 @@ void DatabaseDAO::loadDataTable()
     dataTable = new QList< ColumnData* >();
 
     QSqlQuery query(getDatabase());
-    QString queryString = "SELECT song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id)";
+    QString queryString = "SELECT filename, song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id) ORDER BY song";
 
     query.prepare(queryString);
 
@@ -919,7 +919,7 @@ void DatabaseDAO::loadDataTable()
         row->insert("GENREID", query.value( query.record().indexOf("genreID") ).toString());
         row->insert("YEAR", query.value( query.record().indexOf("year") ).toString());
         row->insert("INDEX", searchIndex);
-
+        row->insert("FILENAME", query.value(query.record().indexOf("filename") ).toString());
         dataTable->append(row);
     }
 }
@@ -1047,9 +1047,22 @@ DatabaseDAO::DataTable* DatabaseDAO::searchDataTable(QString searchString)
     {
         if (dataTable->at(row)->value("INDEX").toLower().contains(searchString.toLower()))
         {
-            results->append(dataTable->at(row));
+            results->append( new ColumnData( *(dataTable->at(row))) );
         }
     }
 
     return results;
+}
+
+DatabaseDAO::DataTable* DatabaseDAO::getDataTableCopy()
+{
+    DataTable* tableCopy = new DataTable();
+
+    int length = dataTable->length();
+    for (int row = 0; row < length; row++)
+    {
+        tableCopy->append( new ColumnData( *(dataTable->at(row))) );
+    }
+
+    return tableCopy;
 }

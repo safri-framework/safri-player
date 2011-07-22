@@ -52,7 +52,8 @@ HEADERS += \
     databasesettingswidget.h \
     dtomapentry.h \
     databasecleaner.h \
-    dtochanger.h
+    dtochanger.h \
+    datatablemodel.h
 
 SOURCES += \
     taginserter.cpp \
@@ -75,7 +76,8 @@ SOURCES += \
     databasesettingswidget.cpp \
     dtomapentry.cpp \
     databasecleaner.cpp \
-    dtochanger.cpp
+    dtochanger.cpp \
+    datatablemodel.cpp
 
 FORMS += \
     playerwidget.ui \

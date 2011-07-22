@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QMdiSubWindow>
 
+#include "datatablemodel.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -93,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
-
+    ui->playlistView->setHeaderHidden(false);
 
  }
 
@@ -120,11 +121,22 @@ void MainWindow::setupTreeViewTabs()
 
         treeView->setDragEnabled(true);
         treeView->setDragDropMode(QAbstractItemView::DragOnly);
-        treeView->setSortingEnabled(false);
         treeView->setAnimated(true);
-        treeView->setExpandsOnDoubleClick(false);
-        treeView->setHeaderHidden(true);
         treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+        treeView->setExpandsOnDoubleClick(false);
+
+        if (i != 3)
+        {
+            treeView->setSortingEnabled(false);
+            treeView->setHeaderHidden(true);
+        }
+        else
+        {
+            // different settings for song - view as list
+            treeView->setHeaderHidden(false);
+            treeView->setRootIsDecorated(false);
+        }
+
 
         layout->addWidget(searchEdit);
         layout->addWidget(treeView);
@@ -199,11 +211,16 @@ void MainWindow::SetupSongTreeModels()
 
     treeViews->at(2)->setModel(model);
 
+    /*
     filters[3]->append(BaseDTO::SONG);
 
     model = new SongTreeModel(filters[3]);
 
     treeViews->at(3)->setModel(model);
+    */
+
+    DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
+    treeViews->at(3)->setModel(tableModel);
 
 }
 
@@ -596,19 +613,38 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
 {
     int index = ui->treeViewTabWidget->currentIndex();
 
-    if ( searchString.isEmpty() )
+    if ( index == 3 )
     {
-        SongTreeModel *model = new SongTreeModel(filters[index]);
+        // different handling of song table
+        if ( searchString.isEmpty() )
+        {
+            DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
+            this->treeViews->at(index)->setModel(tableModel);
+        }
+        else
+        {
+            DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
+            DataTableModel* tableModel = new DataTableModel(results);
+            this->treeViews->at(index)->setModel(tableModel);
+        }
 
-        this->treeViews->at(index)->setModel(model);
     }
     else
     {
-        DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
+        if ( searchString.isEmpty() )
+        {
+            SongTreeModel *model = new SongTreeModel(filters[index]);
 
-        SongTreeModel *model = new SongTreeModel(filters[index], results);
+            this->treeViews->at(index)->setModel(model);
+        }
+        else
+        {
+            DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
 
-        this->treeViews->at(index)->setModel(model);
-        this->treeViews->at(index)->expandAll();
+            SongTreeModel *model = new SongTreeModel(filters[index], results);
+
+            this->treeViews->at(index)->setModel(model);
+            this->treeViews->at(index)->expandAll();
+        }
     }
 }
