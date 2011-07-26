@@ -125,7 +125,7 @@ void Playlist::moveSong(int from, int to)
             setCurrentPlayingSong(actualPlayingSong+1);
 
         }
-        else if(from < actualPlayingSong && to > actualPlayingSong)
+        else if(from < actualPlayingSong && to >= actualPlayingSong)
         {
             setCurrentPlayingSong(actualPlayingSong-1);
 
