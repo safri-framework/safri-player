@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(0), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
     connect(treeViews->at(1), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
     connect(treeViews->at(2), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
+    connect(treeViews->at(3), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songList_doubleClicked(QModelIndex)));
+
+
     //ui->webView->setUrl(QUrl("test.htm"));
 
     context = new PlayerContext();
@@ -90,13 +93,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(0), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-    connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+  //  connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
     ui->playlistView->setHeaderHidden(false);
 
  }
+
+
+
+
 
 void MainWindow::setupTreeViewTabs()
 {
@@ -120,7 +127,8 @@ void MainWindow::setupTreeViewTabs()
         connect(searchEdit, SIGNAL(textChanged(QString)), this, SLOT(searchEditTextChanged(QString)));
 
         treeView->setDragEnabled(true);
-        treeView->setDragDropMode(QAbstractItemView::DragOnly);
+
+        treeView->setDragDropMode(QAbstractItemView::DragDrop);
         treeView->setAnimated(true);
         treeView->setContextMenuPolicy(Qt::CustomContextMenu);
         treeView->setExpandsOnDoubleClick(false);
@@ -135,6 +143,8 @@ void MainWindow::setupTreeViewTabs()
             // different settings for song - view as list
             treeView->setHeaderHidden(false);
             treeView->setRootIsDecorated(false);
+            treeView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
         }
 
 
@@ -192,6 +202,10 @@ void MainWindow::SetupSongTreeModels()
 
 
     model = new SongTreeModel(filters[0]);
+    connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
+
+
+
 
     treeViews->at(0)->setModel(model);
 
@@ -200,7 +214,7 @@ void MainWindow::SetupSongTreeModels()
     filters[1]->append(BaseDTO::SONG);
 
     model = new SongTreeModel(filters[1]);
-
+connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
     treeViews->at(1)->setModel(model);
 
 
@@ -208,7 +222,7 @@ void MainWindow::SetupSongTreeModels()
     filters[2]->append(BaseDTO::SONG);
 
     model = new SongTreeModel(filters[2]);
-
+connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
     treeViews->at(2)->setModel(model);
 
     /*
@@ -319,6 +333,9 @@ void MainWindow::updateProgressBar(int value)
 
 void MainWindow::refreshTreeView()
 {
+
+
+    DatabaseDAO::loadDataTable();
     SetupSongTreeModels();
 
 }
@@ -538,6 +555,7 @@ void MainWindow::songTree_doubleClicked(QModelIndex index)
         BaseDTO *dto = static_cast<BaseDTO*>( index.internalPointer() );
         QList<AudioFile*> *songCollection;
 
+
             songCollection = DatabaseDAO::getAudioFilesByBaseDTO(dto);
 
             Playlist *newPlaylist = new Playlist(songCollection);
@@ -553,6 +571,24 @@ void MainWindow::songTree_doubleClicked(QModelIndex index)
 
 }
 
+void MainWindow::songList_doubleClicked(QModelIndex index)
+{
+
+    int row = index.row();
+    QList<AudioFile*> *songCollection = new QList<AudioFile*>;
+    DataTableModel* model = static_cast<DataTableModel*>(treeViews->at(3)->model());
+    QString path = model->getDataTable()->at(row)->value("FILENAME");
+    songCollection->append(new AudioFile(path));
+    qDebug()<<songCollection->size();
+    Playlist *newPlaylist = new Playlist(songCollection);
+    this->ui->playerWidget->setPlaylist(newPlaylist);
+    this->ui->playerWidget->playSongAt(0);
+    this->playlistModel->setPlaylist(newPlaylist);
+
+
+}
+
+
 
 bool view = true;
 QMainWindow* testwindow = 0;
@@ -564,12 +600,7 @@ void MainWindow::on_toggleView_clicked()
     {
 
         testwindow = new QMainWindow(0,Qt::Window);
-        //testwindow = new QMdiSubWindow(0, Qt::Window);
-
         testwindow->setCentralWidget(ui->playerWidget);
-
-        //testwindow->setWidget(ui->playerWidget);
-
         testwindow->show();
         connect(testwindow,SIGNAL(destroyed()),this, SLOT(on_toggleView_clicked()));
         view = false;
@@ -577,10 +608,7 @@ void MainWindow::on_toggleView_clicked()
     }
     else
     {
-
-
        testwindow->close();
-
        testwindow = 0;
        ui->widget_2->layout()->addWidget(ui->playerWidget);
        view = true;

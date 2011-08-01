@@ -44,15 +44,18 @@ class SongTreeModel : public QAbstractItemModel
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
         QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
         QModelIndex parent(const QModelIndex& index) const;
-
+        QStringList mimeTypes() const;
         Qt::ItemFlags flags(const QModelIndex &index) const;
         QMimeData *mimeData(const QModelIndexList &indexes) const;
-        void dragEnterEvent(QDragEnterEvent *event);
+        //void dragEnterEvent(QDragEnterEvent *event);
         //void dragLeaveEvent(QDragLeaveEvent *event);
-        void dropEvent(QDropEvent *event);
+        // void dropEvent(QDropEvent *event);
+        virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+        virtual Qt::DropActions supportedDropActions() const;
 
+signals:
 
-
+        void songsToInsertInDatabase(QStringList* filenames);
 };
 
 #endif // SONGTREEMODEL_H

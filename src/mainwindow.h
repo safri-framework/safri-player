@@ -58,7 +58,7 @@ private:
     Playlist* lastPlaylist;
 
     PlayerContext *context;
-    void insertSongs(QStringList *files);
+
 
     QSystemTrayIcon *trayIcon;
 
@@ -74,6 +74,7 @@ private slots:
 
 
 
+    void insertSongs(QStringList *files);
 
     void on_toggleView_clicked();
     void on_actionBereinigen_triggered();
@@ -91,6 +92,7 @@ private slots:
 
     void songTree_clicked(QModelIndex index);
     void songTree_doubleClicked(QModelIndex index);
+    void songList_doubleClicked(QModelIndex index);
 
     void treeView_customContextMenuRequested(QPoint pos);
 

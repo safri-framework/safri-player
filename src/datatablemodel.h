@@ -20,6 +20,8 @@ class DataTableModel : public QAbstractTableModel
         QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
         Qt::ItemFlags flags(const QModelIndex &index) const;
+        DatabaseDAO::DataTable* getDataTable();
+
     signals:
 
     public slots:

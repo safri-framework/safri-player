@@ -8,6 +8,7 @@ DataTableModel::DataTableModel(DatabaseDAO::DataTable* dataTable, QObject *paren
     QAbstractTableModel(parent), dataTable(dataTable)
 {
 
+
 }
 
 
@@ -125,6 +126,17 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, in
 
     return QVariant();
 }
+
+DatabaseDAO::DataTable* DataTableModel::getDataTable()
+{
+
+    return dataTable;
+
+}
+
+
+
+
 
 Qt::ItemFlags DataTableModel::flags(const QModelIndex &index) const
 {

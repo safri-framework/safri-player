@@ -183,11 +183,11 @@ Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
 
     if (index.isValid())
     {
-        return Qt::ItemIsDragEnabled | defaultFlags;
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     }
     else
     {
-        return defaultFlags;
+        return Qt::ItemIsDropEnabled | defaultFlags;
     }
 }
 
@@ -213,67 +213,86 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 }
 
 
-
-void SongTreeModel::dragEnterEvent(QDragEnterEvent *event)
- {
-
-    event->acceptProposedAction();
-
- }
-
-
-
-void SongTreeModel::dropEvent(QDropEvent *event)
+QStringList SongTreeModel::mimeTypes() const
 {
-    const QMimeData *mimeData = event->mimeData();
+    QStringList types = QAbstractItemModel::mimeTypes();
+    types << "text/uri-list";
 
-    if (mimeData->hasUrls())
-    {
-
-        QList<QUrl> urllist = mimeData->urls();
-        QStringList* files = new QStringList();
+    return types;
+}
 
 
-        foreach (QUrl i, urllist)
+
+
+Qt::DropActions SongTreeModel::supportedDropActions() const
+{
+    return Qt::CopyAction ;
+}
+
+
+
+bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    bool dropped = false;
+        if (data->hasFormat("text/uri-list"))
         {
 
-            if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+            QList<QUrl> urls = data->urls();
+            QStringList* filenames = new QStringList();
+
+
+
+
+            foreach (QUrl i, urls)
             {
 
-                files->append(QFileInfo(i.toLocalFile()).absoluteFilePath());
-
-            }
-
-            else if(QFileInfo(i.toLocalFile()).isDir())
-            {
+                if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+                {
+                    filenames->append(i.toLocalFile());
 
 
-                if (!i.isEmpty())
+                }
+
+                else
                 {
 
-                    QDir dir(i.toLocalFile());
-                    QStringList filters;
-                    filters << "*.mp3" << "*.wma" << "*.ogg";
-                    dir.setNameFilters(filters);
 
-                    QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
-
-
-                    while (lukeFileWalker.hasNext())
+                    if (!i.isEmpty())
                     {
-                        lukeFileWalker.next();
-                        files->append(lukeFileWalker.fileInfo().absoluteFilePath());
+
+                        QDir dir(i.toLocalFile());
+                        QStringList filters;
+                        filters << "*.mp3" << "*.wma" << "*.ogg";
+                        dir.setNameFilters(filters);
+
+                        QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+                        while (lukeFileWalker.hasNext())
+                        {
+                            lukeFileWalker.next();
+                            filenames->append(lukeFileWalker.fileInfo().absoluteFilePath());
+
+                        }
+
+
                     }
-
-
-
                 }
-                if (!files->isEmpty())
-                {
-                qDebug()<<"einügen";
-                }
+
             }
+
+
+
+            if (filenames->size() > 0)
+            {
+
+                Q_EMIT songsToInsertInDatabase(filenames);
+
+            }
+
+            dropped = true;
+
 
         }
     }
-}
+

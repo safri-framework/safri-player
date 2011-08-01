@@ -41,6 +41,7 @@ class PlaylistModel : public QAbstractTableModel
         void taggerStarted();
         void taggerFinished();
 
+
     public slots:
 
         void positionOfActuallyPlayingSongChanged(int from, int to);
