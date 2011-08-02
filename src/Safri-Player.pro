@@ -54,7 +54,7 @@ HEADERS += \
     databasecleaner.h \
     dtochanger.h \
     datatablemodel.h \
-    showfolderinfilesystemhandler.h
+    showfolderinfilesystemhandler.h \
     settingsmodule.h \
     settingsmanager.h
 
@@ -81,7 +81,7 @@ SOURCES += \
     databasecleaner.cpp \
     dtochanger.cpp \
     datatablemodel.cpp \
-    showfolderinfilesystemhandler.cpp
+    showfolderinfilesystemhandler.cpp \
     settingsmodule.cpp \
     settingsmanager.cpp
 
