@@ -48,7 +48,6 @@ HEADERS += \
     aboutdialog.h \
     playercontext.h \
     coversettingswidget.h \
-    settingsdialog.h \
     databasesettingswidget.h \
     dtomapentry.h \
     databasecleaner.h \
@@ -57,7 +56,11 @@ HEADERS += \
     showfolderinfilesystemhandler.h \
     settingsmodule.h \
     settingsmanager.h \
-    selectedfilesystemindexactionhandler.h
+    selectedfilesystemindexactionhandler.h \
+    settingsmodulewidget.h \
+    settingsmanagerdialog.h \
+    coversmw.h \
+    viewsmw.h
 
 SOURCES += \
     taginserter.cpp \
@@ -76,7 +79,6 @@ SOURCES += \
     aboutdialog.cpp \
     playercontext.cpp \
     coversettingswidget.cpp \
-    settingsdialog.cpp \
     databasesettingswidget.cpp \
     dtomapentry.cpp \
     databasecleaner.cpp \
@@ -85,12 +87,18 @@ SOURCES += \
     showfolderinfilesystemhandler.cpp \
     settingsmodule.cpp \
     settingsmanager.cpp \
-    selectedfilesystemindexactionhandler.cpp
+    selectedfilesystemindexactionhandler.cpp \
+    settingsmodulewidget.cpp \
+    settingsmanagerdialog.cpp \
+    coversmw.cpp \
+    viewsmw.cpp
 
 FORMS += \
     playerwidget.ui \
     mainwindow.ui \
     aboutdialog.ui \
     coversettingswidget.ui \
-    settingsdialog.ui \
-    databasesettingswidget.ui
+    databasesettingswidget.ui \
+    settingsmanagerdialog.ui \
+    coversmw.ui \
+    viewsmw.ui

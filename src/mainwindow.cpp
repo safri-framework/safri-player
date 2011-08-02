@@ -12,6 +12,7 @@
 #include "settingsmanager.h"
 #include "settingsmodule.h"
 #include "selectedfilesystemindexactionhandler.h"
+#include "settingsmanagerdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -105,6 +106,8 @@ MainWindow::MainWindow(QWidget *parent) :
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
     ui->playlistView->setHeaderHidden(false);
+
+    connect(SettingsManager::getInstance()->getModule("core.view"), SIGNAL(settingsChanged()), this, SLOT(SetupSongTreeModels()));
 
  }
 
@@ -548,11 +551,16 @@ void MainWindow::on_action_about_SaFri_Player_triggered()
 
 void MainWindow::on_action_Open_Settings_triggered()
 {
-    SettingsDialog* settings = new SettingsDialog(this);
+    SettingsManagerDialog* settingsDialog = new SettingsManagerDialog(this);
 
     settings->setStyleSheet("background-image:url();");
 
-    settings->show();
+    if (settingsDialog->exec() == QDialog::Accepted)
+    {
+        // save changed settings to database
+        settingsDialog->saveSettings();
+    }
+
 }
 
 void MainWindow::on_actionBereinigen_triggered()

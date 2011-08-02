@@ -26,8 +26,9 @@
 #include "m3utranslator.h"
 #include "aboutdialog.h"
 #include "playercontext.h"
-#include "settingsdialog.h"
+
 #include <QSortFilterProxyModel>
+
 namespace Ui {
     class MainWindow;
 }
@@ -52,7 +53,7 @@ QSortFilterProxyModel *proxyModel;
 
     PlaylistModel *playlistModel;
 
-    void SetupSongTreeModels();
+
     void setupPlaylistModel();
 
     Playlist* lastPlaylist;
@@ -72,7 +73,7 @@ QSortFilterProxyModel *proxyModel;
 private slots:
 
 
-
+    void SetupSongTreeModels();
 
     void insertSongs(QStringList *files);
 

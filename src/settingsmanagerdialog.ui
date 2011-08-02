@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SettingsDialog</class>
- <widget class="QDialog" name="SettingsDialog">
+ <class>SettingsManagerDialog</class>
+ <widget class="QDialog" name="SettingsManagerDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>488</height>
+    <width>513</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="autoFillBackground">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="25,75">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="25,75">
      <item>
-      <widget class="QListWidget" name="contentsWidget">
+      <widget class="QListWidget" name="moduleIconListWidget">
        <property name="palette">
         <palette>
          <active>
@@ -64,21 +61,13 @@
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
        </property>
-       <property name="viewMode">
-        <enum>QListView::IconMode</enum>
-       </property>
       </widget>
      </item>
      <item>
-      <widget class="QStackedWidget" name="pagesWidget">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
+      <widget class="QStackedWidget" name="moduleSettingsWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>-1</number>
        </property>
-       <widget class="CoverSettingsWidget" name="page"/>
-       <widget class="DatabaseSettingsWidget" name="page_2"/>
       </widget>
      </item>
     </layout>
@@ -95,26 +84,12 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CoverSettingsWidget</class>
-   <extends>QWidget</extends>
-   <header>coversettingswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DatabaseSettingsWidget</class>
-   <extends>QWidget</extends>
-   <header>databasesettingswidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SettingsDialog</receiver>
+   <receiver>SettingsManagerDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -130,7 +105,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SettingsDialog</receiver>
+   <receiver>SettingsManagerDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
