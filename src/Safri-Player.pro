@@ -55,6 +55,8 @@ HEADERS += \
     dtochanger.h \
     datatablemodel.h \
     showfolderinfilesystemhandler.h
+    settingsmodule.h \
+    settingsmanager.h
 
 SOURCES += \
     taginserter.cpp \
@@ -80,6 +82,8 @@ SOURCES += \
     dtochanger.cpp \
     datatablemodel.cpp \
     showfolderinfilesystemhandler.cpp
+    settingsmodule.cpp \
+    settingsmanager.cpp
 
 FORMS += \
     playerwidget.ui \

@@ -100,14 +100,11 @@ class DatabaseDAO
 
         static BaseDTO* getDiscographyFromArtist(QString artist);
 
-        static void loadAlbumCoverFilePatterns();
+        static void refreshAlbumCoverFilePatterns();
         static QString findAlbumCover(AudioFile &file);
 
         static QString getAlbumCover(int id);
 
-        static QStringList getSetting(QString setting);
-        static void deleteSetting(QString setting);
-        static void insertSetting(QString setting, QString value);
         static void getSongDTO(BaseDTO* dto, QList<BaseDTO*>*);
         static int deleteSongByID(QList<int>* id);
 
@@ -125,6 +122,10 @@ class DatabaseDAO
 
         static DataTable* searchDataTable(QString searchString);
         static DataTable* getDataTableCopy();
+
+        static bool removeModuleSettings(QString modulename);
+        static bool insertModuleSettings(QMap<QString, QVariant> settings);
+        static QMap<QString, QVariant> getModuleSettings(QString modulename);
 
     };
 

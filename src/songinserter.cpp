@@ -9,7 +9,7 @@ SongInserter::SongInserter(QStringList *sFileList, QObject *parent) :
 
 void SongInserter::run()
 {
-    DatabaseDAO::loadAlbumCoverFilePatterns();
+    DatabaseDAO::refreshAlbumCoverFilePatterns();
 
     QTime timer;
 

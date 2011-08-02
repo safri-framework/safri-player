@@ -1,4 +1,6 @@
- #include "databasedao.h"
+#include "databasedao.h"
+#include "settingsmanager.h"
+#include "settingsmodule.h"
 
 QSqlDatabase DatabaseDAO::database;
 QStringList DatabaseDAO::albumCoverFilePatterns;
@@ -628,9 +630,10 @@ BaseDTO* DatabaseDAO::getDiscographyFromArtist(QString artist)
     return artistDTO;
 }
 
-void DatabaseDAO::loadAlbumCoverFilePatterns()
+void DatabaseDAO::refreshAlbumCoverFilePatterns()
 {
-    albumCoverFilePatterns = getSetting("ALBUM_COVER_FILENAME");
+    SettingsModule* settings = SettingsManager::getInstance()->getModule("core.albumCover");
+    albumCoverFilePatterns = settings->getSetting("filenamePatterns").toString().split(";", QString::SkipEmptyParts);
 }
 
 
@@ -683,59 +686,6 @@ QString DatabaseDAO::getAlbumCover(int album_id)
 
 
     return fileName;
-}
-
-QStringList DatabaseDAO::getSetting(QString setting)
-{
-    QString queryStmt = "SELECT VALUE FROM Settings WHERE Setting = :SETTING";
-    QStringList values;
-    QSqlQuery query(getDatabase());
-
-    query.prepare(queryStmt);
-    query.bindValue(":SETTING", setting);
-
-    if ( !query.exec())
-    {
-        qDebug() << "ERROR: " << queryStmt;
-    }
-
-    while ( query.next() )
-    {
-        values.append( query.value(0).toString() );
-    }
-
-    return values;
-}
-
-void DatabaseDAO::deleteSetting(QString setting)
-{
-    QString queryStmt = "DELETE FROM Settings WHERE Setting = :SETTING";
-    QSqlQuery query(getDatabase());
-
-    query.prepare(queryStmt);
-    query.bindValue(":SETTING", setting);
-
-    if ( !query.exec())
-    {
-        qDebug() << "ERROR: " << queryStmt;
-    }
-}
-
-void DatabaseDAO::insertSetting(QString setting, QString value)
-{
-    QSqlQuery query(getDatabase());
-
-    QString queryString = "INSERT INTO Settings (Setting, Value) VALUES ( :SETTING, :VALUE)";
-
-    query.prepare(queryString);
-    query.bindValue(":SETTING", setting);
-    query.bindValue(":VALUE", value);
-
-    if ( !query.exec())
-    {
-        qDebug() << "ERROR: " << queryString;
-    }
-
 }
 
 QMap<QUrl, int> *DatabaseDAO::getAllSongsAsUrl()
@@ -1065,4 +1015,71 @@ DatabaseDAO::DataTable* DatabaseDAO::getDataTableCopy()
     }
 
     return tableCopy;
+}
+
+
+bool DatabaseDAO::removeModuleSettings(QString modulename)
+{
+    QString deleteStatement = "DELETE FROM settings WHERE Setting LIKE :MODULENAME";
+    QSqlQuery query( getDatabase() );
+
+    query.prepare(deleteStatement);
+    query.bindValue(":MODULENAME", modulename + "%");
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << deleteStatement;
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseDAO::insertModuleSettings(QMap<QString, QVariant> settings)
+{
+    QString insertStatement = "INSERT INTO settings (setting, value) VALUES (?, ?)";
+    QSqlQuery query( getDatabase() );
+
+    QMapIterator<QString, QVariant> i(settings);
+    bool insertedAll = true;
+
+    while ( i.hasNext() )
+    {
+        i.next();
+        query.prepare(insertStatement);
+
+        query.bindValue(0, i.key() );
+        query.bindValue(1, i.value().toString() );
+
+        if ( !query.exec())
+        {
+            qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+           insertedAll = false;
+        }
+    }
+
+    return insertedAll;
+}
+
+QMap<QString, QVariant> DatabaseDAO::getModuleSettings(QString modulename)
+{
+    QString queryStatement = "SELECT setting, value FROM Settings WHERE Setting LIKE :SETTING";
+    QSqlQuery query( getDatabase() );
+    QMap<QString, QVariant> moduleSettings;
+
+
+    query.prepare(queryStatement);
+    query.bindValue(":SETTING", modulename + "%");
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+    }
+
+    while ( query.next() )
+    {
+        moduleSettings.insertMulti( query.value(0).toString(), query.value(1) );
+    }
+
+    return moduleSettings;
 }

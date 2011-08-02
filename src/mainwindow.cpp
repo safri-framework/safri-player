@@ -9,6 +9,8 @@
 #include <QSortFilterProxyModel>
 #include "datatablemodel.h"
 #include "showfolderinfilesystemhandler.h"
+#include "settingsmanager.h"
+#include "settingsmodule.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -180,69 +182,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::SetupSongTreeModels()
 {
-    SongTreeModel *model;
-    filters[0] = new QList<BaseDTO::DTO_TYPE>();
-    filters[1] = new QList<BaseDTO::DTO_TYPE>();
-    filters[2] = new QList<BaseDTO::DTO_TYPE>();
-    filters[3] = new QList<BaseDTO::DTO_TYPE>();
+    SettingsModule* settings = SettingsManager::getInstance()->getModule("core.view");
+    int treeviewCount = settings->getSetting("treeviewCount").toInt();
 
-    QString hierarchySettings = DatabaseDAO::getSetting("TREEVIEW1_HIERARCHY").at(0);
-    QStringList tree1hierarchy = hierarchySettings.split("#", QString::SkipEmptyParts);
-
-
-
-    foreach (QString dtotype, tree1hierarchy)
+    for (int treeviewNumber = 0; treeviewNumber < treeviewCount; treeviewNumber++)
     {
-        filters[0]->append(BaseDTO::stringToType(dtotype));
+        SongTreeModel *model;
+        filters[treeviewNumber] = new QList<BaseDTO::DTO_TYPE>();
+
+        QString hierarchySettings = settings->getSetting("treeview" + QString::number(treeviewNumber+1) + "Hierarchy").toString();
+        QStringList treeHierarchy = hierarchySettings.split(";", QString::SkipEmptyParts);
+
+        foreach (QString dtotype, treeHierarchy)
+        {
+            filters[treeviewNumber]->append(BaseDTO::stringToType(dtotype));
+        }
+
+        model = new SongTreeModel(filters[treeviewNumber]);
+        connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
+
+        treeViews->at(treeviewNumber)->setModel(model);
     }
-
-
-
-
-    /*
-    filters[0]->append(BaseDTO::GENRE);
-    filters[0]->append(BaseDTO::DECADE);
-    filters[0]->append(BaseDTO::ARTIST);
-    filters[0]->append(BaseDTO::ALBUM);
-    filters[0]->append(BaseDTO::SONG);
-    */
-
-
-    model = new SongTreeModel(filters[0]);
-    connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-
-
-
-
-    treeViews->at(0)->setModel(model);
-
-    filters[1]->append(BaseDTO::ARTIST);
-    filters[1]->append(BaseDTO::ALBUM);
-    filters[1]->append(BaseDTO::SONG);
-
-    model = new SongTreeModel(filters[1]);
-connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-    treeViews->at(1)->setModel(model);
-
-
-    filters[2]->append(BaseDTO::ALBUM);
-    filters[2]->append(BaseDTO::SONG);
-
-    model = new SongTreeModel(filters[2]);
-connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-    treeViews->at(2)->setModel(model);
-
-    /*
-    filters[3]->append(BaseDTO::SONG);
-
-    model = new SongTreeModel(filters[3]);
-
-    treeViews->at(3)->setModel(model);
-    */
 
     DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
     treeViews->at(3)->setModel(tableModel);
-
 
 
 

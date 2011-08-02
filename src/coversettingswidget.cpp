@@ -8,7 +8,7 @@ CoverSettingsWidget::CoverSettingsWidget(QWidget *parent) :
     ui->setupUi(this);
 
 
-    QStringList values = DatabaseDAO::getSetting("ALBUM_COVER_FILENAME");
+    QStringList values;
     filenamePatternModel = new QStringListModel(values);
 
     ui->filenamePatterns->setModel(filenamePatternModel);
