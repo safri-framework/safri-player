@@ -5,8 +5,10 @@
 #include "dtochanger.h"
 #include <QStringList>
 #include <QMdiSubWindow>
-
+#include <QFileSystemModel>
+#include <QSortFilterProxyModel>
 #include "datatablemodel.h"
+#include "showfolderinfilesystemhandler.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -93,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(0), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-  //  connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+  //connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
@@ -113,9 +115,9 @@ void MainWindow::setupTreeViewTabs()
 
     QStringList captions;
 
-    captions << "Genre" << "Interpret" << "Album" << "Song";
+    captions << "Genre" << "Interpret" << "Album" << "Song" << "FileSystem";
 
-    for (int i = 3; i >= 0; i--)
+    for (int i = 4; i >= 0; i--)
     {
         QWidget* currentTabWidget = new QWidget(this->ui->treeViewTabWidget);
         QLayout* layout = new QVBoxLayout();
@@ -123,7 +125,7 @@ void MainWindow::setupTreeViewTabs()
         QLineEdit* searchEdit = new QLineEdit();
         QTreeView* treeView = new QTreeView();
 
-        searchEdit->setPlaceholderText("Suche...");
+        searchEdit->setPlaceholderText("Suche");
         connect(searchEdit, SIGNAL(textChanged(QString)), this, SLOT(searchEditTextChanged(QString)));
 
         treeView->setDragEnabled(true);
@@ -133,19 +135,24 @@ void MainWindow::setupTreeViewTabs()
         treeView->setContextMenuPolicy(Qt::CustomContextMenu);
         treeView->setExpandsOnDoubleClick(false);
 
-        if (i != 3)
+        if (i != 3 )
         {
             treeView->setSortingEnabled(false);
-            treeView->setHeaderHidden(true);
+                treeView->setHeaderHidden(true);
         }
         else
         {
             // different settings for song - view as list
-            treeView->setHeaderHidden(false);
+
+
             treeView->setRootIsDecorated(false);
+            treeView->setHeaderHidden(false);
             treeView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
         }
+
+
+
 
 
         layout->addWidget(searchEdit);
@@ -235,6 +242,39 @@ connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertS
 
     DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
     treeViews->at(3)->setModel(tableModel);
+
+
+
+
+
+
+
+
+
+
+QFileSystemModel *fileSystemModel = new QFileSystemModel(this);
+//proxyModel = new QSortFilterProxyModel(this);
+// Set the Root Path
+QModelIndex rootModelIndex = fileSystemModel->setRootPath(fileSystemModel->myComputer().toString());
+
+
+
+
+// Assign the Model to the Proxy and the Proxy to the View
+
+fileSystemModel->setReadOnly(true);
+//proxyModel->setSourceModel(fileSystemModel);
+treeViews->at(4)->setModel(fileSystemModel);
+// Fix the TreeView on the Root Path of the Model
+
+//treeViews->at(4)->setCurrentIndex(rootModelIndex);
+treeViews->at(4)->setColumnHidden(1, true);
+treeViews->at(4)->setColumnHidden(2, true);
+treeViews->at(4)->setColumnHidden(3, true);
+treeViews->at(4)->adjustSize();
+
+
+
 
 }
 
@@ -455,7 +495,7 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
     QMenu* menu = new QMenu();
 
 
-    qDebug() << "huhu";
+
     QTreeView *treeView = treeViews->at(ui->treeViewTabWidget->currentIndex());
 
     QModelIndex index = treeView->indexAt(pos);
@@ -464,6 +504,9 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
     // make a copy of the dto, to separte it from the tree as a single DTO object
     BaseDTO* dto_copy = new BaseDTO(dto->getID(), dto->getText(), dto->getType());
+
+
+
 
     DTOChanger *changer = new DTOChanger(dto_copy, index);
 
@@ -475,8 +518,17 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
             menu->addAction("Albumcover ändern", changer, SLOT(changeAlbumCover()));
             menu->exec(QCursor::pos());
-
             break;
+        case BaseDTO::SONG:
+            QList<AudioFile*>* afList = DatabaseDAO::getAudioFilesByBaseDTO(dto_copy);
+            QString path = afList->at(0)->fileName();
+            QUrl* url = new QUrl(path);
+            ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(url, this);
+
+            menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
+
+
+            menu->exec(QCursor::pos());
     }
 
 
@@ -675,4 +727,23 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             this->treeViews->at(index)->expandAll();
         }
     }
+}
+
+
+
+void MainWindow::showFolderInFileSystem(QUrl* file)
+{
+
+    QFileSystemModel* model = static_cast<QFileSystemModel*>(treeViews->at(4)->model());
+
+    qDebug()<<"Debug2"<<file->toString();
+    qDebug()<<model;
+
+    QModelIndex index = model->index(file->toString());
+    qDebug()<<index;
+    treeViews->at(4)->setCurrentIndex(index);
+    treeViews->at(4)->expand(index);
+    this->ui->treeViewTabWidget->setCurrentIndex(4);
+
+
 }

@@ -27,7 +27,7 @@
 #include "aboutdialog.h"
 #include "playercontext.h"
 #include "settingsdialog.h"
-
+#include <QSortFilterProxyModel>
 namespace Ui {
     class MainWindow;
 }
@@ -43,7 +43,7 @@ public:
 
 
 private:
-
+QSortFilterProxyModel *proxyModel;
     bool click;
     Ui::MainWindow *ui;
 
@@ -115,7 +115,7 @@ public slots:
     void showTrayIconSongInfoMessage(AudioFile* af);
 
     void searchEditTextChanged(const QString &searchString);
-
+    void showFolderInFileSystem(QUrl* file);
 };
 
 #endif // MAINWINDOW_H

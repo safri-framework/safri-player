@@ -53,7 +53,8 @@ HEADERS += \
     dtomapentry.h \
     databasecleaner.h \
     dtochanger.h \
-    datatablemodel.h
+    datatablemodel.h \
+    showfolderinfilesystemhandler.h
 
 SOURCES += \
     taginserter.cpp \
@@ -77,7 +78,8 @@ SOURCES += \
     dtomapentry.cpp \
     databasecleaner.cpp \
     dtochanger.cpp \
-    datatablemodel.cpp
+    datatablemodel.cpp \
+    showfolderinfilesystemhandler.cpp
 
 FORMS += \
     playerwidget.ui \
