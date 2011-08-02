@@ -58,7 +58,7 @@ QSortFilterProxyModel *proxyModel;
     Playlist* lastPlaylist;
 
     PlayerContext *context;
-    QList<AudioFile*>* getSelectedAudioFiles();
+    //QList<AudioFile*>* getSelectedAudioFiles();
 
     QSystemTrayIcon *trayIcon;
 
@@ -82,10 +82,12 @@ private slots:
     void on_action_about_SaFri_Player_triggered();
     void on_actionRestorePlaylist_triggered();
     void on_playlistView_customContextMenuRequested(QPoint pos);
+    void on_fileSystemView_customContextMenuRequested(QPoint pos);
     void on_storedPlaylistView_clicked(QModelIndex index);
     void on_clearPlaylistButton_clicked();
     void on_actualPlayingPlaylistButton_clicked();
     void on_playlistView_doubleClicked(QModelIndex index);
+
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
 
@@ -94,7 +96,7 @@ private slots:
     void songTree_clicked(QModelIndex index);
     void songTree_doubleClicked(QModelIndex index);
     void songList_doubleClicked(QModelIndex index);
-
+    void fileSystem_doubleClicked(QModelIndex index);
     void treeView_customContextMenuRequested(QPoint pos);
 
 
@@ -108,8 +110,11 @@ private slots:
     void DisablePlaylistViewSorting();
     void EnablePlaylistViewSorting();
 
+
+
 public slots:
 
+    void addPathRecursiveToDatabase(QString path);
     void updateProgressBar(int value);
     void setProgressBarRange(int min, int max);
     void setProgressBarText(QString text);

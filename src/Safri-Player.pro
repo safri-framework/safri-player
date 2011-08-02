@@ -56,7 +56,8 @@ HEADERS += \
     datatablemodel.h \
     showfolderinfilesystemhandler.h \
     settingsmodule.h \
-    settingsmanager.h
+    settingsmanager.h \
+    selectedfilesystemindexactionhandler.h
 
 SOURCES += \
     taginserter.cpp \
@@ -83,7 +84,8 @@ SOURCES += \
     datatablemodel.cpp \
     showfolderinfilesystemhandler.cpp \
     settingsmodule.cpp \
-    settingsmanager.cpp
+    settingsmanager.cpp \
+    selectedfilesystemindexactionhandler.cpp
 
 FORMS += \
     playerwidget.ui \

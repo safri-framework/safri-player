@@ -11,6 +11,7 @@
 #include "showfolderinfilesystemhandler.h"
 #include "settingsmanager.h"
 #include "settingsmodule.h"
+#include "selectedfilesystemindexactionhandler.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -82,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(1), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
     connect(treeViews->at(2), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songTree_doubleClicked(QModelIndex)));
     connect(treeViews->at(3), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(songList_doubleClicked(QModelIndex)));
-
+    connect(treeViews->at(4), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(fileSystem_doubleClicked(QModelIndex)));
 
     //ui->webView->setUrl(QUrl("test.htm"));
 
@@ -98,6 +99,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
   //connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(4), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_fileSystemView_customContextMenuRequested(QPoint)));
+
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
 
@@ -218,7 +221,7 @@ void MainWindow::SetupSongTreeModels()
 QFileSystemModel *fileSystemModel = new QFileSystemModel(this);
 //proxyModel = new QSortFilterProxyModel(this);
 // Set the Root Path
-QModelIndex rootModelIndex = fileSystemModel->setRootPath(fileSystemModel->myComputer().toString());
+fileSystemModel->setRootPath(fileSystemModel->myComputer().toString());
 
 
 
@@ -306,26 +309,7 @@ void MainWindow::on_actionOrdner_hinzufuegen_triggered()
     QString directory = QFileDialog::getExistingDirectory(this, tr("Select Music Files"),
         QDesktopServices::storageLocation(QDesktopServices::MusicLocation));
 
-    if (!directory.isEmpty())
-    {
-        QStringList *files = new QStringList();
-        QDir dir(directory);
-        QStringList filters;
-        filters << "*.mp3" << "*.wma" << "*.ogg";
-        dir.setNameFilters(filters);
-
-        QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
-
-
-        while (lukeFileWalker.hasNext())
-        {
-            lukeFileWalker.next();
-            files->append(lukeFileWalker.fileInfo().absoluteFilePath());
-        }
-
-
-        insertSongs(files);
-    }
+    addPathRecursiveToDatabase(directory);
 }
 
 void MainWindow::updateProgressBar(int value)
@@ -452,6 +436,31 @@ void MainWindow::on_playlistView_customContextMenuRequested(QPoint pos)
 
 
 }
+
+void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
+{
+
+    int tabIndex = this->ui->treeViewTabWidget->currentIndex();
+    QTreeView* view = treeViews->at(tabIndex);
+    QModelIndex index = view->indexAt(pos);
+    selectedFileSystemIndexActionHandler* handler = new selectedFileSystemIndexActionHandler(view, this, &index);
+
+
+
+
+    QMenu* menu = new QMenu();
+
+    menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+    menu->exec(QCursor::pos());
+
+
+}
+
+
+
+
+
+
 
 void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 {
@@ -710,3 +719,83 @@ void MainWindow::showFolderInFileSystem(QUrl* file)
 
 
 }
+
+
+void MainWindow::addPathRecursiveToDatabase(QString path)
+{
+
+        if (!path.isEmpty())
+        {
+            QStringList *files = new QStringList();
+            QDir dir(path);
+            QStringList filters;
+            filters << "*.mp3" << "*.wma" << "*.ogg";
+            dir.setNameFilters(filters);
+
+            QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+            while (lukeFileWalker.hasNext())
+            {
+                lukeFileWalker.next();
+                files->append(lukeFileWalker.fileInfo().absoluteFilePath());
+            }
+
+
+            insertSongs(files);
+        }
+}
+
+
+
+
+
+void MainWindow::fileSystem_doubleClicked(QModelIndex index)
+{
+    qDebug()<<"test";
+    const QFileSystemModel* model = static_cast<const QFileSystemModel*>(index.model());
+    QFileInfo info = model->fileInfo(index);
+    QList<AudioFile*>* audioFileList = new QList<AudioFile*>;
+    if (info.isDir())
+    {
+        QStringList *files = new QStringList();
+        QDir dir(info.absoluteFilePath());
+        QStringList filters;
+        filters << "*.mp3" << "*.wma" << "*.ogg";
+        dir.setNameFilters(filters);
+
+        QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+        while (lukeFileWalker.hasNext())
+        {
+            lukeFileWalker.next();
+            files->append(lukeFileWalker.fileInfo().absoluteFilePath());
+        }
+
+        for (int i = 0; i < files->size(); i++)
+        {
+
+            audioFileList->append(new AudioFile(files->at(i)));
+
+        }
+
+    }
+    else
+    {
+
+        audioFileList->append(new AudioFile(info.absoluteFilePath()));
+
+    }
+
+    if (audioFileList->size() > 0)
+    {
+        Playlist* pl = new Playlist(audioFileList);
+
+        this->ui->playerWidget->setPlaylist(pl);
+        this->ui->playerWidget->playSongAt(0);
+
+        this->playlistModel->setPlaylist(pl);
+    }
+}
+
