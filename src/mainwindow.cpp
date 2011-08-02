@@ -154,8 +154,8 @@ void MainWindow::setupTreeViewTabs()
 
 
 
+        if ( i != 4) layout->addWidget(searchEdit);
 
-        layout->addWidget(searchEdit);
         layout->addWidget(treeView);
 
         currentTabWidget->setLayout(layout);

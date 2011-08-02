@@ -58,7 +58,7 @@ QSortFilterProxyModel *proxyModel;
     Playlist* lastPlaylist;
 
     PlayerContext *context;
-
+    QList<AudioFile*>* getSelectedAudioFiles();
 
     QSystemTrayIcon *trayIcon;
 
@@ -88,6 +88,7 @@ private slots:
     void on_playlistView_doubleClicked(QModelIndex index);
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
+
 
 
     void songTree_clicked(QModelIndex index);
