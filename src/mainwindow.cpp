@@ -553,8 +553,6 @@ void MainWindow::on_action_Open_Settings_triggered()
 {
     SettingsManagerDialog* settingsDialog = new SettingsManagerDialog(this);
 
-    settings->setStyleSheet("background-image:url();");
-
     if (settingsDialog->exec() == QDialog::Accepted)
     {
         // save changed settings to database
