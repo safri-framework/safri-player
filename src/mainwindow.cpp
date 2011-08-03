@@ -468,11 +468,22 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
 
     QMenu* menu = new QMenu();
 
-    menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+
 
     if (info.isDir())
     {
         menu->addAction("In Explorer öffnen", showHandler, SLOT(showFolderInExplorer()));
+        menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+
+    }
+    else
+    {
+        if(info.suffix() == "mp3" || info.suffix() == "ogg" )
+        {
+            menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+
+        }
+
     }
     menu->exec(QCursor::pos());
 
