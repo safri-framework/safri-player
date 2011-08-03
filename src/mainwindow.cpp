@@ -14,6 +14,7 @@
 #include "selectedfilesystemindexactionhandler.h"
 #include "settingsmanagerdialog.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -789,9 +790,16 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
     }
     else
     {
+        QString suffix = info.suffix();
+        if ( suffix == "mp3" || suffix == "ogg" )
+        {
+            audioFileList->append(new AudioFile(info.absoluteFilePath()));
+        }
+        else
+        {
 
-        audioFileList->append(new AudioFile(info.absoluteFilePath()));
-
+            //todo
+        }
     }
 
     if (audioFileList->size() > 0)
@@ -802,6 +810,7 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
         this->ui->playerWidget->playSongAt(0);
 
         this->playlistModel->setPlaylist(pl);
+
     }
 }
 

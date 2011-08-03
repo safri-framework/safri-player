@@ -246,7 +246,8 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             foreach (QUrl i, urls)
             {
 
-                if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+                QString suffix = QFileInfo(i.toLocalFile()).suffix();
+                if ( suffix == "mp3" || suffix == "ogg" )
                 {
                     filenames->append(i.toLocalFile());
 
