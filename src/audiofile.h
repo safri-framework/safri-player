@@ -35,7 +35,7 @@ class AudioFile : public Phonon::MediaSource
 
 
     public:
-
+        QString path;
         AudioFile(QString path);
         AudioFile(int sID, QString sArtist, QString sTitle, QString sGenre, QString sAlbum, QString sComment, int sYear, int sTrack, QString path);
 

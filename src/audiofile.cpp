@@ -3,6 +3,7 @@
 AudioFile::AudioFile(QString path)
     : MediaSource(path), tagsRead(false)
 {
+    this->path = path;
     QFileInfo pathInfo( this->fileName() );
         this->artist = pathInfo.fileName();
         this->track = 0;

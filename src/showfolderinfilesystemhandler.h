@@ -19,6 +19,7 @@ private:
 
 public slots:
    void showFolderInFileSystem();
+   void showFolderInExplorer();
 };
 
 #endif // SHOWFOLDERINFILESYSTEMHANDLER_H

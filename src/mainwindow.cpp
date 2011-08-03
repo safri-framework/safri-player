@@ -13,7 +13,7 @@
 #include "settingsmodule.h"
 #include "selectedfilesystemindexactionhandler.h"
 #include "settingsmanagerdialog.h"
-
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -113,11 +113,12 @@ MainWindow::MainWindow(QWidget *parent) :
  }
 
 
-
+bool fileSystem = false;
 
 
 void MainWindow::setupTreeViewTabs()
 {
+
     this->treeViewTabs = new QList<QWidget*>();
     this->searchEdits = new QList<QLineEdit*>();
     this->treeViews = new QList<QTreeView*>();
@@ -174,6 +175,7 @@ void MainWindow::setupTreeViewTabs()
         treeViews->push_front(treeView);
 
         this->ui->treeViewTabWidget->insertTab(0, currentTabWidget, captions.at(i));
+
     }
 
     this->ui->treeViewTabWidget->setCurrentIndex(0);
@@ -221,30 +223,30 @@ void MainWindow::SetupSongTreeModels()
 
 
 
-
-QFileSystemModel *fileSystemModel = new QFileSystemModel(this);
-//proxyModel = new QSortFilterProxyModel(this);
-// Set the Root Path
-fileSystemModel->setRootPath(fileSystemModel->myComputer().toString());
-
-
-
-
-// Assign the Model to the Proxy and the Proxy to the View
-
-fileSystemModel->setReadOnly(true);
-//proxyModel->setSourceModel(fileSystemModel);
-treeViews->at(4)->setModel(fileSystemModel);
-// Fix the TreeView on the Root Path of the Model
-
-//treeViews->at(4)->setCurrentIndex(rootModelIndex);
-treeViews->at(4)->setColumnHidden(1, true);
-treeViews->at(4)->setColumnHidden(2, true);
-treeViews->at(4)->setColumnHidden(3, true);
-treeViews->at(4)->adjustSize();
+    if (!fileSystem)
+    {
+        QFileSystemModel *fileSystemModel = new QFileSystemModel(this);
+        //proxyModel = new QSortFilterProxyModel(this);
+        // Set the Root Path
+        fileSystemModel->setRootPath(fileSystemModel->myComputer().toString());
 
 
 
+
+        // Assign the Model to the Proxy and the Proxy to the View
+
+        fileSystemModel->setReadOnly(true);
+        //proxyModel->setSourceModel(fileSystemModel);
+        treeViews->at(4)->setModel(fileSystemModel);
+        // Fix the TreeView on the Root Path of the Model
+
+        //treeViews->at(4)->setCurrentIndex(rootModelIndex);
+        treeViews->at(4)->setColumnHidden(1, true);
+        treeViews->at(4)->setColumnHidden(2, true);
+        treeViews->at(4)->setColumnHidden(3, true);
+
+    }
+    fileSystem = true;
 
 }
 
@@ -434,8 +436,15 @@ void MainWindow::on_storedPlaylistView_clicked(QModelIndex index)
 void MainWindow::on_playlistView_customContextMenuRequested(QPoint pos)
 {
     QMenu* menu = new QMenu();
+    const QModelIndex index = this->ui->playlistView->selectedIndexes().at(0);
+    AudioFile* af = ((PlaylistModel*)(ui->playlistView->model()))->getPlaylist()->getAudioFileAt(index.row());
+    QFileInfo info(af->fileName());
+    QUrl url(info.absoluteFilePath());
+    ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(&url,this);
 
     menu->addAction("Entfernen", this, SLOT(deleteSelectedSongActionSlot()));
+    menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
+    menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
     menu->exec(QCursor::pos());
 
 
@@ -447,6 +456,11 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
     int tabIndex = this->ui->treeViewTabWidget->currentIndex();
     QTreeView* view = treeViews->at(tabIndex);
     QModelIndex index = view->indexAt(pos);
+
+    const QFileSystemModel* model = static_cast<const QFileSystemModel*>(index.model());
+    QFileInfo info = model->fileInfo(index);
+    ShowFolderInFileSystemHandler* showHandler = new ShowFolderInFileSystemHandler(new QUrl(info.absoluteFilePath()+"/wuseldusel"), this);
+
     selectedFileSystemIndexActionHandler* handler = new selectedFileSystemIndexActionHandler(view, this, &index);
 
 
@@ -455,6 +469,11 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
     QMenu* menu = new QMenu();
 
     menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+
+    if (info.isDir())
+    {
+        menu->addAction("In Explorer öffnen", showHandler, SLOT(showFolderInExplorer()));
+    }
     menu->exec(QCursor::pos());
 
 
@@ -498,11 +517,13 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
         case BaseDTO::SONG:
             QList<AudioFile*>* afList = DatabaseDAO::getAudioFilesByBaseDTO(dto_copy);
             QString path = afList->at(0)->fileName();
-            QUrl* url = new QUrl(path);
+            QFileInfo info(path);
+            QUrl* url = new QUrl(info.absoluteFilePath());
+
             ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(url, this);
 
             menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
-
+            menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
 
             menu->exec(QCursor::pos());
     }
@@ -798,7 +819,9 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
         else
         {
 
-            //todo
+       QString path = QDir::toNativeSeparators(info.absoluteFilePath());
+       QDesktopServices::openUrl(QUrl("file:///" + path));
+
         }
     }
 
