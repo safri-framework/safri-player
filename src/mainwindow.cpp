@@ -14,20 +14,13 @@
 #include "selectedfilesystemindexactionhandler.h"
 #include "settingsmanagerdialog.h"
 #include <QProcess>
+#include "osdisplay.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
-
-
-
-
-
-
-
-
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -38,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-
         trayIcon = 0;
     }
 
@@ -104,12 +96,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(4), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_fileSystemView_customContextMenuRequested(QPoint)));
 
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
-     connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showTrayIconSongInfoMessage(AudioFile*)));
+     connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showNowplayingInfo(AudioFile*)));
 
     ui->playlistView->setHeaderHidden(false);
 
     connect(SettingsManager::getInstance()->getModule("core.view"), SIGNAL(settingsChanged()), this, SLOT(SetupSongTreeModels()));
 
+
+    display = new OSDisplay(0);
  }
 
 
@@ -185,6 +179,7 @@ void MainWindow::setupTreeViewTabs()
 MainWindow::~MainWindow()
 {
     delete ui;
+    trayIcon->setVisible(false);
 }
 
 
@@ -680,25 +675,32 @@ void MainWindow::on_toggleView_clicked()
 }
 
 
-void MainWindow::showTrayIconSongInfoMessage(AudioFile* af)
+void MainWindow::showNowplayingInfo(AudioFile* af)
 {
-
-    if (trayIcon)
+    if ( QApplication::activeWindow() == 0 )
     {
-        QString artist = af->getArtist();
-        QString title = af->getTitle();
+        SettingsModule* viewSettings = SettingsManager::getInstance()->getModule("core.view");
 
-        QString message = artist+" - "+title;
-        if (this->isMinimized() || (testwindow && testwindow->isMinimized()))
+        bool showTrayBalloon = viewSettings->getSetting("showTrayBalloon").toBool();
+        bool showOSDisplay = viewSettings->getSetting("showOSDisplay").toBool();
+
+        if (showOSDisplay)
         {
+            display->showCurrentSong(af);
+        }
+
+        if (showTrayBalloon && trayIcon)
+        {
+            QString artist = af->getArtist();
+            QString title = af->getTitle();
+
+            QString message = artist + " - " + title;
 
             this->trayIcon->showMessage("aktueller Song:", message);
-
         }
 
     }
 }
-
 
 void MainWindow::searchEditTextChanged(const QString &searchString)
 {

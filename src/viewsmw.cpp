@@ -38,6 +38,26 @@ ViewSMW::ViewSMW(SettingsModule* settingsModule, QWidget *parent) :
     ui->treeview1_level3->setCurrentIndex( getIndexFromString(treeview1HierarchyList.at(2))  );
     ui->treeview1_level4->setCurrentIndex( getIndexFromString(treeview1HierarchyList.at(3))  );
     ui->treeview1_level5->setCurrentIndex( getIndexFromString(treeview1HierarchyList.at(4))  );
+
+    QStringList nowplayingDisplays;
+    nowplayingDisplays << "Taskleisten Icon" << "On-Screen Display" << "keine Anzeige";
+
+    ui->cmbNowplayingDisplay->setModel( new QStringListModel(nowplayingDisplays) );
+
+    if ( settingsModule->getSetting("showTrayBalloon").toBool() )
+    {
+        ui->cmbNowplayingDisplay->setCurrentIndex(0);
+    }
+    else if ( settingsModule->getSetting("showOSDisplay").toBool() )
+    {
+        ui->cmbNowplayingDisplay->setCurrentIndex(1);
+    }
+    else
+    {
+        ui->cmbNowplayingDisplay->setCurrentIndex(2);
+    }
+
+    ui->spnDisplayTime->setValue( settingsModule->getSetting("nowplayingDisplayTime").toInt() );
 }
 
 ViewSMW::~ViewSMW()
@@ -62,9 +82,31 @@ void ViewSMW::saveSettings()
         treeview1Hierarchy = treeview1Hierarchy + getStringFromIndex(ui->treeview1_level5->currentIndex()) + ";";
 
     this->settingsModule->setSetting("treeview1Hierarchy", treeview1Hierarchy);
-    this->settingsModule->saveSettings();
 
-    qDebug() << treeview1Hierarchy;
+    switch ( ui->cmbNowplayingDisplay->currentIndex() )
+    {
+        case 0:
+
+            settingsModule->setSetting("showTrayBalloon", 1);
+            settingsModule->setSetting("showOSDisplay", 0);
+            break;
+
+        case 1:
+
+            settingsModule->setSetting("showTrayBalloon", 0);
+            settingsModule->setSetting("showOSDisplay", 1);
+            break;
+
+        case 2:
+
+            settingsModule->setSetting("showTrayBalloon", 0);
+            settingsModule->setSetting("showOSDisplay", 0);
+            break;
+    }
+
+    settingsModule->setSetting("nowplayingDisplayTime", ui->spnDisplayTime->value());
+
+    this->settingsModule->saveSettings();
 }
 
 int ViewSMW::getIndexFromString(QString string)

@@ -29,6 +29,8 @@
 
 #include <QSortFilterProxyModel>
 
+class OSDisplay;
+
 namespace Ui {
     class MainWindow;
 }
@@ -68,6 +70,8 @@ QSortFilterProxyModel *proxyModel;
     QList<QWidget*> *treeViewTabs;
     QList<QTreeView*> *treeViews;
     QList<QLineEdit*> *searchEdits;
+
+    OSDisplay* display;
 
 
 private slots:
@@ -119,7 +123,7 @@ public slots:
     void updateProgressBar(int value);
     void setProgressBarRange(int min, int max);
     void setProgressBarText(QString text);
-    void showTrayIconSongInfoMessage(AudioFile* af);
+    void showNowplayingInfo(AudioFile* af);
 
     void searchEditTextChanged(const QString &searchString);
     void showFolderInFileSystem(QUrl* file);

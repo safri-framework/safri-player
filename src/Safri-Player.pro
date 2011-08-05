@@ -60,7 +60,8 @@ HEADERS += \
     settingsmodulewidget.h \
     settingsmanagerdialog.h \
     coversmw.h \
-    viewsmw.h
+    viewsmw.h \
+    osdisplay.h
 
 SOURCES += \
     taginserter.cpp \
@@ -91,7 +92,8 @@ SOURCES += \
     settingsmodulewidget.cpp \
     settingsmanagerdialog.cpp \
     coversmw.cpp \
-    viewsmw.cpp
+    viewsmw.cpp \
+    osdisplay.cpp
 
 FORMS += \
     playerwidget.ui \
@@ -101,4 +103,5 @@ FORMS += \
     databasesettingswidget.ui \
     settingsmanagerdialog.ui \
     coversmw.ui \
-    viewsmw.ui
+    viewsmw.ui \
+    osdisplay.ui

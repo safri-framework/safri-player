@@ -22,7 +22,7 @@ void SettingsModule::setSetting(QString setting, QVariant value)
         this->modified = true;
         this->settings.insert(moduleName + "." + setting, value);
 
-        Q_EMIT settingsChanged();
+        //Q_EMIT settingsChanged();
     }
 }
 

@@ -844,7 +844,7 @@ void DatabaseDAO::loadDataTable()
     dataTable = new QList< ColumnData* >();
 
     QSqlQuery query(getDatabase());
-    QString queryString = "SELECT filename, song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id) ORDER BY song";
+    QString queryString = "SELECT album_cover, filename, song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id) ORDER BY song";
 
     query.prepare(queryString);
 
@@ -870,6 +870,7 @@ void DatabaseDAO::loadDataTable()
         row->insert("YEAR", query.value( query.record().indexOf("year") ).toString());
         row->insert("INDEX", searchIndex);
         row->insert("FILENAME", query.value(query.record().indexOf("filename") ).toString());
+        row->insert("ALBUMCOVER", query.value(query.record().indexOf("album_cover") ).toString());
         dataTable->append(row);
     }
 }
@@ -1082,4 +1083,21 @@ QMap<QString, QVariant> DatabaseDAO::getModuleSettings(QString modulename)
     }
 
     return moduleSettings;
+}
+
+QString DatabaseDAO::getAlbumCoverByAudioFile(AudioFile* af)
+{
+    if (dataTable == 0)
+    {
+        loadDataTable();
+    }
+
+    int length = dataTable->length();
+    for (int row = 0; row < length; row++)
+    {
+        if (dataTable->at(row)->value("FILENAME") == af->fileName() )
+        {
+            return dataTable->at(row)->value("ALBUMCOVER");
+        }
+    }
 }

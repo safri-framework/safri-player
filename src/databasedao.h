@@ -104,6 +104,7 @@ class DatabaseDAO
         static QString findAlbumCover(AudioFile &file);
 
         static QString getAlbumCover(int id);
+        static QString getAlbumCoverByAudioFile(AudioFile* af);
 
         static void getSongDTO(BaseDTO* dto, QList<BaseDTO*>*);
         static int deleteSongByID(QList<int>* id);
