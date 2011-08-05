@@ -1,9 +1,11 @@
 
 
 #include "playlist.h"
+#include <cstdlib>
+#include <qglobal.h>
 
 Playlist::Playlist(QList<AudioFile*> *audioFiles, QObject *parent) :
-    QObject(parent), actualPlayingSong(-1), SongList(audioFiles), shuffle(false), actualPlayingSongTransactionRequested(false), actualPlayingSongTransaction(0)
+    QObject(parent), actualPlayingSong(-1), SongList(audioFiles), shuffle(false), actualPlayingSongTransactionRequested(false), actualPlayingSongTransaction(0), shuffleHistory(0), shuffleCounter(-1)
 {
 
     if (SongList == 0)
@@ -42,8 +44,8 @@ AudioFile* Playlist::getNextSong()
             }
             else //todo!!
             {
-
-                nextSong = 0;
+                if (shuffleCounter < shuffleHistory->size()-1) shuffleCounter++;
+               nextSong = SongList->indexOf(shuffleHistory->at(shuffleCounter));
 
 
             }
@@ -76,7 +78,9 @@ playlistLock.lockForRead();
         }
         else // todo!!
         {
-             previousSong = 0;
+            if (shuffleCounter > 0)shuffleCounter --;
+             previousSong = SongList->indexOf(shuffleHistory->at(shuffleCounter));
+
 
         }
 
@@ -90,8 +94,32 @@ return song;
 
 void Playlist::setShuffle(bool value)
 {
+
     shuffle = value;
+
+    if (value && SongList->size() > 0)
+    {
+        shuffleHistory = new QList<AudioFile*>(*SongList);
+        if(actualPlayingSong >= 0) shuffleHistory->removeAt(actualPlayingSong);
+        ShufflePlaylist(shuffleHistory);
+
+    }
+    else
+    {
+        shuffleHistory = 0;
+    }
+
 }
+
+bool Playlist::getShuffle()
+{
+
+    return shuffle;
+
+}
+
+
+
 
 AudioFile* Playlist::getAudioFileAt(int value)
 {
@@ -229,6 +257,21 @@ void Playlist::insertSongsAt(int position, QList<AudioFile*> *songs)
         playlistLock.lockForWrite();
             SongList->append(*songs);
         playlistLock.unlock();
+    }
+
+
+    if (shuffle)
+    {
+        QList<AudioFile*>* temp = new QList<AudioFile*>;
+        for (int i = shuffleCounter +1; i < shuffleHistory->size(); i++)
+        {
+            temp->append(shuffleHistory->at(i));
+            shuffleHistory->removeAt(i);
+        }
+        temp->append(*songs);
+        ShufflePlaylist(songs);
+        shuffleHistory->append(*songs);
+
     }
 
     Q_EMIT songsInserted(position, songs->size());
@@ -415,6 +458,21 @@ void Playlist::sortByTitle(Qt::SortOrder order)
     }
 
 }
+
+
+void Playlist::ShufflePlaylist(QList<AudioFile*>* list)
+{
+
+
+    for (int i = list->size()-1; i >= 0; i--)
+    {
+
+          int j = (int) (((float)qrand()/RAND_MAX) * i);
+          list->swap(j, i);
+     }
+
+}
+
 
 void Playlist::sortByYear(Qt::SortOrder order)
 {

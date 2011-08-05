@@ -14,6 +14,7 @@
 #include "selectedfilesystemindexactionhandler.h"
 #include "settingsmanagerdialog.h"
 #include <QProcess>
+#include <qglobal.h>
 #include "osdisplay.h"
 
 
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {

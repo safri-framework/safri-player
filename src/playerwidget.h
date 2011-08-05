@@ -61,6 +61,7 @@ private:
     QToolBar *bar;
     QAction *playAction;
 
+    QAction *shuffleAction;
     QAction *stopAction;
     QAction *nextAction;
     QAction *previousAction;
@@ -77,6 +78,7 @@ public slots:
     void currentSongFinished();
     void nextActionSlot();
     void previousActionSlot();
+    void shuffleActionSlot(bool value);
     void noDataSlot();
 
     void currentSourceChanged(Phonon::MediaSource);

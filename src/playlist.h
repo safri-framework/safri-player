@@ -20,6 +20,7 @@ public:
     explicit Playlist(QList<AudioFile*> *audioFiles, QObject *parent = 0);
 
     void setShuffle(bool value); 
+    bool getShuffle();
     bool isSongPlaying(int value);
     void moveSong(int from, int to);
     void setCurrentPlayingSong(int value);
@@ -60,7 +61,8 @@ private:
 
     int actualPlayingSong;
     QList<AudioFile*> *SongList;
-    bool shuffle;
+
+
 
     QReadWriteLock playlistLock;
 
@@ -68,6 +70,11 @@ private:
     int  actualPlayingSongTransaction;
 
     void checkActualPlayingSongTransaction();
+
+    QList<AudioFile*>* shuffleHistory;
+    bool shuffle;
+    int shuffleCounter;
+    void ShufflePlaylist(QList<AudioFile*>* list);
 
 
 signals:

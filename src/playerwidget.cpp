@@ -72,6 +72,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     bar->addAction(playAction);
     bar->addAction(stopAction);
     bar->addAction(nextAction);
+    bar->addAction(shuffleAction);
 
     connect(play, SIGNAL(entered()), this, SLOT(playStateSlot()));
     connect(pause, SIGNAL(entered()), this, SLOT(pauseStateSlot()));
@@ -81,6 +82,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(previousAction,SIGNAL(triggered()) ,this, SLOT(previousActionSlot()));
 
     connect (noData, SIGNAL(entered()), this, SLOT(noDataSlot()));
+    connect(shuffleAction, SIGNAL(triggered(bool)), this, SLOT(shuffleActionSlot(bool)));
 
     ui->info->setMargin(2);
     ui->info->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -118,7 +120,7 @@ PlayerWidget::~PlayerWidget()
 void PlayerWidget::setPlaylist(Playlist* value)
 {
     this->playlist = value;
-
+    if(shuffleAction->isChecked()) value->setShuffle(true);
 }
 
 void PlayerWidget::playSongAt(int value)
@@ -149,6 +151,12 @@ void PlayerWidget::mouseDoubleClickEvent(QMouseEvent * event)
 
 void PlayerWidget::setupActions()
 {
+
+    shuffleAction = new QAction(QIcon("img/shuffle_icon.png"), tr("Shuffle"), this);
+    shuffleAction->setCheckable(true);
+    shuffleAction->setChecked(false);
+
+
     playAction = new QAction(style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
     playAction->setShortcut(tr("Ctrl+P"));
     playAction->setDisabled(false);
@@ -169,6 +177,7 @@ void PlayerWidget::setupActions()
 
 void PlayerWidget::playStateSlot()
 {
+    shuffleAction->setDisabled(false);
     nextAction->setDisabled(false);
     previousAction->setDisabled(false);
     playAction->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
@@ -238,9 +247,18 @@ void PlayerWidget::previousActionSlot()
 
 }
 
+void PlayerWidget::shuffleActionSlot(bool value)
+{
+    qDebug()<<value;
+    if (playlist) playlist->setShuffle(value);
+
+}
+
+
 
 void PlayerWidget::noDataSlot()
 {
+    shuffleAction->setDisabled(true);
     stopAction->setDisabled(true);
     nextAction->setDisabled(true);
     previousAction->setDisabled(true);
@@ -381,6 +399,7 @@ void PlayerWidget::dropEvent(QDropEvent *event)
 
               this->setPlaylist(pl);
               this->playSongAt(0);
+
         }
 
 

@@ -22,7 +22,7 @@ class SettingsModule : public QObject
 
     signals:
 
-        virtual void settingsChanged();
+        void settingsChanged();
 
     protected:
 
