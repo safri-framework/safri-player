@@ -5,7 +5,7 @@
 #include <QFileInfo>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
-
+#include <QTime>
 #include <QReadWriteLock>
 
 /**
@@ -25,6 +25,7 @@ class AudioFile : public Phonon::MediaSource
         QString genre;
         QString album;
         QString comment;
+        int length;
 
         bool tagsRead;
 
@@ -46,6 +47,8 @@ class AudioFile : public Phonon::MediaSource
         QString getGenre();
         QString getAlbum();
         QString getComment();
+        int getLength();
+        QString getLengthAsString();
         int getYear();
         int getTrack();
 

@@ -147,7 +147,7 @@ QModelIndex SongTreeModel::parent(const QModelIndex& index) const
     if ( index.isValid() )
     {
         BaseDTO *dto = static_cast<BaseDTO*>(index.internalPointer());
-        int row;
+         int row;
 
         if (dto->getParentDTO() == 0 || dto->getParentDTO() == rootDTO)
         {
@@ -195,7 +195,7 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 {
     QList<QUrl> filenames;
     QMimeData *mimeData = new QMimeData();
-
+    mimeData->setText("SongTreeMimeData");
 
     foreach (QModelIndex index, indexes)
     {
@@ -234,7 +234,7 @@ Qt::DropActions SongTreeModel::supportedDropActions() const
 bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     bool dropped = false;
-        if (data->hasFormat("text/uri-list"))
+        if (data->hasFormat("text/uri-list") && data->text()!="SongTreeMimeData")
         {
 
             QList<QUrl> urls = data->urls();

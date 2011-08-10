@@ -41,8 +41,17 @@
            <property name="styleSheet">
             <string notr="true">background-image:url();</string>
            </property>
+           <property name="tabPosition">
+            <enum>QTabWidget::North</enum>
+           </property>
            <property name="currentIndex">
             <number>0</number>
+           </property>
+           <property name="documentMode">
+            <bool>false</bool>
+           </property>
+           <property name="movable">
+            <bool>false</bool>
            </property>
            <widget class="QWidget" name="webTab">
             <attribute name="title">
@@ -89,16 +98,19 @@
             <string notr="true">background-image:url();</string>
            </property>
            <property name="dragEnabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="dragDropMode">
-            <enum>QAbstractItemView::NoDragDrop</enum>
+            <enum>QAbstractItemView::DragOnly</enum>
            </property>
            <property name="rootIsDecorated">
+            <bool>true</bool>
+           </property>
+           <property name="headerHidden">
             <bool>false</bool>
            </property>
            <attribute name="headerVisible">
-            <bool>false</bool>
+            <bool>true</bool>
            </attribute>
           </widget>
          </item>

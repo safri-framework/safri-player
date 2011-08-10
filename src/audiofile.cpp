@@ -88,6 +88,33 @@ int AudioFile::getTrack()
     return track;
 }
 
+
+int AudioFile::getLength()
+{
+    tagsLock.lockForRead();
+
+        int length = this->length;
+    tagsLock.unlock();
+
+
+   return length;
+}
+
+QString AudioFile::getLengthAsString()
+{
+    int length = this->getLength();
+    int min =  length/60;
+    int sec = length % 60;
+    QString string;
+    string = QString::number(min)+":"+QString("%1").arg(QString::number(sec),2,'0');
+
+
+    return string;
+
+}
+
+
+
 int AudioFile::ReadTags()
 {
 
@@ -119,6 +146,9 @@ int AudioFile::ReadTags()
                 genre = ref.tag()->genre().toCString();
                 comment = ref.tag()->comment().toCString();
                 year = ref.tag()->year();
+                length = ref.audioProperties()->length();
+
+
 
                 QFileInfo pathInfo( this->fileName() );
 

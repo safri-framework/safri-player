@@ -1,5 +1,6 @@
 #include "m3utranslator.h"
 
+
 const QString M3uTranslator::DirName= "playlists";
 
 Playlist* M3uTranslator::getPlaylistFromM3u(QString absoluteFilename)
@@ -45,6 +46,56 @@ return m3uFiles;
 
 }
 
+TreeItem* M3uTranslator::getPlaylistTree()
+{
+    TreeItem* root = new TreeItem(0,"ROOT",0,"root",0);
+
+    QDir directory(DirName);
+
+    QStringList filters;
+
+    filters << "*.m3u";
+
+    directory.setNameFilters(filters);
+
+    QDirIterator lukeFileWalker(directory);
+
+
+        while (lukeFileWalker.hasNext())
+        {
+            lukeFileWalker.next();
+            QFileInfo info = lukeFileWalker.fileInfo();
+
+            QString plName = info.fileName().replace(QRegExp(".m3u"),"");
+
+            Playlist* pl = getPlaylistFromM3u(info.absoluteFilePath());
+            TreeItem* child = new TreeItem(pl,"PLAYLIST",info.absoluteFilePath(),plName, root);
+
+
+
+            for (int i = 0; i <pl->getSongCount(); i++ )
+            {
+
+                AudioFile* af = pl->getAudioFileAt(i);
+
+                //af->ReadTags();
+                QFileInfo songinfo(af->fileName());
+                QString text = songinfo.fileName();
+                TreeItem* childItem = new TreeItem(0,"SONG", af->fileName(),text,child);
+                qDebug()<< "neuesKind";
+                child->getChilds()->append(childItem);
+                qDebug()<<"append";
+            }
+            root->getChilds()->append(child);
+        }
+
+return root;
+
+}
+
+
+
+
 
 void M3uTranslator::savePlaylistToM3u(Playlist* playlist, QString absoluteFilename)
 {
@@ -77,3 +128,5 @@ QString M3uTranslator::playlistNameToAbsPath(QString playlistname)
 
     return directory.absoluteFilePath(playlistname + ".m3u");
 }
+
+

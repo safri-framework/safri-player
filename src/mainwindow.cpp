@@ -16,12 +16,15 @@
 #include <QProcess>
 #include <qglobal.h>
 #include "osdisplay.h"
-
+#include "safedplaylistmodel.h"
+#include <QHeaderView>
+#include "headermanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
 
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
@@ -63,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->playlistView->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
-    ui->storedPlaylistView->setModel( new QStringListModel(M3uTranslator::getPlaylists()) );
+    //ui->storedPlaylistView->setModel( new QStringListModel(M3uTranslator::getPlaylists()) );
+    ui->storedPlaylistView->setModel( new SafedPlaylistModel() );
 
     ui->mainToolBar->addAction(ui->actionOrdner_hinzufuegen);
     ui->mainToolBar->addAction(ui->actionSongs_hinzufuegen);
@@ -90,11 +94,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->webView->setPage(context->getWebPage());
 
+
+    QHeaderView* songListHeader = treeViews->at(3)->header();
+    songListHeader->setContextMenuPolicy(Qt::CustomContextMenu);
+    songListHeader->hideSection(2);
+    songListHeader->hideSection(3);
+
+
+
     // connect contextmenu signals for treeviews
     connect(treeViews->at(0), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
   //connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
+    connect(treeViews->at(3)->header(), SIGNAL(customContextMenuRequested(QPoint)),this, SLOT(on_header_customContextMenuRequested(QPoint)));
     connect(treeViews->at(4), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_fileSystemView_customContextMenuRequested(QPoint)));
 
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
@@ -264,10 +277,14 @@ void MainWindow::setProgressBarText(QString text)
 
 void MainWindow::setupPlaylistModel()
 {
+
+
     playlistModel = new PlaylistModel(new Playlist(new QList<AudioFile*>()));
+    ui->playlistView->header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(playlistModel, SIGNAL(taggerStarted()), this, SLOT(DisablePlaylistViewSorting()));
     connect(playlistModel, SIGNAL(taggerFinished()), this, SLOT(EnablePlaylistViewSorting()));
+    connect(ui->playlistView->header(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_header_customContextMenuRequested(QPoint)));
 
     ui->playlistView->setModel(playlistModel);
 }
@@ -433,17 +450,19 @@ void MainWindow::on_storedPlaylistView_clicked(QModelIndex index)
 void MainWindow::on_playlistView_customContextMenuRequested(QPoint pos)
 {
     QMenu* menu = new QMenu();
-    const QModelIndex index = this->ui->playlistView->selectedIndexes().at(0);
-    AudioFile* af = ((PlaylistModel*)(ui->playlistView->model()))->getPlaylist()->getAudioFileAt(index.row());
-    QFileInfo info(af->fileName());
-    QUrl url(info.absoluteFilePath());
-    ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(&url,this);
+    if (this->ui->playlistView->selectedIndexes().size()>0)
+    {
+        const QModelIndex index = this->ui->playlistView->selectedIndexes().at(0);
+        AudioFile* af = ((PlaylistModel*)(ui->playlistView->model()))->getPlaylist()->getAudioFileAt(index.row());
+        QFileInfo info(af->fileName());
+        QUrl url(info.absoluteFilePath());
+        ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(&url,this);
 
-    menu->addAction("Entfernen", this, SLOT(deleteSelectedSongActionSlot()));
-    menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
-    menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
-    menu->exec(QCursor::pos());
-
+        menu->addAction("Entfernen", this, SLOT(deleteSelectedSongActionSlot()));
+        menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
+        menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
+        menu->exec(QCursor::pos());
+    }
 
 }
 
@@ -453,37 +472,38 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
     int tabIndex = this->ui->treeViewTabWidget->currentIndex();
     QTreeView* view = treeViews->at(tabIndex);
     QModelIndex index = view->indexAt(pos);
-
-    const QFileSystemModel* model = static_cast<const QFileSystemModel*>(index.model());
-    QFileInfo info = model->fileInfo(index);
-    ShowFolderInFileSystemHandler* showHandler = new ShowFolderInFileSystemHandler(new QUrl(info.absoluteFilePath()+"/wuseldusel"), this);
-
-    selectedFileSystemIndexActionHandler* handler = new selectedFileSystemIndexActionHandler(view, this, &index);
-
-
-
-
-    QMenu* menu = new QMenu();
-
-
-
-    if (info.isDir())
+    if (index.isValid())
     {
-        menu->addAction("In Explorer öffnen", showHandler, SLOT(showFolderInExplorer()));
-        menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
+        const QFileSystemModel* model = static_cast<const QFileSystemModel*>(index.model());
+        QFileInfo info = model->fileInfo(index);
+        ShowFolderInFileSystemHandler* showHandler = new ShowFolderInFileSystemHandler(new QUrl(info.absoluteFilePath()+"/wuseldusel"), this);
 
-    }
-    else
-    {
-        if(info.suffix() == "mp3" || info.suffix() == "ogg" )
+        selectedFileSystemIndexActionHandler* handler = new selectedFileSystemIndexActionHandler(view, this, &index);
+
+
+
+
+        QMenu* menu = new QMenu();
+
+
+
+        if (info.isDir())
         {
+            menu->addAction("In Explorer öffnen", showHandler, SLOT(showFolderInExplorer()));
             menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
 
         }
+        else
+        {
+            if(info.suffix() == "mp3" || info.suffix() == "ogg" )
+            {
+                menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
 
+            }
+
+        }
+        menu->exec(QCursor::pos());
     }
-    menu->exec(QCursor::pos());
-
 
 }
 
@@ -503,39 +523,42 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
 
     QModelIndex index = treeView->indexAt(pos);
 
-    BaseDTO *dto = static_cast<BaseDTO*>(index.internalPointer());
-
-    // make a copy of the dto, to separte it from the tree as a single DTO object
-    BaseDTO* dto_copy = new BaseDTO(dto->getID(), dto->getText(), dto->getType());
-
-
-
-
-    DTOChanger *changer = new DTOChanger(dto_copy, index);
-
-    connect(changer, SIGNAL(ModelIndexDataChanged(QModelIndex)), treeView, SLOT(update(QModelIndex)));
-
-    switch (dto_copy->getType() )
+    if (index.isValid())
     {
-        case BaseDTO::ALBUM:
 
-            menu->addAction("Albumcover ändern", changer, SLOT(changeAlbumCover()));
-            menu->exec(QCursor::pos());
-            break;
-        case BaseDTO::SONG:
-            QList<AudioFile*>* afList = DatabaseDAO::getAudioFilesByBaseDTO(dto_copy);
-            QString path = afList->at(0)->fileName();
-            QFileInfo info(path);
-            QUrl* url = new QUrl(info.absoluteFilePath());
+        BaseDTO *dto = static_cast<BaseDTO*>(index.internalPointer());
 
-            ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(url, this);
+        // make a copy of the dto, to separte it from the tree as a single DTO object
+        BaseDTO* dto_copy = new BaseDTO(dto->getID(), dto->getText(), dto->getType());
 
-            menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
-            menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
 
-            menu->exec(QCursor::pos());
+
+
+        DTOChanger *changer = new DTOChanger(dto_copy, index);
+
+        connect(changer, SIGNAL(ModelIndexDataChanged(QModelIndex)), treeView, SLOT(update(QModelIndex)));
+
+        switch (dto_copy->getType() )
+        {
+            case BaseDTO::ALBUM:
+
+                menu->addAction("Albumcover ändern", changer, SLOT(changeAlbumCover()));
+                menu->exec(QCursor::pos());
+                break;
+            case BaseDTO::SONG:
+                QList<AudioFile*>* afList = DatabaseDAO::getAudioFilesByBaseDTO(dto_copy);
+                QString path = afList->at(0)->fileName();
+                QFileInfo info(path);
+                QUrl* url = new QUrl(info.absoluteFilePath());
+
+                ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(url, this);
+
+                menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
+                menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
+
+                menu->exec(QCursor::pos());
+        }
     }
-
 
 }
 
@@ -852,3 +875,40 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
     }
 }
 
+void MainWindow::on_header_customContextMenuRequested(QPoint pos)
+{
+
+    QMenu* menu = new QMenu();
+
+    qDebug()<<"test";
+    QTreeView *treeView;
+    if (this->ui->playlistView->hasFocus())
+    {
+        treeView = this->ui->playlistView;
+    }
+    else
+    {
+        treeView = treeViews->at(ui->treeViewTabWidget->currentIndex());
+
+    }
+
+
+    QHeaderView* header = treeView->header();
+
+
+    headerManager* handler = new headerManager(header);
+    qDebug()<<QString::number(header->count());
+    handler->setIndexToEdit(header->logicalIndexAt(pos));
+    if (header->count() - 1 > header->hiddenSectionCount() )
+    {
+        menu->addAction("Spalte verstecken", handler, SLOT(hideSection()));
+    }
+    menu->addAction("Alle anzeigen", handler, SLOT(showAll()));
+
+
+    menu->exec(QCursor::pos());
+
+
+
+
+}

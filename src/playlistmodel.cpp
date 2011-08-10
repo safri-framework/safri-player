@@ -1,6 +1,6 @@
 #include "playlistmodel.h"
 #include <QDirIterator>
-
+#include <QTime>
 
 PlaylistModel::PlaylistModel(Playlist *sPlaylist, QObject *parent) :
     QAbstractTableModel(parent), playlist(0), taggerThread(0)
@@ -105,6 +105,8 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
             case 5:
                 return "Genre";
+        case 6:
+                return "Länge";
         }
     }
 
@@ -113,7 +115,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
 {
-    return 6;
+    return 7;
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -161,6 +163,11 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
                         return audioFile->getGenre();
 
+                    case 6:
+
+
+
+                        return audioFile->getLengthAsString();
 
                     default:
 
@@ -247,7 +254,7 @@ void PlaylistModel::songDeleted(int value)
 
 void PlaylistModel::songDataChanged(int position)
 {
-    Q_EMIT dataChanged( index(position, 0), index(position, 4));
+    Q_EMIT dataChanged( index(position, 0), index(position, 6));
 }
 
 void PlaylistModel::sort( int column, Qt::SortOrder order)

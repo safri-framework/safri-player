@@ -61,7 +61,10 @@ HEADERS += \
     settingsmanagerdialog.h \
     coversmw.h \
     viewsmw.h \
-    osdisplay.h
+    osdisplay.h \
+    safedplaylistmodel.h \
+    treeitem.h \
+    headermanager.h
 
 SOURCES += \
     taginserter.cpp \
@@ -93,7 +96,10 @@ SOURCES += \
     settingsmanagerdialog.cpp \
     coversmw.cpp \
     viewsmw.cpp \
-    osdisplay.cpp
+    osdisplay.cpp \
+    safedplaylistmodel.cpp \
+    treeitem.cpp \
+    headermanager.cpp
 
 FORMS += \
     playerwidget.ui \

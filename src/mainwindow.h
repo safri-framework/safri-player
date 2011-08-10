@@ -88,6 +88,7 @@ private slots:
     void on_actionRestorePlaylist_triggered();
     void on_playlistView_customContextMenuRequested(QPoint pos);
     void on_fileSystemView_customContextMenuRequested(QPoint pos);
+    void on_header_customContextMenuRequested(QPoint pos);
     void on_storedPlaylistView_clicked(QModelIndex index);
     void on_clearPlaylistButton_clicked();
     void on_actualPlayingPlaylistButton_clicked();
