@@ -5,7 +5,7 @@
 #include <qglobal.h>
 
 Playlist::Playlist(QList<AudioFile*> *audioFiles, QObject *parent) :
-    QObject(parent), actualPlayingSong(-1), SongList(audioFiles), shuffle(false), actualPlayingSongTransactionRequested(false), actualPlayingSongTransaction(0), shuffleHistory(0), shuffleCounter(-1)
+   safedPlaylist(false), QObject(parent), actualPlayingSong(-1), SongList(audioFiles), shuffle(false), actualPlayingSongTransactionRequested(false), actualPlayingSongTransaction(0), shuffleHistory(0), shuffleCounter(-1)
 {
 
     if (SongList == 0)
@@ -14,6 +14,28 @@ Playlist::Playlist(QList<AudioFile*> *audioFiles, QObject *parent) :
     }
 
 }
+
+Playlist::Playlist(QString m3ufile, QObject *parent) :
+       safedPlaylist(true),  QObject(parent), actualPlayingSong(-1), SongList(0), shuffle(false), actualPlayingSongTransactionRequested(false), actualPlayingSongTransaction(0), shuffleHistory(0), shuffleCounter(-1)
+{
+    SongList = new QList<AudioFile*>();
+
+    QFile m3u( m3ufile );
+
+    m3u.open(QIODevice::ReadOnly);
+    QTextStream fileStream(&m3u);
+    while (!fileStream.atEnd())
+    {
+        QString path = fileStream.readLine();
+        if (path.at(0)!='#') SongList->append(new AudioFile(path));
+    }
+
+
+
+}
+
+
+
 
 void Playlist::checkActualPlayingSongTransaction()
 {
@@ -570,4 +592,8 @@ void Playlist::disconnectPlaylist()
 
 
 
+bool Playlist::isSafedPlaylist()
+{
+    return safedPlaylist;
+}
 

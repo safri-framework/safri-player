@@ -68,7 +68,7 @@ TreeItem* M3uTranslator::getPlaylistTree()
 
             QString plName = info.fileName().replace(QRegExp(".m3u"),"");
 
-            Playlist* pl = getPlaylistFromM3u(info.absoluteFilePath());
+            Playlist* pl = new Playlist(info.absoluteFilePath());
             TreeItem* child = new TreeItem(pl,"PLAYLIST",info.absoluteFilePath(),plName, root);
 
 

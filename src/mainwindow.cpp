@@ -100,6 +100,19 @@ MainWindow::MainWindow(QWidget *parent) :
     songListHeader->hideSection(2);
     songListHeader->hideSection(3);
 
+    ui->playlistView->setHeaderHidden(false);
+    QHeaderView* playlistHeader = ui->playlistView->header();
+    playlistHeader->setStretchLastSection(false);
+    playlistHeaderManager = new headerManager(ui->playlistView);
+
+
+
+    playlistHeader->resizeSection(0, 55);
+    playlistHeader->resizeSection(4, 55);
+    playlistHeader->resizeSection(6, 55);
+    playlistHeader->setResizeMode(0, QHeaderView::Fixed);
+    playlistHeader->setResizeMode(4,QHeaderView::Fixed);
+    playlistHeader->setResizeMode(6,QHeaderView::Fixed);
 
 
     // connect contextmenu signals for treeviews
@@ -107,13 +120,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(treeViews->at(1), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
     connect(treeViews->at(2), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
   //connect(treeViews->at(3), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(treeView_customContextMenuRequested(QPoint)));
-    connect(treeViews->at(3)->header(), SIGNAL(customContextMenuRequested(QPoint)),this, SLOT(on_header_customContextMenuRequested(QPoint)));
+    connect(songListHeader, SIGNAL(customContextMenuRequested(QPoint)),this, SLOT(on_header_customContextMenuRequested(QPoint)));
     connect(treeViews->at(4), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_fileSystemView_customContextMenuRequested(QPoint)));
 
     connect(ui->playerWidget, SIGNAL(viewModeChanged()), this, SLOT(on_toggleView_clicked()));
      connect(this->ui->playerWidget, SIGNAL(currentSourceChanged(AudioFile*)),this, SLOT(showNowplayingInfo(AudioFile*)));
 
-    ui->playlistView->setHeaderHidden(false);
+
 
     connect(SettingsManager::getInstance()->getModule("core.view"), SIGNAL(settingsChanged()), this, SLOT(SetupSongTreeModels()));
 
@@ -188,6 +201,7 @@ void MainWindow::setupTreeViewTabs()
     }
 
     this->ui->treeViewTabWidget->setCurrentIndex(0);
+    songTableHeaderManager = new headerManager(treeViews->at(3));
 }
 
 
@@ -880,32 +894,31 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
 
     QMenu* menu = new QMenu();
 
-    qDebug()<<"test";
-    QTreeView *treeView;
+
+
+    headerManager* manager;
     if (this->ui->playlistView->hasFocus())
     {
-        treeView = this->ui->playlistView;
+        manager = playlistHeaderManager;
     }
     else
     {
-        treeView = treeViews->at(ui->treeViewTabWidget->currentIndex());
+        manager = songTableHeaderManager;
 
     }
 
 
-    QHeaderView* header = treeView->header();
 
 
-    headerManager* handler = new headerManager(header);
-    qDebug()<<QString::number(header->count());
-    handler->setIndexToEdit(header->logicalIndexAt(pos));
-    if (header->count() - 1 > header->hiddenSectionCount() )
-    {
-        menu->addAction("Spalte verstecken", handler, SLOT(hideSection()));
-    }
-    menu->addAction("Alle anzeigen", handler, SLOT(showAll()));
 
 
+
+
+    menu->addActions(*(manager->getActions()));
+    menu->addSeparator();
+    QMenu* subMenu;
+    subMenu = menu->addMenu("Spaltengröße anpassen");
+    //subMenu->addAction(manager->getResizeActionGroup());
     menu->exec(QCursor::pos());
 
 

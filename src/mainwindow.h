@@ -26,6 +26,7 @@
 #include "m3utranslator.h"
 #include "aboutdialog.h"
 #include "playercontext.h"
+#include "headermanager.h"
 
 #include <QSortFilterProxyModel>
 
@@ -72,6 +73,9 @@ QSortFilterProxyModel *proxyModel;
     QList<QLineEdit*> *searchEdits;
 
     OSDisplay* display;
+
+    headerManager* playlistHeaderManager;
+    headerManager* songTableHeaderManager;
 
 
 private slots:

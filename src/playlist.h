@@ -6,6 +6,7 @@
 
 #include <QObject>
 #include <QReadWriteLock>
+#include <QUrl>
 
 
 /**
@@ -18,6 +19,9 @@ class Playlist : public QObject
     Q_OBJECT
 public:
     explicit Playlist(QList<AudioFile*> *audioFiles, QObject *parent = 0);
+    explicit Playlist(QString m3ufile, QObject *parent = 0);
+
+
 
     void setShuffle(bool value); 
     bool getShuffle();
@@ -26,6 +30,7 @@ public:
     void setCurrentPlayingSong(int value);
     void deleteSong(int value);
     void insertSongsAt(int position, QList<AudioFile*> *songs);
+    bool isSafedPlaylist();
 
     void sortByArtist(Qt::SortOrder order);
     void sortByTitle(Qt::SortOrder order);
@@ -59,6 +64,7 @@ public:
 
 private:
 
+    bool safedPlaylist;
     int actualPlayingSong;
     QList<AudioFile*> *SongList;
 

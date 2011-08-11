@@ -231,6 +231,12 @@ QMimeData *SafedPlaylistModel::mimeData(const QModelIndexList &indexes) const
                }
 
             }
+            if (item->getType() == "SONG")
+            {
+                QString filename = item->getFilename();
+                QUrl url = QUrl::fromLocalFile(filename);
+                filenames.append(url);
+            }
         }
 
     }
