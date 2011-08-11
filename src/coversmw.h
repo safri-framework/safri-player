@@ -22,7 +22,7 @@ class CoverSMW : public SettingsModuleWidget
 
     public slots:
 
-        virtual void saveSettings();
+        virtual void transferSettings();
 
     private slots:
 

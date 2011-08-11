@@ -83,9 +83,20 @@ void SettingsManagerDialog::createIcons()
 void SettingsManagerDialog::saveSettings()
 {
     int len = settingsWidgetList.size();
+    bool hasModifiedSettings = false;
 
     for (int i = 0; i < len; i++)
     {
-        settingsWidgetList.at(i)->saveSettings();
+        settingsWidgetList.at(i)->transferSettings();
+
+        if ( settingsWidgetList.at(i)->isModified() )
+        {
+            hasModifiedSettings = true;
+        }
+    }
+
+    if (hasModifiedSettings)
+    {
+        SettingsManager::getInstance()->saveSettings();
     }
 }

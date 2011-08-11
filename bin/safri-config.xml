@@ -1,0 +1,14 @@
+<safri-configuration>
+    <settingsmodule name="core.albumCover">
+        <setting name="filenamePatterns">%ALBUM - %ARTIST.jpg;%ARTIST - %ALBUM - Front.jpg;%ALBUM - Front.jpg</setting>
+    </settingsmodule>
+    <settingsmodule name="core.view">
+        <setting name="nowplayingDisplayTime">4</setting>
+        <setting name="showOSDisplay">1</setting>
+        <setting name="showTrayBalloon">0</setting>
+        <setting name="treeview1Hierarchy">GENRE;ARTIST;ALBUM;SONG;</setting>
+        <setting name="treeview2Hierarchy">ARTIST;ALBUM;SONG</setting>
+        <setting name="treeview3Hierarchy">ALBUM;SONG</setting>
+        <setting name="treeviewCount">3</setting>
+    </settingsmodule>
+</safri-configuration>

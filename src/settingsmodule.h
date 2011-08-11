@@ -9,6 +9,10 @@
 class SettingsModule : public QObject
 {
     Q_OBJECT
+
+    friend class SettingsManager;
+    friend class SettingsModuleWidget;
+
     public:
 
         SettingsModule(QString moduleName);
@@ -17,16 +21,17 @@ class SettingsModule : public QObject
         virtual QVariant getSetting(QString setting);
         virtual void setSetting(QString setting, QVariant value);
 
-        virtual bool saveSettings();
-        virtual bool loadSettings();
-
     signals:
 
         void settingsChanged();
 
     protected:
 
-        QMap<QString, QVariant> settings;
+        QMap<QString, QVariant>* getSettingsMap();
+        void setSettingsMap(QMap<QString, QVariant>* settings);
+        bool isModified();
+
+        QMap<QString, QVariant>* settings;
         bool modified;
         QString moduleName;
 };

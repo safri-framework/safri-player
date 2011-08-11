@@ -25,7 +25,7 @@ CoverSMW::~CoverSMW()
 }
 
 
-void CoverSMW::saveSettings()
+void CoverSMW::transferSettings()
 {
     QStringList filenamePatternsList = filenamePatternModel->stringList();
     QString filenamePatterns;
@@ -44,9 +44,6 @@ void CoverSMW::saveSettings()
     filenamePatterns.remove( filenamePatterns.size() - 1, 1 );
 
     this->settingsModule->setSetting("filenamePatterns", filenamePatterns);
-
-    this->settingsModule->saveSettings();
-
 }
 
 void CoverSMW::on_addCoverFilePattern_clicked()

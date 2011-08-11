@@ -10,11 +10,14 @@ class SettingsModuleWidget : public QWidget
     public:
         explicit SettingsModuleWidget(SettingsModule* settingsModule = 0, QWidget *parent = 0);
 
+        virtual bool isModified();
+
     signals:
 
     public slots:
 
-        virtual void saveSettings() = 0;
+        virtual void transferSettings() = 0;
+
 
     protected:
 

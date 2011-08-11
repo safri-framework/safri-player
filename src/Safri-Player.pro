@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql phonon webkit mysql
+QT       += core gui sql phonon webkit mysql xml
 
 TARGET = SafriPlayer
 TEMPLATE = app

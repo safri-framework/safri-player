@@ -82,9 +82,7 @@ TreeItem* M3uTranslator::getPlaylistTree()
                 QFileInfo songinfo(af->fileName());
                 QString text = songinfo.fileName();
                 TreeItem* childItem = new TreeItem(0,"SONG", af->fileName(),text,child);
-                qDebug()<< "neuesKind";
                 child->getChilds()->append(childItem);
-                qDebug()<<"append";
             }
             root->getChilds()->append(child);
         }

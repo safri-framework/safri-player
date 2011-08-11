@@ -3,7 +3,8 @@
 
 #include <QDebug>
 
-SettingsModule::SettingsModule(QString moduleName) : moduleName(moduleName)
+SettingsModule::SettingsModule(QString moduleName)
+    : settings(new QMap<QString, QVariant>()), modified(false), moduleName(moduleName)
 {
 
 }
@@ -11,18 +12,16 @@ SettingsModule::SettingsModule(QString moduleName) : moduleName(moduleName)
 QVariant SettingsModule::getSetting(QString setting)
 {
     //qDebug() << "No. of settings: " << settings.size() << moduleName + "." + setting;
-    return this->settings.value(moduleName + "." + setting, QVariant() );
+    return this->settings->value(setting, QVariant() );
 }
 
 void SettingsModule::setSetting(QString setting, QVariant value)
 {
-    if (this->settings.value(moduleName + "." + setting, QVariant()) != value )
+    if (this->settings->value(setting, QVariant()) != value )
     {
         //qDebug() << "Setting modified: " << moduleName + "." + setting << " -> " << value.toString() ;
         this->modified = true;
-        this->settings.insert(moduleName + "." + setting, value);
-
-        //Q_EMIT settingsChanged();
+        this->settings->insert(setting, value);
     }
 }
 
@@ -31,23 +30,31 @@ QString SettingsModule::getModulename()
     return this->moduleName;
 }
 
-bool SettingsModule::saveSettings()
+QMap<QString, QVariant>* SettingsModule::getSettingsMap()
 {
-    if (this->modified)
-    {
-        DatabaseDAO::removeModuleSettings(moduleName);
-        DatabaseDAO::insertModuleSettings(settings);
-        this->modified = false;
-        //qDebug() << "saved " << settings.size() << " settings into database";
-    }
+    return settings;
 }
 
-bool SettingsModule::loadSettings()
+void SettingsModule::setSettingsMap(QMap<QString, QVariant>* settings)
 {
-    this->settings = DatabaseDAO::getModuleSettings(moduleName);
-    this->modified = false;
+    delete this->settings;
+    this->settings = settings;
+}
 
-    Q_EMIT settingsChanged();
+bool SettingsModule::isModified()
+{
 
-    //qDebug() << "loaded " << settings.size() << " settings from database";
+    if (modified)
+    {
+
+        Q_EMIT settingsChanged();
+
+        // reset by read:
+        // soon as the user noticed the modification, we reset the flag
+        modified = false;
+
+        return true;
+    }
+
+    return false;
 }

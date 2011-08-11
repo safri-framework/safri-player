@@ -4,3 +4,8 @@ SettingsModuleWidget::SettingsModuleWidget(SettingsModule* settingsModule, QWidg
     QWidget(parent), settingsModule(settingsModule)
 {
 }
+
+bool SettingsModuleWidget::isModified()
+{
+    return  settingsModule->isModified();
+}

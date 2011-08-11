@@ -66,7 +66,7 @@ ViewSMW::~ViewSMW()
 }
 
 
-void ViewSMW::saveSettings()
+void ViewSMW::transferSettings()
 {
     QString treeview1Hierarchy;
 
@@ -106,7 +106,6 @@ void ViewSMW::saveSettings()
 
     settingsModule->setSetting("nowplayingDisplayTime", ui->spnDisplayTime->value());
 
-    this->settingsModule->saveSettings();
 }
 
 int ViewSMW::getIndexFromString(QString string)
@@ -146,5 +145,5 @@ QString ViewSMW::getStringFromIndex(int index)
 
 void ViewSMW::on_save_clicked()
 {
-    this->saveSettings();
+    this->transferSettings();
 }

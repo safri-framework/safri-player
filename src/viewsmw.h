@@ -18,7 +18,7 @@ class ViewSMW : public SettingsModuleWidget
 
     public slots:
 
-        virtual void saveSettings();
+        virtual void transferSettings();
 
 private slots:
     void on_save_clicked();
