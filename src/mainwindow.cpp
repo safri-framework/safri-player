@@ -97,22 +97,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QHeaderView* songListHeader = treeViews->at(3)->header();
     songListHeader->setContextMenuPolicy(Qt::CustomContextMenu);
-    songListHeader->hideSection(2);
-    songListHeader->hideSection(3);
+
 
     ui->playlistView->setHeaderHidden(false);
-    QHeaderView* playlistHeader = ui->playlistView->header();
-    playlistHeader->setStretchLastSection(false);
-    playlistHeaderManager = new headerManager(ui->playlistView);
 
 
 
-    playlistHeader->resizeSection(0, 55);
-    playlistHeader->resizeSection(4, 55);
-    playlistHeader->resizeSection(6, 55);
-    playlistHeader->setResizeMode(0, QHeaderView::Fixed);
-    playlistHeader->setResizeMode(4,QHeaderView::Fixed);
-    playlistHeader->setResizeMode(6,QHeaderView::Fixed);
+
 
 
     // connect contextmenu signals for treeviews
@@ -201,7 +192,8 @@ void MainWindow::setupTreeViewTabs()
     }
 
     this->ui->treeViewTabWidget->setCurrentIndex(0);
-    songTableHeaderManager = new headerManager(treeViews->at(3));
+
+
 }
 
 
@@ -271,6 +263,10 @@ void MainWindow::SetupSongTreeModels()
 
     }
     fileSystem = true;
+    QHeaderView* songListHeader = treeViews->at(3)->header();
+    songListHeader->hideSection(2);
+    songListHeader->hideSection(3);
+    songTableHeaderManager = new headerManager(treeViews->at(3));
 
 }
 
@@ -301,6 +297,10 @@ void MainWindow::setupPlaylistModel()
     connect(ui->playlistView->header(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_header_customContextMenuRequested(QPoint)));
 
     ui->playlistView->setModel(playlistModel);
+    ui->playlistView->setAlternatingRowColors(true);
+    ui->playlistView->hideColumn(4);
+    ui->playlistView->hideColumn(5);
+    playlistHeaderManager = new headerManager(ui->playlistView);
 }
 
 
@@ -918,7 +918,7 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
     menu->addSeparator();
     QMenu* subMenu;
     subMenu = menu->addMenu("Spaltengröße anpassen");
-    //subMenu->addAction(manager->getResizeActionGroup());
+    subMenu->addActions(manager->getResizeActionGroup()->actions());
     menu->exec(QCursor::pos());
 
 

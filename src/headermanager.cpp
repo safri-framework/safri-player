@@ -15,9 +15,21 @@ headerManager::headerManager(QTreeView* view, QObject *parent) :
 
     actionList = new QList<QAction*>;
     this->header = view->header();
+
+    qDebug()<< QString::number(header->count());
+
+
+
+
+
+
     for (int i = 0; i < header->count(); i++)
     {
+
         const QString headerText = view->model()->headerData(i, Qt::Horizontal).toString();
+
+
+
         QAction* action = new QAction(headerText, this);
 
         action->setCheckable(true);
@@ -52,17 +64,34 @@ connect(mapper, SIGNAL(mapped(int)), this, SLOT(toggleSection(int)));
 
 
 
-QAction* windowSize = new QAction("nach Fenstergröße", this);
-QAction* columnSize = new QAction("nach Zeilenlänge", this);
-QAction* manualResize = new QAction("manuell", this);
-connect(windowSize, SIGNAL(triggered()), this, SLOT(autoResizeAvailableSpace()));
-connect(columnSize, SIGNAL(triggered()), this, SLOT(autoResizeContent()));
-connect(manualResize, SIGNAL(triggered()), this, SLOT(manualResizing()));
 resizeActionGroup = new QActionGroup(this);
+resizeActionGroup->setExclusive(true);
+
+
+
+QAction* windowSize = new QAction("nach Fenstergröße", resizeActionGroup);
+QAction* columnSize = new QAction("nach Zeilenlänge", resizeActionGroup);
+QAction* manualResize = new QAction("manuell", resizeActionGroup);
+windowSize->setActionGroup(resizeActionGroup);
+columnSize->setActionGroup(resizeActionGroup);
+manualResize->setActionGroup(resizeActionGroup);
+
+windowSize->setCheckable(true);
+columnSize->setCheckable(true);
+manualResize->setCheckable(true);
+
+
 resizeActionGroup->addAction(windowSize);
 resizeActionGroup->addAction(columnSize);
 resizeActionGroup->addAction(manualResize);
-manualResize->setChecked(true);
+
+connect(windowSize, SIGNAL(triggered()), this, SLOT(autoResizeAvailableSpace()));
+connect(columnSize, SIGNAL(triggered()), this, SLOT(autoResizeContent()));
+connect(manualResize, SIGNAL(triggered()), this, SLOT(manualResizing()));
+
+windowSize->trigger();
+//manualResize->trigger();
+windowSize->setChecked(true);
 
 
 
@@ -111,6 +140,7 @@ void headerManager::setIndexToEdit(int index)
 
 void headerManager::manualResizing()
 {
+    header->setStretchLastSection(true);
     for (int i = 0; i < header->count(); i++)
     {
       header->setResizeMode(i, QHeaderView::Interactive);
@@ -120,10 +150,14 @@ void headerManager::manualResizing()
 
 void headerManager::autoResizeContent()
 {
-
-
-        header->resizeSections(QHeaderView::ResizeToContents);
-
+    for(int i = 0; i < header->count(); i++)
+    {
+        QString headerText = view->model()->headerData(i, Qt::Horizontal).toString();
+        if (headerText == "Track" || headerText == "Jahr" || headerText == "Länge" )
+            header->setResizeMode(QHeaderView::ResizeToContents);
+        else
+            header->setResizeMode(QHeaderView::Fixed);
+    }
 }
 
 
