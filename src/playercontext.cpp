@@ -120,7 +120,8 @@ void PlayerContext::CurrentSourceChanged(AudioFile* file)
     webPage->mainFrame()->setUrl(QUrl("discography.html"));
     */
 
-    webPage->mainFrame()->setUrl( QUrl("http://musicbrainz.org/search?query=" + file->getArtist() + "&type=artist"));
+ //   webPage->mainFrame()->setUrl( QUrl("http://musicbrainz.org/search?query=" + file->getArtist() + "&type=artist"));
+    webPage->mainFrame()->setUrl( QUrl("http://de.wikipedia.org/wiki/" + file->getArtist()));
 
 
 }

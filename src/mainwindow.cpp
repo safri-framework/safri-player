@@ -919,6 +919,7 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
     QMenu* subMenu;
     subMenu = menu->addMenu("Spaltengröße anpassen");
     subMenu->addActions(manager->getResizeActionGroup()->actions());
+    menu->addAction(manager->getAlternatingRowColorAction());
     menu->exec(QCursor::pos());
 
 

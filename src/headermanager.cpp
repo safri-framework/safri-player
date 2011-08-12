@@ -93,13 +93,26 @@ windowSize->trigger();
 //manualResize->trigger();
 windowSize->setChecked(true);
 
+alternatingRowColorAction = new QAction("alternierende Spaltenfarben", this);
+alternatingRowColorAction->setCheckable(true);
+if(view->alternatingRowColors() == true)
+{
+    alternatingRowColorAction->setChecked(true);
 
+}
 
-
+    connect(alternatingRowColorAction, SIGNAL(toggled(bool)), this, SLOT(toggleAlternatingRowColors(bool)));
 
 
 
 }
+void headerManager::toggleAlternatingRowColors(bool value)
+{
+    view->setAlternatingRowColors(value);
+
+
+}
+
 
 void headerManager::toggleSection(int i)
 {
@@ -189,6 +202,12 @@ void headerManager::autoResizeAvailableSpace()
                 header->setResizeMode(i,QHeaderView::Stretch);
             }
         }
+}
+
+QAction* headerManager::getAlternatingRowColorAction()
+{
+
+    return alternatingRowColorAction;
 }
 
 

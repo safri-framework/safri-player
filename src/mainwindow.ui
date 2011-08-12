@@ -55,7 +55,7 @@
            </property>
            <widget class="QWidget" name="webTab">
             <attribute name="title">
-             <string>Seite</string>
+             <string>Info</string>
             </attribute>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>

@@ -17,6 +17,7 @@ public:
     void setIndexToEdit(int index);
     QList<QAction*>* getActions();
     QActionGroup* getResizeActionGroup();
+    QAction* getAlternatingRowColorAction();
 signals:
 
 public slots:
@@ -29,12 +30,14 @@ public slots:
     void autoResizeContent();
     void autoResizeAvailableSpace();
     void toggleSection(int i);
+    void toggleAlternatingRowColors(bool value);
 
 private:
     QHeaderView* header;
     int indexToEdit;
     QList<QAction*>* actionList;
     QActionGroup* resizeActionGroup;
+    QAction* alternatingRowColorAction;
    QSignalMapper* mapper;
    QTreeView* view;
 };
