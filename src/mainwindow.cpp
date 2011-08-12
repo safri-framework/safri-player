@@ -138,7 +138,7 @@ void MainWindow::setupTreeViewTabs()
 
     QStringList captions;
 
-    captions << "Genre" << "Interpret" << "Album" << "Song" << "FileSystem";
+    captions << "Genre" << "Interpreten" << "Alben" << "Songs" << "Dateien";
 
     for (int i = 4; i >= 0; i--)
     {
