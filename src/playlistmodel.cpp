@@ -1,6 +1,7 @@
 #include "playlistmodel.h"
 #include <QDirIterator>
 #include <QTime>
+#include "playerwidget.h"
 
 PlaylistModel::PlaylistModel(Playlist *sPlaylist, QObject *parent) :
     QAbstractTableModel(parent), playlist(0), taggerThread(0)
@@ -399,7 +400,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             foreach (QUrl i, urls)
             {
 
-                if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+                if (PlayerWidget::getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix()))
                 {
                     AudioFile* song = new AudioFile(i.toLocalFile());
                     audioFiles->append(song);
@@ -410,13 +411,15 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                 {
 
 
+
                     if (!i.isEmpty())
                     {
 
                         QDir dir(i.toLocalFile());
-                        QStringList filters;
-                        filters << "*.mp3" << "*.wma" << "*.ogg";
-                        dir.setNameFilters(filters);
+                        QStringList* filters = PlayerWidget::getSupportedFileTypes();
+                        //filters->append("*.ogx");
+
+                        dir.setNameFilters(*filters);
 
                         QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
 
@@ -426,6 +429,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                             lukeFileWalker.next();
                             AudioFile* af = new AudioFile(lukeFileWalker.fileInfo().absoluteFilePath());
                             audioFiles->append(af);
+
                         }
 
 

@@ -10,6 +10,7 @@
 #include <audiofile.h>
 #include <playlist.h>
 #include <QFileInfo>
+#include <QStringList>
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::PlayerWidget), playlist(0)
@@ -357,7 +358,7 @@ void PlayerWidget::dropEvent(QDropEvent *event)
         foreach (QUrl i, urllist)
         {
 
-            if (QFileInfo(i.toLocalFile()).suffix() == "mp3" || QFileInfo(i.toLocalFile()).suffix() == "ogg" )
+            if (getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix()))
             {
                 AudioFile* song = new AudioFile(i.toLocalFile());
                 songlist->append(song);
@@ -372,9 +373,9 @@ void PlayerWidget::dropEvent(QDropEvent *event)
                 {
 
                     QDir dir(i.toLocalFile());
-                    QStringList filters;
-                    filters << "*.mp3" << "*.wma" << "*.ogg";
-                    dir.setNameFilters(filters);
+                    QStringList* filters = getSupportedFileTypes();
+
+                    dir.setNameFilters(*filters);
 
                     QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
 
@@ -407,4 +408,21 @@ void PlayerWidget::dropEvent(QDropEvent *event)
     }
 }
 
+
+QStringList* PlayerWidget::getSupportedFileTypes()
+{
+    QStringList* values = new QStringList();
+    QStringList list = Phonon::BackendCapabilities::availableMimeTypes();
+    for (int i = 0; i < list.size();i++)
+    {
+        QString value = list.at(i);
+        if (value.startsWith("audio/"))
+        {
+            values->append("*."+value.section("/",1));
+        }
+
+    }
+   return values;
+
+}
 

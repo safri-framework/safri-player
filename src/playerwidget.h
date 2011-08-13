@@ -30,6 +30,8 @@ public:
     void dragEnterEvent(QDragEnterEvent *event);
     //void dragLeaveEvent(QDragLeaveEvent *event);
     void dropEvent(QDropEvent *event);
+    static QStringList* getSupportedFileTypes();
+
 
 
 private:

@@ -20,6 +20,8 @@
 #include <QHeaderView>
 #include "headermanager.h"
 
+#include <Phonon/BackendCapabilities>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -72,6 +74,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainToolBar->addAction(ui->actionOrdner_hinzufuegen);
     ui->mainToolBar->addAction(ui->actionSongs_hinzufuegen);
     ui->mainToolBar->setStyleSheet("background-image:url();");
+
+
+
+
+    QStringList* availableMime = PlayerWidget::getSupportedFileTypes();
+   for (int i = 0; i < availableMime->size();i++)
+   {
+     qDebug()<< availableMime->at(i);
+   }
 
 
 
@@ -509,7 +520,7 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
         }
         else
         {
-            if(info.suffix() == "mp3" || info.suffix() == "ogg" )
+            if(PlayerWidget::getSupportedFileTypes()->contains(info.suffix()))
             {
                 menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
 
@@ -808,8 +819,7 @@ void MainWindow::addPathRecursiveToDatabase(QString path)
         {
             QStringList *files = new QStringList();
             QDir dir(path);
-            QStringList filters;
-            filters << "*.mp3" << "*.wma" << "*.ogg";
+            QStringList filters = *PlayerWidget::getSupportedFileTypes();
             dir.setNameFilters(filters);
 
             QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
@@ -840,8 +850,7 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
     {
         QStringList *files = new QStringList();
         QDir dir(info.absoluteFilePath());
-        QStringList filters;
-        filters << "*.mp3" << "*.wma" << "*.ogg";
+        QStringList filters = *PlayerWidget::getSupportedFileTypes();
         dir.setNameFilters(filters);
 
         QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
@@ -863,8 +872,8 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
     }
     else
     {
-        QString suffix = info.suffix();
-        if ( suffix == "mp3" || suffix == "ogg" )
+        QString suffix = "*."+info.suffix();
+        if(PlayerWidget::getSupportedFileTypes()->contains(suffix))
         {
             audioFileList->append(new AudioFile(info.absoluteFilePath()));
         }

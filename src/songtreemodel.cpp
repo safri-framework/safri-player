@@ -1,5 +1,6 @@
 #include "songtreemodel.h"
 #include <QDirIterator>
+#include <playerwidget.h>
 
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
@@ -246,8 +247,8 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             foreach (QUrl i, urls)
             {
 
-                QString suffix = QFileInfo(i.toLocalFile()).suffix();
-                if ( suffix == "mp3" || suffix == "ogg" )
+                QString suffix = "*."+QFileInfo(i.toLocalFile()).suffix();
+                if (PlayerWidget::getSupportedFileTypes()->contains(suffix))
                 {
                     filenames->append(i.toLocalFile());
 
@@ -262,7 +263,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                     {
 
                         QDir dir(i.toLocalFile());
-                        QStringList filters;
+                        QStringList filters = *PlayerWidget::getSupportedFileTypes();
                         filters << "*.mp3" << "*.wma" << "*.ogg";
                         dir.setNameFilters(filters);
 

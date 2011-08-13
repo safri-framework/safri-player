@@ -78,6 +78,7 @@ QSortFilterProxyModel *proxyModel;
     headerManager* songTableHeaderManager;
 
 
+
 private slots:
 
 
