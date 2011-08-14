@@ -112,11 +112,12 @@ void M3uTranslator::savePlaylistToM3u(Playlist* playlist, QString absoluteFilena
 
     QTextStream fileStream(&file);
 
+    qDebug()<<"immernoch alles OK";
     for (int i=0; i<playlist->getSongCount(); i++)
     {
         fileStream << playlist->getAudioFileAt(i)->fileName() << endl;
     }
-
+    qDebug()<<"immernoch alles OK";
     file.close();
 }
 

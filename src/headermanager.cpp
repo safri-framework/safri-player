@@ -93,7 +93,7 @@ windowSize->trigger();
 //manualResize->trigger();
 windowSize->setChecked(true);
 
-alternatingRowColorAction = new QAction("alternierende Spaltenfarben", this);
+alternatingRowColorAction = new QAction("alternierende Zeilenfarben", this);
 alternatingRowColorAction->setCheckable(true);
 if(view->alternatingRowColors() == true)
 {

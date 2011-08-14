@@ -358,7 +358,7 @@ void PlayerWidget::dropEvent(QDropEvent *event)
         foreach (QUrl i, urllist)
         {
 
-            if (getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix()))
+            if (getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix().toLower()))
             {
                 AudioFile* song = new AudioFile(i.toLocalFile());
                 songlist->append(song);
@@ -416,8 +416,9 @@ QStringList* PlayerWidget::getSupportedFileTypes()
     for (int i = 0; i < list.size();i++)
     {
         QString value = list.at(i);
-        if (value.startsWith("audio/"))
+        if (value.startsWith("audio/mp3")||value.startsWith("audio/flac")||value.startsWith("audio/ogg")||value.startsWith("audio/m4a"))
         {
+
             values->append("*."+value.section("/",1));
         }
 

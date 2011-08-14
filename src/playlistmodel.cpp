@@ -400,7 +400,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             foreach (QUrl i, urls)
             {
 
-                if (PlayerWidget::getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix()))
+                if (PlayerWidget::getSupportedFileTypes()->contains("*."+QFileInfo(i.toLocalFile()).suffix().toLower()))
                 {
                     AudioFile* song = new AudioFile(i.toLocalFile());
                     audioFiles->append(song);
@@ -417,7 +417,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
                         QDir dir(i.toLocalFile());
                         QStringList* filters = PlayerWidget::getSupportedFileTypes();
-                        //filters->append("*.ogx");
+
 
                         dir.setNameFilters(*filters);
 

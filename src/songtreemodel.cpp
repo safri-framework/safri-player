@@ -248,7 +248,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             {
 
                 QString suffix = "*."+QFileInfo(i.toLocalFile()).suffix();
-                if (PlayerWidget::getSupportedFileTypes()->contains(suffix))
+                if (PlayerWidget::getSupportedFileTypes()->contains(suffix.toLower()))
                 {
                     filenames->append(i.toLocalFile());
 
@@ -264,7 +264,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
                         QDir dir(i.toLocalFile());
                         QStringList filters = *PlayerWidget::getSupportedFileTypes();
-                        filters << "*.mp3" << "*.wma" << "*.ogg";
+                        filters << *PlayerWidget::getSupportedFileTypes();
                         dir.setNameFilters(filters);
 
                         QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);

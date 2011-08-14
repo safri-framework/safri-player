@@ -440,7 +440,10 @@ void MainWindow::savePlaylistActioSlot()
         chooseNewPlaylistName = false;
 
         playlistName = QInputDialog::getText(this, "Playliste speichern", "Geben Sie ihrer Playliste einen Namen:", QLineEdit::Normal, playlistName);
-
+        if (playlistName.isNull())
+        {
+           return;
+        }
 
         if ( QFile::exists(M3uTranslator::playlistNameToAbsPath(playlistName)))
         {
@@ -451,6 +454,10 @@ void MainWindow::savePlaylistActioSlot()
                 chooseNewPlaylistName = true;
 
             }
+            else
+            {
+                chooseNewPlaylistName = false;
+            }
         }
 
 
@@ -458,10 +465,10 @@ void MainWindow::savePlaylistActioSlot()
     while( chooseNewPlaylistName );
 
 
-
+    qDebug()<<"alles oK";
     M3uTranslator::savePlaylistToM3u(((PlaylistModel*)(ui->playlistView->model()))->getPlaylist(), M3uTranslator::playlistNameToAbsPath(playlistName));
 
-    ((QStringListModel*)ui->storedPlaylistView->model())->setStringList( M3uTranslator::getPlaylists()  );
+    ui->storedPlaylistView->setModel( new SafedPlaylistModel() );
 }
 
 void MainWindow::on_storedPlaylistView_clicked(QModelIndex index)
@@ -520,7 +527,7 @@ void MainWindow::on_fileSystemView_customContextMenuRequested(QPoint pos)
         }
         else
         {
-            if(PlayerWidget::getSupportedFileTypes()->contains(info.suffix()))
+            if(PlayerWidget::getSupportedFileTypes()->contains(info.suffix().toLower()))
             {
                 menu->addAction("zur Bibliothek hinzufügen", handler, SLOT(addSelectedIndexRecursiveToDatabase()));
 
@@ -842,7 +849,7 @@ void MainWindow::addPathRecursiveToDatabase(QString path)
 
 void MainWindow::fileSystem_doubleClicked(QModelIndex index)
 {
-    qDebug()<<"test";
+
     const QFileSystemModel* model = static_cast<const QFileSystemModel*>(index.model());
     QFileInfo info = model->fileInfo(index);
     QList<AudioFile*>* audioFileList = new QList<AudioFile*>;
@@ -873,7 +880,7 @@ void MainWindow::fileSystem_doubleClicked(QModelIndex index)
     else
     {
         QString suffix = "*."+info.suffix();
-        if(PlayerWidget::getSupportedFileTypes()->contains(suffix))
+        if(PlayerWidget::getSupportedFileTypes()->contains(suffix.toLower()))
         {
             audioFileList->append(new AudioFile(info.absoluteFilePath()));
         }
