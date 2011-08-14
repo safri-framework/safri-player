@@ -856,7 +856,7 @@ void DatabaseDAO::loadDataTable()
 
     while ( query.next() )
     {
-        QString searchIndex = query.value( query.record().indexOf("song") ).toString() + " " + query.value( query.record().indexOf("album") ).toString() + " " + query.value( query.record().indexOf("artist") ).toString();
+        QString searchIndex = query.value( query.record().indexOf("song") ).toString() + " " + query.value( query.record().indexOf("album") ).toString() + " " + query.value( query.record().indexOf("artist") ).toString()+ " " + query.value( query.record().indexOf("genre") ).toString();
         ColumnData* row = new ColumnData();
 
         row->insert("SONG", query.value( query.record().indexOf("song") ).toString());
