@@ -23,7 +23,7 @@ class SettingsModule : public QObject
 
     signals:
 
-        void settingsChanged();
+        void settingsChanged(QString setting);
 
     protected:
 

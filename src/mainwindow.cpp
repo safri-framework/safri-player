@@ -20,6 +20,7 @@
 #include <QHeaderView>
 #include "headermanager.h"
 
+#include <QRegExp>
 #include <Phonon/BackendCapabilities>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -130,7 +131,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    connect(SettingsManager::getInstance()->getModule("core.view"), SIGNAL(settingsChanged()), this, SLOT(SetupSongTreeModels()));
+    connect(SettingsManager::getInstance()->getModule("core.view"), SIGNAL(settingsChanged(QString)), this, SLOT(viewSettingsChanged(QString)));
 
 
     display = new OSDisplay(0);
@@ -139,6 +140,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 bool fileSystem = false;
 
+
+void MainWindow::viewSettingsChanged(QString setting)
+{
+    if (setting.contains("treeview") && setting.contains("Hierarchy"))
+    {
+       setting.replace(QRegExp("treeview"),"");
+       setting.replace(QRegExp("Hierarchy"),"");
+
+       int treeviewNr = setting.toInt();
+
+       // -1: settings start counting at 1 / GUI at 0
+       setupSongTreeModelNumber(treeviewNr - 1);
+    }
+}
 
 void MainWindow::setupTreeViewTabs()
 {
@@ -214,7 +229,26 @@ MainWindow::~MainWindow()
     trayIcon->setVisible(false);
 }
 
+void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
+{
+    SettingsModule* settings = SettingsManager::getInstance()->getModule("core.view");
 
+    SongTreeModel *model;
+    filters[treeviewNumber] = new QList<BaseDTO::DTO_TYPE>();
+
+    QString hierarchySettings = settings->getSetting("treeview" + QString::number(treeviewNumber+1) + "Hierarchy").toString();
+    QStringList treeHierarchy = hierarchySettings.split(";", QString::SkipEmptyParts);
+
+    foreach (QString dtotype, treeHierarchy)
+    {
+        filters[treeviewNumber]->append(BaseDTO::stringToType(dtotype));
+    }
+
+    model = new SongTreeModel(filters[treeviewNumber]);
+    connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
+
+    treeViews->at(treeviewNumber)->setModel(model);
+}
 
 void MainWindow::SetupSongTreeModels()
 {
@@ -223,21 +257,7 @@ void MainWindow::SetupSongTreeModels()
 
     for (int treeviewNumber = 0; treeviewNumber < treeviewCount; treeviewNumber++)
     {
-        SongTreeModel *model;
-        filters[treeviewNumber] = new QList<BaseDTO::DTO_TYPE>();
-
-        QString hierarchySettings = settings->getSetting("treeview" + QString::number(treeviewNumber+1) + "Hierarchy").toString();
-        QStringList treeHierarchy = hierarchySettings.split(";", QString::SkipEmptyParts);
-
-        foreach (QString dtotype, treeHierarchy)
-        {
-            filters[treeviewNumber]->append(BaseDTO::stringToType(dtotype));
-        }
-
-        model = new SongTreeModel(filters[treeviewNumber]);
-        connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-
-        treeViews->at(treeviewNumber)->setModel(model);
+        setupSongTreeModelNumber(treeviewNumber);
     }
 
     DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());

@@ -22,6 +22,8 @@ void SettingsModule::setSetting(QString setting, QVariant value)
         //qDebug() << "Setting modified: " << moduleName + "." + setting << " -> " << value.toString() ;
         this->modified = true;
         this->settings->insert(setting, value);
+
+        Q_EMIT settingsChanged(setting);
     }
 }
 
@@ -46,9 +48,6 @@ bool SettingsModule::isModified()
 
     if (modified)
     {
-
-        Q_EMIT settingsChanged();
-
         // reset by read:
         // soon as the user noticed the modification, we reset the flag
         modified = false;

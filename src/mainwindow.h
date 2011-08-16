@@ -81,6 +81,7 @@ QSortFilterProxyModel *proxyModel;
 
 private slots:
 
+    void viewSettingsChanged(QString setting);
 
     void SetupSongTreeModels();
 
@@ -102,6 +103,7 @@ private slots:
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
 
+    void setupSongTreeModelNumber(int treeviewNumber);
 
 
     void songTree_clicked(QModelIndex index);
