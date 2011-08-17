@@ -123,8 +123,6 @@ private slots:
     void DisablePlaylistViewSorting();
     void EnablePlaylistViewSorting();
 
-
-
 public slots:
 
     void addPathRecursiveToDatabase(QString path);

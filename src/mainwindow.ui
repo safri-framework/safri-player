@@ -110,7 +110,7 @@ QScrollBar::handle:vertical { background:  qlineargradient(x1:0, y1:0, x2:1, y2:
        <widget class="QWidget" name="leftWidget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
          <item>
-          <widget class="QTabWidget" name="treeViewTabWidget">
+          <widget class="SongtreeTabWidget" name="treeViewTabWidget">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -352,7 +352,7 @@ QScrollBar::handle:vertical { background:  qlineargradient(x1:0, y1:0, x2:1, y2:
      <x>0</x>
      <y>0</y>
      <width>824</width>
-     <height>18</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -471,6 +471,12 @@ QScrollBar::handle:vertical { background:  qlineargradient(x1:0, y1:0, x2:1, y2:
    <class>PlaylistView</class>
    <extends>QTreeView</extends>
    <header>playlistview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SongtreeTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>songtreetabwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

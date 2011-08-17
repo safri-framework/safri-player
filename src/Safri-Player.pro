@@ -64,7 +64,8 @@ HEADERS += \
     osdisplay.h \
     safedplaylistmodel.h \
     treeitem.h \
-    headermanager.h
+    headermanager.h \
+    songtreetabwidget.h
 
 SOURCES += \
     taginserter.cpp \
@@ -99,7 +100,8 @@ SOURCES += \
     osdisplay.cpp \
     safedplaylistmodel.cpp \
     treeitem.cpp \
-    headermanager.cpp
+    headermanager.cpp \
+    songtreetabwidget.cpp
 
 FORMS += \
     playerwidget.ui \

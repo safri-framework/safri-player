@@ -1001,3 +1001,5 @@ void MainWindow::infoClicked()
 {
     qDebug()<<"TRIGGER";
 }
+
+
