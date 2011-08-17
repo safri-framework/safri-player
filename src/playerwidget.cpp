@@ -416,7 +416,11 @@ QStringList* PlayerWidget::getSupportedFileTypes()
     for (int i = 0; i < list.size();i++)
     {
         QString value = list.at(i);
-        if (value.startsWith("audio/mp3")||value.startsWith("audio/flac")||value.startsWith("audio/ogg")||value.startsWith("audio/m4a"))
+        if (
+            value.startsWith("audio/mp3")||value.startsWith("audio/flac")
+            ||value.startsWith("audio/ogg")||value.startsWith("audio/m4a")
+            ||value.startsWith("audio/wma")
+            )
         {
 
             values->append("*."+value.section("/",1));

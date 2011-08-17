@@ -60,10 +60,6 @@ MainWindow::MainWindow(QWidget *parent) :
     SetupSongTreeModels();
     setupPlaylistModel();
 
-    deletePlaylistItemAction = new QAction("Aus Playlist Entfernen", ui->playlistView);
-    //deletePlaylistItemAction->setShortcutContext(Qt::WidgetShortcut);
-    deletePlaylistItemAction->setShortcut(tr("d"));
-    connect(deletePlaylistItemAction, SIGNAL(triggered()), this, SLOT(deleteSelectedSongActionSlot()));
 
     ui->progressBar->setVisible(false);
 
@@ -143,6 +139,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     display = new OSDisplay(0);
+
+
+
+
+
+
+this->deletePlaylistItemAction = new QAction("Aus Playliste entfernen", this);
+deletePlaylistItemAction->setShortcut(QKeySequence::Delete);
+  this->ui->playlistView->addAction(deletePlaylistItemAction);
+connect(this->deletePlaylistItemAction, SIGNAL(triggered()), this, SLOT(deleteSelectedSongActionSlot()));
+deletePlaylistItemAction->setEnabled(true);
+
+
+
  }
 
 
@@ -213,6 +223,7 @@ void MainWindow::setupTreeViewTabs()
 
         if ( i != 4) layout->addWidget(searchEdit);
 
+        treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
         layout->addWidget(treeView);
 
         currentTabWidget->setLayout(layout);
@@ -988,6 +999,5 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
 
 void MainWindow::infoClicked()
 {
-
-
+    qDebug()<<"TRIGGER";
 }
