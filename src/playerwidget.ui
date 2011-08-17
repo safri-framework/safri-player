@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>186</width>
     <height>30</height>
    </size>
   </property>
@@ -33,7 +33,7 @@
     <widget class="QLabel" name="info">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>186</width>
        <height>40</height>
       </size>
      </property>

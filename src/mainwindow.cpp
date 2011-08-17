@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     click = false;
     ui->setupUi(this);
 
-    QSplitter *splitter = new QSplitter(ui->centralWidget);
+    splitter = new QSplitter(ui->centralWidget);
 
     splitter->addWidget(ui->leftWidget);
     splitter->addWidget(ui->rightWidget);
@@ -60,7 +60,15 @@ MainWindow::MainWindow(QWidget *parent) :
     SetupSongTreeModels();
     setupPlaylistModel();
 
+    deletePlaylistItemAction = new QAction("Aus Playlist Entfernen", ui->playlistView);
+    //deletePlaylistItemAction->setShortcutContext(Qt::WidgetShortcut);
+    deletePlaylistItemAction->setShortcut(tr("d"));
+    connect(deletePlaylistItemAction, SIGNAL(triggered()), this, SLOT(deleteSelectedSongActionSlot()));
+
     ui->progressBar->setVisible(false);
+
+   this->ui->playlistView->header()->setObjectName("playlistHeader");
+
 
     connect(ui->actionSavePlaylist, SIGNAL(triggered()), this, SLOT(savePlaylistActioSlot()));
     connect(ui->savePlaylistButton, SIGNAL(clicked()), ui->actionSavePlaylist, SLOT(trigger()));
@@ -76,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainToolBar->addAction(ui->actionSongs_hinzufuegen);
     ui->mainToolBar->setStyleSheet("background-image:url();");
 
-
+    //this->ui->playerWidget->setStyleSheet("background-color: green");
 
 
     QStringList* availableMime = PlayerWidget::getSupportedFileTypes();
@@ -183,7 +191,7 @@ void MainWindow::setupTreeViewTabs()
         treeView->setAnimated(true);
         treeView->setContextMenuPolicy(Qt::CustomContextMenu);
         treeView->setExpandsOnDoubleClick(false);
-
+        treeView->setSelectionBehavior(QAbstractItemView::SelectRows);
         if (i != 3 )
         {
             treeView->setSortingEnabled(false);
@@ -332,6 +340,7 @@ void MainWindow::setupPlaylistModel()
     ui->playlistView->hideColumn(4);
     ui->playlistView->hideColumn(5);
     playlistHeaderManager = new headerManager(ui->playlistView);
+
 }
 
 
@@ -458,25 +467,36 @@ void MainWindow::savePlaylistActioSlot()
     do
     {
         chooseNewPlaylistName = false;
-
-        playlistName = QInputDialog::getText(this, "Playliste speichern", "Geben Sie ihrer Playliste einen Namen:", QLineEdit::Normal, playlistName);
-        if (playlistName.isNull())
+        bool ok;
+        playlistName = QInputDialog::getText(this, "Playliste speichern", "Geben Sie ihrer Playliste einen Namen:", QLineEdit::Normal, playlistName, &ok);
+        if (!ok)
         {
+           qDebug()<<"cancel";
            return;
         }
-
-        if ( QFile::exists(M3uTranslator::playlistNameToAbsPath(playlistName)))
+        if (playlistName.isNull())
         {
-            if ( QMessageBox::warning(this, "Playliste existiert bereits.", "Möchten sie die bereits existierende Playliste überschreiben?",
-                                      QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
-            {
+            qDebug()<<"isnull";
+            if (QMessageBox::warning(this, "Dateiname ungültig", "Bitte geben Sie einen Dateinamen ein",
+                                     QMessageBox::Ok) == QMessageBox::Ok);
+            chooseNewPlaylistName = true;
+        }
+        else
+        {
 
-                chooseNewPlaylistName = true;
-
-            }
-            else
+            if ( QFile::exists(M3uTranslator::playlistNameToAbsPath(playlistName)))
             {
-                chooseNewPlaylistName = false;
+                if ( QMessageBox::warning(this, "Playliste existiert bereits.", "Möchten Sie die bereits existierende Playliste überschreiben?",
+                                          QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+                {
+
+                    chooseNewPlaylistName = true;
+
+                }
+                else
+                {
+                    chooseNewPlaylistName = false;
+                }
             }
         }
 
@@ -510,7 +530,7 @@ void MainWindow::on_playlistView_customContextMenuRequested(QPoint pos)
         QUrl url(info.absoluteFilePath());
         ShowFolderInFileSystemHandler* handler = new ShowFolderInFileSystemHandler(&url,this);
 
-        menu->addAction("Entfernen", this, SLOT(deleteSelectedSongActionSlot()));
+        menu->addAction(deletePlaylistItemAction);
         menu->addAction("Ordner anzeigen", handler, SLOT(showFolderInFileSystem()));
         menu->addAction("In Explorer öffnen", handler, SLOT(showFolderInExplorer()));
         menu->exec(QCursor::pos());
@@ -597,6 +617,7 @@ void MainWindow::treeView_customContextMenuRequested(QPoint pos)
                 menu->addAction("Albumcover ändern", changer, SLOT(changeAlbumCover()));
                 menu->exec(QCursor::pos());
                 break;
+
             case BaseDTO::SONG:
                 QList<AudioFile*>* afList = DatabaseDAO::getAudioFilesByBaseDTO(dto_copy);
                 QString path = afList->at(0)->fileName();
@@ -959,6 +980,14 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
     menu->exec(QCursor::pos());
 
 
+
+
+}
+
+
+
+void MainWindow::infoClicked()
+{
 
 
 }

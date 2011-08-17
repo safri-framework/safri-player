@@ -727,6 +727,7 @@ int DatabaseDAO::cleanDatabase()
         QFileInfo* file = new QFileInfo(keys.at(i).toLocalFile());
         if (!file->exists())
         {
+            qDebug()<<"Datei gibts nich mehr";
          toDelete->append(pathlist->value(keys.at(i)));
         }
 

@@ -15,7 +15,7 @@
 #include <QSystemTrayIcon>
 #include <QTreeView>
 #include<QxtGlobalShortcut>
-
+#include <QAction>
 
 #include "basedto.h"
 #include "songtreemodel.h"
@@ -51,7 +51,7 @@ QSortFilterProxyModel *proxyModel;
     bool click;
     Ui::MainWindow *ui;
 
-
+    QSplitter *splitter;
     QList<BaseDTO::DTO_TYPE> *filters[4];
 
     PlaylistModel *playlistModel;
@@ -76,7 +76,7 @@ QSortFilterProxyModel *proxyModel;
 
     headerManager* playlistHeaderManager;
     headerManager* songTableHeaderManager;
-
+    QAction* deletePlaylistItemAction;
 
 
 private slots:
@@ -102,9 +102,9 @@ private slots:
 
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
+    void infoClicked();
 
     void setupSongTreeModelNumber(int treeviewNumber);
-
 
     void songTree_clicked(QModelIndex index);
     void songTree_doubleClicked(QModelIndex index);

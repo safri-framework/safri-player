@@ -2,6 +2,9 @@
 #include <QDirIterator>
 #include <QTime>
 #include "playerwidget.h"
+#include <QLinearGradient>
+#include <QGradientStop>
+#include <QGradientStop>
 
 PlaylistModel::PlaylistModel(Playlist *sPlaylist, QObject *parent) :
     QAbstractTableModel(parent), playlist(0), taggerThread(0)
@@ -183,15 +186,33 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 
         }
+
+
+
+
         else if (role == Qt::BackgroundRole)
         {
             if(playlist->isSongPlaying(index.row()))
             {
-                return QBrush( QColor(90, 174, 254) );
+
+
+                QLinearGradient gradient(0,0,0,15);
+                gradient.setColorAt(0, QColor("#6ea1f1"));
+                gradient.setColorAt(1, QColor("#567dbc"));
+
+
+
+
+                return QBrush( gradient );
             }
-            else
+
+        }
+        else if (role == Qt::ForegroundRole)
+        {
+            if(playlist->isSongPlaying(index.row()))
             {
-                return QVariant();
+                return QBrush(QColor("white"));
+
             }
         }
         else if (role == Qt::DecorationRole)
