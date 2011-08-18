@@ -77,7 +77,8 @@ QSortFilterProxyModel *proxyModel;
     headerManager* playlistHeaderManager;
     headerManager* songTableHeaderManager;
     QAction* deletePlaylistItemAction;
-
+    void keyPressEvent ( QKeyEvent * event );
+    void keyReleaseEvent(QKeyEvent * event);
 
 private slots:
 
@@ -102,7 +103,7 @@ private slots:
 
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
-    void infoClicked();
+
 
     void setupSongTreeModelNumber(int treeviewNumber);
 

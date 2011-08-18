@@ -997,9 +997,37 @@ void MainWindow::on_header_customContextMenuRequested(QPoint pos)
 
 
 
-void MainWindow::infoClicked()
+void MainWindow::keyPressEvent ( QKeyEvent * event )
 {
-    qDebug()<<"TRIGGER";
-}
 
+    if (event->key() == Qt::Key_Shift || event->key() == Qt::Key_Control)
+    {
+        int index = ui->treeViewTabWidget->currentIndex();
+        if (index <= 2)
+        {
+            QTreeView *treeView = treeViews->at(index);
+            treeView->clearSelection();
+            disconnect(treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)) );
+            qDebug()<<"deaktiviert";
+
+        }
+    }
+
+}
+void MainWindow::keyReleaseEvent(QKeyEvent * event)
+{
+
+    if (event->key() == Qt::Key_Shift || event->key() == Qt::Key_Control)
+    {
+        int index = ui->treeViewTabWidget->currentIndex();
+        if (index <= 2)
+        {
+            QTreeView *treeView = treeViews->at(index);
+
+            connect(treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)) );
+            qDebug()<<"aktiviert";
+        }
+    }
+
+}
 
