@@ -65,7 +65,8 @@ HEADERS += \
     safedplaylistmodel.h \
     treeitem.h \
     headermanager.h \
-    songtreetabwidget.h
+    songtreetabwidget.h \
+    quickplay.h
 
 SOURCES += \
     taginserter.cpp \
@@ -101,7 +102,8 @@ SOURCES += \
     safedplaylistmodel.cpp \
     treeitem.cpp \
     headermanager.cpp \
-    songtreetabwidget.cpp
+    songtreetabwidget.cpp \
+    quickplay.cpp
 
 FORMS += \
     playerwidget.ui \
@@ -112,4 +114,5 @@ FORMS += \
     settingsmanagerdialog.ui \
     coversmw.ui \
     viewsmw.ui \
-    osdisplay.ui
+    osdisplay.ui \
+    quickplay.ui

@@ -19,6 +19,7 @@
 #include "safedplaylistmodel.h"
 #include <QHeaderView>
 #include "headermanager.h"
+#include "quickplay.h"
 
 #include <QRegExp>
 #include <Phonon/BackendCapabilities>
@@ -152,7 +153,10 @@ connect(this->deletePlaylistItemAction, SIGNAL(triggered()), this, SLOT(deleteSe
 deletePlaylistItemAction->setEnabled(true);
 
 
+    quickPlayShortcut = new QxtGlobalShortcut(QKeySequence("Alt+Q"), this);
+    quickPlayShortcut->setEnabled(true);
 
+    connect(this->quickPlayShortcut, SIGNAL(activated()), this, SLOT(startQuickPlayer()));
  }
 
 
@@ -1003,7 +1007,7 @@ void MainWindow::keyPressEvent ( QKeyEvent * event )
     if (event->key() == Qt::Key_Shift || event->key() == Qt::Key_Control)
     {
         int index = ui->treeViewTabWidget->currentIndex();
-        if (index <= 2)
+        if (index <= 2 || index == 4)
         {
             QTreeView *treeView = treeViews->at(index);
             treeView->clearSelection();
@@ -1028,6 +1032,17 @@ void MainWindow::keyReleaseEvent(QKeyEvent * event)
             qDebug()<<"aktiviert";
         }
     }
+
+}
+
+
+
+
+void MainWindow::startQuickPlayer()
+{
+
+
+    QuickPlay* quickplay = new QuickPlay(this->ui->playerWidget, this);
 
 }
 

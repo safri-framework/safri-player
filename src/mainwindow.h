@@ -50,6 +50,7 @@ private:
 QSortFilterProxyModel *proxyModel;
     bool click;
     Ui::MainWindow *ui;
+    QxtGlobalShortcut* quickPlayShortcut;
 
     QSplitter *splitter;
     QList<BaseDTO::DTO_TYPE> *filters[4];
@@ -123,6 +124,7 @@ private slots:
 
     void DisablePlaylistViewSorting();
     void EnablePlaylistViewSorting();
+    void startQuickPlayer();
 
 public slots:
 
