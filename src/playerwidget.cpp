@@ -250,7 +250,7 @@ void PlayerWidget::previousActionSlot()
 
 void PlayerWidget::shuffleActionSlot(bool value)
 {
-    qDebug()<<value;
+
     if (playlist) playlist->setShuffle(value);
 
 }
@@ -416,6 +416,7 @@ QStringList* PlayerWidget::getSupportedFileTypes()
     for (int i = 0; i < list.size();i++)
     {
         QString value = list.at(i);
+
         if (
             value.startsWith("audio/mp3")||value.startsWith("audio/flac")
             ||value.startsWith("audio/ogg")||value.startsWith("audio/m4a")
@@ -426,7 +427,10 @@ QStringList* PlayerWidget::getSupportedFileTypes()
             values->append("*."+value.section("/",1));
         }
 
+
     }
+   if(list.contains("audio/mp4"))
+    values->append("*.m4a");
    return values;
 
 }

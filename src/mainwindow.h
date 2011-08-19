@@ -101,11 +101,12 @@ private slots:
     void on_clearPlaylistButton_clicked();
     void on_actualPlayingPlaylistButton_clicked();
     void on_playlistView_doubleClicked(QModelIndex index);
+    void on_storedPlaylistView_customContextMenuRequested(QPoint pos);
 
     void on_actionOrdner_hinzufuegen_triggered();
     void on_actionSongs_hinzufuegen_triggered();
 
-
+    void deletePlaylist(QString path);
     void setupSongTreeModelNumber(int treeviewNumber);
 
     void songTree_clicked(QModelIndex index);

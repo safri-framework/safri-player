@@ -20,6 +20,8 @@
 #include <QHeaderView>
 #include "headermanager.h"
 #include "quickplay.h"
+#include "m3utranslator.h"
+#include <QSignalMapper>
 
 #include <QRegExp>
 #include <Phonon/BackendCapabilities>
@@ -29,6 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
+    QChar i(L'\u00A8');
+    qDebug()<<i;
+
+
+   QString blah = "Lyrik/JBO - Ko¨nige.mp3" ;
+   qDebug()<< blah.contains(i);
 
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
@@ -75,7 +83,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     //ui->storedPlaylistView->setModel( new QStringListModel(M3uTranslator::getPlaylists()) );
+
+
+
     ui->storedPlaylistView->setModel( new SafedPlaylistModel() );
+    ui->storedPlaylistView->setContextMenuPolicy(Qt::CustomContextMenu);
+   // connect(this->ui->storedPlaylistView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_storedPlaylistView_customContextMenuRequested(QPoint)));
 
     ui->mainToolBar->addAction(ui->actionOrdner_hinzufuegen);
     ui->mainToolBar->addAction(ui->actionSongs_hinzufuegen);
@@ -892,6 +905,9 @@ void MainWindow::addPathRecursiveToDatabase(QString path)
             {
                 lukeFileWalker.next();
                 files->append(lukeFileWalker.fileInfo().absoluteFilePath());
+
+
+
             }
 
 
@@ -1046,3 +1062,36 @@ void MainWindow::startQuickPlayer()
 
 }
 
+void MainWindow::on_storedPlaylistView_customContextMenuRequested(QPoint pos)
+{
+
+    QModelIndex index = this->ui->storedPlaylistView->indexAt(pos);
+    TreeItem *item = static_cast<TreeItem*>( index.internalPointer() );
+    qDebug()<<item->getType();
+
+
+    if (item->getType() == "PLAYLIST")
+    {
+
+        QMenu* menu = new QMenu();
+        QAction* deletePlaylist = menu->addAction("Playliste löschen");
+        QSignalMapper* mapper = new QSignalMapper(this);
+
+
+        mapper->setMapping(deletePlaylist, index.data().toString() );
+        connect(deletePlaylist, SIGNAL(triggered()), mapper, SLOT(map()));
+        connect(mapper, SIGNAL(mapped(QString)),this, SLOT(deletePlaylist(QString)));
+
+        menu->exec(QCursor::pos());
+    }
+
+
+}
+
+void MainWindow::deletePlaylist(QString path)
+{
+
+    qDebug()<<M3uTranslator::deletePlaylist(M3uTranslator::playlistNameToAbsPath(path));
+    ui->storedPlaylistView->setModel( new SafedPlaylistModel() );
+
+}

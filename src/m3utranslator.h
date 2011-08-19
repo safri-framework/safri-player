@@ -22,6 +22,7 @@ public:
     static QString playlistNameToAbsPath(QString playlistname);
     //static void addSongToPlaylist(QString playlistPath);
     static const QString DirName;
+    static bool deletePlaylist(QString playlistname);
 
 private:
 

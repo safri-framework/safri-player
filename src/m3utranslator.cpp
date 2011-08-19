@@ -128,4 +128,11 @@ QString M3uTranslator::playlistNameToAbsPath(QString playlistname)
     return directory.absoluteFilePath(playlistname + ".m3u");
 }
 
+bool M3uTranslator::deletePlaylist(QString playlistname)
+{
+    QFile file(playlistname);
+    return file.remove();
+
+
+}
 

@@ -16,12 +16,30 @@ void SongInserter::run()
     qDebug() << "Starting timer...";
     timer.start();
 
+
+
     for (int i = 0; i < fileList->size(); i++)
     {
-        AudioFile song(fileList->at(i));
-        song.ReadTags();
-        DatabaseDAO::insertSongWithCover(song);
-        Q_EMIT songInserted(i);
+        QString path = fileList->at(i);
+        QString test = QString::fromStdString(path.toStdString());
+
+
+
+
+
+
+        if(!(test.contains("?")))
+        {
+            qDebug()<<test;
+            AudioFile song(test);
+            song.ReadTags();
+            DatabaseDAO::insertSongWithCover(song);
+            Q_EMIT songInserted(i);
+            qDebug()<<path;
+
+        }
+
+
 
     }
 
