@@ -171,7 +171,7 @@ int AudioFile::ReadTags()
 bool AudioFile::setArtist(QString artist)
 {
     QByteArray fileName = QFile::encodeName( this->fileName() );
-
+    bool success;
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
@@ -179,13 +179,23 @@ bool AudioFile::setArtist(QString artist)
         tagsLock.lockForWrite();
         TagLib::FileRef ref = TagLib::FileRef( encodedName );
         ref.tag()->setArtist(artist.toStdString());
-        qDebug()<<"success? "<<ref.save();
+        success = ref.save();
         tagsLock.unlock();
-        qDebug()<<"unlock";
+
         this->ReadTags();
-        qDebug()<<"tags gelesen";
+        if (this->getArtist() != artist) qDebug()<<"album Error";
+
+    }
+    if (success)
+    {
+        qDebug()<<"Taggen erfolgreich";
+    }
+    else
+    {
+        qDebug()<<"Taggen nicht erfolgreich";
     }
 
+return success;
 }
 bool AudioFile::setTitle(QString title)
 {
@@ -207,7 +217,7 @@ bool AudioFile::setGenre(QString genre)
 {
 
     QByteArray fileName = QFile::encodeName( this->fileName() );
-
+    bool success;
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
@@ -215,17 +225,28 @@ bool AudioFile::setGenre(QString genre)
         tagsLock.lockForWrite();
         TagLib::FileRef ref = TagLib::FileRef( encodedName );
         ref.tag()->setGenre(genre.toStdString());
-        qDebug()<<"success? "<<ref.save();
+        success = ref.save();
         tagsLock.unlock();
-        qDebug()<<"unlock";
+
         this->ReadTags();
-        qDebug()<<"tags gelesen";
+        if (this->getGenre() != genre) qDebug()<<"genre Error";
+
+    }
+    if (success)
+    {
+        qDebug()<<"Taggen erfolgreich";
+    }
+    else
+    {
+        qDebug()<<"Taggen nicht erfolgreich";
     }
 
+return success;
 
 }
 bool AudioFile::setAlbum(QString album)
 {
+    bool success;
     QByteArray fileName = QFile::encodeName( this->fileName() );
 
     QFileInfo* file = new QFileInfo(this->fileName());
@@ -235,14 +256,25 @@ bool AudioFile::setAlbum(QString album)
         tagsLock.lockForWrite();
         TagLib::FileRef ref = TagLib::FileRef( encodedName );
         ref.tag()->setAlbum(album.toStdString());
-        qDebug()<<"success? "<<ref.save();
+        success = ref.save();
         tagsLock.unlock();
-        qDebug()<<"unlock";
+
         this->ReadTags();
-        qDebug()<<"tags gelesen";
+        if (this->getAlbum() != album) qDebug()<<"album Error";
     }
 
+    if (success)
+    {
+        qDebug()<<"Taggen erfolgreich";
+    }
+    else
+    {
+        qDebug()<<"Taggen nicht erfolgreich";
+    }
+ return success;
 }
+
+
 bool AudioFile::setComment(QString comment)
 {
     QByteArray fileName = QFile::encodeName( this->fileName() );

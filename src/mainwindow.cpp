@@ -1037,7 +1037,7 @@ void MainWindow::keyPressEvent ( QKeyEvent * event )
         int tabIndex = this->ui->treeViewTabWidget->currentIndex();
         if (tabIndex < 3)
         {
-            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(3)->model());
+            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(tabIndex)->model());
             model->allowEditTags();
              qDebug()<<"edit aktiviert";
         }
@@ -1063,7 +1063,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent * event)
         int tabIndex = this->ui->treeViewTabWidget->currentIndex();
         if (tabIndex < 3)
         {
-            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(3)->model());
+            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(tabIndex)->model());
             model->denyEditTags();
             qDebug()<<"edit deaktiviert";
         }

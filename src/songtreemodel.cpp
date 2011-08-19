@@ -4,7 +4,7 @@
 
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
-            QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy), tagEditAllowed(true)
+            QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy), tagEditAllowed(false)
 {
     rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy, useDataTable);
 }
@@ -234,6 +234,7 @@ Qt::DropActions SongTreeModel::supportedDropActions() const
 
 bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+
     bool dropped = false;
         if (data->hasFormat("text/uri-list"))
         {
@@ -290,13 +291,12 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                     if (data->text()!= "SongTreeMimeData")
                     {
 
-                    Q_EMIT songsToInsertInDatabase(filenames);
+                        Q_EMIT songsToInsertInDatabase(filenames);
 
                     }
                     else
                     {
-                        qDebug()<<"gehtnoch";
-                        qDebug()<<"taggen erlaubt:"<< tagEditAllowed;
+
                         if(parent.internalPointer() != 0 && tagEditAllowed)
                         {
                             BaseDTO *dto = static_cast<BaseDTO*>(parent.internalPointer());
@@ -323,7 +323,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                         DatabaseDAO::setAlbumID(filenames->at(i), id);
 
 
-                                        qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+
                                     }
                                 }
                                 DatabaseDAO::loadDataTable();
@@ -340,7 +340,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                         DatabaseDAO::setArtistID(filenames->at(i), id);
 
 
-                                        qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+
                                     }
                                 }
                                 DatabaseDAO::loadDataTable();
@@ -358,14 +358,14 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                             DatabaseDAO::setGenreID(filenames->at(i), id);
 
 
-                                            qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+
                                         }
                                     }
                                     DatabaseDAO::loadDataTable();
                                     Q_EMIT DatabaseDataChanged();
                                     break;
 
-                                default: qDebug()<<"was anneres";
+
                             }
                         }
                         else
@@ -387,11 +387,11 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 void SongTreeModel::allowEditTags()
 {
     tagEditAllowed = true;
-    qDebug("aktiviert");
+
 }
 void SongTreeModel::denyEditTags()
 {
     tagEditAllowed = false;
-    qDebug("dektiviert");
+
 }
 

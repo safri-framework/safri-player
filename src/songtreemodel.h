@@ -34,6 +34,7 @@ class SongTreeModel : public QAbstractItemModel
         //! this attribute stores the dto object hierarchy of the tree
         QList<BaseDTO::DTO_TYPE> *treeHierarchy;
         bool tagEditAllowed;
+        int test;
 
     public:
 
