@@ -166,3 +166,95 @@ int AudioFile::ReadTags()
     return 0;
 
 }
+
+
+bool AudioFile::setArtist(QString artist)
+{
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+        const char * encodedName = fileName.constData();
+        tagsLock.lockForWrite();
+        TagLib::FileRef ref = TagLib::FileRef( encodedName );
+        ref.tag()->setArtist(artist.toStdString());
+        qDebug()<<"success? "<<ref.save();
+        tagsLock.unlock();
+        qDebug()<<"unlock";
+        this->ReadTags();
+        qDebug()<<"tags gelesen";
+    }
+
+}
+bool AudioFile::setTitle(QString title)
+{
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+    const char * encodedName = fileName.constData();
+    TagLib::FileRef ref = TagLib::FileRef( encodedName );
+    ref.tag()->setTitle(title.toStdString());
+    ref.save();
+    ref.~FileRef();
+    //this->ReadTags();
+}
+
+}
+bool AudioFile::setGenre(QString genre)
+{
+
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+        const char * encodedName = fileName.constData();
+        tagsLock.lockForWrite();
+        TagLib::FileRef ref = TagLib::FileRef( encodedName );
+        ref.tag()->setGenre(genre.toStdString());
+        qDebug()<<"success? "<<ref.save();
+        tagsLock.unlock();
+        qDebug()<<"unlock";
+        this->ReadTags();
+        qDebug()<<"tags gelesen";
+    }
+
+
+}
+bool AudioFile::setAlbum(QString album)
+{
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+        const char * encodedName = fileName.constData();
+        tagsLock.lockForWrite();
+        TagLib::FileRef ref = TagLib::FileRef( encodedName );
+        ref.tag()->setAlbum(album.toStdString());
+        qDebug()<<"success? "<<ref.save();
+        tagsLock.unlock();
+        qDebug()<<"unlock";
+        this->ReadTags();
+        qDebug()<<"tags gelesen";
+    }
+
+}
+bool AudioFile::setComment(QString comment)
+{
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+        const char * encodedName = fileName.constData();
+        TagLib::FileRef ref = TagLib::FileRef( encodedName );
+        ref.tag()->setComment(comment.toStdString());
+        ref.save();
+        this->ReadTags();
+    }
+
+}

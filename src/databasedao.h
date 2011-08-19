@@ -95,6 +95,15 @@ class DatabaseDAO
         static int getIDFromGenre(QString genre);
         static int getIDFromAlbum(QString album, int artistID);
 
+
+        static void setGenreID(QString filename, int id);
+        static void setArtistID(QString filename, int id);
+        static void setAlbumID(QString filename, int id);
+
+
+
+
+
         static QList<AudioFile*> *getAudioFilesByBaseDTO(BaseDTO *dto);
         static QList<QUrl> getUrlsByBaseDTO(BaseDTO *dto);
 

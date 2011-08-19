@@ -4,7 +4,7 @@
 
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
-            QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy)
+            QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy), tagEditAllowed(true)
 {
     rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy, useDataTable);
 }
@@ -235,66 +235,163 @@ Qt::DropActions SongTreeModel::supportedDropActions() const
 bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     bool dropped = false;
-        if (data->hasFormat("text/uri-list") && data->text()!="SongTreeMimeData")
+        if (data->hasFormat("text/uri-list"))
         {
 
-            QList<QUrl> urls = data->urls();
-            QStringList* filenames = new QStringList();
+                QList<QUrl> urls = data->urls();
+                QStringList* filenames = new QStringList();
 
 
 
 
-            foreach (QUrl i, urls)
-            {
-
-                QString suffix = "*."+QFileInfo(i.toLocalFile()).suffix();
-                if (PlayerWidget::getSupportedFileTypes()->contains(suffix.toLower()))
-                {
-                    filenames->append(i.toLocalFile());
-
-
-                }
-
-                else
+                foreach (QUrl i, urls)
                 {
 
-
-                    if (!i.isEmpty())
+                    QString suffix = "*."+QFileInfo(i.toLocalFile()).suffix();
+                    if (PlayerWidget::getSupportedFileTypes()->contains(suffix.toLower()))
                     {
-
-                        QDir dir(i.toLocalFile());
-                        QStringList filters = *PlayerWidget::getSupportedFileTypes();
-                        filters << *PlayerWidget::getSupportedFileTypes();
-                        dir.setNameFilters(filters);
-
-                        QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
-
-
-                        while (lukeFileWalker.hasNext())
-                        {
-                            lukeFileWalker.next();
-                            filenames->append(lukeFileWalker.fileInfo().absoluteFilePath());
-
-                        }
+                        filenames->append(i.toLocalFile());
 
 
                     }
+
+                    else
+                    {
+
+
+                        if (!i.isEmpty())
+                        {
+
+                            QDir dir(i.toLocalFile());
+                            QStringList filters = *PlayerWidget::getSupportedFileTypes();
+                            filters << *PlayerWidget::getSupportedFileTypes();
+                            dir.setNameFilters(filters);
+
+                            QDirIterator lukeFileWalker(dir, QDirIterator::Subdirectories);
+
+
+                            while (lukeFileWalker.hasNext())
+                            {
+                                lukeFileWalker.next();
+                                filenames->append(lukeFileWalker.fileInfo().absoluteFilePath());
+
+                            }
+
+
+                        }
+                    }
+
                 }
 
+
+
+                if (filenames->size() > 0)
+                {
+                    if (data->text()!= "SongTreeMimeData")
+                    {
+
+                    Q_EMIT songsToInsertInDatabase(filenames);
+
+                    }
+                    else
+                    {
+                        qDebug()<<"gehtnoch";
+                        qDebug()<<"taggen erlaubt:"<< tagEditAllowed;
+                        if(parent.internalPointer() != 0 && tagEditAllowed)
+                        {
+                            BaseDTO *dto = static_cast<BaseDTO*>(parent.internalPointer());
+                            QString text = dto->getText();
+
+                            BaseDTO::DTO_TYPE type = dto->getType();
+
+                            QList<AudioFile*>* afList = new QList<AudioFile*>();
+                            for (int i =0; i < filenames->size(); i++)
+                            {
+                                afList->append(new AudioFile(filenames->at(i)));
+
+
+                            }
+                            switch (type)
+                            {
+                                case BaseDTO::ALBUM:
+                                for (int i = 0; i< afList->size(); i++)
+                                {
+                                    QFileInfo info(filenames->at(i));
+                                    if(afList->at(i)->setAlbum(text))
+                                    {
+                                        int id = dto->getID();
+                                        DatabaseDAO::setAlbumID(filenames->at(i), id);
+
+
+                                        qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+                                    }
+                                }
+                                DatabaseDAO::loadDataTable();
+                                Q_EMIT DatabaseDataChanged();
+                                break;
+
+                                case BaseDTO::ARTIST:
+                                for (int i = 0; i< afList->size(); i++)
+                                {
+                                    QFileInfo info(filenames->at(i));
+                                    if(afList->at(i)->setArtist(text))
+                                    {
+                                        int id = dto->getID();
+                                        DatabaseDAO::setArtistID(filenames->at(i), id);
+
+
+                                        qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+                                    }
+                                }
+                                DatabaseDAO::loadDataTable();
+                                Q_EMIT DatabaseDataChanged();
+                                break;
+
+
+                                case BaseDTO::GENRE:
+                                    for (int i = 0; i< afList->size(); i++)
+                                    {
+                                        QFileInfo info(filenames->at(i));
+                                        if(afList->at(i)->setGenre(text))
+                                        {
+                                            int id = dto->getID();
+                                            DatabaseDAO::setGenreID(filenames->at(i), id);
+
+
+                                            qDebug()<<"genre getagt nach "<<info.baseName()<< text;
+                                        }
+                                    }
+                                    DatabaseDAO::loadDataTable();
+                                    Q_EMIT DatabaseDataChanged();
+                                    break;
+
+                                default: qDebug()<<"was anneres";
+                            }
+                        }
+                        else
+                        {
+                            qDebug()<<"nullpointer";
+                        }
+                    }
+
+
+                dropped = true;
             }
-
-
-
-            if (filenames->size() > 0)
-            {
-
-                Q_EMIT songsToInsertInDatabase(filenames);
-
-            }
-
-            dropped = true;
 
 
         }
+
+    return dropped;
     }
+
+void SongTreeModel::allowEditTags()
+{
+    tagEditAllowed = true;
+    qDebug("aktiviert");
+}
+void SongTreeModel::denyEditTags()
+{
+    tagEditAllowed = false;
+    qDebug("dektiviert");
+}
 

@@ -26,17 +26,16 @@
 #include <QRegExp>
 #include <Phonon/BackendCapabilities>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 
-    QChar i(L'\u00A8');
-    qDebug()<<i;
 
 
-   QString blah = "Lyrik/JBO - Ko¨nige.mp3" ;
-   qDebug()<< blah.contains(i);
+AudioFile* af = new AudioFile("C:/Users/Friedemann Metzger/Music/Shané/song3.mp3");
+af->setGenre("WuselDusel");
 
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
@@ -282,6 +281,7 @@ void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
 
     model = new SongTreeModel(filters[treeviewNumber]);
     connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
+    connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
 
     treeViews->at(treeviewNumber)->setModel(model);
 }
@@ -1032,6 +1032,16 @@ void MainWindow::keyPressEvent ( QKeyEvent * event )
 
         }
     }
+    if (event->key() == Qt::Key_Alt)
+    {
+        int tabIndex = this->ui->treeViewTabWidget->currentIndex();
+        if (tabIndex < 3)
+        {
+            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(3)->model());
+            model->allowEditTags();
+             qDebug()<<"edit aktiviert";
+        }
+    }
 
 }
 void MainWindow::keyReleaseEvent(QKeyEvent * event)
@@ -1046,6 +1056,16 @@ void MainWindow::keyReleaseEvent(QKeyEvent * event)
 
             connect(treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(songTree_clicked(QModelIndex)) );
             qDebug()<<"aktiviert";
+        }
+    }
+    if (event->key() == Qt::Key_Alt)
+    {
+        int tabIndex = this->ui->treeViewTabWidget->currentIndex();
+        if (tabIndex < 3)
+        {
+            SongTreeModel* model = static_cast<SongTreeModel*>(treeViews->at(3)->model());
+            model->denyEditTags();
+            qDebug()<<"edit deaktiviert";
         }
     }
 

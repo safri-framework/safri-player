@@ -842,6 +842,7 @@ void DatabaseDAO::changeAlbumCover(QString filename, int album_id)
 
 void DatabaseDAO::loadDataTable()
 {
+
     dataTable = new QList< ColumnData* >();
 
     QSqlQuery query(getDatabase());
@@ -1099,6 +1100,127 @@ QString DatabaseDAO::getAlbumCoverByAudioFile(AudioFile* af)
         if (dataTable->at(row)->value("FILENAME") == af->fileName() )
         {
             return dataTable->at(row)->value("ALBUMCOVER");
+        }
+    }
+}
+
+void DatabaseDAO::setGenreID(QString filename, int id)
+{
+    QString queryStatement = "SELECT id FROM song WHERE filename = :FILENAME";
+    QSqlQuery query( getDatabase() );
+    int songid = -1;
+
+
+    query.prepare(queryStatement);
+    query.bindValue(":FILENAME", filename);
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+        return;
+    }
+
+    while ( query.next() )
+    {
+        songid =  query.value(0).toInt();
+    }
+
+    if (songid > 0)
+    {
+
+        QString queryStatement2 = "UPDATE song SET genre_id = :GENRE_ID WHERE id = :SONG_ID";
+
+        QSqlQuery query2( getDatabase() );
+
+        query2.prepare(queryStatement2);
+        query2.bindValue(":SONG_ID", songid);
+        query2.bindValue(":GENRE_ID", id);
+
+        if ( !query2.exec())
+        {
+            qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+            return;
+        }
+    }
+
+}
+
+void DatabaseDAO::setArtistID(QString filename, int id)
+{
+    QString queryStatement = "SELECT id FROM song WHERE filename = :FILENAME";
+    QSqlQuery query( getDatabase() );
+    int songid = -1;
+
+
+    query.prepare(queryStatement);
+    query.bindValue(":FILENAME", filename);
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+        return;
+    }
+
+    while ( query.next() )
+    {
+        songid =  query.value(0).toInt();
+    }
+
+    if (songid > 0)
+    {
+
+        QString queryStatement2 = "UPDATE song SET artist_id = :ARTIST_ID WHERE id = :SONG_ID";
+
+        QSqlQuery query2( getDatabase() );
+
+        query2.prepare(queryStatement2);
+        query2.bindValue(":SONG_ID", songid);
+        query2.bindValue(":ARTIST_ID", id);
+
+        if ( !query2.exec())
+        {
+            qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+            return;
+        }
+    }
+}
+
+void DatabaseDAO::setAlbumID(QString filename, int id)
+{
+    QString queryStatement = "SELECT id FROM song WHERE filename = :FILENAME";
+    QSqlQuery query( getDatabase() );
+    int songid = -1;
+
+
+    query.prepare(queryStatement);
+    query.bindValue(":FILENAME", filename);
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+        return;
+    }
+
+    while ( query.next() )
+    {
+        songid =  query.value(0).toInt();
+    }
+
+    if (songid > 0)
+    {
+
+        QString queryStatement2 = "UPDATE song SET album_id = :ALBUM_ID WHERE id = :SONG_ID";
+
+        QSqlQuery query2( getDatabase() );
+
+        query2.prepare(queryStatement2);
+        query2.bindValue(":SONG_ID", songid);
+        query2.bindValue(":ALBUM_ID", id);
+
+        if ( !query2.exec())
+        {
+            qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+            return;
         }
     }
 }

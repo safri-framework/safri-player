@@ -47,6 +47,14 @@ class AudioFile : public Phonon::MediaSource
         QString getGenre();
         QString getAlbum();
         QString getComment();
+
+        bool setArtist(QString artist);
+        bool setTitle(QString title);
+        bool setGenre(QString genre);
+        bool setAlbum(QString album);
+        bool setComment(QString comment);
+
+
         int getLength();
         QString getLengthAsString();
         int getYear();
