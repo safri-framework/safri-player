@@ -1188,6 +1188,7 @@ void DatabaseDAO::setArtistID(QString filename, int id)
 void DatabaseDAO::setAlbumID(QString filename, int id)
 {
     QString queryStatement = "SELECT id FROM song WHERE filename = :FILENAME";
+
     QSqlQuery query( getDatabase() );
     int songid = -1;
 
@@ -1204,6 +1205,7 @@ void DatabaseDAO::setAlbumID(QString filename, int id)
     while ( query.next() )
     {
         songid =  query.value(0).toInt();
+        qDebug()<< "Datenbank "<< songid;
     }
 
     if (songid > 0)
@@ -1216,6 +1218,7 @@ void DatabaseDAO::setAlbumID(QString filename, int id)
         query2.prepare(queryStatement2);
         query2.bindValue(":SONG_ID", songid);
         query2.bindValue(":ALBUM_ID", id);
+        qDebug()<< "Datenbank: Update ";
 
         if ( !query2.exec())
         {

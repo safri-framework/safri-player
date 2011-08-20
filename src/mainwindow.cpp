@@ -266,6 +266,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
 {
+    qDebug()<<"update treeview"<<treeviewNumber;
     SettingsModule* settings = SettingsManager::getInstance()->getModule("core.view");
 
     SongTreeModel *model;
@@ -288,6 +289,7 @@ void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
 
 void MainWindow::SetupSongTreeModels()
 {
+    qDebug()<<"setupSongtreeModels";
     SettingsModule* settings = SettingsManager::getInstance()->getModule("core.view");
     int treeviewCount = settings->getSetting("treeviewCount").toInt();
 
@@ -426,6 +428,7 @@ void MainWindow::refreshTreeView()
 
     DatabaseDAO::loadDataTable();
     SetupSongTreeModels();
+    qDebug()<<"refresh TreeView";
 
 }
 
@@ -437,6 +440,7 @@ void MainWindow::hideProgressBar()
 
 void MainWindow::songTree_clicked(QModelIndex index)
 {
+    qDebug()<< " klick ";
     if (!this->click){
         if ( index.isValid() )
         {
@@ -839,12 +843,14 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
         {
             DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
             this->treeViews->at(index)->setModel(tableModel);
+
         }
         else
         {
             DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
             DataTableModel* tableModel = new DataTableModel(results);
             this->treeViews->at(index)->setModel(tableModel);
+
         }
 
     }
@@ -855,6 +861,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             SongTreeModel *model = new SongTreeModel(filters[index]);
 
             this->treeViews->at(index)->setModel(model);
+            connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
         }
         else
         {
@@ -863,6 +870,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             SongTreeModel *model = new SongTreeModel(filters[index], results);
 
             this->treeViews->at(index)->setModel(model);
+            connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
             this->treeViews->at(index)->expandAll();
         }
     }

@@ -59,6 +59,7 @@ signals:
 
         void songsToInsertInDatabase(QStringList* filenames);
         void DatabaseDataChanged();
+
 public slots:
 
         void allowEditTags();

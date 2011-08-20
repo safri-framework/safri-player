@@ -311,40 +311,46 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 
                             }
+
                             switch (type)
                             {
                                 case BaseDTO::ALBUM:
-                                for (int i = 0; i< afList->size(); i++)
-                                {
-                                    QFileInfo info(filenames->at(i));
-                                    if(afList->at(i)->setAlbum(text))
+                                    for (int i = 0; i< afList->size(); i++)
                                     {
-                                        int id = dto->getID();
-                                        DatabaseDAO::setAlbumID(filenames->at(i), id);
+                                        QFileInfo info(filenames->at(i));
+                                        if(afList->at(i)->setAlbum(text))
+                                        {
+                                            int id = dto->getID();
+                                            DatabaseDAO::setAlbumID(filenames->at(i), id);
+                                            qDebug()<<"Album geändert";
 
 
-
+                                        }
                                     }
-                                }
-                                DatabaseDAO::loadDataTable();
-                                Q_EMIT DatabaseDataChanged();
+
+                                    DatabaseDAO::loadDataTable();
+                                    Q_EMIT DatabaseDataChanged();
+                                    qDebug()<<"load data table";
+
+
                                 break;
 
-                                case BaseDTO::ARTIST:
-                                for (int i = 0; i< afList->size(); i++)
-                                {
-                                    QFileInfo info(filenames->at(i));
-                                    if(afList->at(i)->setArtist(text))
+                                    case BaseDTO::ARTIST:
+                                    for (int i = 0; i< afList->size(); i++)
                                     {
-                                        int id = dto->getID();
-                                        DatabaseDAO::setArtistID(filenames->at(i), id);
+                                        QFileInfo info(filenames->at(i));
+                                        if(afList->at(i)->setArtist(text))
+                                        {
+                                                int id = dto->getID();
+                                            DatabaseDAO::setArtistID(filenames->at(i), id);
 
 
 
+                                        }
                                     }
-                                }
-                                DatabaseDAO::loadDataTable();
-                                Q_EMIT DatabaseDataChanged();
+                                    DatabaseDAO::loadDataTable();
+                                    Q_EMIT DatabaseDataChanged();
+
                                 break;
 
 
@@ -363,7 +369,8 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                     }
                                     DatabaseDAO::loadDataTable();
                                     Q_EMIT DatabaseDataChanged();
-                                    break;
+
+                                break;
 
 
                             }
