@@ -1,4 +1,5 @@
 #include "songinserter.h"
+#include "databasedao.h"
 
 
 SongInserter::SongInserter(QStringList *sFileList, QObject *parent) :
@@ -44,5 +45,5 @@ void SongInserter::run()
     }
 
     qDebug() << "Duration of inserting (with cover): " << ((float) timer.elapsed() / 1000.f);
-
+    DatabaseDAO::loadDataTable();
 }

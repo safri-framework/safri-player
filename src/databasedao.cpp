@@ -873,6 +873,7 @@ void DatabaseDAO::loadDataTable()
         row->insert("INDEX", searchIndex);
         row->insert("FILENAME", query.value(query.record().indexOf("filename") ).toString());
         row->insert("ALBUMCOVER", query.value(query.record().indexOf("album_cover") ).toString());
+        row->insert("DIRTY", "FALSE");
         dataTable->append(row);
     }
 }
@@ -1226,4 +1227,9 @@ void DatabaseDAO::setAlbumID(QString filename, int id)
             return;
         }
     }
+}
+DatabaseDAO::DataTable* DatabaseDAO::getDataTablePtr()
+{
+    return dataTable;
+
 }

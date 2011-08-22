@@ -426,7 +426,7 @@ void MainWindow::refreshTreeView()
 {
 
 
-    DatabaseDAO::loadDataTable();
+    //DatabaseDAO::loadDataTable();
     SetupSongTreeModels();
     qDebug()<<"refresh TreeView";
 

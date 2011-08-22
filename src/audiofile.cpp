@@ -1,4 +1,5 @@
 #include "audiofile.h"
+#include "taglib/mpegfile.h"
 
 AudioFile::AudioFile(QString path)
     : MediaSource(path), tagsRead(false)
@@ -175,118 +176,205 @@ bool AudioFile::setArtist(QString artist)
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
-        const char * encodedName = fileName.constData();
-        tagsLock.lockForWrite();
-        TagLib::FileRef ref = TagLib::FileRef( encodedName );
-        ref.tag()->setArtist(artist.toStdString());
-        success = ref.save();
-        tagsLock.unlock();
+    const char * encodedName = fileName.constData();
+    TagLib::Tag* tag;
+
+    if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+        {
+        TagLib::MPEG::File mpegfile(encodedName);
+
+            tag = mpegfile.ID3v2Tag(true);
+            tagsLock.lockForWrite();
+            tag->setArtist(artist.toStdString());
+            success = mpegfile.save();
+            tagsLock.unlock();
+
+        }
+        else
+        {
+
+            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+            tag = ref.tag();
+            tagsLock.lockForWrite();
+            tag->setArtist(artist.toStdString());
+            success = ref.save();
+            tagsLock.unlock();
+
+        }
+
 
         this->ReadTags();
-        if (this->getArtist() != artist) qDebug()<<"album Error";
+        if (this->getTitle() != title) qDebug()<<"title Error";
+        return success;
 
-    }
-    if (success)
-    {
-        qDebug()<<"Taggen erfolgreich";
-    }
-    else
-    {
-        qDebug()<<"Taggen nicht erfolgreich";
-    }
-
-return success;
 }
+
+}
+
+
+
 bool AudioFile::setTitle(QString title)
 {
-    QByteArray fileName = QFile::encodeName( this->fileName() );
-
-    QFileInfo* file = new QFileInfo(this->fileName());
-    if (file->exists())
-    {
-    const char * encodedName = fileName.constData();
-    TagLib::FileRef ref = TagLib::FileRef( encodedName );
-    ref.tag()->setTitle(title.toStdString());
-    ref.save();
-    ref.~FileRef();
-    //this->ReadTags();
-}
-
-}
-bool AudioFile::setGenre(QString genre)
-{
-
     QByteArray fileName = QFile::encodeName( this->fileName() );
     bool success;
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
-        const char * encodedName = fileName.constData();
-        tagsLock.lockForWrite();
-        TagLib::FileRef ref = TagLib::FileRef( encodedName );
-        ref.tag()->setGenre(genre.toStdString());
-        success = ref.save();
-        tagsLock.unlock();
+    const char * encodedName = fileName.constData();
+    TagLib::Tag* tag;
+
+        if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+        {
+            TagLib::MPEG::File mpegfile(encodedName);
+
+            tag = mpegfile.ID3v2Tag(true);
+            tagsLock.lockForWrite();
+            tag->setTitle(title.toStdString());
+            success = mpegfile.save();
+            tagsLock.unlock();
+        }
+        else
+        {
+
+            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+            tag = ref.tag();
+            tagsLock.lockForWrite();
+            tag->setTitle(title.toStdString());
+            success = ref.save();
+            tagsLock.unlock();
+        }
+
+        this->ReadTags();
+        if (this->getTitle() != title) qDebug()<<"title Error";
+        return success;
+     }
+
+}
+
+
+
+
+bool AudioFile::setGenre(QString genre)
+{
+    QByteArray fileName = QFile::encodeName( this->fileName() );
+    bool success;
+    QFileInfo* file = new QFileInfo(this->fileName());
+    if (file->exists())
+    {
+    const char * encodedName = fileName.constData();
+    TagLib::Tag* tag;
+
+    if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+        {
+        TagLib::MPEG::File mpegfile(encodedName);
+
+            tag = mpegfile.ID3v2Tag(true);
+            tagsLock.lockForWrite();
+            tag->setGenre(genre.toStdString());
+            success = mpegfile.save();
+            tagsLock.unlock();
+
+        }
+        else
+        {
+
+            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+            tag = ref.tag();
+            tagsLock.lockForWrite();
+            tag->setGenre(genre.toStdString());
+            success = ref.save();
+            tagsLock.unlock();
+
+        }
 
         this->ReadTags();
         if (this->getGenre() != genre) qDebug()<<"genre Error";
+        return success;
 
     }
-    if (success)
-    {
-        qDebug()<<"Taggen erfolgreich";
-    }
-    else
-    {
-        qDebug()<<"Taggen nicht erfolgreich";
-    }
+
 
 return success;
 
 }
 bool AudioFile::setAlbum(QString album)
 {
-    bool success;
     QByteArray fileName = QFile::encodeName( this->fileName() );
-
+    bool success;
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
-        const char * encodedName = fileName.constData();
-        tagsLock.lockForWrite();
-        TagLib::FileRef ref = TagLib::FileRef( encodedName );
-        ref.tag()->setAlbum(album.toStdString());
-        success = ref.save();
-        tagsLock.unlock();
+    const char * encodedName = fileName.constData();
+    TagLib::Tag* tag;
+
+    if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+        {
+        TagLib::MPEG::File mpegfile(encodedName);
+
+            tag = mpegfile.ID3v2Tag(true);
+            tagsLock.lockForWrite();
+            tag->setAlbum(album.toStdString());
+            success = mpegfile.save();
+            tagsLock.unlock();
+
+        }
+        else
+        {
+
+            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+            tag = ref.tag();
+            tagsLock.lockForWrite();
+            tag->setAlbum(album.toStdString());
+            success = ref.save();
+            tagsLock.unlock();
+
+        }
 
         this->ReadTags();
-        if (this->getAlbum() != album) qDebug()<<"album Error";
+        if (this->getAlbum() != album) qDebug()<<"genre Error";
+        return success;
+
     }
 
-    if (success)
-    {
-        qDebug()<<"Taggen erfolgreich";
-    }
-    else
-    {
-        qDebug()<<"Taggen nicht erfolgreich";
-    }
- return success;
+
+return success;
 }
 
 
 bool AudioFile::setComment(QString comment)
 {
     QByteArray fileName = QFile::encodeName( this->fileName() );
-
+    bool success;
     QFileInfo* file = new QFileInfo(this->fileName());
     if (file->exists())
     {
-        const char * encodedName = fileName.constData();
-        TagLib::FileRef ref = TagLib::FileRef( encodedName );
-        ref.tag()->setComment(comment.toStdString());
-        ref.save();
-        this->ReadTags();
-    }
+    const char * encodedName = fileName.constData();
+    TagLib::Tag* tag;
 
+        if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+        {
+            TagLib::MPEG::File mpegfile(encodedName);
+
+            tag = mpegfile.ID3v2Tag(true);
+            tagsLock.lockForWrite();
+            tag->setComment(comment.toStdString());
+            success = mpegfile.save();
+            tagsLock.unlock();
+        }
+        else
+        {
+
+            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+            tag = ref.tag();
+            tagsLock.lockForWrite();
+            tag->setComment(comment.toStdString());
+            success = ref.save();
+            tagsLock.unlock();
+        }
+
+        this->ReadTags();
+        if (this->getComment() != comment) qDebug()<<"title Error";
+
+     }
+return success;
 }

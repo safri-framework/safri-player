@@ -5,6 +5,10 @@
 #include <QFileInfo>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
+#include <taglib/id3v2tag.h>
+
+
+
 #include <QTime>
 #include <QReadWriteLock>
 

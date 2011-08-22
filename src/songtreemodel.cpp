@@ -1,6 +1,7 @@
 #include "songtreemodel.h"
 #include <QDirIterator>
 #include <playerwidget.h>
+#include "basedto.h"
 
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
@@ -300,7 +301,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                         if(parent.internalPointer() != 0 && tagEditAllowed)
                         {
                             BaseDTO *dto = static_cast<BaseDTO*>(parent.internalPointer());
-                            QString text = dto->getText();
+                            const QString text = dto->getText();
 
                             BaseDTO::DTO_TYPE type = dto->getType();
 
@@ -311,63 +312,72 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 
                             }
+                            DatabaseDAO::DataTable* table = DatabaseDAO::getDataTablePtr();
+                            int id = dto->getID();
 
                             switch (type)
                             {
                                 case BaseDTO::ALBUM:
-                                    for (int i = 0; i< afList->size(); i++)
+
+
+
+                                    for (int i = 0; i < table->size(); i++)
                                     {
-                                        QFileInfo info(filenames->at(i));
-                                        if(afList->at(i)->setAlbum(text))
+                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
                                         {
-                                            int id = dto->getID();
-                                            DatabaseDAO::setAlbumID(filenames->at(i), id);
-                                            qDebug()<<"Album geändert";
 
-
+                                            DatabaseDAO::ColumnData* column = table->at(i);
+                                            column->remove("ALBUM");
+                                            column->insert("ALBUM", text);
+                                            column->remove("DIRTY");
+                                            column->insert("DIRTY","TRUE");
+                                            column->remove("ALBUMID");
+                                            column->insert("COLUMNID", QString::number(id));
                                         }
+
                                     }
 
-                                    DatabaseDAO::loadDataTable();
+
                                     Q_EMIT DatabaseDataChanged();
-                                    qDebug()<<"load data table";
-
-
                                 break;
 
-                                    case BaseDTO::ARTIST:
-                                    for (int i = 0; i< afList->size(); i++)
+                                case BaseDTO::ARTIST:
+                                    for (int i = 0; i < table->size(); i++)
                                     {
-                                        QFileInfo info(filenames->at(i));
-                                        if(afList->at(i)->setArtist(text))
+                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
                                         {
-                                                int id = dto->getID();
-                                            DatabaseDAO::setArtistID(filenames->at(i), id);
 
-
-
+                                            DatabaseDAO::ColumnData* column = table->at(i);
+                                            column->remove("ARTIST");
+                                            column->insert("ARTIST", text);
+                                            column->remove("DIRTY");
+                                            column->insert("DIRTY","TRUE");
+                                            column->remove("ARTISTID");
+                                            column->insert("ARTISTID", QString::number(id));
                                         }
+
                                     }
-                                    DatabaseDAO::loadDataTable();
                                     Q_EMIT DatabaseDataChanged();
 
                                 break;
 
 
                                 case BaseDTO::GENRE:
-                                    for (int i = 0; i< afList->size(); i++)
+                                    for (int i = 0; i < table->size(); i++)
                                     {
-                                        QFileInfo info(filenames->at(i));
-                                        if(afList->at(i)->setGenre(text))
+                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
                                         {
-                                            int id = dto->getID();
-                                            DatabaseDAO::setGenreID(filenames->at(i), id);
 
-
-
+                                            DatabaseDAO::ColumnData* column = table->at(i);
+                                            column->remove("GENRE");
+                                            column->insert("GENRE", text);
+                                            column->remove("DIRTY");
+                                            column->insert("DIRTY","TRUE");
+                                            column->remove("GENREID");
+                                            column->insert("GENREID", QString::number(id));
                                         }
+
                                     }
-                                    DatabaseDAO::loadDataTable();
                                     Q_EMIT DatabaseDataChanged();
 
                                 break;

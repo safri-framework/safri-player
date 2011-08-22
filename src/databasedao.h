@@ -132,6 +132,7 @@ class DatabaseDAO
 
         static DataTable* searchDataTable(QString searchString);
         static DataTable* getDataTableCopy();
+        static DataTable* getDataTablePtr();
 
         static bool removeModuleSettings(QString modulename);
         static bool insertModuleSettings(QMap<QString, QVariant> settings);
