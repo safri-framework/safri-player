@@ -43,144 +43,6 @@ QSqlDatabase &DatabaseDAO::getDatabase()
     return database;
 }
 
-QString DatabaseDAO::prepareWHEREStatement(BaseDTO *dto)
-{
-    QString whereStatement;
-    QString wherePart = " %DTOTYPE_ID = %ID ";
-
-
-    while (dto != 0)
-    {
-        if (dto->getParentDTO() != 0)
-        {
-            // replace the possible AND-shadow with a real "AND" operator
-            whereStatement.replace(QRegExp("%AND_SHADOW"), " AND ");
-
-            // add a new where part to the where statement
-            whereStatement += wherePart;
-
-            // replace the placeholder with apropriate values
-            whereStatement.replace(QRegExp("%DTOTYPE"), BaseDTO::typeToString( dto->getType() ));
-            whereStatement.replace(QRegExp("%ID"), QString::number( dto->getID() ));
-
-            // insert "shadow" AND operator, unneeded shadows will be cut off after the loop
-            whereStatement += " %AND_SHADOW ";
-
-        }
-        dto = dto->getParentDTO();
-    }
-
-    // cut off unused "shadow" operators
-    whereStatement.replace(QRegExp("%AND_SHADOW"), " ");
-
-    return whereStatement;
-}
-
-QList<BaseDTO*> *DatabaseDAO::loadDTOChildren(BaseDTO *dto, QList<BaseDTO::DTO_TYPE> *treeHierarchy)
-{
-
-    QString sqlStatement;
-    QString whereStatement;
-    QList<BaseDTO*> *linkedDTOs = new QList<BaseDTO*>();
-    BaseDTO *father = dto->getParentDTO();
-
-    int index;
-
-    BaseDTO::DTO_TYPE currentType = dto->getType();
-
-    if (father != 0)
-    {
-        index = treeHierarchy->indexOf(currentType) + 1;
-    }
-    else
-    {
-        index = 0;
-    }
-
-    if ( index >= treeHierarchy->length() )
-    {
-        return 0;
-    }
-
-    if ( dto->getChildren() != 0)
-    {
-        return 0;
-    }
-
-    BaseDTO::DTO_TYPE requestType = treeHierarchy->at(index);
-    QString reqTypeStr = BaseDTO::typeToString(requestType);
-
-    // if there are already child DTOs loaded return
-    if (dto->getChildren() != 0)
-    {
-        return 0;
-    }
-
-    // select the appropriate base SELECT statement according to the requested children DTO Type
-    if (requestType == BaseDTO::SONG)
-    {
-        sqlStatement = "SELECT SONG, ID FROM SONG %WHERE_STATEMENT ORDER BY SONG";
-
-    }
-    else
-    {
-        sqlStatement = "SELECT %TABLE, ID FROM %TABLE WHERE ID IN ( SELECT %TABLE_ID FROM SONG %WHERE_STATEMENT ) ORDER BY %TABLE";
-
-        sqlStatement.replace(QRegExp("%TABLE"), reqTypeStr);
-    }
-
-    whereStatement = DatabaseDAO::prepareWHEREStatement(dto);
-
-    if (whereStatement.length() > 0)
-    {
-        sqlStatement.replace(QRegExp("%WHERE_STATEMENT"), "WHERE " + whereStatement);
-    }
-    else
-    {
-        // remove unused placeholder
-       sqlStatement.replace(QRegExp("%WHERE_STATEMENT"), " ");
-    }
-
-
-    //qDebug() << sqlStatement;
-
-    QSqlQuery query(getDatabase());
-    query.exec(sqlStatement);
-
-    int idIndex = query.record().indexOf("ID");
-    int strIndex = query.record().indexOf(reqTypeStr);
-
-    while ( query.next() )
-    {
-        int id = query.value(idIndex).toInt();
-        QString string = query.value(strIndex).toString();
-
-        BaseDTO *base = new BaseDTO(id, string, requestType);
-
-        base->setParent(dto);
-
-        linkedDTOs->append(base);
-
-    }
-
-    return linkedDTOs;
-
-}
-
-
-void DatabaseDAO::fillDTO(BaseDTO *dto, QList<BaseDTO::DTO_TYPE> *treeHierarchy)
-{
-    QList<BaseDTO*> *linkedDTOs = DatabaseDAO::loadDTOChildren(dto, treeHierarchy);
-
-    if ( (linkedDTOs != 0) && (linkedDTOs->length() > 0))
-    {
-        dto->setChildren(linkedDTOs);
-    }
-}
-
-
-
-
 int DatabaseDAO::getIDFromArtist(QString artist)
 {
 
@@ -511,24 +373,16 @@ int DatabaseDAO::insertSong(AudioFile &aFile)
 
 QList<QUrl> DatabaseDAO::getUrlsByBaseDTO(BaseDTO *dto)
 {
-
-    // Kopieren, damit die Datenstruktur des TreeModels nicht verändert wird
-    // linkedDTOs werden nicht gesetzt, damit die loadLinkedDTOs die geänderten DTOs nachläd
-    BaseDTO *dto_copy = new BaseDTO( dto->getID(), dto->getText(), dto->getType());
-    dto_copy->setParent(dto->getParentDTO());
-
     QList<QUrl> urlCollection;
-    QList<BaseDTO*> *songs;
+    QList<BaseDTO*> *songs = new QList<BaseDTO*>();
 
     if (dto->getType() != BaseDTO::SONG)
     {
-        songs = new QList<BaseDTO*>();
         getSongDTO(dto, songs);
 
     }
     else
     {
-        songs = new QList<BaseDTO*>();
         songs->append(dto);
     }
 
@@ -548,6 +402,8 @@ QList<QUrl> DatabaseDAO::getUrlsByBaseDTO(BaseDTO *dto)
 
     }
     queryString.append(" ) ORDER BY filename");
+
+    delete songs;
 
 
     if ( !query.exec(queryString))
@@ -600,34 +456,7 @@ QList<AudioFile*> *DatabaseDAO::getAudioFilesByBaseDTO(BaseDTO *dto)
 
 BaseDTO* DatabaseDAO::getDiscographyFromArtist(QString artist)
 {
-    int id = getIDFromArtist(artist);
-
-    BaseDTO *rootDTO = new BaseDTO(0, "", BaseDTO::ARTIST);
-    BaseDTO *artistDTO = new BaseDTO(id, artist, BaseDTO::ARTIST);
-
-    artistDTO->setParent(rootDTO);
-
-    QList<BaseDTO*> *children = new QList<BaseDTO*>();
-    children->append(artistDTO);
-
-    rootDTO->setChildren(children);
-
-    QList<BaseDTO::DTO_TYPE> treeHierarchy;
-
-    treeHierarchy.append(BaseDTO::ARTIST);
-    treeHierarchy.append(BaseDTO::ALBUM);
-    treeHierarchy.append(BaseDTO::SONG);
-
-    fillDTO(artistDTO, &treeHierarchy);
-
-    int albumCount = artistDTO->getChildren()->size();
-
-    for (int i = 0; i < albumCount; i++)
-    {
-        fillDTO(artistDTO->getChildren()->at(i), &treeHierarchy);
-    }
-
-    return artistDTO;
+    return 0;
 }
 
 void DatabaseDAO::refreshAlbumCoverFilePatterns()
@@ -724,8 +553,8 @@ int DatabaseDAO::cleanDatabase()
 
     for (int i = 0; i < keys.length(); i++)
     {
-        QFileInfo* file = new QFileInfo(keys.at(i).toLocalFile());
-        if (!file->exists())
+        QFileInfo file = QFileInfo(keys.at(i).toLocalFile());
+        if (!file.exists())
         {
             qDebug()<<"Datei gibts nich mehr";
          toDelete->append(pathlist->value(keys.at(i)));
@@ -734,7 +563,11 @@ int DatabaseDAO::cleanDatabase()
 
     }
 
-    return deleteSongByID(toDelete);
+    int result = deleteSongByID(toDelete);
+
+    delete toDelete;
+
+    return result;
 }
 
 
@@ -843,7 +676,15 @@ void DatabaseDAO::changeAlbumCover(QString filename, int album_id)
 void DatabaseDAO::loadDataTable()
 {
 
-    dataTable = new QList< ColumnData* >();
+    if (dataTable != 0)
+    {
+        while( !dataTable->isEmpty() )
+            delete dataTable->takeFirst();
+    }
+    else
+    {
+        dataTable = new QList< ColumnData* >();
+    }
 
     QSqlQuery query(getDatabase());
     QString queryString = "SELECT album_cover, filename, song.id AS songID, song, artist.id AS artistID, artist, album.id AS albumID, album, genre.id AS genreID, genre, song.year AS year FROM song, artist, album, genre WHERE (song.album_id = album.id) AND (song.artist_id = artist.id) AND (song.genre_id = genre.id) ORDER BY song";
@@ -876,6 +717,29 @@ void DatabaseDAO::loadDataTable()
         row->insert("DIRTY", "FALSE");
         dataTable->append(row);
     }
+}
+
+void DatabaseDAO::deleteSongTreeDTOMap(QMap<int, DTOMapEntry*> *current)
+{
+    QMap<int, DTOMapEntry*> *children;
+
+    if (current != 0)
+    {
+        QMapIterator<int, DTOMapEntry*> i(*current);
+        while (i.hasNext())
+        {
+            i.next();
+            children = i.value()->getChildren();
+
+            if (children != 0)
+                deleteSongTreeDTOMap(children);
+
+        }
+
+        delete current;
+
+    }
+
 }
 
 BaseDTO* DatabaseDAO::BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, DataTable* useDataTable)
@@ -964,7 +828,7 @@ BaseDTO* DatabaseDAO::BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, Dat
 
             if ( !mapEntry )
             {
-                BaseDTO *newDTO = new BaseDTO(id, text, currentType);
+                BaseDTO *newDTO = new BaseDTO(id, text, currentType, currentDTO);
                 newDTO->setParent(currentDTO);
                 currentDTO->getChildren()->append(newDTO);
 
@@ -986,6 +850,8 @@ BaseDTO* DatabaseDAO::BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, Dat
     }
 
     sortTree(rootDTO);
+
+    deleteSongTreeDTOMap(rootMap);
 
 
     return rootDTO;
@@ -1291,4 +1157,10 @@ void DatabaseDAO::updateSongInfo(ColumnData* data)
     }
 
 
+}
+
+void DatabaseDAO::deleteUserDataTable(DatabaseDAO::DataTable* table)
+{
+    while( !table->isEmpty() )
+        delete table->takeFirst();
 }

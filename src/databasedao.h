@@ -42,43 +42,10 @@ class DatabaseDAO
 
     protected:
 
-        /**
-            \brief  Prepares the SQL WHERE statement to load the DTO children of a BaseDTO object
-
-                    This function prepares the SQL WHERE statement to load only DTO objects
-                    which has the given attributes along the tree path up to the root. (I.e.
-                    load only songs from the genre rock and a particular artist.)
-
-            \returns the sql where statement
-        */
-        static QString prepareWHEREStatement(BaseDTO *dto);
-
-
     public:
         DatabaseDAO();
 
         static QSqlDatabase &getDatabase();
-
-        /**
-            \brief Loads the tree DTO children of the given DTO object
-
-            This function returns the BaseDTO objects (DTO-children) for the next tree level of
-            the given dto object. The requested tree hierachy can be specified with the
-            treeHierarchy parameter.
-
-            \param  the parent dto object
-            \param  the requested tree hierarchy
-            \returns the child DTO objects
-        */
-        static QList<BaseDTO*> *loadDTOChildren(BaseDTO *dto, QList<BaseDTO::DTO_TYPE> *treeHierarchy);
-
-        /**
-            \brief  Fills (respectively  sets) the child DTO objects of the given DTO object.
-
-            \param  the parent dto object
-            \param  the requested tree hierarchy
-        */
-        static void fillDTO(BaseDTO *dto, QList<BaseDTO::DTO_TYPE> *treeHierarchy);
 
         //! Returns the next database record id for the given DTO Type
         static int nextSequenceVal(BaseDTO::DTO_TYPE type);
@@ -118,6 +85,7 @@ class DatabaseDAO
         static void getSongDTO(BaseDTO* dto, QList<BaseDTO*>*);
         static int deleteSongByID(QList<int>* id);
 
+        static void deleteSongTreeDTOMap(QMap<int, DTOMapEntry*> *current);
         static BaseDTO* BuildSongTree(QList<BaseDTO::DTO_TYPE> *treeHierarchy, DataTable* dataTable = 0);
 
         static QMap<QUrl, int> *getAllSongsAsUrl();
@@ -139,6 +107,8 @@ class DatabaseDAO
         static QMap<QString, QVariant> getModuleSettings(QString modulename);
         static void saveDirtyEntrys(int flags);
         static void updateSongInfo(ColumnData* data);
+
+        static void deleteUserDataTable(DatabaseDAO::DataTable* table);
 
     };
 

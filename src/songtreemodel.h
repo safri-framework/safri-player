@@ -36,10 +36,14 @@ class SongTreeModel : public QAbstractItemModel
         bool tagEditAllowed;
         int test;
 
+        void deleteTree(BaseDTO* current);
+
     public:
 
         //! Constructs a new SongTreeModel with the specified tree hierarchy of DTO objects
         explicit SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable = 0,QObject *parent = 0);
+
+        ~SongTreeModel();
 
         int columnCount(const QModelIndex& parent = QModelIndex()) const;
         int rowCount(const QModelIndex& parent = QModelIndex()) const;

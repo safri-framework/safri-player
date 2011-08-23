@@ -2,14 +2,36 @@
 #include <QDirIterator>
 #include <playerwidget.h>
 #include "basedto.h"
-
+#include <QList>
 
 SongTreeModel::SongTreeModel(QList<BaseDTO::DTO_TYPE> *sTreeHierarchy, DatabaseDAO::DataTable* useDataTable, QObject *parent) :
             QAbstractItemModel(parent), treeHierarchy(sTreeHierarchy), tagEditAllowed(false)
 {
     rootDTO = DatabaseDAO::BuildSongTree(treeHierarchy, useDataTable);
+    //DatabaseDAO::deleteUserDataTable(useDataTable);
 }
 
+SongTreeModel::~SongTreeModel()
+{
+    qDebug() << "~SongTreeModel";
+    deleteTree(rootDTO);
+}
+
+void SongTreeModel::deleteTree(BaseDTO* current)
+{
+    if (current != 0)
+    {
+        QList<BaseDTO*>* children = current->getChildren();
+        if (children != 0)
+        {
+            while ( !children->isEmpty() )
+                deleteTree( children->takeFirst() );
+
+        }
+
+        delete current;
+    }
+}
 
 int SongTreeModel::columnCount(const QModelIndex& parent) const
 {

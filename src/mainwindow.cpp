@@ -836,11 +836,13 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
 {
     int index = ui->treeViewTabWidget->currentIndex();
 
+    delete this->treeViews->at(index)->model();
+
     if ( index == 3 )
     {
         // different handling of song table
         if ( searchString.isEmpty() )
-        {
+        {           
             DataTableModel* tableModel = new DataTableModel(DatabaseDAO::getDataTableCopy());
             this->treeViews->at(index)->setModel(tableModel);
 
@@ -849,6 +851,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
         {
             DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
             DataTableModel* tableModel = new DataTableModel(results);
+
             this->treeViews->at(index)->setModel(tableModel);
 
         }
@@ -868,6 +871,8 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             DatabaseDAO::DataTable* results = DatabaseDAO::searchDataTable(searchString);
 
             SongTreeModel *model = new SongTreeModel(filters[index], results);
+
+            DatabaseDAO::deleteUserDataTable(results);
 
             this->treeViews->at(index)->setModel(model);
             connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));

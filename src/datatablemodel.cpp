@@ -11,6 +11,11 @@ DataTableModel::DataTableModel(DatabaseDAO::DataTable* dataTable, QObject *paren
 
 }
 
+DataTableModel::~DataTableModel()
+{
+    DatabaseDAO::deleteUserDataTable(dataTable);
+}
+
 
 int DataTableModel::rowCount(const QModelIndex &parent) const
 {

@@ -11,6 +11,7 @@ class DataTableModel : public QAbstractTableModel
     Q_OBJECT
     public:
         explicit DataTableModel(DatabaseDAO::DataTable* dataTable, QObject *parent = 0);
+        ~DataTableModel();
         virtual int rowCount(const QModelIndex &parent) const;
         virtual int columnCount(const QModelIndex &parent) const;
 
