@@ -1233,3 +1233,62 @@ DatabaseDAO::DataTable* DatabaseDAO::getDataTablePtr()
     return dataTable;
 
 }
+
+void DatabaseDAO::saveDirtyEntrys(int flags)
+{
+    QList<AudioFile*>* af = new QList<AudioFile*>;
+    for (int i = 0; i < dataTable->size(); i++)
+    {
+        DatabaseDAO::ColumnData* column = dataTable->at(i);
+        if (column->value("DIRTY") == "TRUE")
+        {
+            updateSongInfo(column);
+            if (flags == 2)
+            {
+                af->append(new AudioFile(column->value("FILENAME")));
+
+            }
+        }
+
+
+    }
+
+
+}
+
+void DatabaseDAO::updateSongInfo(ColumnData* data)
+{
+    //QString song =data->value("SONG");
+    // QString artist = data->value("ARTIST");
+    // QString album = data->value("ALBUM");
+    //QString genre =data->value("GENRE");
+    // int year = data->value("YEAR");
+    //data->value("INDEX");
+    //QString filename =data->value("FILENAME");
+    //QString cover = data->value("ALBUMCOVER");
+
+
+
+    int genreid =QString(data->value("GENREID")).toInt();
+    int artistid = QString(data->value("ARTISTID")).toInt();
+    QString queryStatement = "UPDATE song SET artist_id = :ARTIST_ID, genre_id = :GENRE_ID, album_id = :ALBUM_ID WHERE id = :SONG_ID";
+    int songid = QString(data->value("SONGID")).toInt() ;
+    int albumid = QString(data->value("ALBUMID")).toInt();
+
+
+    QSqlQuery query( getDatabase() );
+
+    query.prepare(queryStatement);
+    query.bindValue(":SONG_ID", songid);
+    query.bindValue(":ARTIST_ID", artistid);
+    query.bindValue(":GENRE_ID", genreid);
+    query.bindValue(":ALBUM_ID", albumid);
+
+    if ( !query.exec())
+    {
+        qDebug() << "ERROR: " << query.lastError() << " / " << query.executedQuery();
+        return;
+    }
+
+
+}

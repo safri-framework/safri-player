@@ -332,13 +332,13 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                             column->remove("DIRTY");
                                             column->insert("DIRTY","TRUE");
                                             column->remove("ALBUMID");
-                                            column->insert("COLUMNID", QString::number(id));
+                                            column->insert("ALBUMID", QString::number(id));
                                         }
 
                                     }
 
 
-                                    Q_EMIT DatabaseDataChanged();
+
                                 break;
 
                                 case BaseDTO::ARTIST:
@@ -357,7 +357,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                         }
 
                                     }
-                                    Q_EMIT DatabaseDataChanged();
+
 
                                 break;
 
@@ -378,12 +378,13 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                                         }
 
                                     }
-                                    Q_EMIT DatabaseDataChanged();
 
                                 break;
 
 
+
                             }
+                        Q_EMIT DirtyDataTable();
                         }
                         else
                         {

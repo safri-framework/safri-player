@@ -137,6 +137,8 @@ class DatabaseDAO
         static bool removeModuleSettings(QString modulename);
         static bool insertModuleSettings(QMap<QString, QVariant> settings);
         static QMap<QString, QVariant> getModuleSettings(QString modulename);
+        static void saveDirtyEntrys(int flags);
+        static void updateSongInfo(ColumnData* data);
 
     };
 

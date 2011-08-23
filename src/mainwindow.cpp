@@ -282,7 +282,7 @@ void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
 
     model = new SongTreeModel(filters[treeviewNumber]);
     connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-    connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
+    connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
 
     treeViews->at(treeviewNumber)->setModel(model);
 }
@@ -861,7 +861,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             SongTreeModel *model = new SongTreeModel(filters[index]);
 
             this->treeViews->at(index)->setModel(model);
-            connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
+            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
         }
         else
         {
@@ -870,7 +870,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             SongTreeModel *model = new SongTreeModel(filters[index], results);
 
             this->treeViews->at(index)->setModel(model);
-            connect(model, SIGNAL(DatabaseDataChanged()), this, SLOT(refreshTreeView()));
+            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
             this->treeViews->at(index)->expandAll();
         }
     }

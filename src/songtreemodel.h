@@ -58,7 +58,7 @@ class SongTreeModel : public QAbstractItemModel
 signals:
 
         void songsToInsertInDatabase(QStringList* filenames);
-        void DatabaseDataChanged();
+        void DirtyDataTable();
 
 public slots:
 
