@@ -322,19 +322,19 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
                         if(parent.internalPointer() != 0 && tagEditAllowed)
                         {
+
+                            DatabaseDAO::DataTable* table = DatabaseDAO::getDataTablePtr();
+
+
+
                             BaseDTO *dto = static_cast<BaseDTO*>(parent.internalPointer());
                             const QString text = dto->getText();
 
+
                             BaseDTO::DTO_TYPE type = dto->getType();
 
-                            QList<AudioFile*>* afList = new QList<AudioFile*>();
-                            for (int i =0; i < filenames->size(); i++)
-                            {
-                                afList->append(new AudioFile(filenames->at(i)));
 
 
-                            }
-                            DatabaseDAO::DataTable* table = DatabaseDAO::getDataTablePtr();
                             int id = dto->getID();
 
                             switch (type)

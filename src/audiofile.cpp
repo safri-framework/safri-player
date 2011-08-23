@@ -1,6 +1,7 @@
 #include "audiofile.h"
 #include "taglib/mpegfile.h"
 
+
 AudioFile::AudioFile(QString path)
     : MediaSource(path), tagsRead(false)
 {
@@ -204,7 +205,7 @@ bool AudioFile::setArtist(QString artist)
 
 
         this->ReadTags();
-        if (this->getTitle() != title) qDebug()<<"title Error";
+        if (this->getTitle() != title) qDebug()<<"artist Error "+artist;
         return success;
 
 }
@@ -245,7 +246,7 @@ bool AudioFile::setTitle(QString title)
         }
 
         this->ReadTags();
-        if (this->getTitle() != title) qDebug()<<"title Error";
+        if (this->getTitle() != title) qDebug()<<"title Error "+title;
         return success;
      }
 
@@ -288,7 +289,7 @@ bool AudioFile::setGenre(QString genre)
         }
 
         this->ReadTags();
-        if (this->getGenre() != genre) qDebug()<<"genre Error";
+        if (this->getGenre() != genre) qDebug()<<"genre Error "+genre;
         return success;
 
     }
@@ -331,7 +332,7 @@ bool AudioFile::setAlbum(QString album)
         }
 
         this->ReadTags();
-        if (this->getAlbum() != album) qDebug()<<"genre Error";
+        if (this->getAlbum() != album) qDebug()<<"album Error "+album;
         return success;
 
     }
@@ -373,8 +374,66 @@ bool AudioFile::setComment(QString comment)
         }
 
         this->ReadTags();
-        if (this->getComment() != comment) qDebug()<<"title Error";
+        if (this->getComment() != comment) qDebug()<<"comment Error "+comment;
 
      }
 return success;
 }
+
+
+bool AudioFile::setTags(QString artist, QString album, QString genre)
+{
+
+//    QByteArray fileName = QFile::encodeName( this->fileName() );
+//    bool success;
+//    QFileInfo* file = new QFileInfo(this->fileName());
+//    if (file->exists())
+//    {
+//    const char * encodedName = fileName.constData();
+//    TagLib::Tag* tag;
+
+//        //if (this->fileName().toLower().endsWith(QString(".mp3").toLower()))
+//        if (false)
+//        {
+//            TagLib::MPEG::File mpegfile(encodedName);
+
+//            tag = mpegfile.ID3v2Tag(true);
+//            tagsLock.lockForWrite();
+//            tag->setArtist(artist.toStdString());
+//            tag->setAlbum(album.toStdString());
+//            tag->setGenre(genre.toStdString());
+//            success = mpegfile.save();
+//            qDebug()<<success;
+//            tagsLock.unlock();
+//        }
+//        else
+//        {
+
+//            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+//            tag = ref.tag();
+//            tagsLock.lockForWrite();
+//            tag->setArtist(artist.toStdString());
+//            tag->setAlbum(album.toStdString());
+//            tag->setGenre(genre.toStdString());
+//            success = ref.save();
+//            qDebug()<<success;
+//            tagsLock.unlock();
+//        }
+
+
+
+ //    }
+
+
+if ((this->setAlbum(album) && this->setArtist(artist) && this->setGenre(genre)) == true )
+
+return true;
+
+else
+    return false;
+
+}
+
+
+
+

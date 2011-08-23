@@ -22,7 +22,7 @@
 #include "quickplay.h"
 #include "m3utranslator.h"
 #include <QSignalMapper>
-
+#include "datatablesaver.h"
 #include <QRegExp>
 #include <Phonon/BackendCapabilities>
 
@@ -34,8 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-AudioFile* af = new AudioFile("C:/Users/Friedemann Metzger/Music/Shané/song3.mp3");
-af->setGenre("WuselDusel");
+
 
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
@@ -89,8 +88,17 @@ af->setGenre("WuselDusel");
     ui->storedPlaylistView->setContextMenuPolicy(Qt::CustomContextMenu);
    // connect(this->ui->storedPlaylistView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_storedPlaylistView_customContextMenuRequested(QPoint)));
 
+    saveDataTableChanges = new QAction(QIcon("img/save.png"),"Änderungen speichern", this);
+    connect(saveDataTableChanges, SIGNAL(triggered()), this, SLOT(saveDataTableChangesSlot()));
+    saveDataTableChanges->setEnabled(false);
+
+
+
+    ui->mainToolBar->addAction(saveDataTableChanges);
+    ui->mainToolBar->addSeparator();
     ui->mainToolBar->addAction(ui->actionOrdner_hinzufuegen);
     ui->mainToolBar->addAction(ui->actionSongs_hinzufuegen);
+
     ui->mainToolBar->setStyleSheet("background-image:url();");
 
     //this->ui->playerWidget->setStyleSheet("background-color: green");
@@ -282,7 +290,7 @@ void MainWindow::setupSongTreeModelNumber(int treeviewNumber)
 
     model = new SongTreeModel(filters[treeviewNumber]);
     connect(model, SIGNAL(songsToInsertInDatabase(QStringList*)), this, SLOT(insertSongs(QStringList*)));
-    connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
+    connect(model, SIGNAL(DirtyDataTable()), this, SLOT(dataTableDataChanged()));
 
     treeViews->at(treeviewNumber)->setModel(model);
 }
@@ -436,6 +444,13 @@ void MainWindow::refreshTreeView()
 void MainWindow::hideProgressBar()
 {
     ui->progressBar->setVisible(false);
+}
+
+
+
+void MainWindow::showProgressBar()
+{
+    ui->progressBar->setVisible(true);
 }
 
 void MainWindow::songTree_clicked(QModelIndex index)
@@ -864,7 +879,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             SongTreeModel *model = new SongTreeModel(filters[index]);
 
             this->treeViews->at(index)->setModel(model);
-            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
+            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(dataTableDataChanged()));
         }
         else
         {
@@ -875,7 +890,7 @@ void MainWindow::searchEditTextChanged(const QString &searchString)
             DatabaseDAO::deleteUserDataTable(results);
 
             this->treeViews->at(index)->setModel(model);
-            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(refreshTreeView()));
+            connect(model, SIGNAL(DirtyDataTable()), this, SLOT(dataTableDataChanged()));
             this->treeViews->at(index)->expandAll();
         }
     }
@@ -1128,3 +1143,61 @@ void MainWindow::deletePlaylist(QString path)
     ui->storedPlaylistView->setModel( new SafedPlaylistModel() );
 
 }
+
+void MainWindow::dataTableDataChanged()
+{
+    saveDataTableChanges->setIcon(QIcon("img/save_possible.png"));
+    saveDataTableChanges->setEnabled(true);
+    refreshTreeView();
+
+
+}
+
+void MainWindow::saveDataTableChangesSlot()
+{
+    QStringList items;
+         items << tr(".. nur in der Datenbank") << tr("..auch in den Tags") ;
+
+         bool ok;
+         QString item = QInputDialog::getItem(this, tr("Speichern"),
+                                              tr("Änderungen speichern.."), items, 0, false, &ok);
+         if (ok && !item.isEmpty())
+         {
+             saveDataTableChanges->setIcon(QIcon("img/save.png"));
+             saveDataTableChanges->setDisabled(true);
+             DataTableSaver* saver;
+
+             if (item == ".. nur in der Datenbank")
+             {
+                 saver = new DataTableSaver(0, this);
+
+
+             }
+
+
+             if (item == "..auch in den Tags")
+             {
+                saver = new DataTableSaver(1, this);
+
+             }
+
+
+             connect(saver, SIGNAL(setRange(int,int)), this, SLOT(setProgressBarRange(int,int)));
+             connect(saver, SIGNAL(songSaved(int)), this, SLOT(updateProgressBar(int)));
+             connect(saver, SIGNAL(setProgressBarText(QString)), this, SLOT(setProgressBarText(QString)));
+             connect(saver, SIGNAL(showProgressBar()), this, SLOT(showProgressBar()));
+             connect(saver, SIGNAL(hideProgressBar()), this, SLOT(hideProgressBar()));
+             saver->run();
+
+
+
+
+         }
+         else
+         {
+
+         }
+
+
+}
+

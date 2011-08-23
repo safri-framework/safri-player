@@ -66,7 +66,8 @@ HEADERS += \
     treeitem.h \
     headermanager.h \
     songtreetabwidget.h \
-    quickplay.h
+    quickplay.h \
+    datatablesaver.h
 
 SOURCES += \
     taginserter.cpp \
@@ -103,7 +104,8 @@ SOURCES += \
     treeitem.cpp \
     headermanager.cpp \
     songtreetabwidget.cpp \
-    quickplay.cpp
+    quickplay.cpp \
+    datatablesaver.cpp
 
 FORMS += \
     playerwidget.ui \

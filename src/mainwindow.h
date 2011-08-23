@@ -78,6 +78,7 @@ QSortFilterProxyModel *proxyModel;
     headerManager* playlistHeaderManager;
     headerManager* songTableHeaderManager;
     QAction* deletePlaylistItemAction;
+    QAction* saveDataTableChanges;
     void keyPressEvent ( QKeyEvent * event );
     void keyReleaseEvent(QKeyEvent * event);
 
@@ -118,6 +119,7 @@ private slots:
 
     void deleteSelectedSongActionSlot();
 
+    void showProgressBar();
     void hideProgressBar();
     void refreshTreeView();
 
@@ -137,6 +139,8 @@ public slots:
 
     void searchEditTextChanged(const QString &searchString);
     void showFolderInFileSystem(QUrl* file);
+    void dataTableDataChanged();
+    void saveDataTableChangesSlot();
 };
 
 #endif // MAINWINDOW_H
