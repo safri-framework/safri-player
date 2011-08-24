@@ -32,7 +32,8 @@ void DataTableSaver::run()
 
                 columnList->append(column);
                 qDebug()<<"es passiert was";
-
+                column->remove("DIRTY"),
+                column->insert("DIRTY","FALSE");
         }
     }
 
@@ -68,7 +69,7 @@ void DataTableSaver::run()
         for (int i = 0; i < columnList->size(); i++)
         {
             qDebug()<<"taggen";
-            DatabaseDAO::ColumnData* column = dataTable->at(i);
+            DatabaseDAO::ColumnData* column = columnList->at(i);
             Q_EMIT setProgressBarText(tr("tagge ") + column->value("ARTIST")+" - " + column->value("SONG"));
             AudioFile af(column->value("FILENAME"));
             QString artist = column->value("ARTIST");
