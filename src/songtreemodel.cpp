@@ -324,87 +324,94 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                         {
 
                             DatabaseDAO::DataTable* table = DatabaseDAO::getDataTablePtr();
-
-
-
                             BaseDTO *dto = static_cast<BaseDTO*>(parent.internalPointer());
-                            const QString text = dto->getText();
-
-
                             BaseDTO::DTO_TYPE type = dto->getType();
 
+                            int index = treeHierarchy->indexOf(type);
 
 
-                            int id = dto->getID();
 
-                            switch (type)
+
+                            for (int i =index; i >= 0; i--)
                             {
-                                case BaseDTO::ALBUM:
+                                type = dto->getType();
+                                int id = dto->getID();
+                                QString text = dto->getText();
+
+                                switch (type)
+                                {
+                                    case BaseDTO::ALBUM:
 
 
 
-                                    for (int i = 0; i < table->size(); i++)
-                                    {
-                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                        for (int i = 0; i < table->size(); i++)
                                         {
+                                            if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                            {
 
-                                            DatabaseDAO::ColumnData* column = table->at(i);
-                                            column->remove("ALBUM");
-                                            column->insert("ALBUM", text);
-                                            column->remove("DIRTY");
-                                            column->insert("DIRTY","TRUE");
-                                            column->remove("ALBUMID");
-                                            column->insert("ALBUMID", QString::number(id));
+                                                DatabaseDAO::ColumnData* column = table->at(i);
+                                                column->remove("ALBUM");
+                                                column->insert("ALBUM", text);
+                                                column->remove("DIRTY");
+                                                column->insert("DIRTY","TRUE");
+                                                column->remove("ALBUMID");
+                                                column->insert("ALBUMID", QString::number(id));
+                                                qDebug()<<"album";
+                                            }
+
                                         }
 
-                                    }
 
 
+                                    break;
 
-                                break;
-
-                                case BaseDTO::ARTIST:
-                                    for (int i = 0; i < table->size(); i++)
-                                    {
-                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                    case BaseDTO::ARTIST:
+                                        for (int i = 0; i < table->size(); i++)
                                         {
+                                            if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                            {
 
-                                            DatabaseDAO::ColumnData* column = table->at(i);
-                                            column->remove("ARTIST");
-                                            column->insert("ARTIST", text);
-                                            column->remove("DIRTY");
-                                            column->insert("DIRTY","TRUE");
-                                            column->remove("ARTISTID");
-                                            column->insert("ARTISTID", QString::number(id));
+                                                DatabaseDAO::ColumnData* column = table->at(i);
+                                                column->remove("ARTIST");
+                                                column->insert("ARTIST", text);
+                                                column->remove("DIRTY");
+                                                column->insert("DIRTY","TRUE");
+                                                column->remove("ARTISTID");
+                                                column->insert("ARTISTID", QString::number(id));
+                                                qDebug()<<"artist";
+                                            }
+
                                         }
 
-                                    }
+
+                                    break;
 
 
-                                break;
-
-
-                                case BaseDTO::GENRE:
-                                    for (int i = 0; i < table->size(); i++)
-                                    {
-                                        if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                    case BaseDTO::GENRE:
+                                        for (int i = 0; i < table->size(); i++)
                                         {
+                                            if (filenames->contains(table->at(i)->value("FILENAME")) )
+                                            {
 
-                                            DatabaseDAO::ColumnData* column = table->at(i);
-                                            column->remove("GENRE");
-                                            column->insert("GENRE", text);
-                                            column->remove("DIRTY");
-                                            column->insert("DIRTY","TRUE");
-                                            column->remove("GENREID");
-                                            column->insert("GENREID", QString::number(id));
+                                                DatabaseDAO::ColumnData* column = table->at(i);
+                                                column->remove("GENRE");
+                                                column->insert("GENRE", text);
+                                                column->remove("DIRTY");
+                                                column->insert("DIRTY","TRUE");
+                                                column->remove("GENREID");
+                                                column->insert("GENREID", QString::number(id));
+                                                qDebug()<<"genre";
+
+                                            }
+
                                         }
 
-                                    }
-
-                                break;
+                                    break;
 
 
 
+                                 }
+                            dto=dto->getParentDTO();
                             }
                         Q_EMIT DirtyDataTable();
                         }
