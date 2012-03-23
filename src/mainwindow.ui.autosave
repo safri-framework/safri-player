@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>824</width>
+    <height>733</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SaFri Player</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>img/sf_icon.png</normaloff>img/sf_icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QToolBar{background:transparent;}
+#centralWidget{  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 0.1 silver, stop: 0.3 grey, stop: 1  rgb(28, 53, 70))}
+QFrame {border: transparent;}
+QMenuBar { background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 lightgray, stop:1 darkgray); } QMenuBar::item { spacing: 3px; 
+
+
+/* spacing between menu bar items */
+
+ padding: 1px 4px; background: transparent; border-radius: 4px; } QMenuBar::item:selected { /* when selected using mouse or keyboard */ background: #a8a8a8; } QMenuBar::item:pressed { background: #888888; }
+
+
+/*
+QTreeView#playlistView::item { border: 1px solid #d9d9d9; border-top-color: transparent; border-bottom-color: transparent }
+*/
+
+QTreeView#playlistView::item:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1); color:black; } 
+
+
+
+ QTreeView::item:selected{background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1); color:black; }
+/*
+ QTreeView::item:selected:!active { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf); color:black; }
+*/
+
+QStatusBar { background: rgb(28, 53, 70); } QStatusBar::item { border: 1px solid red; border-radius: 3px; }
+
+
+
+QHeaderView::section { background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 silver,  stop:1 white); padding-left: 4px;  border: 1px solid #6c6c6c; 
+}
+
+
+
+/*
+ QHeaderView::section:checked { background-color: red; }
+
+QHeaderView::down-arrow { image: url(down_arrow.png); }
+ QHeaderView::up-arrow { image: url(up_arrow.png); }
+*/
+
+
+/*
+QScrollBar:horizontal { border: 2px solid grey; background: #32CC99; height: 15px; margin: 0px 20px 0 20px; }
+ QScrollBar::handle:horizontal { background: white; min-width: 20px; }
+ QScrollBar::add-line:horizontal { border: 2px solid grey; background: #32CC99; width: 20px; subcontrol-position: right; subcontrol-origin: margin; } 
+QScrollBar::sub-line:horizontal { border: 2px solid grey; background: #32CC99; width: 20px; subcontrol-position: left; subcontrol-origin: margin; }
+*/
+
+/*
+QScrollBar:vertical { border: 1px solid grey; background:rgb(52,52,52) ; width: 12px; margin: 22px 0 22px 0; } 
+QScrollBar::handle:vertical { background:  qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #616161, stop: 0.5 #505050, stop: 0.6 #434343, stop:1 #656565);; min-height: 25px;border: 1px solid #6c6c6c; }
+ QScrollBar::add-line:vertical { border: 1px solid grey; background:#6c6c6c; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; }
+ QScrollBar::sub-line:vertical { border: 1px solid grey; background: #32CC99; height: 20px; subcontrol-position: top; subcontrol-origin: margin; }
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { border: 2px solid grey; width: 3px; height: 3px; background:black; }
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }
+
+*/
+
+
+
+
+
+ QMenu {
+     background-color: #ABABAB; /* sets background of the menu */
+     border: 1px solid black;
+ }
+
+ QMenu::item {
+     /* sets background of menu item. set this to something non-transparent
+         if you want menu color and menu item color to be different */
+     background-color: transparent;
+ }
+
+ QMenu::item:selected { /* when user selects item using mouse or keyboard */
+     background-color: #654321;
+ }
+
+
+
+QTabWidget::pane { /* The tab widget frame */ border: 1px solid transparent; background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 white, stop:0.2 silver, stop:0.5 grey,   stop:1 white)} 
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="margin">
+     <number>2</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="leftWidget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+         <item>
+          <widget class="SongtreeTabWidget" name="treeViewTabWidget">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-image:url();</string>
+           </property>
+           <property name="tabPosition">
+            <enum>QTabWidget::North</enum>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <property name="documentMode">
+            <bool>false</bool>
+           </property>
+           <property name="movable">
+            <bool>false</bool>
+           </property>
+           <widget class="QWidget" name="webTab">
+            <attribute name="title">
+             <string>Info</string>
+            </attribute>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QWebView" name="webView">
+               <property name="url">
+                <url>
+                 <string>about:blank</string>
+                </url>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTreeView" name="storedPlaylistView">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>130</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>130</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-image:url();</string>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>true</bool>
+           </property>
+           <property name="headerHidden">
+            <bool>false</bool>
+           </property>
+           <attribute name="headerVisible">
+            <bool>true</bool>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="rightWidget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,82,0,0,0">
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>19</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="PlaylistView" name="playlistView">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="dragEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragDrop</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::MoveAction</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>false</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
+           <property name="itemsExpandable">
+            <bool>false</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="animated">
+            <bool>true</bool>
+           </property>
+           <property name="headerHidden">
+            <bool>false</bool>
+           </property>
+           <attribute name="headerVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="headerCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="headerShowSortIndicator" stdset="0">
+            <bool>true</bool>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_2" native="true">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-image:url();</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="margin">
+             <number>3</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="actualPlayingPlaylistButton">
+              <property name="text">
+               <string>Aktuelle Playliste</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="clearPlaylistButton">
+              <property name="text">
+               <string>Playliste leeren</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="restorePlaylistButton">
+              <property name="text">
+               <string>Playliste wiederherstellen</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="savePlaylistButton">
+              <property name="text">
+               <string>Playliste speichern</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="PlayerWidget" name="playerWidget" native="true">
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>824</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QMenu" name="menuSammlung">
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="title">
+     <string>Sammlung</string>
+    </property>
+    <addaction name="actionSongs_hinzufuegen"/>
+    <addaction name="actionOrdner_hinzufuegen"/>
+    <addaction name="actionBereinigen"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Einstellungen</string>
+    </property>
+    <addaction name="action_Open_Settings"/>
+    <addaction name="action_about_SaFri_Player"/>
+   </widget>
+   <addaction name="menuSammlung"/>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonFollowStyle</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionSongs_hinzufuegen">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/addsong_icon.png</normaloff>img/addsong_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Songs hinzufügen</string>
+   </property>
+  </action>
+  <action name="actionOrdner_hinzufuegen">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/addfolder_icon.png</normaloff>img/addfolder_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ordner hinzufügen</string>
+   </property>
+  </action>
+  <action name="actionSavePlaylist">
+   <property name="text">
+    <string>Playliste speichern</string>
+   </property>
+   <property name="toolTip">
+    <string>Speichert die angezeigten Lieder in einer Playliste.</string>
+   </property>
+  </action>
+  <action name="actionRestorePlaylist">
+   <property name="text">
+    <string>Wiederherstellen</string>
+   </property>
+   <property name="toolTip">
+    <string>letzte Ansicht wiederherstellen</string>
+   </property>
+  </action>
+  <action name="action_about_SaFri_Player">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/sf_icon.png</normaloff>img/sf_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Über SaFri Player</string>
+   </property>
+  </action>
+  <action name="action_Open_Settings">
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="actionBereinigen">
+   <property name="text">
+    <string>Bereinigen</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>PlayerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">playerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PlaylistView</class>
+   <extends>QTreeView</extends>
+   <header>playlistview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SongtreeTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>songtreetabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
