@@ -1,0 +1,36 @@
+
+<html>
+	<head>
+		<style type="text/css">
+			body { background-color: white; font-family: Arial; font-size: 12pt;}
+			img { border: 0px; }
+			table { font-size: 9pt; }
+			h1 { font-size: 1em; padding-bottom: 0px; margin-bottom: 2px; color: black;}
+			td.trackNo { font-weight: bold; text-align: right;}
+			td.track-title { padding-left: 2pt; }
+			
+			#discographys { background-color: LightCyan ; border: 1px solid black; padding-left: 5px; padding-top: 5px; }
+		</style>
+	</head>
+	<body>
+		<script type='text/javascript'>
+			function toggleBlock(ID) 
+			{
+				if ( document.getElementById(ID).style.display != 'none' ) 
+				{
+					document.getElementById(ID).style.display = 'none';
+				}
+				else
+				{
+					if ( ID[0] != 'T' ) 
+					{
+						document.getElementById(ID).style.display = 'inline';
+					}
+					else
+					{
+						document.getElementById(ID).style.display = 'inline';
+					}
+				}
+			}
+		</script>
+		<h1>%%ARTIST%% - Discographie</h1>
