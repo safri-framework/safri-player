@@ -1,0 +1,5 @@
+<map id="PluginSystem::IPlugin::addObject" name="PluginSystem::IPlugin::addObject">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_plugin_manager.html#a6b8381eae9354b4815498410622bbc86" title="Method the access the PluginManager instance." alt="" coords="205,5,403,46"/>
+<area shape="rect" id="node5" href="$class_plugin_system_1_1_plugin_manager.html#a28b3d0678d654b04df871a46ac859f94" title="Method for adding objects to the object pool." alt="" coords="205,70,403,111"/>
+<area shape="rect" id="node7" href="$class_plugin_system_1_1_plugin_manager.html#a34e5b08d965bf0da20308daf36f5ccac" title="PluginSystem::PluginManager\l::objectAdded" alt="" coords="451,70,648,111"/>
+</map>

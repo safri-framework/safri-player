@@ -1,0 +1,4 @@
+<map id="PluginSystem::PluginManager::instance" name="PluginSystem::PluginManager::instance">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_i_plugin.html#a6995b4a01829b6a612a8f79ff332fc69" title="Convenience method to register an object in the plugin manager&#39;s object pool." alt="" coords="251,5,402,46"/>
+<area shape="rect" id="node5" href="$class_plugin_system_1_1_i_plugin.html#aa489786ccbcfa097071c4fdd5297b43b" title="Convenience method to unregister an object in the plugin manager&#39;s object pool." alt="" coords="251,70,402,111"/>
+</map>

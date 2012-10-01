@@ -1,0 +1,7 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_plugin_manager.html#acaf9134697fc93c177031beac8cad50d" title="PluginSystem::PluginManager\l::loadPlugins" alt="" coords="104,103,301,145"/>
+<area shape="rect" id="node5" href="$class_plugin_system_1_1_plugin_spec.html#ac736f0b2b207160b850c102c033d6e15" title="getter for PlugIn &#45; Name." alt="" coords="350,5,527,46"/>
+<area shape="rect" id="node7" href="$class_plugin_system_1_1_plugin_spec.html#ada73a8b27bc75bf9a8ba5cb3462cdecf" title="Loads the shared library of the plugin." alt="" coords="350,70,527,111"/>
+<area shape="rect" id="node9" href="$class_plugin_system_1_1_plugin_spec.html#a4a36005d00bf24f3c2662a5e6235be9f" title="getter for PlugIn &#45; Instance." alt="" coords="350,135,527,177"/>
+<area shape="rect" id="node11" href="$class_plugin_system_1_1_i_plugin.html#a22a031c7c7d68e2b256fbf50996f01b6" title="Called after the plugin was loaded and the IPlugin instance has been created." alt="" coords="363,201,514,242"/>
+</map>

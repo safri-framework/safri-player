@@ -1,0 +1,4 @@
+<map id="PluginSystem::PluginManager::objectAboutToRemove" name="PluginSystem::PluginManager::objectAboutToRemove">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_plugin_manager.html#a37e27328cf0adcd9c5ce5090089c990f" title="Method for removing objects from the object pool." alt="" coords="251,5,448,46"/>
+<area shape="rect" id="node5" href="$class_plugin_system_1_1_i_plugin.html#aa489786ccbcfa097071c4fdd5297b43b" title="Convenience method to unregister an object in the plugin manager&#39;s object pool." alt="" coords="497,5,647,46"/>
+</map>

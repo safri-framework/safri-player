@@ -1,0 +1,5 @@
+<map id="PluginSystem::IPlugin::removeObject" name="PluginSystem::IPlugin::removeObject">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_plugin_manager.html#a6b8381eae9354b4815498410622bbc86" title="Method the access the PluginManager instance." alt="" coords="205,5,403,46"/>
+<area shape="rect" id="node5" href="$class_plugin_system_1_1_plugin_manager.html#a37e27328cf0adcd9c5ce5090089c990f" title="Method for removing objects from the object pool." alt="" coords="205,70,403,111"/>
+<area shape="rect" id="node7" href="$class_plugin_system_1_1_plugin_manager.html#a3bb7c1e1dd8db49fda84d5e5f25f43b8" title="PluginSystem::PluginManager\l::objectAboutToRemove" alt="" coords="451,70,648,111"/>
+</map>

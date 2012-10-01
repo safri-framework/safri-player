@@ -1,0 +1,15 @@
+<map id="X:/safri/src/PluginSystem/PluginSystem_global.h" name="X:/safri/src/PluginSystem/PluginSystem_global.h">
+<area shape="rect" id="node3" href="$iplugin_8h.html" title="X:/safri/src/PluginSystem\l/iplugin.h" alt="" coords="341,97,509,138"/>
+<area shape="rect" id="node15" href="$pluginmanager_8h.html" title="X:/safri/src/PluginSystem\l/pluginmanager.h" alt="" coords="445,187,613,229"/>
+<area shape="rect" id="node25" href="$plugindependency_8h.html" title="X:/safri/src/PluginSystem\l/plugindependency.h" alt="" coords="811,97,979,138"/>
+<area shape="rect" id="node30" href="$pluginspec_8h.html" title="X:/safri/src/PluginSystem\l/pluginspec.h" alt="" coords="619,97,787,138"/>
+<area shape="rect" id="node5" href="$coreplugin_8h.html" title="X:/safri/src/Plugins\l/CorePlugin/coreplugin.h" alt="" coords="208,187,371,229"/>
+<area shape="rect" id="node9" href="$testplugin_8h.html" title="X:/safri/src/Plugins\l/TestPlugin/testplugin.h" alt="" coords="18,187,176,229"/>
+<area shape="rect" id="node13" href="$iplugin_8cpp.html" title="X:/safri/src/PluginSystem\l/iplugin.cpp" alt="" coords="403,278,571,319"/>
+<area shape="rect" id="node22" href="$pluginspec_8cpp.html" title="X:/safri/src/PluginSystem\l/pluginspec.cpp" alt="" coords="637,187,805,229"/>
+<area shape="rect" id="node7" href="$coreplugin_8cpp.html" title="X:/safri/src/Plugins\l/CorePlugin/coreplugin.cpp" alt="" coords="201,278,377,319"/>
+<area shape="rect" id="node11" href="$testplugin_8cpp.html" title="X:/safri/src/Plugins\l/TestPlugin/testplugin.cpp" alt="" coords="5,278,176,319"/>
+<area shape="rect" id="node18" href="$pluginmanager_8cpp.html" title="X:/safri/src/PluginSystem\l/pluginmanager.cpp" alt="" coords="748,278,916,319"/>
+<area shape="rect" id="node20" href="$main_8cpp.html" title="X:/safri/src/Safri\l&#45;Player/main.cpp" alt="" coords="595,278,715,319"/>
+<area shape="rect" id="node27" href="$plugindependency_8cpp.html" title="X:/safri/src/PluginSystem\l/plugindependency.cpp" alt="" coords="880,187,1048,229"/>
+</map>

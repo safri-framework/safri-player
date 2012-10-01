@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$class_plugin_system_1_1_i_plugin.html" title="The IPlugin class is an abstract class that each plugin must implement." alt="" coords="159,31,310,57"/>
+<area shape="rect" id="node9" href="$class_plugin_system_1_1_plugin_dependency.html" title="PluginSystem::PluginDependency" alt="" coords="125,81,344,108"/>
+<area shape="rect" id="node11" href="$class_plugin_system_1_1_plugin_manager.html" title="PluginSystem::PluginManager" alt="" coords="136,132,333,159"/>
+<area shape="rect" id="node5" href="$class_core_1_1_core_plugin.html" title="Core::CorePlugin" alt="" coords="392,5,512,32"/>
+<area shape="rect" id="node7" href="$class_test_plugin.html" title="TestPlugin" alt="" coords="411,56,493,83"/>
+</map>
