@@ -154,10 +154,35 @@ namespace Core
 
     signals:
 
-        void positionOfActuallyPlayingSongChanged(int from, int to);
+       // void positionOfActuallyPlayingSongChanged(int from, int to);
+        // was renamed in:
+
+        /**
+            \brief  lets the PlaylistModel know, that another ModelIndex has to be marked as "playing"
+        */
+        void changeActualPlayingMarker(int from, int to);
+        /**
+            \brief  this signal has to be emitted if songs were inserted.
+        */
+
         void songsInserted(int position, int count);
+
+        /**
+            \brief  this signal has to be emitted if a song was moved.
+        */
+
         void songMoved(int from, int to);
+
+        /**
+            \brief  this signal has to be emitted if a song was deleted.
+        */
         void songDeleted(int value);
+
+        /**
+            \brief  this signal will force the PlaylistModel (ViewAdapter) to redraw the data of the given song.
+
+        */
+
         void songDataChanged(int value);
 
     };
