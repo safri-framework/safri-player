@@ -28,7 +28,8 @@ HEADERS += coreplugin.h\
     CoreData/genre.h \
     CoreData/artist.h \
     CoreData/album.h \
-    CoreData/song.h
+    CoreData/song.h\
+    iplaylist.h
 
 OTHER_FILES += \
     Core.xml
