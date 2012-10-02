@@ -19,7 +19,8 @@ SOURCES += coreplugin.cpp \
     CoreData/genre.cpp \
     CoreData/artist.cpp \
     CoreData/album.cpp \
-    CoreData/song.cpp
+    CoreData/song.cpp \
+    icore.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -29,7 +30,8 @@ HEADERS += coreplugin.h\
     CoreData/artist.h \
     CoreData/album.h \
     CoreData/song.h\
-    iplaylist.h
+    iplaylist.h \
+    icore.h
 
 OTHER_FILES += \
     Core.xml

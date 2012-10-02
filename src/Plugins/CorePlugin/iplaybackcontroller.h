@@ -1,6 +1,8 @@
 #ifndef IPLAYBACKCONTROLLER_H
 #define IPLAYBACKCONTROLLER_H
 
+#include "CorePlugin_global.h"
+
 #include <QObject>
 
 namespace Core
@@ -14,7 +16,7 @@ namespace Core
         If you want to write your own playback controller, you have to implement
         this interface.
     */
-    class IPlaybackController : public QObject
+    class COREPLUGINSHARED_EXPORT IPlaybackController : public QObject
     {
         Q_OBJECT
         public:
