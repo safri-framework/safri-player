@@ -73,6 +73,6 @@ namespace PluginSystem
     };
 }
 
-Q_DECLARE_INTERFACE(PluginSystem::IPlugin, "IPlugin")
+Q_DECLARE_INTERFACE(PluginSystem::IPlugin, "PluginSystem::IPlugin")
 
 #endif // IPLUGIN_H

@@ -19,5 +19,8 @@ SOURCES += testplugin.cpp
 HEADERS += testplugin.h\
         TestPlugin_global.h
 
+INCLUDEPATH += ../CorePlugin
+LIBS += -L"../../../bin/plugins/safri" -lCore
+
 OTHER_FILES += \
     testplugin.xml
