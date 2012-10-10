@@ -12,27 +12,27 @@ class Playlist : public Core::IPlaylist
     Q_INTERFACES(Core::IPlaylist)
 
 public:
-    explicit Playlist(QList<Song*> songs, QObject *parent = 0);
+    explicit Playlist(QList<Item*> items, QObject *parent = 0);
     explicit Playlist(QString m3ufile, QObject *parent = 0);
 
 
 
     void setShuffle(bool value);
     bool getShuffle();
-    bool isItemPlaying(int value);
-    void moveItem(int from, int to);
-    void setCurrentPlayingItem(int value);
-    void deleteItem(int value);
-    void insertItemsAt(int position, QList<Song *> songs);
+    bool isCurrentMedia(int value);
+    void moveMedia(int from, int to);
+    void setCurrentMedia(int pos);
+    void deleteMedia(int pos);
+    void insertMediaAt(int position, QList<Song *> songs);
     bool isSafedPlaylist();
 
 
-    Song* getItemAt(int value);
-    Song* getNextItem();
-    Song* getPreviousItem();
-    Song* getCurrentPlayingItem();
+    Media* getMediaAt(int value);
+    Media* getNextMedia();
+    Media* getPreviousMedia();
+    Media* getCurrentMedia();
 
-    int getItemCount();
+    int getSize();
 
     void readTagsAtPosition(int position);
     void disconnectPlaylist();
@@ -40,31 +40,36 @@ public:
 private:
 
     bool safedPlaylist;
-    int actualPlayingSong;
-    QList<Song*> SongList;
+    int currentMedia;
+    QList<Media*> mediaList;
 
 
 
     QReadWriteLock playlistLock;
 
-    bool actualPlayingSongTransactionRequested;
-    int  actualPlayingSongTransaction;
+    bool currentMediaTransactionRequested;
+    int  currentMediaTransaction;
 
-    void checkActualPlayingSongTransaction();
+    void checkCurrentMediaTransaction();
 
-    QList<Song*> shuffleHistory;
+    QList<Media*> shuffleHistory;
     bool shuffle;
     int shuffleCounter;
-    QList<Song*> shufflePlaylist(QList<Song*> songs);
+    QList<Media*> shufflePlaylist(QList<Media*> media);
 
 
 signals:
 
-    void positionOfActuallyPlayingSongChanged(int from, int to);
-    void songsInserted(int position, int count);
-    void songMoved(int from, int to);
-    void songDeleted(int value);
-    void songDataChanged(int value);
+    void changeActualPlayingMarker(int from, int to);
+
+    void MediaInserted(int position, int count);
+
+    void MediaMoved(int from, int to);
+
+    void MediaDeleted(int value);
+
+    void MediaDataChanged(int value);
+
 
 
 };
