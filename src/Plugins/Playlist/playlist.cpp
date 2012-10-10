@@ -5,8 +5,10 @@
 #include <qglobal.h>
 #include <QFile>
 
+using namespace Core;
+
 Playlist::Playlist(QList<Item*> items, QObject *parent) :
-   safedPlaylist(false), QObject(parent), currentMedia(-1), shuffle(false), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffleCounter(-1)
+   IPlaylist(parent), safedPlaylist(false), currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
 {
 
     for(int i = 0; i < items.size(); i++)
@@ -16,7 +18,7 @@ Playlist::Playlist(QList<Item*> items, QObject *parent) :
 }
 
 Playlist::Playlist(QString m3ufile, QObject *parent) :
-       safedPlaylist(true),  QObject(parent), currentMedia(-1), shuffle(false), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffleCounter(-1)
+       IPlaylist(parent), safedPlaylist(true),  currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
 {
 /*
 
@@ -201,7 +203,7 @@ void Playlist::setCurrentMedia(int value)
     {
         int lastMedia = currentMedia;
         this->currentMedia = -1;
-        Q_EMIT(songDataChanged(lastMedia));
+        Q_EMIT(MediaDataChanged(lastMedia));
 
     }
     else
@@ -261,7 +263,7 @@ void Playlist::insertMediaAt(int position, QList<Item*> items)
     QList<Media*> media;
     for(int i = 0; i < items.size(); i++)
     {
-        media.append(items.getMedia());
+        media.append(items.at(i)->getMedia());
     }
 
 
@@ -286,7 +288,7 @@ void Playlist::insertMediaAt(int position, QList<Item*> items)
     else
     {
         playlistLock.lockForWrite();
-            mediaList.append(songs);
+            mediaList.append(media);
         playlistLock.unlock();
     }
 
@@ -342,7 +344,7 @@ void Playlist::readTagsAtPosition(int position)
 
 Media* Playlist::getCurrentMedia()
 {
-    return getSongAt(currentMedia);
+    return getMediaAt(currentMedia);
 }
 
 

@@ -4,20 +4,16 @@
 #include <QObject>
 #include "CorePlugin_global.h"
 
-
- class Item;
- class Media;
 namespace Core
 {
 
+    class Item;
+    class Media;
 
     class COREPLUGINSHARED_EXPORT IPlaylist : public QObject
     {
         Q_OBJECT
     public:
-       // explicit IPlaylist(QObject *parent = 0);
-
-
 
         /**
             \brief enables or disables shuffle mode
@@ -189,6 +185,10 @@ namespace Core
         */
 
         void MediaDataChanged(int value);
+
+    protected:
+
+        explicit IPlaylist(QObject *parent = 0) : QObject(parent) {}
 
     };
 }

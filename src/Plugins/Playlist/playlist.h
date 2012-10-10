@@ -4,6 +4,7 @@
 #include "CoreData/song.h"
 #include <QList>
 #include "CoreData/song.h"
+#include <QReadWriteLock>
 
 using namespace Core;
 class Playlist : public Core::IPlaylist
@@ -23,7 +24,7 @@ public:
     void moveMedia(int from, int to);
     void setCurrentMedia(int pos);
     void deleteMedia(int pos);
-    void insertMediaAt(int position, QList<Song *> songs);
+    void insertMediaAt(int position, QList<Item *> items);
     bool isSafedPlaylist();
 
 

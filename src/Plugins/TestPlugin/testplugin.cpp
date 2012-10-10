@@ -25,7 +25,7 @@ bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
     Core::Genre *genre = new Core::Genre(1, "Rock");
 
     qDebug() << genre->getName();
-    qDebug() << Core::BaseDTO::typeToString(genre->getType());
+    qDebug() << Core::DataItem::typeToString(genre->getType());
 
     Core::IPlaybackController *pbc;
 

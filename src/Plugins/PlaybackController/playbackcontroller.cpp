@@ -23,8 +23,8 @@ Core::IPlaylist *PlaybackController::getPlaylist()
 
 void PlaybackController::play()
 {
-    Core::Song *song = playlist->getCurrentPlayingSong();
-    playSong(song);
+    Core::Media *media = playlist->getCurrentMedia();
+    playMedia(media);
 }
 
 void PlaybackController::pause()
@@ -39,17 +39,25 @@ void PlaybackController::stop()
 
 void PlaybackController::next()
 {
-     Core::Song *song = playlist->getNextSong();
-     playSong(song);
+     Core::Media *media = playlist->getNextMedia();
+
+     if (media)
+     {
+        playMedia(media);
+     }
 }
 
 void PlaybackController::previous()
 {
-    Core::Song *song = playlist->getPreviousSong();
-    playSong(song);
+    Core::Media *media = playlist->getPreviousMedia();
+
+    if (media)
+    {
+        playMedia(media);
+    }
 }
 
-void PlaybackController::playSong(Core::Song *song)
+void PlaybackController::playMedia(Core::Media* media)
 {
     // TODO: AudioEngine play song
 }

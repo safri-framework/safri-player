@@ -39,20 +39,26 @@ int Album::createNewID()
     return ++latestID;
 }
 
+QList<Media *> Album::getMedia()
+{
+    //TODO:
+    return QList<Media*>();
+}
+
 Album::Album(int sID, QString sName, QObject *parent) :
-    BaseDTO(sID, sName, BaseDTO::ALBUM,  parent)
+    DataItem(sID, sName, DataItem::ALBUM,  parent)
 {
 
 }
 
 Album::Album(Album* album, QObject *parent) :
-    BaseDTO(createNewID(),album->getName(),album->getType(), parent)
+    DataItem(createNewID(),album->getName(),album->getType(), parent)
 {
 
 }
 
 Album::Album(int sID, QString sName, bool temporary, QObject *parent):
-BaseDTO(sID, sName, BaseDTO::ALBUM, temporary, parent)
+DataItem(sID, sName, DataItem::ALBUM, temporary, parent)
 {
 
 }
@@ -140,13 +146,13 @@ void Album::removeSong(Song* song)
 
 }
 
-Album* Album::separateArtist(BaseDTO *sArtist)
+Album* Album::separateArtist(DataItem *sArtist)
 {
     // first find or create an appropriate album object
     Album* newAlbum = 0;
     Artist *artist;
 
-    if (sArtist->getType() != BaseDTO::ARTIST)
+    if (sArtist->getType() != DataItem::ARTIST)
     {
         return 0;
     }

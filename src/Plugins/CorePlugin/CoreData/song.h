@@ -1,7 +1,7 @@
 #ifndef SONG_H
 #define SONG_H
 
-#include "basedto.h"
+#include "media.h"
 #include "genre.h"
 #include "album.h"
 #include "artist.h"
@@ -14,7 +14,7 @@ namespace Core
         This class stores and provides the information (such as title, year, artist, ...)
         for individual songs.
     */
-    class Song : public BaseDTO
+    class COREPLUGINSHARED_EXPORT Song : public Media
     {
         Q_OBJECT
         public:
@@ -47,7 +47,7 @@ namespace Core
                 \param      the new artist
                 \returns    success of the operation
             */
-            bool moveToArtist(BaseDTO *newArtist);
+            bool moveToArtist(DataItem *newArtist);
 
             /**
                 \brief      Moves to song to a new album and makes the
@@ -55,9 +55,9 @@ namespace Core
                 \param      the new album
                 \returns    success of the operation
             */
-            bool moveToAlbum(BaseDTO *newAlbum);
+            bool moveToAlbum(DataItem *newAlbum);
 
-            bool moveToGenre(BaseDTO *newGenre);
+            bool moveToGenre(DataItem *newGenre);
 
         public:
 
@@ -110,6 +110,9 @@ namespace Core
             //! Static integer for the latest used ID
             static int latestID;
 
+            QList<Media*> getMedia();
+
+            QUrl getURL();
 
         private:
 

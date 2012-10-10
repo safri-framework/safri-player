@@ -3,7 +3,7 @@
 
 #include "../CorePlugin_global.h"
 
-#include "basedto.h"
+#include "dataitem.h"
 #include <QList>
 #include <QMap>
 
@@ -11,7 +11,7 @@ namespace Core
 {
     class Song;
 
-    class COREPLUGINSHARED_EXPORT Genre : public BaseDTO
+    class COREPLUGINSHARED_EXPORT Genre : public DataItem
     {
         Q_OBJECT
         public:
@@ -36,8 +36,6 @@ namespace Core
                 \returns    the genre which is associated with the given name
               */
             static Genre* getByName(QString name);
-
-
 
             static QList<Genre*> getAll();
 
@@ -69,6 +67,8 @@ namespace Core
 
             //! Static integer for the latest used ID
             static int latestID;
+
+            QList<Media*> getMedia();
 
         protected:
 

@@ -15,23 +15,25 @@ include(../../SafriPlugin.pri)
 DEFINES += COREPLUGIN_LIBRARY
 
 SOURCES += coreplugin.cpp \
-    CoreData/basedto.cpp \
     CoreData/genre.cpp \
     CoreData/artist.cpp \
     CoreData/album.cpp \
     CoreData/song.cpp \
-    icore.cpp
+    icore.cpp \
+    CoreData/dataitem.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
     iplaybackcontroller.h \
-    CoreData/basedto.h \
     CoreData/genre.h \
     CoreData/artist.h \
     CoreData/album.h \
     CoreData/song.h\
     iplaylist.h \
-    icore.h
+    icore.h \
+    CoreData/dataitem.h \
+    CoreData/item.h \
+    CoreData/media.h
 
 OTHER_FILES += \
     Core.xml

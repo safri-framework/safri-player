@@ -3,8 +3,6 @@
 
 #include "iplaybackcontroller.h"
 
-namespace Core { class Song; } // forward declaration
-
 class PlaybackController : public Core::IPlaybackController
 {
     Q_OBJECT
@@ -26,7 +24,7 @@ class PlaybackController : public Core::IPlaybackController
 
         Core::IPlaylist *playlist;
 
-        void playSong(Core::Song* song);
+        void playMedia(Core::Media* media);
 };
 
 #endif // PLAYBACKCONTROLLER_H

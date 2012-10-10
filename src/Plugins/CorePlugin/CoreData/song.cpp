@@ -46,25 +46,34 @@ int Song::createNewID()
     return ++latestID;
 }
 
+QList<Media *> Song::getMedia()
+{
+    //TODO
+    return QList<Media*>();
+}
+
+QUrl Song::getURL()
+{
+    return QUrl(filename);
+}
+
 Song::Song(int sID, QString sName, int year, QString filename, QObject *parent) :
-    BaseDTO(sID, sName, BaseDTO::SONG, parent), filename(filename), year(year)
+    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year)
 {
 
 }
 
 Song::Song(int sID, QString sName, int year,  QObject *parent) :
-    BaseDTO(sID, sName, BaseDTO::SONG, parent), year(year)
+    Media(sID, sName, DataItem::SONG, parent), year(year)
 {
 
 }
-
 
 Song::Song(int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent):
-    BaseDTO(sID, sName, BaseDTO::SONG, temporary, parent), filename(filename), year(year)
+    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year)
 {
 
 }
-
 
 Artist* Song::getArtist()
 {
@@ -126,18 +135,16 @@ void Song::setLength(int length)
     this->length = length;
 }
 
-bool Song::moveToArtist(BaseDTO *newArtist)
+bool Song::moveToArtist(DataItem *newArtist)
 {
     Artist *artist, *oldArtist;
 
-    if (newArtist->getType() != BaseDTO::ARTIST)
+    if (newArtist->getType() != DataItem::ARTIST)
     {
         return false;
     }
 
     artist = static_cast<Artist*>(newArtist);
-
-
 
     oldArtist = this->interpret;
 
@@ -158,11 +165,11 @@ bool Song::moveToArtist(BaseDTO *newArtist)
     return true;
 }
 
-bool Song::moveToAlbum(BaseDTO *newAlbum)
+bool Song::moveToAlbum(DataItem *newAlbum)
 {
     Album *album;
 
-    if (newAlbum->getType() != BaseDTO::ALBUM)
+    if (newAlbum->getType() != DataItem::ALBUM)
     {
         return false;
     }
@@ -192,11 +199,11 @@ bool Song::moveToAlbum(BaseDTO *newAlbum)
     return true;
 }
 
-bool Song::moveToGenre(BaseDTO *newGenre)
+bool Song::moveToGenre(DataItem *newGenre)
 {
     Genre* genre;
 
-    if (newGenre->getType() != BaseDTO::GENRE)
+    if (newGenre->getType() != DataItem::GENRE)
     {
         return false;
     }

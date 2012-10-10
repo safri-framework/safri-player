@@ -39,19 +39,25 @@ int Artist::createNewID()
     return ++latestID;
 }
 
+QList<Media *> Artist::getMedia()
+{
+    //TODO
+    return QList<Media*>();
+}
+
 Artist::Artist(int sID, QString sName, QObject *parent) :
-    BaseDTO(sID, sName, BaseDTO::ARTIST, parent)
+    DataItem(sID, sName, DataItem::ARTIST, parent)
 {
 
 }
 
 Artist::Artist(int sID, QString sName, bool temporary, QObject *parent):
-    BaseDTO(sID, sName, BaseDTO::ARTIST, temporary, parent)
+    DataItem(sID, sName, DataItem::ARTIST, temporary, parent)
 {
 }
 
 Artist::Artist(Artist* artist, QObject *parent) :
-    BaseDTO(createNewID(), artist->getName(), BaseDTO::ARTIST, parent)
+    DataItem(createNewID(), artist->getName(), DataItem::ARTIST, parent)
 {
 
 }

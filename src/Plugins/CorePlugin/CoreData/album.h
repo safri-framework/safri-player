@@ -16,7 +16,7 @@ namespace Core
         This class stores and provides the information (such as name, artist, ...)
         for individual albums.
     */
-    class Album : public BaseDTO
+    class Album : public DataItem
     {
         Q_OBJECT
         public:
@@ -47,7 +47,7 @@ namespace Core
                 \param      the artist to separate
                 \returns    the album to which the songs were separated
             */
-            Album* separateArtist(BaseDTO* artist);
+            Album* separateArtist(DataItem* artist);
 
         public:
 
@@ -92,6 +92,8 @@ namespace Core
 
             //! Static integer for the latest used ID
             static int latestID;
+
+            QList<Media*> getMedia();
 
 
         private:

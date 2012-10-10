@@ -1,58 +1,58 @@
-#include "basedto.h"
+#include "dataitem.h"
 
 #include <QDebug>
 
 using namespace Core;
 
-BaseDTO::BaseDTO(int sID, QString sName, DTO_TYPE sType, QObject *parent) :
-    QObject(parent), type(sType), id(sID), name(sName), temporary(false)
+DataItem::DataItem(int sID, QString sName, DATA_ITEM_TYPE sType, QObject *parent) :
+    Item(parent), type(sType), id(sID), name(sName), temporary(false)
 {
 
 }
 
 
-BaseDTO::BaseDTO(int sID, QString sName, DTO_TYPE sType, bool temporary, QObject *parent) :
-    QObject(parent), type(sType), id(sID), name(sName), temporary(temporary)
+DataItem::DataItem(int sID, QString sName, DATA_ITEM_TYPE sType, bool temporary, QObject *parent) :
+    Item(parent), type(sType), id(sID), name(sName), temporary(temporary)
 {
 
 }
 
-BaseDTO::~BaseDTO()
+DataItem::~DataItem()
 {
-    qDebug() << "~BaseDTO";
+    qDebug() << "~Item";
 }
 
-BaseDTO::DTO_TYPE BaseDTO::getType() const
+DataItem::DATA_ITEM_TYPE DataItem::getType() const
 {
     return type;
 }
 
-int BaseDTO::getID() const
+int DataItem::getID() const
 {
     return id;
 }
 
-QString BaseDTO::getName() const
+QString DataItem::getName() const
 {
     return name;
 }
 
-bool BaseDTO::getTemporary() const
+bool DataItem::getTemporary() const
 {
     return temporary;
 }
 
-void BaseDTO::setName(QString sName)
+void DataItem::setName(QString sName)
 {
     name = sName;
 }
 
-void BaseDTO::setID(int sID)
+void DataItem::setID(int sID)
 {
     id = sID;
 }
 
-QString BaseDTO::typeToString(DTO_TYPE type)
+QString DataItem::typeToString(DATA_ITEM_TYPE type)
 {
 
     switch (type)
@@ -98,26 +98,26 @@ QString BaseDTO::typeToString(DTO_TYPE type)
 }
 
 
-BaseDTO::DTO_TYPE BaseDTO::stringToType(QString type)
+DataItem::DATA_ITEM_TYPE DataItem::stringToType(QString type)
 {
     if (type == "NONE")
-        return BaseDTO::NONE;
+        return DataItem::NONE;
     if (type == "GENRE")
-        return BaseDTO::GENRE;
+        return DataItem::GENRE;
     if (type == "ALBUM")
-        return BaseDTO::ALBUM;
+        return DataItem::ALBUM;
     if (type == "ARTIST")
-        return BaseDTO::ARTIST;
+        return DataItem::ARTIST;
     if (type == "SONG")
-        return BaseDTO::SONG;
+        return DataItem::SONG;
     if (type == "CD")
-        return BaseDTO::CD;
+        return DataItem::CD;
     if (type == "TAG")
-        return BaseDTO::TAG;
+        return DataItem::TAG;
     if (type == "DECADE")
-        return BaseDTO::DECADE;
+        return DataItem::DECADE;
     if (type == "YEAR")
-        return BaseDTO::YEAR;
+        return DataItem::YEAR;
 
-    return BaseDTO::NONE;
+    return DataItem::NONE;
 }

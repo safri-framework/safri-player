@@ -38,20 +38,25 @@ int Genre::createNewID()
     return ++latestID;
 }
 
+QList<Media *> Genre::getMedia()
+{
+    //TODO
+    return QList<Media*>();
+}
 
 Genre::Genre(int sID, QString sName, QObject *parent) :
-    BaseDTO(sID, sName, BaseDTO::GENRE, parent)
+    DataItem(sID, sName, DataItem::GENRE, parent)
 {
 
 }
 
 Genre::Genre(int sID, QString sName, bool temporary, QObject *parent):
-    BaseDTO(sID, sName, BaseDTO::GENRE, temporary, parent)
+    DataItem(sID, sName, DataItem::GENRE, temporary, parent)
 {
 }
 
 Genre::Genre(Genre* genre, QObject *parent):
-    BaseDTO(createNewID(), genre->getName(), BaseDTO::GENRE, parent)
+    DataItem(createNewID(), genre->getName(), DataItem::GENRE, parent)
 {
 
 }

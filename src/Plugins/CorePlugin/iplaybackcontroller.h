@@ -8,7 +8,7 @@
 namespace Core
 {
     class IPlaylist;
-    class Item;
+    class Media;
 
     /**
         \brief  Interface for playback controllers
@@ -33,36 +33,36 @@ namespace Core
             virtual IPlaylist* getPlaylist() = 0;
 
             /**
-                \brief  will start to play the current song from the playlist
+                \brief  will start to play the current media from the playlist
             */
             virtual void play() = 0;
 
             /**
-                \brief  will pause the current song
+                \brief  will pause the current media
             */
             virtual void pause() = 0;
 
             /**
-                \brief  will stop the current song
+                \brief  will stop the current media
             */
             virtual void stop() = 0;
 
             /**
-                \brief  will start to play the next song from the playlist
+                \brief  will start to play the next media from the playlist
             */
             virtual void next() = 0;
 
             /**
-                \brief  will start to play the previous song from the playlist
+                \brief  will start to play the previous media from the playlist
             */
             virtual void previous() = 0;
 
         signals:
 
             /**
-                \brief  emit this signal whenever the currently playing song has changed
+                \brief  emit this signal whenever the current media has changed
             */
-            void songChanged(Item*);
+            void mediaChanged(Media*);
     };
 
 }

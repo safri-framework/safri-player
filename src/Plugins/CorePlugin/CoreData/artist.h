@@ -1,7 +1,7 @@
 #ifndef ARTIST_H
 #define ARTIST_H
 
-#include "basedto.h"
+#include "dataitem.h"
 #include <QList>
 #include <QMap>
 
@@ -9,7 +9,7 @@ namespace Core
 {
     class Album;
 
-    class Artist : public BaseDTO
+    class Artist : public DataItem
     {
         Q_OBJECT
         public:
@@ -64,6 +64,8 @@ namespace Core
 
             //! Static integer for the latest used ID
             static int latestID;
+
+            QList<Media*> getMedia();
 
         private:
 
