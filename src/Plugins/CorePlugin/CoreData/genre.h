@@ -1,7 +1,7 @@
 #ifndef GENRE_H
 #define GENRE_H
 
-#include "CorePlugin_global.h"
+#include "../CorePlugin_global.h"
 
 #include "basedto.h"
 #include <QList>

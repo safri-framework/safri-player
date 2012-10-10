@@ -1,7 +1,7 @@
 #ifndef BASEDTO_H
 #define BASEDTO_H
 
-#include "CorePlugin_global.h"
+#include "../CorePlugin_global.h"
 
 #include <QObject>
 #include <QString>

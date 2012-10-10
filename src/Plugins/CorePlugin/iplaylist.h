@@ -3,9 +3,14 @@
 
 #include <QObject>
 #include "CorePlugin_global.h"
- class Song;
+
+
+ class Item;
+ class Media;
 namespace Core
 {
+
+
     class COREPLUGINSHARED_EXPORT IPlaylist : public QObject
     {
         Q_OBJECT
@@ -31,48 +36,48 @@ namespace Core
 
         /**
 
-            \brief returns 'true' if the song on the given position is marked as 'playing'
+            \brief returns 'true' if the BaseDTO on the given position is marked as 'playing'
         */
 
-        virtual bool isSongPlaying(int value) = 0;
+        virtual bool isCurrentMedia(int value) = 0;
 
         /**
-            \brief  This function will move the position of a song.
+            \brief  This function will move the position of a BaseDTO.
 
 
-            \param  moveSong(2, 5) will move the second song to the fith position.
+            \param  moveBaseDTO(2, 5) will move the second BaseDTO to the fith position.
             \returns
         */
 
-        virtual void moveSong(int from, int to) = 0;
+        virtual void moveMedia(int from, int to) = 0;
 
         /**
-            \brief  Will mark the song at the given position as "current playing"
+            \brief  Will mark the BaseDTO at the given position as "current playing"
 
-            \param  position of that song as Integer.
+            \param  position of that BaseDTO as Integer.
 
         */
 
-        virtual void setCurrentPlayingSong(int value) = 0;
+        virtual void setCurrentMedia(int value) = 0;
 
         /**
-            \brief  Will remove the song at given position from playlist.
+            \brief  Will remove the BaseDTO at given position from playlist.
 
             \param  position of the song.
 
         */
 
-        virtual void deleteSong(int value) = 0;
+        virtual void deleteMedia(int value) = 0;
 
         /**
-            \brief this function is for inserting songs into the playlist.
+            \brief this function is for inserting BaseDTOs into the playlist.
 
-            \param  position is where the songs will be inserted, songs is a QList of songs which will be inserted.
+            \param  position is where the BaseDTOs will be inserted, BaseDTOs is a QList of BaseDTOs which will be inserted.
 
 
         */
 
-        virtual void insertSongsAt(int position, QList<Song *> songs) = 0;
+        virtual void insertMediaAt(int position, QList<Item*> items) = 0;
 
         /**
             \brief  returns true, if that playlist was stored
@@ -84,55 +89,55 @@ namespace Core
         virtual bool isSafedPlaylist() = 0;
 
         /**
-            \brief Returns the Song at given position.
+            \brief Returns the BaseDTO at given position.
 
 
-            \returns the Song at given position.
+            \returns the BaseDTO at given position.
         */
 
-        virtual Song* getSongAt(int value) = 0;
+        virtual Media* getMediaAt(int value) = 0;
 
         /**
-            \brief returns the song which will be played next.
+            \brief returns the BaseDTO which will be played next.
 
-            If shuffle-mode is on, that song does not have to be the 'physical next' Song in the list. In fact,
-            it has to return the next Song which should be played.
+            If shuffle-mode is on, that BaseDTO does not have to be the 'physical next' BaseDTO in the list. In fact,
+            it has to return the next BaseDTO which should be played.
 
             \param
             \returns a Pizza with double cheese and bacon..
         */
 
 
-        virtual Song* getNextSong() = 0;
+        virtual Media* getNextMedia() = 0;
 
         /**
-            \brief  see also: getNextSong()
+            \brief  see also: getNextBaseDTO()
 
 
-            \returns the previous Song in play-order
+            \returns the previous BaseDTO in play-order
         */
 
-        virtual Song* getPreviousSong() = 0;
+        virtual Media* getPreviousMedia() = 0;
 
         /**
-            \brief  returns the song which is acutally playing.
+            \brief  returns the BaseDTO which is acutally playing.
 
 
-            \returns a Song.
+            \returns a pointer to BaseDTO.
         */
 
 
 
-        virtual Song* getCurrentPlayingSong() = 0;
+        virtual Media* getCurrentMedia() = 0;
 
         /**
-            \brief  returns the count of songs in Playlist
+            \brief  returns the count of BaseDTOs in Playlist
 
             \param
             \returns an Integer
         */
 
-        virtual int getSongCount()= 0;
+        virtual int getSize()= 0;
 
         /**
             \brief  forces the Tagger to read the tags at that position
@@ -162,28 +167,28 @@ namespace Core
         */
         void changeActualPlayingMarker(int from, int to);
         /**
-            \brief  this signal has to be emitted if songs were inserted.
+            \brief  this signal has to be emitted if BaseDTOs were inserted.
         */
 
-        void songsInserted(int position, int count);
+        void MediaInserted(int position, int count);
 
         /**
-            \brief  this signal has to be emitted if a song was moved.
+            \brief  this signal has to be emitted if a BaseDTO was moved.
         */
 
-        void songMoved(int from, int to);
+        void MediaMoved(int from, int to);
 
         /**
-            \brief  this signal has to be emitted if a song was deleted.
+            \brief  this signal has to be emitted if a BaseDTO was deleted.
         */
-        void songDeleted(int value);
+        void MediaDeleted(int value);
 
         /**
-            \brief  this signal will force the PlaylistModel (ViewAdapter) to redraw the data of the given song.
+            \brief  this signal will force the PlaylistModel (ViewAdapter) to redraw the data of the given BaseDTO.
 
         */
 
-        void songDataChanged(int value);
+        void MediaDataChanged(int value);
 
     };
 }

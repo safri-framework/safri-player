@@ -5,5 +5,6 @@ CONFIG += ordered
 SUBDIRS += \
         CorePlugin \
         TestPlugin \
-    PlaybackController
+    	Playlist\
+    	PlaybackController
 

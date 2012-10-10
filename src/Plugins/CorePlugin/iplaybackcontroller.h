@@ -8,7 +8,7 @@
 namespace Core
 {
     class IPlaylist;
-    class Song;
+    class Item;
 
     /**
         \brief  Interface for playback controllers
@@ -33,7 +33,7 @@ namespace Core
             virtual IPlaylist* getPlaylist() = 0;
 
             /**
-                \brief  will start to play the current song an the playlist
+                \brief  will start to play the current song from the playlist
             */
             virtual void play() = 0;
 
@@ -62,7 +62,7 @@ namespace Core
             /**
                 \brief  emit this signal whenever the currently playing song has changed
             */
-            void songChanged(Song*);
+            void songChanged(Item*);
     };
 
 }
