@@ -3,6 +3,8 @@
 #include "iplaylist.h"
 #include "CoreData/song.h"
 
+#include <QDebug>
+
 PlaybackController::PlaybackController()
 {
 
@@ -15,6 +17,7 @@ void PlaybackController::setPlaylist(Core::IPlaylist *playlist)
 
 Core::IPlaylist *PlaybackController::getPlaylist()
 {
+    qDebug() << "getPlaylist()";
     return this->playlist;
 }
 
@@ -46,7 +49,7 @@ void PlaybackController::previous()
     playSong(song);
 }
 
-void PlaybackController::playSong(Song *song)
+void PlaybackController::playSong(Core::Song *song)
 {
     // TODO: AudioEngine play song
 }

@@ -3,7 +3,7 @@
 
 #include "iplaybackcontroller.h"
 
-class Song;
+namespace Core { class Song; } // forward declaration
 
 class PlaybackController : public Core::IPlaybackController
 {
@@ -26,7 +26,7 @@ class PlaybackController : public Core::IPlaybackController
 
         Core::IPlaylist *playlist;
 
-        void playSong(Song* song);
+        void playSong(Core::Song* song);
 };
 
 #endif // PLAYBACKCONTROLLER_H

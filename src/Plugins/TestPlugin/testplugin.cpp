@@ -2,7 +2,11 @@
 
 #include <QDebug>
 
+#include "pluginmanager.h"
+
 #include "CoreData/genre.h"
+#include "iplaybackcontroller.h"
+#include "icore.h"
 
 TestPlugin::TestPlugin()
 {
@@ -22,6 +26,22 @@ bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
 
     qDebug() << genre->getName();
     qDebug() << Core::BaseDTO::typeToString(genre->getType());
+
+    Core::IPlaybackController *pbc;
+
+
+    QList<Core::IPlaybackController*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IPlaybackController>();
+
+    qDebug() << objects.size();
+
+    pbc = objects.at(0);
+    pbc->getPlaylist();
+
+
+
+    pbc = Core::ICore::playbackController();
+    pbc->getPlaylist();
+
 
     return true;
 }
