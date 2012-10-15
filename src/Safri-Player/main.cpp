@@ -1,4 +1,4 @@
-#include <QtCore/QCoreApplication>
+#include <QtGui/QApplication>
 
 #include "pluginmanager.h"
 #include <QPluginLoader>
@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "\n\n";
 

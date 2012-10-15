@@ -6,9 +6,7 @@
 
 SAFRI_VERSION = 0.3.1
 
-QT       += core
-
-QT       -= gui
+QT       += core gui
 
 TARGET = Safri-Player
 CONFIG   += console
