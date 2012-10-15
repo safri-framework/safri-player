@@ -24,9 +24,9 @@ IPlaybackController* ICore::playbackController()
     return m_instance->m_playbackController;
 }
 
-void ICore::registerPlaybackController(IPlaybackController *pbc)
+IAudioBackend *ICore::audioBackend()
 {
-    m_instance->m_playbackController = pbc;
+    return m_instance->m_audioBackend;
 }
 
 void ICore::objectAddedToObjectPool(QObject *object)

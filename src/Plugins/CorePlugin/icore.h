@@ -9,6 +9,7 @@ namespace Core
 {
     class IPlaybackController;
     class CorePlugin;
+    class IAudioBackend;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -24,7 +25,7 @@ namespace Core
 
             static ICore* instance();
             static IPlaybackController* playbackController();
-            static void registerPlaybackController(IPlaybackController* pbc);
+            static IAudioBackend* audioBackend();
 
         public slots:
 
@@ -34,6 +35,7 @@ namespace Core
 
             static ICore* m_instance;
             IPlaybackController* m_playbackController;
+            IAudioBackend* m_audioBackend;
     };
 }
 
