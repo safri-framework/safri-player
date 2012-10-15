@@ -1,8 +1,12 @@
 #ifndef PLAYBACKCONTROLLER_H
 #define PLAYBACKCONTROLLER_H
-
+#include <QStateMachine>
+#include "Interfaces/IAudioBackend.h"
 #include "iplaybackcontroller.h"
+#include <QAction>
+#include <CoreData/media.h>
 
+//using namespace Core;
 class PlaybackController : public Core::IPlaybackController
 {
     Q_OBJECT
@@ -20,11 +24,57 @@ class PlaybackController : public Core::IPlaybackController
         void next();
         void previous();
 
-    protected:
+
+
+
+
+protected:
 
         Core::IPlaylist *playlist;
-
         void playMedia(Core::Media* media);
+
+public slots:
+        void seek(int playTime);
+
+signals:
+        void tick(int playTime);
+        void mediaChanged();
+
+private:
+
+        QStateMachine *machine;
+        QState *m_play ;
+        QState *m_pause ;
+        QState *m_stop ;
+        QState *m_noData;
+
+        QAction *playAction;
+        QAction *shuffleAction;
+        QAction *stopAction;
+        QAction *nextAction;
+        QAction *previousAction;
+
+        QState* currentState;
+        Core::IAudioBackend* audioBackend;
+        Core::Media* currentMedia;
+        void setupActions();
+        void setupTransitions();
+        void setupSignalAndSlots();
+
+        bool stopped;
+
+private slots:
+
+        void playStateSlot();
+        void pauseStateSlot();
+        void stopStateSlot();
+        void currentSongFinished();
+        void nextActionSlot();
+        void previousActionSlot();
+        void shuffleActionSlot(bool value);
+        void noDataSlot();
+
+
 };
 
 #endif // PLAYBACKCONTROLLER_H

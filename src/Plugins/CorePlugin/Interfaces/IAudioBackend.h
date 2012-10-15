@@ -15,7 +15,7 @@ namespace Core
             virtual int getTotalTime() = 0;
             virtual int getCurrentTime() = 0;
             virtual void seek(int ms) = 0;
-            virtual void play(QUrl& url) = 0;
+            virtual void play(QUrl url) = 0;
             virtual void pause() = 0;
             virtual void stop() = 0;
             virtual void setVolume(int percent) = 0;

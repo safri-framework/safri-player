@@ -7,6 +7,9 @@
 
 namespace Core
 {
+
+    enum playState{PLAY, STOP, PAUSE, NODATA};
+
     class IPlaylist;
     class Media;
 
@@ -63,6 +66,27 @@ namespace Core
                 \brief  emit this signal whenever the current media has changed
             */
             void mediaChanged(Media*);
+
+            /**
+                \brief  this signal can be used to update your disply in the GUI
+            */
+
+            void tick(int playTime);
+
+            void stateChanged(playState state);
+
+
+    public slots:
+
+
+            virtual void seek(int playTime) = 0;
+            virtual void playStateSlot() = 0;
+            virtual void pauseStateSlot()= 0;
+            virtual void stopStateSlot() = 0;
+            virtual void currentSongFinished() = 0;
+            virtual void noDataSlot() = 0;
+
+
     };
 
 }
