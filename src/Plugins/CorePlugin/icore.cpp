@@ -1,6 +1,7 @@
 #include "icore.h"
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
+#include "Interfaces/IAudioBackend.h"
 
 #include <QDebug>
 
@@ -38,6 +39,12 @@ void ICore::objectAddedToObjectPool(QObject *object)
         m_playbackController = pbc;
     }
 
+    IAudioBackend *audio_backend = qobject_cast<IAudioBackend*>(object);
+    if (audio_backend != 0)
+    {
+        qDebug() << "IAudioBackend class added";
+        m_audioBackend = audio_backend;
+    }
 }
 
 

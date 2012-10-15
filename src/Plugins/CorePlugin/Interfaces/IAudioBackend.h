@@ -7,7 +7,7 @@
 
 namespace Core
 {
-    class IAudioBackend : public QObject, public IMediaBackend
+    class COREPLUGINSHARED_EXPORT IAudioBackend : public QObject, public IMediaBackend
     {
         Q_OBJECT
         public:
@@ -31,5 +31,7 @@ namespace Core
             void seeked(int ms);
     };
 }
+
+Q_DECLARE_INTERFACE(Core::IAudioBackend, "Core::IAudioBackend")
 
 #endif // IAUDIOBACKEND_H

@@ -6,5 +6,7 @@ SUBDIRS += \
         CorePlugin \
         TestPlugin \
     	Playlist\
-    	PlaybackController
+    	PlaybackController \
+    PhononBackend \
+    HackingWidget
 
