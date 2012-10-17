@@ -52,9 +52,9 @@ void PlaybackController::setupActions()
     m_shuffleAction = new QAction(QIcon(":icons/ressources/shuffle_icon.png"), tr("Shuffle"), this);
     m_shuffleAction->setCheckable(true);
     m_shuffleAction->setChecked(false);
-    m_playAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
-    m_playAction->setShortcut(tr("Ctrl+P"));
-    m_playAction->setDisabled(false);
+    m_playPauseAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
+    m_playPauseAction->setShortcut(tr("Ctrl+P"));
+    m_playPauseAction->setDisabled(false);
     m_stopAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaStop), tr("Stop"), this);
     m_stopAction->setShortcut(tr("Ctrl+S"));
     m_stopAction->setDisabled(false);
@@ -62,20 +62,31 @@ void PlaybackController::setupActions()
     m_nextAction->setShortcut(tr("Ctrl+N"));
     m_previousAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaSkipBackward), tr("Previous"), this);
     m_previousAction->setShortcut(tr("Ctrl+R"));
+
+    m_pauseAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPause), tr("Pause"), this);
+    m_playAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
+
 }
 
 void PlaybackController::setupTransitions()
 {
-    m_play  ->addTransition(m_playAction, SIGNAL(triggered()), m_pause);
+    m_play  ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_pause);
+    m_play  ->addTransition(m_pauseAction, SIGNAL(triggered()), m_pause);
+    m_pause ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
+
     m_pause ->addTransition(m_playAction, SIGNAL(triggered()), m_play);
+
     m_pause ->addTransition(m_stopAction, SIGNAL(triggered()), m_stop);
     m_play  ->addTransition(m_stopAction, SIGNAL(triggered()), m_stop);
+    m_stop  ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
+
     m_stop  ->addTransition(m_playAction, SIGNAL(triggered()), m_play);
+
     m_pause ->addTransition(m_nextAction, SIGNAL(triggered()),m_play);
     m_pause ->addTransition(m_previousAction, SIGNAL(triggered()),m_play);
     m_stop  ->addTransition(m_nextAction, SIGNAL(triggered()), m_play);
     m_stop  ->addTransition(m_previousAction, SIGNAL(triggered()), m_play);
-    m_noData->addTransition(m_playAction, SIGNAL(triggered()), m_play);
+    m_noData->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
 }
 
 void PlaybackController::playStateSlot()
@@ -85,27 +96,33 @@ void PlaybackController::playStateSlot()
     m_shuffleAction->setDisabled(false);
     m_nextAction->setDisabled(false);
     m_previousAction->setDisabled(false);
-    m_playAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPause));
+    m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPause));
     stopped = false;
     m_stopAction->setDisabled(false);
-    m_playAction->setDisabled(false);
+    m_playPauseAction->setDisabled(false);
+    m_playAction->setDisabled(true);
+    m_pauseAction->setDisabled(false);
     audioBackend->play(currentMedia->getURL());
 }
 
 void PlaybackController::pauseStateSlot()
 {
     currentState = m_pause;
+    m_pauseAction->setDisabled(true);
+    m_playAction->setEnabled(true);
     audioBackend->pause();
-    m_playAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
+    m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
     stopped = false;
 }
 
 void PlaybackController::stopStateSlot()
 {
     currentState = m_stop;
+    m_playAction->setEnabled(true);
+    m_pauseAction->setEnabled(false);
     m_stopAction->setDisabled(true);
     stopped = true;
-    m_playAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
+    m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
     audioBackend->stop();
 }
 
@@ -119,7 +136,7 @@ void PlaybackController::currentSongFinished()
        if (nextMedia != currentMedia)
        {
            currentMedia = nextMedia;
-           m_playAction->trigger();
+           m_playPauseAction->trigger();
 
        }
        else
@@ -136,7 +153,7 @@ void PlaybackController::noDataSlot()
     m_stopAction->setDisabled(true);
     m_nextAction->setDisabled(true);
     m_previousAction->setDisabled(true);
-    m_playAction->setDisabled(true);
+    m_playPauseAction->setDisabled(true);
 
 }
 
@@ -150,7 +167,7 @@ void PlaybackController::nextActionSlot()
 
        m_stopAction->trigger();
        currentMedia = media;
-       m_playAction->trigger();
+       m_playPauseAction->trigger();
     }
 }
 
@@ -161,7 +178,7 @@ void PlaybackController::previousActionSlot()
     {
         m_stopAction->trigger();
         currentMedia = media;
-        m_playAction->trigger();
+        m_playPauseAction->trigger();
 
     }
 
@@ -187,7 +204,7 @@ Core::IPlaylist *PlaybackController::getPlaylist()
 
 QAction* PlaybackController::playPauseAction()
 {
-    return this->m_playAction;
+    return this->m_playPauseAction;
 }
 
 QAction* PlaybackController::playAction()
@@ -197,7 +214,7 @@ QAction* PlaybackController::playAction()
 
 QAction* PlaybackController::pauseAction()
 {
-    return 0;
+    return this->m_pauseAction;
 }
 
 QAction* PlaybackController::stopAction()

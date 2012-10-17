@@ -50,11 +50,13 @@ private:
         QState *m_stop ;
         QState *m_noData;
 
-        QAction *m_playAction;
+        QAction *m_playPauseAction;
         QAction *m_shuffleAction;
         QAction *m_stopAction;
         QAction *m_nextAction;
         QAction *m_previousAction;
+        QAction *m_pauseAction;
+        QAction *m_playAction;
 
         QState* currentState;
         Core::IAudioBackend* audioBackend;
