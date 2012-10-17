@@ -18,11 +18,13 @@ class PlaybackController : public Core::IPlaybackController
         void setPlaylist(Core::IPlaylist* playlist);
         Core::IPlaylist* getPlaylist();
 
-        void play();
-        void pause();
-        void stop();
-        void next();
-        void previous();
+        QAction* playAction();
+        QAction* playPauseAction();
+        QAction* pauseAction();
+        QAction* stopAction();
+        QAction* nextAction();
+        QAction* previousAction();
+        QList<QAction*> getAdditionalActions();
 
 
 
@@ -48,11 +50,11 @@ private:
         QState *m_stop ;
         QState *m_noData;
 
-        QAction *playAction;
-        QAction *shuffleAction;
-        QAction *stopAction;
-        QAction *nextAction;
-        QAction *previousAction;
+        QAction *m_playAction;
+        QAction *m_shuffleAction;
+        QAction *m_stopAction;
+        QAction *m_nextAction;
+        QAction *m_previousAction;
 
         QState* currentState;
         Core::IAudioBackend* audioBackend;

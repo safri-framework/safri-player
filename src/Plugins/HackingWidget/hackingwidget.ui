@@ -13,11 +13,21 @@
   <property name="windowTitle">
    <string>Happy hacking....</string>
   </property>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>30</y>
+     <width>133</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>180</y>
+     <x>210</x>
+     <y>30</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -26,15 +36,43 @@
     <string>setVolume</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>180</y>
-     <width>113</width>
-     <height>20</height>
+     <x>110</x>
+     <y>190</y>
+     <width>351</width>
+     <height>131</height>
     </rect>
    </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="widget_2" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Play</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="actions" native="true"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

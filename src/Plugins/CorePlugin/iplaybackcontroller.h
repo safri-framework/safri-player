@@ -4,6 +4,7 @@
 #include "CorePlugin_global.h"
 
 #include <QObject>
+#include <QAction>
 
 namespace Core
 {
@@ -38,27 +39,31 @@ namespace Core
             /**
                 \brief  will start to play the current media from the playlist
             */
-            virtual void play() = 0;
+            virtual QAction* playAction() = 0;
 
             /**
                 \brief  will pause the current media
             */
-            virtual void pause() = 0;
+            virtual QAction* pauseAction() = 0;
 
             /**
                 \brief  will stop the current media
             */
-            virtual void stop() = 0;
+            virtual QAction* stopAction() = 0;
 
             /**
                 \brief  will start to play the next media from the playlist
             */
-            virtual void next() = 0;
+            virtual QAction* nextAction() = 0;
 
             /**
                 \brief  will start to play the previous media from the playlist
             */
-            virtual void previous() = 0;
+            virtual QAction* previousAction() = 0;
+
+            virtual QAction* playPauseAction() = 0;
+
+            virtual QList<QAction*> getAdditionalActions() = 0;
 
         signals:
 
@@ -76,15 +81,19 @@ namespace Core
             void stateChanged(playState state);
 
 
-    public slots:
+    private slots:
 
 
-            virtual void seek(int playTime) = 0;
+
             virtual void playStateSlot() = 0;
             virtual void pauseStateSlot()= 0;
             virtual void stopStateSlot() = 0;
             virtual void currentSongFinished() = 0;
             virtual void noDataSlot() = 0;
+
+    public slots:
+            virtual void seek(int playTime) = 0;
+
 
 
     };
