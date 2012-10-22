@@ -15,6 +15,7 @@ class PhononBackend : public Core::IAudioBackend
         virtual int getCurrentTime();
         virtual void seek(int ms);
         virtual void play(QUrl url);
+        virtual void play();
         virtual void pause();
         virtual void stop();
         virtual void setVolume(int percent);

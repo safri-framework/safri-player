@@ -76,7 +76,7 @@ namespace Core
                 \brief  this signal can be used to update your disply in the GUI
             */
 
-            void tick(int playTime);
+            void update(int currentTime);
 
             void stateChanged(playState state);
 
@@ -93,6 +93,7 @@ namespace Core
 
     public slots:
             virtual void seek(int playTime) = 0;
+            virtual void setVolume(int volume) = 0;
 
 
 

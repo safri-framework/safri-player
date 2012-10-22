@@ -1,5 +1,7 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
+
+#include "Playlist_global.h"
 #include "iplaylist.h"
 #include "CoreData/song.h"
 #include <QList>
@@ -7,12 +9,14 @@
 #include <QReadWriteLock>
 
 using namespace Core;
-class Playlist : public Core::IPlaylist
+class PLAYLISTSHARED_EXPORT Playlist : public Core::IPlaylist
 {
     Q_OBJECT
     Q_INTERFACES(Core::IPlaylist)
 
 public:
+
+    explicit Playlist(QObject *parent = 0);
     explicit Playlist(QList<Item*> items, QObject *parent = 0);
     explicit Playlist(QString m3ufile, QObject *parent = 0);
 

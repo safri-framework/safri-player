@@ -10,6 +10,8 @@ namespace Core
     class IPlaybackController;
     class CorePlugin;
     class IAudioBackend;
+    class IPlaylistFactory;
+    class IPlaylist;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -26,16 +28,19 @@ namespace Core
             static ICore* instance();
             static IPlaybackController* playbackController();
             static IAudioBackend* audioBackend();
+            static IPlaylist* createPlaylist();
 
         public slots:
 
             void objectAddedToObjectPool(QObject *object);
+
 
         private:
 
             static ICore* m_instance;
             IPlaybackController* m_playbackController;
             IAudioBackend* m_audioBackend;
+            IPlaylistFactory* m_playlistFactory;
     };
 }
 

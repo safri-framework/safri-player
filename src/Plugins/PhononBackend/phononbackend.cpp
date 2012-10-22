@@ -24,7 +24,9 @@ int PhononBackend::getCurrentTime()
 
 void PhononBackend::seek(int ms)
 {
+    qDebug() << "seek: " << QString::number(ms);
     mediaObject->seek(ms);
+    Q_EMIT update(ms);
 }
 
 void PhononBackend::play(QUrl url)
@@ -32,6 +34,11 @@ void PhononBackend::play(QUrl url)
     mediaObject->setCurrentSource(Phonon::MediaSource(url));
     mediaObject->play();
     qDebug() << "PhononBackend::play: " << url.toString();
+}
+
+void PhononBackend::play()
+{
+    mediaObject->play();
 }
 
 void PhononBackend::pause()

@@ -37,10 +37,12 @@ protected:
 
 public slots:
         void seek(int playTime);
+        virtual void setVolume(int volume);
 
 signals:
-        void tick(int playTime);
+        void update(int currentTime);
         void mediaChanged();
+        void hasData();
 
 private:
 
@@ -77,6 +79,8 @@ private slots:
         void previousActionSlot();
         void shuffleActionSlot(bool value);
         void noDataSlot();
+        void audioBackendUpdate(int currentTime);
+
 
 
 };

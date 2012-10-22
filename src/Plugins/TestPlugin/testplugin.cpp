@@ -8,6 +8,7 @@
 #include "iplaybackcontroller.h"
 #include "icore.h"
 #include "Interfaces/IAudioBackend.h"
+#include <QFile>
 
 TestPlugin::TestPlugin()
 {
@@ -43,7 +44,7 @@ bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
     pbc = Core::ICore::playbackController();
     pbc->getPlaylist();
 
-    Core::ICore::audioBackend()->play(QUrl("C:\\YellowLedbetter.mp3"));
+    //Core::ICore::audioBackend()->play(QUrl("audacity-test-file.mp3"));
     int totalTime = Core::ICore::audioBackend()->getTotalTime();
 
     Core::ICore::audioBackend()->setVolume(100);

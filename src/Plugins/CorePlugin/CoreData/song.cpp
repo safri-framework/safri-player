@@ -48,8 +48,10 @@ int Song::createNewID()
 
 QList<Media *> Song::getMedia()
 {
-    //TODO
-    return QList<Media*>();
+    QList<Media*> myMedia;
+    myMedia.append(this);
+
+    return myMedia;
 }
 
 QUrl Song::getURL()

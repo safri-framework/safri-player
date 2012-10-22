@@ -12,11 +12,13 @@ TEMPLATE = lib
 DEFINES += PLAYLIST_LIBRARY
 
 SOURCES += playlistplugin.cpp \
-    playlist.cpp
+    playlist.cpp \
+    playlistfactory.cpp
 
 HEADERS += playlistplugin.h\
         Playlist_global.h \
-    playlist.h
+    playlist.h \
+    playlistfactory.h
 
 PROVIDER = safri
 include(../../SafriPlugin.pri)

@@ -28,9 +28,15 @@ PlaybackController::PlaybackController()
 
 
 
+    machine->addState(m_play);
+    machine->addState(m_pause);
+    machine->addState(m_stop);
+    machine->addState(m_noData);
+    machine->setInitialState(m_noData);
+    machine->start();
 
 
-
+    connect(audioBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
 }
 
 void PlaybackController::setupSignalAndSlots()
@@ -87,12 +93,13 @@ void PlaybackController::setupTransitions()
     m_stop  ->addTransition(m_nextAction, SIGNAL(triggered()), m_play);
     m_stop  ->addTransition(m_previousAction, SIGNAL(triggered()), m_play);
     m_noData->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
+    m_noData->addTransition(this, SIGNAL(hasData()),m_stop);
 }
 
 void PlaybackController::playStateSlot()
 {
 
-    currentState = m_play;
+
     m_shuffleAction->setDisabled(false);
     m_nextAction->setDisabled(false);
     m_previousAction->setDisabled(false);
@@ -102,7 +109,18 @@ void PlaybackController::playStateSlot()
     m_playPauseAction->setDisabled(false);
     m_playAction->setDisabled(true);
     m_pauseAction->setDisabled(false);
-    audioBackend->play(currentMedia->getURL());
+
+    if(currentState == m_pause)
+    {
+        audioBackend->play();
+        qDebug()<<"Pause->Play";
+    }
+    else
+    {
+        audioBackend->play(currentMedia->getURL());
+        qDebug()<<"x -> Play";
+    }
+    currentState = m_play;
 }
 
 void PlaybackController::pauseStateSlot()
@@ -119,6 +137,7 @@ void PlaybackController::stopStateSlot()
 {
     currentState = m_stop;
     m_playAction->setEnabled(true);
+    m_playPauseAction->setEnabled(true);
     m_pauseAction->setEnabled(false);
     m_stopAction->setDisabled(true);
     stopped = true;
@@ -157,6 +176,11 @@ void PlaybackController::noDataSlot()
 
 }
 
+void PlaybackController::audioBackendUpdate(int currentTime)
+{
+    Q_EMIT update(currentTime);
+}
+
 void PlaybackController::nextActionSlot()
 {
 
@@ -193,6 +217,11 @@ void PlaybackController::shuffleActionSlot(bool value)
 void PlaybackController::setPlaylist(Core::IPlaylist *playlist)
 {
     this->playlist = playlist;
+    if(playlist->getSize()>0)
+    {
+        currentMedia = playlist->getNextMedia();
+        Q_EMIT hasData();
+    }
 }
 
 Core::IPlaylist *PlaybackController::getPlaylist()
@@ -248,6 +277,11 @@ void PlaybackController::playMedia(Core::Media* media)
 void PlaybackController::seek(int playTime)
 {
     audioBackend->seek(playTime);
+}
+
+void PlaybackController::setVolume(int volume)
+{
+    audioBackend->setVolume(volume);
 }
 
 

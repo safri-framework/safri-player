@@ -35,7 +35,8 @@ HEADERS += coreplugin.h\
     CoreData/item.h \
     CoreData/media.h \
     Interfaces/IMediaBackend.h \
-    Interfaces/IAudioBackend.h
+    Interfaces/IAudioBackend.h \
+    Interfaces/IPlaylistFactory.h
 
 OTHER_FILES += \
     Core.xml

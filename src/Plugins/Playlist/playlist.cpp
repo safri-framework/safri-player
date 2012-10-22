@@ -7,6 +7,13 @@
 
 using namespace Core;
 
+Playlist::Playlist(QObject *parent) :
+    IPlaylist(parent), safedPlaylist(false), currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
+{
+
+}
+
+
 Playlist::Playlist(QList<Item*> items, QObject *parent) :
    IPlaylist(parent), safedPlaylist(false), currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
 {
@@ -381,4 +388,5 @@ bool Playlist::isSafedPlaylist()
 {
     return safedPlaylist;
 }
+
 

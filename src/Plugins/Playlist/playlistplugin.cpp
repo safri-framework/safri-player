@@ -1,5 +1,5 @@
 #include "playlistplugin.h"
-
+#include "playlistfactory.h"
 
 PlaylistPlugin::PlaylistPlugin()
 {
@@ -7,6 +7,7 @@ PlaylistPlugin::PlaylistPlugin()
 
 bool PlaylistPlugin::initialize(QStringList &arguments)
 {
+    addObject(new PlaylistFactory() );
     return true;
 }
 

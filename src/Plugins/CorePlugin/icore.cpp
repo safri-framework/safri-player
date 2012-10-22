@@ -2,6 +2,7 @@
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
 #include "Interfaces/IAudioBackend.h"
+#include "Interfaces/IPlaylistFactory.h"
 
 #include <QDebug>
 
@@ -45,6 +46,22 @@ void ICore::objectAddedToObjectPool(QObject *object)
         qDebug() << "IAudioBackend class added";
         m_audioBackend = audio_backend;
     }
+
+    IPlaylistFactory *playlistFactory = qobject_cast<IPlaylistFactory*>(object);
+    if (playlistFactory != 0)
+    {
+        m_playlistFactory = playlistFactory;
+    }
+}
+
+IPlaylist *ICore::createPlaylist()
+{
+    if (m_instance->m_playlistFactory != 0)
+    {
+        return m_instance->m_playlistFactory->createPlaylist();
+    }
+
+    return 0;
 }
 
 
