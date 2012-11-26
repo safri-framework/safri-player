@@ -1,8 +1,8 @@
 #ifndef IPLAYLISTFACTORY_H
 #define IPLAYLISTFACTORY_H
 
-#include "CorePlugin_global.h"
-#include "iplaylist.h"
+#include "..\CorePlugin_global.h"
+#include "..\iplaylist.h"
 #include <QObject>
 
 namespace Core

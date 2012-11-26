@@ -8,5 +8,6 @@ SUBDIRS += \
     	Playlist\
     	PlaybackController \
     PhononBackend \
-    HackingWidget
+    HackingWidget \
+    AudioCollection
 
