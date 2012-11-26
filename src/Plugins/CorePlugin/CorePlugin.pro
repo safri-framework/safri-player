@@ -20,7 +20,9 @@ SOURCES += coreplugin.cpp \
     CoreData/album.cpp \
     CoreData/song.cpp \
     icore.cpp \
-    CoreData/dataitem.cpp
+    CoreData/dataitem.cpp \
+    CoreData/dataitemtablemodel.cpp \
+    Interfaces/IStorageAdapter.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -38,7 +40,10 @@ HEADERS += coreplugin.h\
     Interfaces/IAudioBackend.h \
     Interfaces/IPlaylistFactory.h \
     Interfaces/IMediaCollection.h \
-    Interfaces/IAudioCollection.h
+    Interfaces/IMediaCollectionBuilder.h \
+    Interfaces/IStorageAdapter.h \
+    Interfaces/IAudioCollection.h \
+    CoreData/dataitemtablemodel.h
 
 OTHER_FILES += \
     Core.xml

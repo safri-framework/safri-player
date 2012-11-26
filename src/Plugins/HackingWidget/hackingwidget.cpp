@@ -7,6 +7,7 @@
 #include "CoreData/song.h"
 #include <QList>
 #include "iplaylist.h"
+#include "CoreData/dataitemtablemodel.h"
 
 HackingWidget::HackingWidget(QWidget *parent) :
     QWidget(parent),
@@ -42,7 +43,7 @@ void HackingWidget::on_pushButton_4_clicked()
 
 
     Core::Song *testMp31 = new Core::Song(1, "Test", 2012, "x:/audacity-test-file.mp3", this);
-    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "C:\YellowLedbetter.mp3", this);
+    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "C:\\YellowLedbetter.mp3", this);
 
     QList<Core::Item*> songs;
     songs.append(testMp31);
@@ -54,6 +55,11 @@ void HackingWidget::on_pushButton_4_clicked()
 
     playbackController->setPlaylist(playList);
     connect(playbackController, SIGNAL(update(int)), this, SLOT(update(int)));
+
+    Core::DataItemTableModel* model = new Core::DataItemTableModel(5000, 10, this);
+    ui->tableView->setModel(model);
+
+    model->setData(model->index(0, 0), "wusel dusel");
 
 }
 

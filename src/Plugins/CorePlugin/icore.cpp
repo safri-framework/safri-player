@@ -5,6 +5,7 @@
 #include "Interfaces/IPlaylistFactory.h"
 
 #include <QDebug>
+#include <QDesktopServices>
 
 using namespace Core;
 
@@ -62,6 +63,17 @@ IPlaylist *ICore::createPlaylist()
     }
 
     return 0;
+}
+
+QString ICore::storageDirectory()
+{
+    QString storageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+
+#ifdef Q_OS_LINUX
+    storageLocation.chop(2);
+#endif
+
+    return  storageLocation + "/.safri/";
 }
 
 

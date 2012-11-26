@@ -9,5 +9,6 @@ SUBDIRS += \
     	PlaybackController \
     PhononBackend \
     HackingWidget \
+    SQLStorage \
     AudioCollection
 

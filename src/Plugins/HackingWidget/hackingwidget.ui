@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>689</width>
+    <width>1125</width>
     <height>499</height>
    </rect>
   </property>
@@ -137,6 +137,16 @@
    </property>
    <property name="text">
     <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>40</y>
+     <width>541</width>
+     <height>431</height>
+    </rect>
    </property>
   </widget>
  </widget>

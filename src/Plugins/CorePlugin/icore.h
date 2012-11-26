@@ -29,6 +29,7 @@ namespace Core
             static IPlaybackController* playbackController();
             static IAudioBackend* audioBackend();
             static IPlaylist* createPlaylist();
+            static QString storageDirectory();
 
         public slots:
 
