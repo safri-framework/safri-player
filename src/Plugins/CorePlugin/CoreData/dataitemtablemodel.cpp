@@ -1,12 +1,12 @@
 #include "dataitemtablemodel.h"
 #include <QVariant>
+#include <QDebug>
 
 using namespace Core;
 
 DataItemTableModel::DataItemTableModel(int rows, int columns, QObject* parent)
     : QAbstractTableModel(parent), dataSource(Table(rows, TableRow(columns))), columnHeaders(TableRow(columns))
 {
-    dataSource[4][4] = "Foo Bar";
 }
 
 Core::DataItemTableModel::~DataItemTableModel()
@@ -72,4 +72,12 @@ bool DataItemTableModel::setData(const QModelIndex &index, const QVariant &value
     }
 
     return false;
+}
+
+QVariant DataItemTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole)
+    {
+        return columnHeaders[section];
+    }
 }

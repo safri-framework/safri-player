@@ -14,7 +14,8 @@ namespace Core
 
             virtual ~IMediaCollectionBuilder() {}
 
-            IMediaCollection* getMediaCollection(IDataItemLoader* itemLoader) = 0;
+            IMediaCollection* buildMediaCollection(IStorageAdapter* storageAdapter) = 0;
+            void storeMediaCollection(IMediaCollection* mediaCollection, IStorageAdapter* storageAdapter) = 0;
     };
 }
 

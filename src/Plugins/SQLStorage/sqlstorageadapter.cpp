@@ -2,6 +2,8 @@
 #include "icore.h"
 #include <QDebug>
 #include <QDir>
+#include <QElapsedTimer>
+#include "CoreData/dataitemtablemodel.h"
 
 SQLStorageAdapter::SQLStorageAdapter(QUrl filePath)
     : sqlFilePath(filePath)
@@ -14,7 +16,75 @@ SQLStorageAdapter::~SQLStorageAdapter()
 
 QAbstractTableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type)
 {
-    return 0;
+    if ( checkIfDatabaseExists() )
+    {
+        qDebug() << "Database exists";
+    }
+    else
+    {
+        qDebug() << "Database doesn't exist";
+        return 0;
+    }
+
+    if ( checkDatabaseVersion() )
+    {
+        qDebug() << "Database version match";
+    }
+    else
+    {
+        qDebug() << "Database version mismatch";
+        return 0;
+    }
+
+    QString queryStmt = "SELECT COUNT(*) FROM " + Core::DataItem::typeToString(type);
+    int querySize, recordSize;
+
+    qDebug() << queryStmt;
+
+    QSqlQuery query( getDatabase() );
+
+
+    if ( !query.exec(queryStmt))
+    {
+        qDebug() << "ERROR: " << queryStmt << query.lastError();
+        return 0;
+    }
+
+    query.next();
+    querySize = query.value(0).toInt();
+
+    queryStmt = "SELECT * FROM " + Core::DataItem::typeToString(type);
+    if ( !query.exec(queryStmt))
+    {
+        qDebug() << "ERROR: " << queryStmt << query.lastError();
+        return 0;
+    }
+
+    if (!query.next() )
+    {
+        return 0;
+    }
+
+    recordSize = query.record().count();
+
+    qDebug() << "querySize: " << querySize;
+    qDebug() << "recordSize: " << recordSize;
+
+    Core::DataItemTableModel* tableModel = new Core::DataItemTableModel(querySize, recordSize);
+
+    int row = 0;
+    do
+    {
+        for (int c = 0; c < recordSize; c++)
+        {
+            tableModel->setData(tableModel->index(row, c), query.value(c));
+        }
+        row++;
+    }
+    while (query.next());
+
+
+    return tableModel;
 }
 
 void SQLStorageAdapter::writeTableForDataItemType(QAbstractTableModel *model, Core::DataItem::DATA_ITEM_TYPE type)

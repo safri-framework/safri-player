@@ -6,11 +6,13 @@
 #include <QAbstractTableModel>
 #include <QUrl>
 #include <QString>
+#include <QObject>
 
 namespace Core
 {
-    class COREPLUGINSHARED_EXPORT IStorageAdapter
+    class COREPLUGINSHARED_EXPORT IStorageAdapter : public QObject
     {
+        Q_OBJECT
         public:
 
             virtual ~IStorageAdapter();
@@ -22,5 +24,7 @@ namespace Core
             virtual QUrl getStoragePath() = 0;
     };
 }
+
+Q_DECLARE_INTERFACE(Core::IStorageAdapter, "Core::IStorageAdapter")
 
 #endif // ISTORAGEADAPTER_H

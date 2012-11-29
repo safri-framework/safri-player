@@ -8,6 +8,9 @@
 #include <QList>
 #include "iplaylist.h"
 #include "CoreData/dataitemtablemodel.h"
+#include "pluginmanager.h"
+#include "Interfaces/IStorageAdapter.h"
+#include <QDebug>
 
 HackingWidget::HackingWidget(QWidget *parent) :
     QWidget(parent),
@@ -80,4 +83,17 @@ void HackingWidget::on_pushButton_5_clicked()
 {
     int sec = ui->lineEdit_3->text().toInt();
     Core::ICore::playbackController()->seek(sec * 1000);
+}
+
+void HackingWidget::on_pushButton_6_clicked()
+{
+    Core::IStorageAdapter *storageAdapter;
+    QList<Core::IStorageAdapter*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapter>();
+
+    if (objects.size() > 0)
+    {
+        storageAdapter = objects.at(0);
+        qDebug() << storageAdapter->getStorageType();
+        ui->tableView->setModel(storageAdapter->loadTableForDataItemType(Core::DataItem::SONG));
+    }
 }
