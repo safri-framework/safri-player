@@ -18,11 +18,13 @@ LIBS += -L"../../../bin/plugins/safri" -lCore
 DEFINES += AUDIOCOLLECTION_LIBRARY
 
 SOURCES += audiocollectionplugin.cpp \
-    audiocollection.cpp
+    audiocollection.cpp \
+    audiocollectionbuilder.cpp
 
 HEADERS += audiocollectionplugin.h\
         AudioCollection_global.h \
-    audiocollection.h
+    audiocollection.h \
+    audiocollectionbuilder.h
 
 OTHER_FILES += \
     AudioCollection.xml

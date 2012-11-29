@@ -4,7 +4,7 @@
 #include "Interfaces/IAudioCollection.h"
 #include <QUrl>
 #include <QReadWriteLock>
-
+#include "audiocollectionbuilder.h"
 #include "CoreData/dataitem.h"
 #include "CoreData/media.h"
 #include <QMap>
@@ -12,6 +12,7 @@
 using namespace Core;
 class AudioCollection : public Core::IAudioCollection
 {
+    friend class AudioCollectionBuilder;
 
     Q_OBJECT
 
@@ -47,22 +48,35 @@ public:
     Core::Song* getSongByID(int id);
     QList<Core::Song*> getSongsByName(QString name);
     Core::Song* getSongByPath(QString path);
+    Core::Song* newSong(QString name, int year);
+    void removeSong(Song* song);
 
     QList<Core::Artist*> getArtists();
     QList<Core::Artist*> getArtistsByName(QString name);
     Core::Artist* getArtistByID(int id);
+    Core::Artist* newArtist(QString name);
+    void removeArtist(Artist* artist);
 
     QList<Core::Album*> getAlbums();
     QList<Core::Album*> getAlbumsByName(QString name);
     Core::Album* getAlbumByID(int id);
+    Core::Album* newAlbum(QString name);
+    void removeAlbum(Album* album);
 
     QList<Core::Genre*> getGenres();
     QList<Core::Genre*> getGenresByName(QString name);
     Core::Genre* getGenreByID(int id);
+    Core::Genre* newGenre(QString genre);
+    void removeGenre(Genre* genre);
+
 
 
 private:
 
+    void insertGenre(Core::Genre* genre);
+    void insertAlbum(Core::Album* album);
+    void insertSong(Core::Song* song);
+    void insertArtist(Core::Artist* artist);
 
     QList<Song*>* m_songList;
     QList<Artist*>* m_artistList;
@@ -88,7 +102,16 @@ private:
     QString m_hash;
     QReadWriteLock m_lock;
 
+    int newAlbumID();
+    int newArtistID();
+    int newGenreID();
+    int newSongID();
 
+    //will be initialized by AudioCollection Builder via friend-relationship
+    int currentAlbumID;
+    int currentArtistID;
+    int currentGenreID;
+    int currentSongID;
 
 
 

@@ -3,6 +3,8 @@
 
 #include "../CorePlugin_global.h"
 #include "IStorageAdapter.h"
+#include "IMediaCollection.h"
+
 
 namespace Core
 {
@@ -12,11 +14,21 @@ namespace Core
     {
         public:
 
-            virtual ~IMediaCollectionBuilder() {}
+            virtual ~IMediaCollectionBuilder();
 
-            IMediaCollection* buildMediaCollection(IStorageAdapter* storageAdapter) = 0;
-            void storeMediaCollection(IMediaCollection* mediaCollection, IStorageAdapter* storageAdapter) = 0;
+            virtual IMediaCollection* buildMediaCollection(IStorageAdapter* storageAdapter) = 0;
+            virtual void storeMediaCollection(IMediaCollection* mediaCollection, IStorageAdapter* storageAdapter) = 0;
+
+
+
+
+
     };
 }
+
+
+
+Q_DECLARE_INTERFACE(Core::IMediaCollectionBuilder, "Core::IMediaCollectionBuilder")
+
 
 #endif // IMEDIACOLLECTIONBUILDER_H

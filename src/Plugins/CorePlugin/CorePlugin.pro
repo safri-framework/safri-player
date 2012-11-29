@@ -22,7 +22,8 @@ SOURCES += coreplugin.cpp \
     icore.cpp \
     CoreData/dataitem.cpp \
     CoreData/dataitemtablemodel.cpp \
-    Interfaces/IStorageAdapter.cpp
+    Interfaces/IStorageAdapter.cpp \
+    Interfaces/IMediaCollectionBuilder.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \

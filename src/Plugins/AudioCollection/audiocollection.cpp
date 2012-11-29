@@ -1,6 +1,10 @@
 #include "audiocollection.h"
 
-AudioCollection::AudioCollection(QString name):m_name(name)
+AudioCollection::AudioCollection(QString name):m_name(name),
+    currentAlbumID(0),
+    currentSongID(0),
+    currentArtistID(0),
+    currentGenreID(0)
 {
     m_songList = new QList<Song*>;
     m_artistList = new QList<Artist*> ;
@@ -15,6 +19,7 @@ AudioCollection::AudioCollection(QString name):m_name(name)
     m_nameToArtistMap = new QMap<QString, Artist*>;
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
+
 }
 
 
@@ -254,6 +259,7 @@ QList<Core::Song *> AudioCollection::getSongsByName(QString name)
     m_lock.lockForRead();
         list = m_nameToSongMap->values(name);
     m_lock.unlock();
+    return list;
 }
 
 QList<Core::Artist *> AudioCollection::getArtistsByName(QString name)
@@ -302,6 +308,7 @@ Core::Artist* AudioCollection::getArtistByID(int id)
     return artist;
 }
 
+
 Core::Album* AudioCollection::getAlbumByID(int id)
 {
     Album* album;
@@ -310,6 +317,7 @@ Core::Album* AudioCollection::getAlbumByID(int id)
     m_lock.unlock();
     return album;
 }
+
 
 Core::Genre* AudioCollection::getGenreByID(int id)
 {
@@ -334,7 +342,159 @@ Core::Song* AudioCollection::getSongByPath(QString path)
 
 
 
+Artist *AudioCollection::newArtist(QString name)
+{
+    Artist* artist = new Artist(newArtistID(), name, this);
+    insertArtist(artist);
+    return artist;
+}
 
+
+
+
+Album *AudioCollection::newAlbum(QString name)
+{
+    Album* album = new Core::Album(newAlbumID(), name, this);
+    insertAlbum(album);
+    return album;
+}
+
+
+
+
+Genre *AudioCollection::newGenre(QString name)
+{
+    Genre* genre = new Genre(newGenreID(), name, this);
+    insertGenre(genre);
+    return genre;
+}
+
+
+
+
+Song *AudioCollection::newSong(QString name, int year)
+{
+    Song* song = new Song(newSongID(), name, year, this);
+    insertSong(song);
+    return song;
+
+}
+
+void AudioCollection::removeSong(Song *song)
+{
+    m_lock.lockForWrite();
+        m_songList->removeAll(song);
+        m_PathToSongMap->remove(song->getFileName());
+        m_nameToSongMap->remove(song->getName());
+        m_IDtoSongMap->remove(song->getID());
+    m_lock.unlock();
+    Q_EMIT itemRemoved(song);
+
+}
+
+void AudioCollection::removeArtist(Artist *artist)
+{
+    m_lock.lockForWrite();
+        m_artistList->removeAll(artist);
+        m_nameToArtistMap->remove(artist->getName());
+        m_IDtoArtistMap->remove(artist->getID());
+    m_lock.unlock();
+    Q_EMIT itemRemoved(artist);
+}
+
+void AudioCollection::removeAlbum(Album *album)
+{
+    m_lock.lockForWrite();
+        m_albumList->removeAll(album);
+        m_nameToAlbumMap->remove(album->getName());
+        m_IDtoAlbumMap->remove(album->getID());
+    m_lock.unlock();
+    Q_EMIT itemRemoved(album);
+}
+
+void AudioCollection::removeGenre(Genre *genre)
+{
+    m_lock.lockForWrite();
+        m_genreList->removeAll(genre);
+        m_IDtoGenreMap->remove(genre->getID());
+        m_nameToGenreMap->remove(genre->getName());
+    m_lock.unlock();
+    Q_EMIT itemRemoved(genre);
+}
+
+void AudioCollection::insertGenre(Genre* genre)
+{
+
+    m_lock.lockForWrite();
+        m_genreList->append(genre);
+        m_IDtoGenreMap->insert(genre->getID(), genre);
+        m_nameToGenreMap->insert(genre->getName(), genre);
+    m_lock.unlock();
+    Q_EMIT itemAdded(genre);
+
+}
+
+
+
+void AudioCollection::insertArtist(Artist* artist)
+{
+    m_lock.lockForWrite();
+        m_artistList->append(artist);
+        m_IDtoArtistMap->insert(artist->getID(), artist);
+        m_nameToArtistMap->insert(artist->getName(), artist);
+    m_lock.unlock();
+    Q_EMIT itemAdded(artist);
+
+
+}
+
+void AudioCollection::insertAlbum(Album* album)
+{
+
+    m_lock.lockForWrite();
+        m_albumList->append(album);
+        m_IDtoAlbumMap->insert(album->getID(), album);
+        m_nameToAlbumMap->insert(album->getName(), album);
+    m_lock.unlock();
+    Q_EMIT itemAdded(album);
+
+
+}
+
+
+void AudioCollection::insertSong(Song* song)
+{
+    m_lock.lockForWrite();
+        m_songList->append(song);
+        m_IDtoSongMap->insert(song->getID(), song);
+        m_nameToSongMap->insert(song->getName(), song);
+    m_lock.unlock();
+    Q_EMIT itemAdded(song);
+
+}
+
+
+
+
+int AudioCollection::newAlbumID()
+{
+    return ++currentAlbumID;
+}
+
+int AudioCollection::newArtistID()
+{
+    return ++currentArtistID;
+}
+
+int AudioCollection::newGenreID()
+{
+    return ++currentGenreID;
+}
+
+int AudioCollection::newSongID()
+{
+    return ++currentSongID;
+}
 
 
 

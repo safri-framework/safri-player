@@ -5,6 +5,7 @@
 #include <QList>
 #include <QSet>
 #include <QMap>
+#include "../CorePlugin_global.h"
 
 namespace Core
 {
@@ -16,7 +17,9 @@ namespace Core
         This class stores and provides the information (such as name, artist, ...)
         for individual albums.
     */
-    class Album : public DataItem
+
+
+    class COREPLUGINSHARED_EXPORT Album : public DataItem
     {
         Q_OBJECT
         public:

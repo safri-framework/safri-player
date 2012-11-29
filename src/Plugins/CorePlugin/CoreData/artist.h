@@ -4,12 +4,12 @@
 #include "dataitem.h"
 #include <QList>
 #include <QMap>
-
+#include "../CorePlugin_global.h"
 namespace Core
 {
     class Album;
 
-    class Artist : public DataItem
+    class COREPLUGINSHARED_EXPORT Artist : public DataItem
     {
         Q_OBJECT
         public:
