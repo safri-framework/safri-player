@@ -5,8 +5,9 @@
 using namespace Core;
 
 DataItemTableModel::DataItemTableModel(int rows, int columns, QObject* parent)
-    : QAbstractTableModel(parent), dataSource(Table(rows, TableRow(columns))), columnHeaders(TableRow(columns))
+    : ITableModel(parent), dataSource(Table(rows, TableRow(columns))), columnHeaders(TableRow(columns))
 {
+
 }
 
 Core::DataItemTableModel::~DataItemTableModel()
@@ -76,8 +77,27 @@ bool DataItemTableModel::setData(const QModelIndex &index, const QVariant &value
 
 QVariant DataItemTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
     {
         return columnHeaders[section];
     }
+
+    return QVariant();
+}
+
+bool DataItemTableModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
+    {
+        columnHeaders[section] = value.toString();
+        Q_EMIT headerDataChanged(orientation, section, section);
+        return true;
+    }
+
+    return false;
+}
+
+int DataItemTableModel::indexOfColumn(QString column)
+{
+    return columnHeaders.indexOf(column);
 }

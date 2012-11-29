@@ -39,6 +39,8 @@ void AudioCollectionBuilder::buildGenres(IStorageAdapter *storageAdapter, AudioC
 
 void AudioCollectionBuilder::buildArtists(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
+    QAbstractTableModel* tableModel = storageAdapter->loadTableForDataItemType(DataItem::ARTIST);
+
 }
 
 void AudioCollectionBuilder::buildAlbums(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)

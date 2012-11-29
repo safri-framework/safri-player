@@ -18,8 +18,8 @@ class SQLSTORAGESHARED_EXPORT SQLStorageAdapter : public Core::IStorageAdapter
         SQLStorageAdapter(QUrl filePath);
         ~SQLStorageAdapter();
 
-        virtual QAbstractTableModel* loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type);
-        virtual void writeTableForDataItemType(QAbstractTableModel* model, Core::DataItem::DATA_ITEM_TYPE type);
+        virtual Core::ITableModel* loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type);
+        virtual void writeTableForDataItemType(Core::ITableModel* model, Core::DataItem::DATA_ITEM_TYPE type);
 
         virtual QString getStorageType();
         virtual QUrl getStoragePath();

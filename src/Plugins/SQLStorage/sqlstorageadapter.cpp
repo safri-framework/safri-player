@@ -14,23 +14,15 @@ SQLStorageAdapter::~SQLStorageAdapter()
 {
 }
 
-QAbstractTableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type)
+Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type)
 {
-    if ( checkIfDatabaseExists() )
-    {
-        qDebug() << "Database exists";
-    }
-    else
+    if ( !checkIfDatabaseExists() )
     {
         qDebug() << "Database doesn't exist";
         return 0;
     }
 
-    if ( checkDatabaseVersion() )
-    {
-        qDebug() << "Database version match";
-    }
-    else
+    if ( !checkDatabaseVersion() )
     {
         qDebug() << "Database version mismatch";
         return 0;
@@ -67,10 +59,12 @@ QAbstractTableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem:
 
     recordSize = query.record().count();
 
-    qDebug() << "querySize: " << querySize;
-    qDebug() << "recordSize: " << recordSize;
-
     Core::DataItemTableModel* tableModel = new Core::DataItemTableModel(querySize, recordSize);
+
+    for (int c = 0; c < recordSize; c++)
+    {
+        tableModel->setHeaderData(c, Qt::Horizontal, query.record().fieldName(c));
+    }
 
     int row = 0;
     do
@@ -87,7 +81,7 @@ QAbstractTableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem:
     return tableModel;
 }
 
-void SQLStorageAdapter::writeTableForDataItemType(QAbstractTableModel *model, Core::DataItem::DATA_ITEM_TYPE type)
+void SQLStorageAdapter::writeTableForDataItemType(Core::ITableModel *model, Core::DataItem::DATA_ITEM_TYPE type)
 {
 }
 

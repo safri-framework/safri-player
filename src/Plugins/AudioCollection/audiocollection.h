@@ -4,7 +4,7 @@
 #include "Interfaces/IAudioCollection.h"
 #include <QUrl>
 #include <QReadWriteLock>
-#include "audiocollectionbuilder.h"
+//#include "audiocollectionbuilder.h"
 #include "CoreData/dataitem.h"
 #include "CoreData/media.h"
 #include <QMap>

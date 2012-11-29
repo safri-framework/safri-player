@@ -23,7 +23,8 @@ SOURCES += coreplugin.cpp \
     CoreData/dataitem.cpp \
     CoreData/dataitemtablemodel.cpp \
     Interfaces/IStorageAdapter.cpp \
-    Interfaces/IMediaCollectionBuilder.cpp
+    Interfaces/IMediaCollectionBuilder.cpp \
+    Interfaces/ITableModel.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -44,7 +45,8 @@ HEADERS += coreplugin.h\
     Interfaces/IMediaCollectionBuilder.h \
     Interfaces/IStorageAdapter.h \
     Interfaces/IAudioCollection.h \
-    CoreData/dataitemtablemodel.h
+    CoreData/dataitemtablemodel.h \
+    Interfaces/ITableModel.h
 
 OTHER_FILES += \
     Core.xml
