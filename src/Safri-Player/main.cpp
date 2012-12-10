@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QStringList paths;
     paths << "plugins/";
 
-    PluginSystem::PluginManager manager(paths);
+    PluginSystem::PluginManager manager("Core", paths);
 
     manager.loadPlugins();
 

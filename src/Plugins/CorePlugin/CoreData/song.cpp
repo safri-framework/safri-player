@@ -92,9 +92,9 @@ Genre* Song::getGenre()
     return this->genre;
 }
 
-void Song::setInterpret(Artist* sInterpret)
+void Song::setArtist(Artist* sArtist)
 {
-    this->interpret = sInterpret;
+    this->interpret = sArtist;
 }
 
 void Song::setAlbum(Album* sAlbum)

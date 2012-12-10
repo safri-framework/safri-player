@@ -1,5 +1,6 @@
 #include "pluginmanager.h"
 #include "pluginspec.h"
+#include "pluginviewer.h"
 
 #include <QDebug>
 #include <QDir>
@@ -10,7 +11,8 @@ using namespace PluginSystem;
 
 PluginManager *PluginManager::m_instance = 0;
 
-PluginManager::PluginManager(QStringList pluginPaths) : QObject(0), pluginPaths(pluginPaths)
+PluginManager::PluginManager(QString corePluginName, QStringList pluginPaths)
+    : QObject(0), pluginPaths(pluginPaths), corePluginName(corePluginName)
 {
     qDebug() << "PluginManager(QStringList pluginPaths)";
     m_instance = this;
@@ -43,8 +45,10 @@ bool PluginManager::loadPlugins()
     QStringList pluginSpecNameFilters;
     pluginSpecNameFilters.append("*.xml");
     QString filename;
-    PluginSpec *pluginSpec;
+    PluginSpec *pluginSpec, *corePluginSpec;
+    QList<PluginSpec*> pluginsToLoad;
 
+    // Load plugin specs
     for (int i = 0; i < pluginPaths.size(); i++)
     {
         QDir dir(pluginPaths.at(i));
@@ -57,23 +61,55 @@ bool PluginManager::loadPlugins()
             filename = dirIterator.fileInfo().absoluteFilePath();
 
             pluginSpec = new PluginSpec(filename);
-            plugins.append(pluginSpec);
 
-            qDebug() << "\n" << pluginSpec->getName();
-
-            pluginSpec->loadLibrary();
-            QStringList foo;
-
-            IPlugin *plugin = pluginSpec->getPlugin();
-
-            if (plugin)
+            if (pluginSpec->getName() == corePluginName)
             {
-                plugin->initialize(foo);
+                corePluginSpec = pluginSpec;
+            }
+            else
+            {
+                pluginsToLoad.append(pluginSpec);
             }
         }
     }
 
+    // Load plugins
+    if (!loadPlugin(corePluginSpec))
+        return false;
+
+    plugins.append(corePluginSpec);
+
+    for (int i = 0; i < pluginsToLoad.size(); i++)
+    {
+        pluginSpec = pluginsToLoad.at(i);
+        loadPlugin(pluginSpec);
+        plugins.append(pluginSpec);
+    }
+
     return true;
+}
+
+void PluginManager::showPluginViewer()
+{
+    PluginViewer* viewer = new PluginViewer(this->plugins);
+    viewer->show();
+}
+
+bool PluginManager::loadPlugin(PluginSpec *pluginSpec)
+{
+    QStringList foo;
+    qDebug() << "\n" << pluginSpec->getName();
+
+    pluginSpec->loadLibrary();
+
+    IPlugin *plugin = pluginSpec->getPlugin();
+
+    if (plugin)
+    {
+        return plugin->initialize(foo);
+    }
+
+    return false;
 }
 
 

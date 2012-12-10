@@ -6,8 +6,12 @@
 
 class AUDIOCOLLECTIONSHARED_EXPORT AudioCollectionPlugin : public PluginSystem::IPlugin
 {
-public:
-    AudioCollectionPlugin();
+    Q_OBJECT
+    Q_INTERFACES(PluginSystem::IPlugin)
+    public:
+
+        AudioCollectionPlugin();
+        bool initialize(QStringList &arguments);
 };
 
 #endif // AUDIOCOLLECTIONPLUGIN_H

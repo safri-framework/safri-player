@@ -17,7 +17,7 @@ namespace PluginSystem
         Q_OBJECT
         public:
 
-            PluginManager(QStringList pluginPaths);
+            PluginManager(QString corePluginName, QStringList pluginPaths);
 
             /**
                 \brief  Method the access the PluginManager instance.
@@ -67,6 +67,8 @@ namespace PluginSystem
 
             bool loadPlugins();
 
+            void showPluginViewer();
+
         signals:
 
             void objectAdded(QObject *object);
@@ -74,10 +76,13 @@ namespace PluginSystem
 
         private:
 
+
+            bool loadPlugin(PluginSpec* pluginSpec);
             static PluginManager *m_instance;
             QList<QObject*> objectPool;
             QStringList pluginPaths;
 
+            QString corePluginName;
             QList<PluginSpec*> plugins;
     };
 }

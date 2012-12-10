@@ -35,7 +35,7 @@ namespace Core
             int getTrack();
             int getLength();
 
-            void setInterpret(Artist* sInterpret);
+            void setArtist(Artist* sArtist);
             void setAlbum(Album* sAlbum);
             void setGenre(Genre* sGenre);
             void setTrack(int track);

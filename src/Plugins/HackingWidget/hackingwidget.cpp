@@ -10,6 +10,8 @@
 #include "CoreData/dataitemtablemodel.h"
 #include "pluginmanager.h"
 #include "Interfaces/IStorageAdapter.h"
+#include "Interfaces/IMediaCollectionBuilder.h"
+#include "Interfaces/IAudioCollection.h"
 #include <QDebug>
 
 HackingWidget::HackingWidget(QWidget *parent) :
@@ -90,10 +92,40 @@ void HackingWidget::on_pushButton_6_clicked()
     Core::IStorageAdapter *storageAdapter;
     QList<Core::IStorageAdapter*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapter>();
 
+
     if (objects.size() > 0)
     {
         storageAdapter = objects.at(0);
         qDebug() << storageAdapter->getStorageType();
         ui->tableView->setModel(storageAdapter->loadTableForDataItemType(Core::DataItem::SONG));
     }
+
+    QList<Core::IMediaCollectionBuilder*> collectionBuilders = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
+    Core::IMediaCollection *mediaCollection;
+
+    if (collectionBuilders.size() > 0)
+    {
+        Core::IMediaCollectionBuilder* builder = collectionBuilders.at(0);
+        mediaCollection = builder->buildMediaCollection(storageAdapter);
+    }
+    else
+    {
+        qDebug() << "No Collection Builders found!";
+    }
+
+    Core::IAudioCollection* audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
+    Core::Artist *artist = audioCollection->getArtistByID(1);
+
+    qDebug() << artist->getName();
+
+    for (int i = 0; i < artist->getAlbums().size(); i++)
+    {
+        qDebug() << artist->getAlbums().at(i)->getName();
+    }
+
+}
+
+void HackingWidget::on_pushButton_7_clicked()
+{
+    PluginSystem::PluginManager::instance()->showPluginViewer();
 }

@@ -17,6 +17,7 @@ namespace Core
 
             virtual ~IStorageAdapter();
 
+            virtual ITableModel* loadTable(QString table) = 0;
             virtual ITableModel* loadTableForDataItemType(DataItem::DATA_ITEM_TYPE type) = 0;
             virtual void writeTableForDataItemType(ITableModel* model, DataItem::DATA_ITEM_TYPE type) = 0;
 

@@ -14,7 +14,7 @@ SQLStorageAdapter::~SQLStorageAdapter()
 {
 }
 
-Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type)
+Core::ITableModel *SQLStorageAdapter::loadTable(QString tableName)
 {
     if ( !checkIfDatabaseExists() )
     {
@@ -28,7 +28,7 @@ Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::D
         return 0;
     }
 
-    QString queryStmt = "SELECT COUNT(*) FROM " + Core::DataItem::typeToString(type);
+    QString queryStmt = "SELECT COUNT(*) FROM " + tableName;
     int querySize, recordSize;
 
     qDebug() << queryStmt;
@@ -45,7 +45,7 @@ Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::D
     query.next();
     querySize = query.value(0).toInt();
 
-    queryStmt = "SELECT * FROM " + Core::DataItem::typeToString(type);
+    queryStmt = "SELECT * FROM " + tableName;
     if ( !query.exec(queryStmt))
     {
         qDebug() << "ERROR: " << queryStmt << query.lastError();
@@ -79,6 +79,11 @@ Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::D
 
 
     return tableModel;
+}
+
+Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::DATA_ITEM_TYPE type)
+{
+    return loadTable(Core::DataItem::typeToString(type));
 }
 
 void SQLStorageAdapter::writeTableForDataItemType(Core::ITableModel *model, Core::DataItem::DATA_ITEM_TYPE type)

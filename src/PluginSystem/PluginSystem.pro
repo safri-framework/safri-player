@@ -1,4 +1,4 @@
-QT       -= gui
+QT       += gui
 QT       += xml
 
 TARGET = PluginSystem
@@ -11,12 +11,22 @@ SOURCES += \
         iplugin.cpp \
         pluginmanager.cpp \
         pluginspec.cpp \
-    plugindependency.cpp
+    plugindependency.cpp \
+    pluginviewer.cpp \
+    pluginviewermodel.cpp \
+    pluginspecviewer.cpp
 
 HEADERS +=\
         PluginSystem_global.h \
         iplugin.h \
         pluginmanager.h \
         pluginspec.h \
-    plugindependency.h
+    plugindependency.h \
+    pluginviewer.h \
+    pluginviewermodel.h \
+    pluginspecviewer.h
+
+FORMS += \
+    pluginviewer.ui \
+    pluginspecviewer.ui
 
