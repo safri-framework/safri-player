@@ -58,6 +58,7 @@ void ICore::objectAddedToObjectPool(QObject *object)
     IGUIController *guiController = qobject_cast<IGUIController*>(object);
     if (guiController != 0)
     {
+        qDebug() << "ICore::IGUIController class added";
         m_guiController = guiController;
     }
 }

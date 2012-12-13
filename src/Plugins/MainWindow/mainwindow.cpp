@@ -5,6 +5,9 @@
 #include <QSpacerItem>
 #include <QSplitter>
 #include <QDebug>
+#include "Interfaces/iguicontroller.h"
+#include "icore.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -76,9 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(buttonList->at(i), SIGNAL(clicked(bool)), this, SLOT(sideBarButtonClicked(bool)));
     }
 
-
-
-
+    guiController = Core::ICore::guiController();
+    connect(guiController, SIGNAL(playerWidgetChanged()), this, SLOT(changePlayerWidget()));
 }
 
 MainWindow::~MainWindow()
@@ -110,5 +112,16 @@ void MainWindow::sideBarButtonClicked(bool checked)
     QPushButton* button = qobject_cast<QPushButton*>(sender());
     int buttonID = button->property("id").toInt();
 
+}
+
+void MainWindow::changePlayerWidget()
+{
+    QWidget* playerWidget = guiController->getPlayerWidget();
+
+    //playerWidget->setParent(ui->player_frame->layout());
+    //qDebug()<< "Nullpointer: " << ui->player_frame->layout();
+
+    ui->player_frame->layout()->addWidget(playerWidget);
+    //playerWidget->show();
 }
 

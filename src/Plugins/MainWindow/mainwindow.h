@@ -6,6 +6,9 @@
 namespace Ui {
 class MainWindow;
 }
+namespace Core {
+class IGUIController;
+}
 
 class MainWindow : public QMainWindow
 {
@@ -19,8 +22,11 @@ private:
     Ui::MainWindow *ui;
     void readAndSetStylesheet();
     int visiblePlugins;
+    Core::IGUIController* guiController;
+
 private slots:
     void sideBarButtonClicked(bool checked);
+    void changePlayerWidget();
 };
 
 #endif // MAINWINDOW_H

@@ -21,6 +21,10 @@ namespace Core
             virtual QWidget* getPlayerWidget() = 0;
             virtual QWidget* getPlaylistWidget() = 0;
             virtual QList<ISideBarPlugin*> getSideBarPlugins() = 0;
+
+        signals:
+
+            void playerWidgetChanged();
     };
 }
 
