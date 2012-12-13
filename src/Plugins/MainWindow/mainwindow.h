@@ -18,6 +18,9 @@ public:
 private:
     Ui::MainWindow *ui;
     void readAndSetStylesheet();
+    int visiblePlugins;
+private slots:
+    void sideBarButtonClicked(bool checked);
 };
 
 #endif // MAINWINDOW_H
