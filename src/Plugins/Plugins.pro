@@ -12,5 +12,6 @@ SUBDIRS += \
     SQLStorage \
     AudioCollection \
     PlayerWidget \
-    MainWindow
+    MainWindow \
+    GUIController
 

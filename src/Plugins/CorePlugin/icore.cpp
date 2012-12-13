@@ -3,6 +3,7 @@
 #include "iplaybackcontroller.h"
 #include "Interfaces/IAudioBackend.h"
 #include "Interfaces/IPlaylistFactory.h"
+#include "Interfaces/iguicontroller.h"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -53,6 +54,12 @@ void ICore::objectAddedToObjectPool(QObject *object)
     {
         m_playlistFactory = playlistFactory;
     }
+
+    IGUIController *guiController = qobject_cast<IGUIController*>(object);
+    if (guiController != 0)
+    {
+        m_guiController = guiController;
+    }
 }
 
 IPlaylist *ICore::createPlaylist()
@@ -63,6 +70,11 @@ IPlaylist *ICore::createPlaylist()
     }
 
     return 0;
+}
+
+IGUIController *ICore::guiController()
+{
+    return m_instance->m_guiController;
 }
 
 QString ICore::storageDirectory()

@@ -25,7 +25,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/IStorageAdapter.cpp \
     Interfaces/IMediaCollectionBuilder.cpp \
     Interfaces/ITableModel.cpp \
-    Interfaces/iplayerwidgetfactory.cpp
+    Interfaces/iplayerwidgetfactory.cpp \
+    Interfaces/isidebarplugin.cpp \
+    Interfaces/iguicontroller.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -48,7 +50,9 @@ HEADERS += coreplugin.h\
     Interfaces/IAudioCollection.h \
     CoreData/dataitemtablemodel.h \
     Interfaces/ITableModel.h \
-    Interfaces/iplayerwidgetfactory.h
+    Interfaces/iplayerwidgetfactory.h \
+    Interfaces/isidebarplugin.h \
+    Interfaces/iguicontroller.h
 
 OTHER_FILES += \
     Core.xml

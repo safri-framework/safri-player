@@ -12,6 +12,7 @@ namespace Core
     class IAudioBackend;
     class IPlaylistFactory;
     class IPlaylist;
+    class IGUIController;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -29,6 +30,7 @@ namespace Core
             static IPlaybackController* playbackController();
             static IAudioBackend* audioBackend();
             static IPlaylist* createPlaylist();
+            static IGUIController* guiController();
             static QString storageDirectory();
 
         public slots:
@@ -42,6 +44,7 @@ namespace Core
             IPlaybackController* m_playbackController;
             IAudioBackend* m_audioBackend;
             IPlaylistFactory* m_playlistFactory;
+            IGUIController* m_guiController;
     };
 }
 
