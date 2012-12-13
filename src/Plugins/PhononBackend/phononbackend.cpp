@@ -1,6 +1,9 @@
 #include "phononbackend.h"
 
 #include <QDebug>
+#include <QTime>
+#include <QCoreApplication>
+#include <QEventLoop>
 
 PhononBackend::PhononBackend()
 {
@@ -14,6 +17,9 @@ PhononBackend::PhononBackend()
 
 int PhononBackend::getTotalTime()
 {
+    QTime dieTime = QTime::currentTime().addMSecs(500);
+    while( QTime::currentTime() < dieTime )
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     return mediaObject->totalTime();
 }
 
@@ -54,6 +60,11 @@ void PhononBackend::stop()
 void PhononBackend::setVolume(int percent)
 {
     audioOutput->setVolume(percent / 100.0f);
+}
+
+int PhononBackend::getVolume()
+{
+    return audioOutput->volume() * 100.0f;
 }
 
 void PhononBackend::tick(qint64 ms)

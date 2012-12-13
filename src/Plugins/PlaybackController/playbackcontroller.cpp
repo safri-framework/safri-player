@@ -118,6 +118,7 @@ void PlaybackController::playStateSlot()
     else
     {
         audioBackend->play(currentMedia->getURL());
+        Q_EMIT mediaChanged(currentMedia);
         qDebug()<<"x -> Play";
     }
     currentState = m_play;
@@ -155,8 +156,7 @@ void PlaybackController::currentSongFinished()
        if (nextMedia != currentMedia)
        {
            currentMedia = nextMedia;
-           m_playPauseAction->trigger();
-
+           m_playPauseAction->trigger();          
        }
        else
        {
@@ -183,12 +183,10 @@ void PlaybackController::audioBackendUpdate(int currentTime)
 
 void PlaybackController::nextActionSlot()
 {
-
     Core::Media *media = playlist->getNextMedia();
 
     if (media)
     {
-
        m_stopAction->trigger();
        currentMedia = media;
        m_playPauseAction->trigger();
@@ -203,7 +201,7 @@ void PlaybackController::previousActionSlot()
         m_stopAction->trigger();
         currentMedia = media;
         m_playPauseAction->trigger();
-
+        Q_EMIT mediaChanged(currentMedia);
     }
 
 }
@@ -267,6 +265,16 @@ QList<QAction *> PlaybackController::getAdditionalActions()
 {
     return QList<QAction*>();
 
+}
+
+int PlaybackController::getMediaTotalTime()
+{
+    return audioBackend->getTotalTime();
+}
+
+int PlaybackController::getVolume()
+{
+    return audioBackend->getVolume();
 }
 
 void PlaybackController::playMedia(Core::Media* media)

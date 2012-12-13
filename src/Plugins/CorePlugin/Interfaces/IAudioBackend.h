@@ -20,6 +20,7 @@ namespace Core
             virtual void pause() = 0;
             virtual void stop() = 0;
             virtual void setVolume(int percent) = 0;
+            virtual int getVolume() = 0;
 
         signals:
 

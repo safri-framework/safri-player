@@ -19,6 +19,7 @@ class PhononBackend : public Core::IAudioBackend
         virtual void pause();
         virtual void stop();
         virtual void setVolume(int percent);
+        virtual int getVolume();
 
     private:
 

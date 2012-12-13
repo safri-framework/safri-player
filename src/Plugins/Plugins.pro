@@ -11,5 +11,6 @@ SUBDIRS += \
     HackingWidget \
     SQLStorage \
     AudioCollection \
+    PlayerWidget \
     MainWindow
 

@@ -65,12 +65,16 @@ namespace Core
 
             virtual QList<QAction*> getAdditionalActions() = 0;
 
+            virtual int getMediaTotalTime() = 0;
+
+            virtual int getVolume() = 0;
+
         signals:
 
             /**
                 \brief  emit this signal whenever the current media has changed
             */
-            void mediaChanged(Media*);
+            void mediaChanged(Core::Media*);
 
             /**
                 \brief  this signal can be used to update your disply in the GUI
@@ -79,7 +83,6 @@ namespace Core
             void update(int currentTime);
 
             void stateChanged(playState state);
-
 
     private slots:
 

@@ -26,8 +26,8 @@ class PlaybackController : public Core::IPlaybackController
         QAction* previousAction();
         QList<QAction*> getAdditionalActions();
 
-
-
+        int getMediaTotalTime();
+        int getVolume();
 
 
 protected:
@@ -39,9 +39,8 @@ public slots:
         void seek(int playTime);
         virtual void setVolume(int volume);
 
-signals:
-        void update(int currentTime);
-        void mediaChanged();
+    signals:
+
         void hasData();
 
 private:

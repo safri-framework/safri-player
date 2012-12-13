@@ -24,7 +24,8 @@ SOURCES += coreplugin.cpp \
     CoreData/dataitemtablemodel.cpp \
     Interfaces/IStorageAdapter.cpp \
     Interfaces/IMediaCollectionBuilder.cpp \
-    Interfaces/ITableModel.cpp
+    Interfaces/ITableModel.cpp \
+    Interfaces/iplayerwidgetfactory.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -46,7 +47,8 @@ HEADERS += coreplugin.h\
     Interfaces/IStorageAdapter.h \
     Interfaces/IAudioCollection.h \
     CoreData/dataitemtablemodel.h \
-    Interfaces/ITableModel.h
+    Interfaces/ITableModel.h \
+    Interfaces/iplayerwidgetfactory.h
 
 OTHER_FILES += \
     Core.xml

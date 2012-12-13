@@ -12,6 +12,7 @@
 #include "Interfaces/IStorageAdapter.h"
 #include "Interfaces/IMediaCollectionBuilder.h"
 #include "Interfaces/IAudioCollection.h"
+#include "Interfaces/iplayerwidgetfactory.h"
 #include <QDebug>
 
 HackingWidget::HackingWidget(QWidget *parent) :
@@ -128,4 +129,15 @@ void HackingWidget::on_pushButton_6_clicked()
 void HackingWidget::on_pushButton_7_clicked()
 {
     PluginSystem::PluginManager::instance()->showPluginViewer();
+}
+
+void HackingWidget::on_pushButton_8_clicked()
+{
+    QList<Core::IPlayerWidgetFactory*> playerFactories = PluginSystem::PluginManager::instance()->getObjects<Core::IPlayerWidgetFactory>();
+    if (playerFactories.size() > 0)
+    {
+        qDebug() << playerFactories.at(0)->getName();
+        QWidget* player = playerFactories.at(0)->createWidget();
+        player->show();
+    }
 }
