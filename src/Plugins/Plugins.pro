@@ -10,5 +10,6 @@ SUBDIRS += \
     PhononBackend \
     HackingWidget \
     SQLStorage \
-    AudioCollection
+    AudioCollection \
+    MainWindow
 
