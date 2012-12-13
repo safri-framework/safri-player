@@ -13,5 +13,6 @@ SUBDIRS += \
     AudioCollection \
     PlayerWidget \
     MainWindow \
-    GUIController
+    GUIController \
+    SidebarPluginTest
 
