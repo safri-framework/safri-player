@@ -3,84 +3,39 @@
 #include <QFile>
 #include <QPushButton>
 #include <QSpacerItem>
-#include <QSplitter>
+
 #include <QDebug>
 #include "Interfaces/iguicontroller.h"
 #include "icore.h"
+#include <QWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), visiblePlugins(0)
 {
-
-
-
     ui->setupUi(this);
     readAndSetStylesheet();
-    QPushButton* button = new QPushButton(this->ui->buttonspace);
-    button->setProperty("place","menu_left");
-    button->setProperty("type","menu_button");
-    button->setText("hello");
-    button->setCheckable(true);
-    button->setChecked(true);
-    button->setProperty("id",0);
 
-
-
-
-    QPushButton* button1 = new QPushButton(this->ui->buttonspace);
-    button1->setProperty("place","menu_left");
-    button1->setProperty("type","menu_button");
-    button1->setText("hello");
-    button1->setCheckable(true);
-    button1->setChecked(true);
-    button1->setProperty("id",1);
-
-
-    QPushButton* button2 = new QPushButton(this->ui->buttonspace);
-    button2->setProperty("place","menu_left");
-    button2->setProperty("type","menu_button_last");
-    button2->setText("hello");
-    button2->setCheckable(true);
-    button2->setChecked(true);
-    button2->setProperty("id",2);
-
-
-    QSplitter* splitter = new QSplitter(Qt::Horizontal, this->ui->mainframe);
+    splitter = new QSplitter(Qt::Horizontal, this->ui->mainframe);
     splitter->addWidget(this->ui->widget_frame);
     splitter->addWidget(this->ui->player_frame);
     this->ui->mainframe->layout()->addWidget(splitter);
-
-    this->ui->buttonspace->layout()->addWidget(button);
-    this->ui->buttonspace->layout()->addWidget(button1);
-    this->ui->buttonspace->layout()->addWidget(button2);
-
-
-    QWidget* w1 = new QWidget();
-    QWidget* w2 = new QWidget();
-    QWidget* w3 = new QWidget();
-
-    QList<QWidget*>* widgetList = new QList<QWidget*>();
-    QList<QPushButton*>* buttonList = new QList<QPushButton*>();
-
-
-    buttonList->append(button);
-    buttonList->append(button1);
-    buttonList->append(button2);
-    widgetList->append(w1);
-    widgetList->append(w2);
-    widgetList->append(w3);
-
-    Q_ASSERT(widgetList->size() == buttonList->size());
-
-    for(int i = 0; i<widgetList->size(); i++)
-    {
-        //connect(buttonList.at(i), SIGNAL(clicked(bool)), widgetList.at(i), SLOT(setVisible(bool)));
-        connect(buttonList->at(i), SIGNAL(clicked(bool)), this, SLOT(sideBarButtonClicked(bool)));
-    }
+    lastSplitterSize.append(300);
+    lastSplitterSize.append(700);
 
     guiController = Core::ICore::guiController();
     connect(guiController, SIGNAL(playerWidgetChanged()), this, SLOT(changePlayerWidget()));
+    connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(pluginAdded(QObject*)));
+
+
+    QList<Core::ISideBarPlugin*> pluginList = PluginSystem::PluginManager::instance()->getObjects<Core::ISideBarPlugin>();
+    this->plugins.append(pluginList);
+
+    qDebug()<<pluginList.size()<<"DAS WILL ICH WISSEN";
+    for(int i = 0; i < pluginList.size(); i++)
+    {
+        addPlugin(pluginList.at(i));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -101,6 +56,53 @@ void MainWindow::readAndSetStylesheet()
 
 }
 
+void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
+{
+    QWidget* sidebarWidget = plugin->getSideBarWidget();
+    QWidget* menuBarWidget = plugin->getMenuBarWidget();
+    QPushButton* tabButton = qobject_cast<QPushButton*>(menuBarWidget);
+    if(tabButton && tabButton->property("style").toString() == "tabStyle" )
+    {
+            this->ui->buttonspace->layout()->addWidget(tabButton);
+            tabButtons.append(tabButton);
+            if(tabButtons.size() <= 1)
+            {
+                tabButton->setProperty("place","menu_left");
+                tabButton->setProperty("type","menu_button_last");
+            }
+            else
+            {
+                QPushButton* lastBtn = tabButtons.at(tabButtons.size()-2);
+
+                lastBtn->setProperty("type","menu_button");
+                tabButton->setProperty("place","menu_left");
+                tabButton->setProperty("type","menu_button_last");
+            }
+        }
+    else
+    {
+        this->ui->sidebar_widget_space->layout()->addWidget(menuBarWidget);
+    }
+
+
+    if(sidebarWidget)
+    {
+        connect(plugin, SIGNAL(show(bool)), this, SLOT(showRequest(bool)));
+        if(plugin->isVisible())
+        {
+            this->ui->widget_frame->layout()->addWidget(plugin->getSideBarWidget());
+            plugin->getSideBarWidget()->show();
+            visiblePlugins++;
+            qDebug()<<"visible Plugins"<< visiblePlugins;
+
+        }
+
+
+        if(visiblePlugins == 0)
+            showSidebar(false);
+    }
+}
+
 void MainWindow::sideBarButtonClicked(bool checked)
 {
     if(checked)
@@ -108,10 +110,8 @@ void MainWindow::sideBarButtonClicked(bool checked)
     else
         visiblePlugins--;
 
-
     QPushButton* button = qobject_cast<QPushButton*>(sender());
     int buttonID = button->property("id").toInt();
-
 }
 
 void MainWindow::changePlayerWidget()
@@ -124,4 +124,63 @@ void MainWindow::changePlayerWidget()
     ui->player_frame->layout()->addWidget(playerWidget);
     //playerWidget->show();
 }
+
+void MainWindow::showRequest(bool show)
+{
+    Core::ISideBarPlugin* plugin = qobject_cast<Core::ISideBarPlugin*>(sender());
+    QWidget* pluginWidget = plugin->getSideBarWidget();
+    qDebug()<<"show "<<show;
+    if(pluginWidget)
+    {
+        if(show )
+        {
+            qDebug()<<"SHOW";
+            this->ui->widget_frame->layout()->addWidget(pluginWidget);
+            pluginWidget->show();
+            visiblePlugins++;
+            if (visiblePlugins == 1)
+            showSidebar(true);
+
+        }
+        else
+        {
+            qDebug()<<"HIDE";
+            this->ui->widget_frame->layout()->removeWidget(pluginWidget);
+            pluginWidget->hide();
+            visiblePlugins--;
+            if (visiblePlugins == 0)
+            showSidebar(false);
+        }
+    }
+
+}
+
+void MainWindow::pluginAdded(QObject *plugin)
+{
+    Core::ISideBarPlugin* sidebarPlugin = qobject_cast<Core::ISideBarPlugin*>(plugin);
+    if(sidebarPlugin)
+    {
+        addPlugin(sidebarPlugin);
+    }
+}
+
+
+
+void MainWindow::showSidebar(bool visible)
+{
+    if(visible)
+    {
+        splitter->setSizes(lastSplitterSize);
+    }
+    else
+    {
+        lastSplitterSize = splitter->sizes();
+        QList<int> list;
+        list.append(0);
+        list.append(600);
+        splitter->setSizes(list);
+    }
+
+}
+
 

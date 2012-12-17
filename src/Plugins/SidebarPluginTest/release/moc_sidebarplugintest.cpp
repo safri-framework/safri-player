@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'sidebarplugintest.h'
 **
-** Created: Thu 13. Dec 19:13:15 2012
+** Created: Mon 17. Dec 17:13:54 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!

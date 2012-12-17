@@ -8,10 +8,12 @@ SidebarPluginTest::SidebarPluginTest(QString name, QWidget *parent)
     this->name = name;
     QPushButton* button = new QPushButton(parent);
     button->setCheckable(true);
+    button->setText(name);
     button->setProperty("style", QVariant("tabStyle"));
     connect(button, SIGNAL(clicked(bool)), this, SIGNAL(show(bool)));
     menuBarWidget = button;
     sideBarWidget = new QWidget(parent);
+  //  sideBarWidget->show();
     sideBarWidget->setStyleSheet("background-color: red;");
 
 }

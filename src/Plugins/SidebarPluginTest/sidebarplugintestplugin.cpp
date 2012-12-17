@@ -12,7 +12,7 @@ bool SidebarPluginTestPlugin::initialize(QStringList &arguments)
     addObject(plugin1);
     addObject(plugin2);
     addObject(plugin3);
-
+return true;
 
 }
 
