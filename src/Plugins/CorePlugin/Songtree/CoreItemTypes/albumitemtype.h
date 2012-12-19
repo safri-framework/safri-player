@@ -18,7 +18,7 @@ namespace Core
             AlbumItemType();
             QString getTypeName();
             QString getNodeName(Song* song);
-            BaseDTO* getNodeDTO(Song *song);
+            DataItem* getNodeDataItem(Song *song);
             QString getHash(Song* song);
     };
 }

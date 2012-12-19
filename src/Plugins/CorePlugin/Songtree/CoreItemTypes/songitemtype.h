@@ -15,13 +15,12 @@ namespace Core
       */
     class COREPLUGINSHARED_EXPORT SongItemType : public ITreeItemType
     {
-
         public:
             SongItemType();
 
             QString getTypeName();
             QString getNodeName(Song* song);
-            BaseDTO* getNodeDTO(Song *song);
+            DataItem* getNodeDataItem(Song *song);
             QString getHash(Song* song);
     };
 }

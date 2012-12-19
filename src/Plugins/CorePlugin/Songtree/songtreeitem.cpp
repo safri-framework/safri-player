@@ -1,4 +1,4 @@
-#include "SongTreeItem.h"
+#include "songtreeitem.h"
 #include "songtree.h"
 #include "changedflags.h"
 #include "../CoreData/song.h"
@@ -13,7 +13,7 @@ using namespace Core;
 
 SongTreeItem::SongTreeItem(ITreeItemType* type, int level, QList<ITreeItemType*>* hierarchy, SongTreeItem* parentItem, Song* song, SongTree* songTree, QObject *parent)
     : QObject(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
-      dto(type->getNodeDTO(song)), name(type->getNodeName(song)), type(type), level(level), hierarchy(hierarchy), songTree(songTree), hash(type->getHash(song))
+      dataItemPtr(type->getNodeDataItem(song)), name(type->getNodeName(song)), type(type), level(level), hierarchy(hierarchy), songTree(songTree), hash(type->getHash(song))
 {
 #ifdef DEBUG
         ID = idCount++;
@@ -24,7 +24,7 @@ SongTreeItem::SongTreeItem(ITreeItemType* type, int level, QList<ITreeItemType*>
 
 SongTreeItem::SongTreeItem(QList<ITreeItemType*>* hierarchy, SongTree* songTree, QObject *parent)
     : QObject(parent), parentItem(0), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
-      dto(0), name("ROOT"), type(0), level(-1), hierarchy(hierarchy), songTree(songTree), hash("")
+      dataItemPtr(0), name("ROOT"), type(0), level(-1), hierarchy(hierarchy), songTree(songTree), hash("")
 {
 #ifdef DEBUG
         ID = idCount++;
@@ -35,7 +35,7 @@ SongTreeItem::SongTreeItem(QList<ITreeItemType*>* hierarchy, SongTree* songTree,
 
 SongTreeItem::SongTreeItem(SongTreeItem *sample, SongTreeItem *parentItem, QObject *parent)
     : QObject(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
-      dto(sample->dto), name(sample->name), type(sample->type), level(sample->level), hierarchy(sample->hierarchy), songTree(sample->songTree), hash(sample->hash)
+      dataItemPtr(sample->dataItemPtr), name(sample->name), type(sample->type), level(sample->level), hierarchy(sample->hierarchy), songTree(sample->songTree), hash(sample->hash)
 {
 #ifdef DEBUG
         ID = idCount++;
@@ -59,9 +59,9 @@ bool SongTreeItem::ancestorsContains(QRegExp exp)
     return false;
 }
 
-void SongTreeItem::setDtoPtr(BaseDTO *dto)
+void SongTreeItem::setDataItemPtr(DataItem *dataItemPtr)
 {
-    this->dto = dto;
+    this->dataItemPtr = dataItemPtr;
 }
 
 bool SongTreeItem::subTreeContains(QRegExp exp)
@@ -115,18 +115,18 @@ int SongTreeItem::getNumberOfChilds() const
     return childs->size();
 }
 
-BaseDTO* SongTreeItem::getDTOPtr()
+DataItem* SongTreeItem::getDataItemPtr()
 {
-    return this->dto;
+    return this->dataItemPtr;
 }
 
 QList<Song*> SongTreeItem::getSongs()
 {
     QList<Song*> list;
 
-    if(this->dto != 0 && this->dto->getType() == BaseDTO::SONG)
+    if(this->dataItemPtr != 0 && this->dataItemPtr->getType() == DataItem::SONG)
     {
-         list.append((Song*) this->dto);
+         list.append((Song*) this->dataItemPtr);
     }
     else
     {
@@ -327,14 +327,14 @@ void SongTreeItem::moveToParent(SongTreeItem *destination)
                 sourceParent->childs->removeAt(rowRemoved);
                 sourceParent->childMap->remove( sourceParent->childMap->key(source) );
 
-                if (sourceParent->dto != 0 && sourceParent->dto->getType() == BaseDTO::ALBUM)
+                if (sourceParent->dataItemPtr != 0 && sourceParent->dataItemPtr->getType() == DataItem::ALBUM)
                 {
-                    Album *album = static_cast<Album*>(sourceParent->dto);
+                    Album *album = static_cast<Album*>(sourceParent->dataItemPtr);
 
                     if (album->isCompilation() && sourceParent->childs->size() == 0)
                     {
                         Album *newAlbum = new Album(album, album->parent());
-                        sourceParent->dto = newAlbum;
+                        sourceParent->dataItemPtr = newAlbum;
                     }
 
                     // WENN HIER COMPILATION, ABER VON EINEM INTERPRET KEIN SONG MEHR
@@ -532,42 +532,45 @@ void SongTreeItem::adaptParentDataToSource(SongTreeItem *source, ChangedFlags &f
     QList<Song*> songs = source->getSongs();
     int songCount = songs.size();
 
-    // ignore TreeItemTypes which doesn't match to a specific BaseDTO
-    if (this->dto != 0)
+    // ignore TreeItemTypes which doesn't match to a specific DataItem
+    if (this->dataItemPtr != 0)
     {
-        switch (this->dto->getType())
+        switch (this->dataItemPtr->getType())
         {
-            case BaseDTO::GENRE:
+            case DataItem::GENRE:
 
                 for (int i = 0; i < songCount; i++)
                 {
-                    qDebug() << songs.at(i)->getName() << " moveToGenre " << this->dto->getName();
-                    songs.at(i)->moveToGenre(this->dto);
+                    qDebug() << songs.at(i)->getName() << " moveToGenre " << this->dataItemPtr->getName();
+                    songs.at(i)->moveToGenre(this->dataItemPtr);
                 }
                 flags.genreChanged = true;
-                flags.genre = static_cast<Genre*>(this->dto);
+                flags.genre = static_cast<Genre*>(this->dataItemPtr);
                 break;
 
-            case BaseDTO::ALBUM:
+            case DataItem::ALBUM:
 
                 for (int i = 0; i < songCount; i++)
                 {
-                    songs.at(i)->moveToAlbum(this->dto);
-                    qDebug() << songs.at(i)->getName() << " moveToAlbum " << this->dto->getName();
+                    songs.at(i)->moveToAlbum(this->dataItemPtr);
+                    qDebug() << songs.at(i)->getName() << " moveToAlbum " << this->dataItemPtr->getName();
                 }
                 flags.albumChanged = true;
-                flags.album = static_cast<Album*>(this->dto);
+                flags.album = static_cast<Album*>(this->dataItemPtr);
             break;
 
-            case BaseDTO::ARTIST:
+            case DataItem::ARTIST:
 
                 for (int i = 0; i < songCount; i++)
                 {
-                    songs.at(i)->moveToArtist(this->dto);
-                    qDebug() << songs.at(i)->getName() << " moveToArtist " << this->dto->getName();
+                    songs.at(i)->moveToArtist(this->dataItemPtr);
+                    qDebug() << songs.at(i)->getName() << " moveToArtist " << this->dataItemPtr->getName();
                 }
                 flags.artistChanged = true;
-                flags.artist = static_cast<Artist*>(this->dto);
+                flags.artist = static_cast<Artist*>(this->dataItemPtr);
+                break;
+
+            default:
                 break;
         }
     }

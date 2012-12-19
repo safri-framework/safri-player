@@ -11,7 +11,6 @@
 #include "changedflags.h"
 
 //#define DEBUG
-#define BaseDTO Core::DataItem
 
 namespace Core
 {
@@ -118,11 +117,11 @@ namespace Core
             QString getName();
             void addSong(Song* song);
             QString getTypeName();
-            BaseDTO* getDTOPtr();
+            void setDataItemPtr(DataItem* dataItemPtr);
+            DataItem* getDataItemPtr();
             int getTreeLevel();
             int getNumberOfChilds() const;
             SongTreeItem* getParentItem() const;
-            void setDtoPtr(BaseDTO* dto);
 
     #ifdef DEBUG
             long ID;
@@ -135,7 +134,7 @@ namespace Core
             QList<SongTreeItem*>* childs;
             QMap<QString, SongTreeItem*>* childMap;
 
-            BaseDTO* dto;
+            DataItem* dataItemPtr;
             QString name;
 
             ITreeItemType* type;

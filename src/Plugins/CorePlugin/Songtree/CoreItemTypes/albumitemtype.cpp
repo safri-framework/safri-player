@@ -24,7 +24,7 @@ return song->getAlbum()->getName();
 }
 
 
-BaseDTO* AlbumItemType::getNodeDTO(Song *song)
+DataItem* AlbumItemType::getNodeDataItem(Song *song)
 {
     return song->getAlbum();
 

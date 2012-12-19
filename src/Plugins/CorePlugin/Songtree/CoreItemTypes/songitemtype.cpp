@@ -19,7 +19,7 @@ QString SongItemType::getNodeName(Song* song)
 }
 
 
-BaseDTO* SongItemType::getNodeDTO(Song *song)
+DataItem* SongItemType::getNodeDataItem(Song *song)
 {
     return song;
 }

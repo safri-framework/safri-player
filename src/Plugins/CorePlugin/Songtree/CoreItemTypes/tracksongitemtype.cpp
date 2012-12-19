@@ -18,7 +18,7 @@ QString TrackSongItemType::getNodeName(Song* song)
     return ((song->getTrack() < 10) ? "0" : "") + QString::number(song->getTrack()) + ". " + song->getName();
 }
 
-BaseDTO* TrackSongItemType::getNodeDTO(Song *song)
+DataItem* TrackSongItemType::getNodeDataItem(Song *song)
 {
     return song;
 }

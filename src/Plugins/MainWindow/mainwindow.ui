@@ -138,17 +138,10 @@
         <widget class="QWidget" name="player_frame" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>538</height>
-             </size>
-            </property>
-           </spacer>
+           <widget class="QWidget" name="playlist" native="true"/>
+          </item>
+          <item>
+           <widget class="QWidget" name="playerWidget" native="true"/>
           </item>
          </layout>
         </widget>

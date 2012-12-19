@@ -22,7 +22,7 @@ QString DecadeItemType::getNodeName(Song* song)
 }
 
 
-BaseDTO* DecadeItemType::getNodeDTO(Song *song)
+DataItem* DecadeItemType::getNodeDataItem(Song *song)
 {
     return 0;
 }

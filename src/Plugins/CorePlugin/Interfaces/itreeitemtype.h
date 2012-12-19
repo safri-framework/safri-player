@@ -7,7 +7,7 @@ namespace Core
 {
     class Song;
     class DataItem;
-    #define BaseDTO DataItem   // TODO: remove!
+
     /**
         \brief Interface for individual song tree item types
 
@@ -31,10 +31,10 @@ namespace Core
             virtual QString getNodeName(Song* song) = 0;
 
             /**
-                \param      the song for which the BaseDTO should returned
-                \returns    the BaseDTO for the given song according to the type
+                \param      the song for which the DataItem should returned
+                \returns    the DataItem for the given song according to the type
             */
-            virtual BaseDTO* getNodeDTO(Song* song) = 0;
+            virtual DataItem* getNodeDataItem(Song* song) = 0;
 
             /**
                 \brief      generates an item hash from the given song
