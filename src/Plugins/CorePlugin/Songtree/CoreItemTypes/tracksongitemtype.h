@@ -1,7 +1,6 @@
 #ifndef TRACKSONGITEMTYPE_H
 #define TRACKSONGITEMTYPE_H
-
-#include "itreeitemtype.h"
+#include "../../Interfaces/itreeitemtype.h"
 
 /**
     \brief  ItemType that generates the node name for the title of a song
@@ -10,17 +9,21 @@
     This implementation of the ITreeItemType interface generates the node name
     for the title of a song with the leading track number.
   */
-class TrackSongItemType : public ITreeItemType
+
+
+namespace Core
 {
-    public:
+    class TrackSongItemType : public ITreeItemType
+    {
+        public:
 
-        TrackSongItemType();
+            TrackSongItemType();
 
-        QString getTypeName();
-        QString getNodeName(Song* song);
-        BaseDTO* getNodeDTO(Song *song);
-        QString getHash(Song* song);
-        QList<QAction*>* getContextMenuActions(SongTreeItem* item);
-};
+            QString getTypeName();
+            QString getNodeName(Song* song);
+            BaseDTO* getNodeDTO(Song *song);
+            QString getHash(Song* song);
+    };
+}
 
 #endif // TRACKSONGITEMTYPE_H

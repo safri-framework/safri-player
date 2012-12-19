@@ -1,28 +1,29 @@
 #ifndef SONGTREEITEMTYPE_H
 #define SONGTREEITEMTYPE_H
 
-#include <QString>
 
-#include "itreeitemtype.h"
 #include "song.h"
+#include "../../Interfaces/itreeitemtype.h"
 
-/**
-    \brief  ItemType that generates the node name for the title of a song.
-
-    This implementation of the ITreeItemType interface generates the node name
-    for the title of a song.
-  */
-class SongItemType : public ITreeItemType
+namespace Core
 {
+    /**
+        \brief  ItemType that generates the node name for the title of a song.
 
-    public:
-        SongItemType();
+        This implementation of the ITreeItemType interface generates the node name
+        for the title of a song.
+      */
+    class SongItemType : public ITreeItemType
+    {
 
-        QString getTypeName();
-        QString getNodeName(Song* song);
-        BaseDTO* getNodeDTO(Song *song);
-        QString getHash(Song* song);
-        QList<QAction*>* getContextMenuActions(SongTreeItem* item);
-};
+        public:
+            SongItemType();
+
+            QString getTypeName();
+            QString getNodeName(Song* song);
+            BaseDTO* getNodeDTO(Song *song);
+            QString getHash(Song* song);
+    };
+}
 
 #endif // SONGTREEITEMTYPE_H

@@ -9,6 +9,7 @@ class PhononBackend : public Core::IAudioBackend
     Q_OBJECT
     public:
 
+
         PhononBackend();
 
         virtual int getTotalTime();
