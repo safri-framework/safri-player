@@ -123,7 +123,7 @@ void MainWindow::changePlayerWidget()
     //playerWidget->setParent(ui->player_frame->layout());
     //qDebug()<< "Nullpointer: " << ui->player_frame->layout();
 
-    //ui->playerWidget->layout()->addWidget(playerWidget);
+    ui->playerWidget->layout()->addWidget(playerWidget);
 
     //ui->player_frame->layout()->addWidget(playerWidget);
     //playerWidget->show();
@@ -131,8 +131,8 @@ void MainWindow::changePlayerWidget()
 
 void MainWindow::changePlaylistWidget()
 {
-    //Core::IPlaylistWidget* playlistWidget = guiController->getPlaylistWidget();
-    //playlistWidget->show();
+    Core::IPlaylistWidget* playlistWidget = guiController->getPlaylistWidget();
+    ui->playlistWidget->layout()->addWidget(playlistWidget);
 }
 
 void MainWindow::showRequest(bool show)
