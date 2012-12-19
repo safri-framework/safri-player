@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QList<Core::ISideBarPlugin*> pluginList = PluginSystem::PluginManager::instance()->getObjects<Core::ISideBarPlugin>();
     this->plugins.append(pluginList);
 
-    qDebug()<<pluginList.size()<<"DAS WILL ICH WISSEN";
     for(int i = 0; i < pluginList.size(); i++)
     {
         addPlugin(pluginList.at(i));
@@ -95,13 +94,14 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
             this->ui->widget_frame->layout()->addWidget(plugin->getSideBarWidget());
             plugin->getSideBarWidget()->show();
             visiblePlugins++;
-            qDebug()<<"visible Plugins"<< visiblePlugins;
-
         }
 
 
         if(visiblePlugins == 0)
+        {
+            showSidebar(true);
             showSidebar(false);
+        }
     }
 }
 
@@ -137,12 +137,10 @@ void MainWindow::showRequest(bool show)
 {
     Core::ISideBarPlugin* plugin = qobject_cast<Core::ISideBarPlugin*>(sender());
     QWidget* pluginWidget = plugin->getSideBarWidget();
-    qDebug()<<"show "<<show;
     if(pluginWidget)
     {
         if(show )
         {
-            qDebug()<<"SHOW";
             this->ui->widget_frame->layout()->addWidget(pluginWidget);
             pluginWidget->show();
             visiblePlugins++;
@@ -178,10 +176,14 @@ void MainWindow::showSidebar(bool visible)
 {
     if(visible)
     {
+        this->ui->widget_frame->setMaximumWidth(3000);
+        this->ui->widget_frame->setMinimumWidth(200);
         splitter->setSizes(lastSplitterSize);
     }
     else
     {
+        this->ui->widget_frame->setMaximumWidth(0);
+        this->ui->widget_frame->setMinimumWidth(0);
         lastSplitterSize = splitter->sizes();
         QList<int> list;
         list.append(0);
