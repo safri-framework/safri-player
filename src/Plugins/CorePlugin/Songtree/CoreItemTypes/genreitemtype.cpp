@@ -1,4 +1,6 @@
 #include "genreitemtype.h"
+#include "../../CoreData/song.h"
+using namespace Core;
 
 GenreItemType::GenreItemType()
 {
@@ -34,7 +36,4 @@ QString GenreItemType::getHash(Song *song)
 
 
 
-QList<QAction *> *GenreItemType::getContextMenuActions(SongTreeItem *item)
-{
-    return 0;
-}
+

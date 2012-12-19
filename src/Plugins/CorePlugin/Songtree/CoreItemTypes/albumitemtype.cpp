@@ -1,4 +1,9 @@
 #include "albumitemtype.h"
+#include "../../CoreData/song.h"
+#include "../../CoreData/album.h"
+
+
+using namespace Core;
 
 AlbumItemType::AlbumItemType()
 {
@@ -42,7 +47,4 @@ QString AlbumItemType::getHash(Song *song)
     return QString::number(id) + album->getName();
 }
 
-QList<QAction *> *AlbumItemType::getContextMenuActions(SongTreeItem *item)
-{
-    return 0;
-}
+

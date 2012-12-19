@@ -1,5 +1,8 @@
 #include "decadeitemtype.h"
+#include "../../CoreData/song.h"
 #include <QDebug>
+
+using namespace Core;
 
 DecadeItemType::DecadeItemType()
 {
@@ -31,7 +34,4 @@ QString DecadeItemType::getHash(Song *song)
     return QString::number(year);
 }
 
-QList<QAction *> *DecadeItemType::getContextMenuActions(SongTreeItem *item)
-{
-    return 0;
-}
+

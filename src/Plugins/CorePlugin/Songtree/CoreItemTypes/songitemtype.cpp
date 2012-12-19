@@ -1,5 +1,7 @@
 #include "songitemtype.h"
 
+using namespace Core;
+
 SongItemType::SongItemType()
 {
 
@@ -27,7 +29,3 @@ QString SongItemType::getHash(Song *song)
     return QString::number(song->getID()) + song->getName();
 }
 
-QList<QAction *> *SongItemType::getContextMenuActions(SongTreeItem *item)
-{
-    return 0;
-}

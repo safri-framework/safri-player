@@ -2,7 +2,7 @@
 #define SONGTREEITEMTYPE_H
 
 
-#include "song.h"
+#include "../../CoreData/song.h"
 #include "../../Interfaces/itreeitemtype.h"
 
 namespace Core

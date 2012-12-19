@@ -1,7 +1,7 @@
 #ifndef SONGTREE_H
 #define SONGTREE_H
 
-#include "itreeitemtype.h"
+#include "../Interfaces/itreeitemtype.h"
 
 class SongTreeItem;
 

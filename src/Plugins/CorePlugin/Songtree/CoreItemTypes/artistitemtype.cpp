@@ -1,9 +1,13 @@
 #include "artistitemtype.h"
+#include "../../CoreData/song.h"
+
+using namespace Core;
 
 ArtistItemType::ArtistItemType()
 {
-}
 
+
+}
 
 
 QString ArtistItemType::getTypeName()
@@ -14,25 +18,20 @@ QString ArtistItemType::getTypeName()
 
 QString ArtistItemType::getNodeName(Song* song)
 {
-
-return song->getInterpret()->getName();
-
+    return song->getArtist()->getName();
 }
 
 
 BaseDTO* ArtistItemType::getNodeDTO(Song *song)
 {
-    return song->getInterpret();
-
+    return song->getArtist();
 }
+
 
 QString ArtistItemType::getHash(Song *song)
 {
-    Artist *artist = song->getInterpret();
+    Artist *artist = song->getArtist();
     return QString::number(artist->getID()) + artist->getName();
 }
 
-QList<QAction *> *ArtistItemType::getContextMenuActions(SongTreeItem *item)
-{
-    return 0;
-}
+
