@@ -37,7 +37,9 @@ SOURCES += coreplugin.cpp \
     Songtree/CoreItemTypes/decadeitemtype.cpp \
     Songtree/CoreItemTypes/artistitemtype.cpp \
     Songtree/CoreItemTypes/albumitemtype.cpp \
-    Songtree/songtree.cpp
+    Songtree/songtree.cpp \
+    Songtree/songtreeitem.cpp \
+    Songtree/changedflags.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -72,7 +74,9 @@ HEADERS += coreplugin.h\
     Songtree/CoreItemTypes/decadeitemtype.h \
     Songtree/CoreItemTypes/artistitemtype.h \
     Songtree/CoreItemTypes/albumitemtype.h \
-    Songtree/songtree.h
+    Songtree/songtree.h \
+    Songtree/songtreeitem.h \
+    Songtree/changedflags.h
 
 OTHER_FILES += \
     Core.xml

@@ -1,7 +1,8 @@
 #ifndef GENREITEMTYPE_H
 #define GENREITEMTYPE_H
-#include "../../Interfaces/itreeitemtype.h"
 
+#include "../../CorePlugin_global.h"
+#include "../../Interfaces/itreeitemtype.h"
 
 /**
     \brief  ItemType that generates the node name for the genre of a song.
@@ -12,7 +13,7 @@
 
 namespace Core
 {
-    class GenreItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT GenreItemType : public ITreeItemType
     {
     public:
         GenreItemType();

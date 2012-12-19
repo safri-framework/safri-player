@@ -1,6 +1,7 @@
 #ifndef ARTISTITEMTYPE_H
 #define ARTISTITEMTYPE_H
 
+#include "../../CorePlugin_global.h"
 #include "../../Interfaces/itreeitemtype.h"
 
 namespace Core
@@ -11,7 +12,7 @@ namespace Core
         This implementation of the ITreeItemType interface generates the node name
         for the artist of a song.
       */
-    class ArtistItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT ArtistItemType : public ITreeItemType
     {
         public:
             ArtistItemType();

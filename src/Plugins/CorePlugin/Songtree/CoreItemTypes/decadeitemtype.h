@@ -1,6 +1,7 @@
 #ifndef DECADETREEITEMTYPE_H
 #define DECADETREEITEMTYPE_H
 
+#include "../../CorePlugin_global.h"
 #include "../../Interfaces/itreeitemtype.h"
 
 namespace Core
@@ -13,7 +14,7 @@ namespace Core
         for the decade of a song. As there is no essential BaseDTO for decades the
         getNodeDTO function only returns 0.
       */
-    class DecadeItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT DecadeItemType : public ITreeItemType
     {
         public:
             DecadeItemType();

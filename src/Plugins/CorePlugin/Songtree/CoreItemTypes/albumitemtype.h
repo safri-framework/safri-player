@@ -1,6 +1,7 @@
 #ifndef ALBUMTREEITEMTYPE_H
 #define ALBUMTREEITEMTYPE_H
 
+#include "../../CorePlugin_global.h"
 #include "../../Interfaces/itreeitemtype.h"
 
 namespace Core
@@ -11,7 +12,7 @@ namespace Core
         This implementation of the ITreeItemType interface generates the node name
         for the album of a song.
       */
-    class AlbumItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT AlbumItemType : public ITreeItemType
     {
         public:
             AlbumItemType();

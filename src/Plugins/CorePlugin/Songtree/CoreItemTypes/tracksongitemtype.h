@@ -1,5 +1,7 @@
 #ifndef TRACKSONGITEMTYPE_H
 #define TRACKSONGITEMTYPE_H
+
+#include "../../CorePlugin_global.h"
 #include "../../Interfaces/itreeitemtype.h"
 
 /**
@@ -13,7 +15,7 @@
 
 namespace Core
 {
-    class TrackSongItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT TrackSongItemType : public ITreeItemType
     {
         public:
 

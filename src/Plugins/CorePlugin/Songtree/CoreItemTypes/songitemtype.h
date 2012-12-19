@@ -1,7 +1,7 @@
 #ifndef SONGTREEITEMTYPE_H
 #define SONGTREEITEMTYPE_H
 
-
+#include "../../CorePlugin_global.h"
 #include "../../CoreData/song.h"
 #include "../../Interfaces/itreeitemtype.h"
 
@@ -13,7 +13,7 @@ namespace Core
         This implementation of the ITreeItemType interface generates the node name
         for the title of a song.
       */
-    class SongItemType : public ITreeItemType
+    class COREPLUGINSHARED_EXPORT SongItemType : public ITreeItemType
     {
 
         public:
