@@ -29,7 +29,15 @@ SOURCES += coreplugin.cpp \
     Interfaces/isidebarplugin.cpp \
     Interfaces/iguicontroller.cpp \
     Interfaces/iplaylistwidget.cpp \
-    Interfaces/iplaylistwidgetfactory.cpp
+    Interfaces/iplaylistwidgetfactory.cpp \
+    Interfaces/itreeitemtype.cpp \
+    Songtree/CoreItemTypes/tracksongitemtype.cpp \
+    Songtree/CoreItemTypes/songitemtype.cpp \
+    Songtree/CoreItemTypes/genreitemtype.cpp \
+    Songtree/CoreItemTypes/decadeitemtype.cpp \
+    Songtree/CoreItemTypes/artistitemtype.cpp \
+    Songtree/CoreItemTypes/albumitemtype.cpp \
+    Songtree/songtree.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -56,7 +64,15 @@ HEADERS += coreplugin.h\
     Interfaces/isidebarplugin.h \
     Interfaces/iguicontroller.h \
     Interfaces/iplaylistwidget.h \
-    Interfaces/iplaylistwidgetfactory.h
+    Interfaces/iplaylistwidgetfactory.h \
+    Interfaces/itreeitemtype.h \
+    Songtree/CoreItemTypes/tracksongitemtype.h \
+    Songtree/CoreItemTypes/songitemtype.h \
+    Songtree/CoreItemTypes/genreitemtype.h \
+    Songtree/CoreItemTypes/decadeitemtype.h \
+    Songtree/CoreItemTypes/artistitemtype.h \
+    Songtree/CoreItemTypes/albumitemtype.h \
+    Songtree/songtree.h
 
 OTHER_FILES += \
     Core.xml
