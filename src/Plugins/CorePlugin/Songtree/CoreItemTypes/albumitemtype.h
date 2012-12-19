@@ -19,7 +19,6 @@ namespace Core
             QString getNodeName(Song* song);
             BaseDTO* getNodeDTO(Song *song);
             QString getHash(Song* song);
-            QList<QAction*>* getContextMenuActions(SongTreeItem* item);
     };
 }
 
