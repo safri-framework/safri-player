@@ -12,7 +12,9 @@
 #include "Interfaces/IStorageAdapter.h"
 #include "Interfaces/IMediaCollectionBuilder.h"
 #include "Interfaces/IAudioCollection.h"
+#include "Interfaces/iguicontroller.h"
 #include "Interfaces/iplayerwidgetfactory.h"
+#include "Interfaces/iplaylistwidget.h"
 #include <QDebug>
 
 HackingWidget::HackingWidget(QWidget *parent) :
@@ -114,7 +116,7 @@ void HackingWidget::on_pushButton_6_clicked()
         qDebug() << "No Collection Builders found!";
     }
 
-    Core::IAudioCollection* audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
+    audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
     Core::Artist *artist = audioCollection->getArtistByID(1);
 
     qDebug() << artist->getName();
@@ -140,4 +142,30 @@ void HackingWidget::on_pushButton_8_clicked()
         QWidget* player = playerFactories.at(0)->createWidget();
         player->show();
     }
+}
+
+void HackingWidget::on_pushButton_9_clicked()
+{
+    Core::Artist *artist = audioCollection->getArtistByID(1);
+
+    qDebug() << "PlaylistModel Test for: " << artist->getName();
+    QList<Core::Album*> albums = artist->getAlbums();
+    QList<Core::Song*> songs;
+
+    Core::IPlaylist* playlist = Core::ICore::createPlaylist();
+
+
+    if (albums.size() > 0)
+    {
+        Core::Album* album = albums.at(0);
+        songs = album->getSongs();
+
+        for (int i = 0; i < songs.size(); i++)
+        {
+            playlist->appendMedia(songs.at(i));
+        }
+    }
+
+    qDebug() << "Playlist size: " << playlist->getSize();
+    Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playlist);
 }

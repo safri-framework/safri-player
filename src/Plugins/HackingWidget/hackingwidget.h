@@ -8,7 +8,7 @@ namespace Ui {
 class HACKINGWIDGETSHARED_EXPORT HackingWidget;
 }
 
-namespace Core { class IPlaybackController; }
+namespace Core { class IPlaybackController; class IAudioCollection; }
 
 class HACKINGWIDGETSHARED_EXPORT HackingWidget : public QWidget
 {
@@ -35,8 +35,11 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void on_pushButton_9_clicked();
+
 private:
     Ui::HackingWidget *ui;
+    Core::IAudioCollection* audioCollection;
     Core::IPlaybackController *playbackController;
 };
 

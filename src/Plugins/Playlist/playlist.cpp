@@ -319,6 +319,30 @@ void Playlist::insertMediaAt(int position, QList<Item*> items)
     Q_EMIT MediaInserted(position, media.size());
 }
 
+void Playlist::appendMedia(Media* media)
+{
+    int position = mediaList.size();
+
+    playlistLock.lockForWrite();
+        mediaList.append(media);
+    playlistLock.unlock();
+
+    if (shuffle)
+    {
+        QList<Media*> temp;
+        for (int i = shuffleCounter +1; i < shuffleHistory.size(); i++)
+        {
+            temp.append(shuffleHistory.at(i));
+            shuffleHistory.removeAt(i);
+        }
+        temp.append(media);
+
+        shuffleHistory.append(media);
+    }
+
+    Q_EMIT MediaInserted(position, 1);
+}
+
 
 
 int Playlist::getSize()

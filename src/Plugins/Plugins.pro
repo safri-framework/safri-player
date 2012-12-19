@@ -14,5 +14,6 @@ SUBDIRS += \
     PlayerWidget \
     MainWindow \
     GUIController \
-    SidebarPluginTest
+    SidebarPluginTest \
+    PlaylistWidget
 

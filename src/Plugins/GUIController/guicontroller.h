@@ -7,6 +7,8 @@
 namespace Core
 {
     class IPlayerWidgetFactory;
+    class IPlaylistWidgetFactory;
+    class IPlaylistWidget;
 }
 
 class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
@@ -17,7 +19,7 @@ class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
         explicit GUIController(QObject *parent = 0);
 
         virtual QWidget* getPlayerWidget();
-        virtual QWidget* getPlaylistWidget();
+        virtual Core::IPlaylistWidget* getPlaylistWidget();
         virtual QList<Core::ISideBarPlugin*> getSideBarPlugins();
 
     public slots:
@@ -27,11 +29,14 @@ class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
     private:
 
         void switchPlayerWidgetFactory(Core::IPlayerWidgetFactory* factory);
+        void switchPlaylistWidgetFactory(Core::IPlaylistWidgetFactory* factory);
 
         QWidget* currentPlayerWidget;
         Core::IPlayerWidgetFactory *currentPlayerWidgetFactory;
 
-        QWidget* currentPlaylistWidget;
+        Core::IPlaylistWidget* currentPlaylistWidget;
+        Core::IPlaylistWidgetFactory* currentPlaylistWidgetFactory;
+
 };
 
 #endif // GUICONTROLLER_H

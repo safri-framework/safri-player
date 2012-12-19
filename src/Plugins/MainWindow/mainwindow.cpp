@@ -6,6 +6,7 @@
 
 #include <QDebug>
 #include "Interfaces/iguicontroller.h"
+#include "Interfaces/iplaylistwidget.h"
 #include "icore.h"
 #include <QWidget>
 
@@ -36,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         addPlugin(pluginList.at(i));
     }
+    connect(guiController, SIGNAL(playlistWidgetChanged()), this, SLOT(changePlaylistWidget()));
 }
 
 MainWindow::~MainWindow()
@@ -125,6 +127,12 @@ void MainWindow::changePlayerWidget()
     //playerWidget->show();
 }
 
+void MainWindow::changePlaylistWidget()
+{
+    Core::IPlaylistWidget* playlistWidget = guiController->getPlaylistWidget();
+    playlistWidget->show();
+}
+
 void MainWindow::showRequest(bool show)
 {
     Core::ISideBarPlugin* plugin = qobject_cast<Core::ISideBarPlugin*>(sender());
@@ -182,5 +190,3 @@ void MainWindow::showSidebar(bool visible)
     }
 
 }
-
-

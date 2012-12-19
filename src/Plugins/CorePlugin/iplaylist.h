@@ -72,8 +72,9 @@ namespace Core
 
 
         */
-
         virtual void insertMediaAt(int position, QList<Item*> items) = 0;
+
+        virtual void appendMedia(Media* media) = 0;
 
         /**
             \brief  returns true, if that playlist was stored

@@ -37,6 +37,7 @@ private:
 private slots:
     void sideBarButtonClicked(bool checked);
     void changePlayerWidget();
+    void changePlaylistWidget();
     void showRequest(bool show);
 
 public slots:

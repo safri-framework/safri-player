@@ -10,6 +10,7 @@ class QWidget;
 namespace Core
 {
     class ISideBarPlugin;
+    class IPlaylistWidget;
 
     class COREPLUGINSHARED_EXPORT IGUIController : public QObject
     {
@@ -19,12 +20,13 @@ namespace Core
             virtual ~IGUIController();
 
             virtual QWidget* getPlayerWidget() = 0;
-            virtual QWidget* getPlaylistWidget() = 0;
+            virtual IPlaylistWidget* getPlaylistWidget() = 0;
             virtual QList<ISideBarPlugin*> getSideBarPlugins() = 0;
 
         signals:
 
             void playerWidgetChanged();
+            void playlistWidgetChanged();
     };
 }
 

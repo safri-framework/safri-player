@@ -27,7 +27,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/ITableModel.cpp \
     Interfaces/iplayerwidgetfactory.cpp \
     Interfaces/isidebarplugin.cpp \
-    Interfaces/iguicontroller.cpp
+    Interfaces/iguicontroller.cpp \
+    Interfaces/iplaylistwidget.cpp \
+    Interfaces/iplaylistwidgetfactory.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -52,7 +54,9 @@ HEADERS += coreplugin.h\
     Interfaces/ITableModel.h \
     Interfaces/iplayerwidgetfactory.h \
     Interfaces/isidebarplugin.h \
-    Interfaces/iguicontroller.h
+    Interfaces/iguicontroller.h \
+    Interfaces/iplaylistwidget.h \
+    Interfaces/iplaylistwidgetfactory.h
 
 OTHER_FILES += \
     Core.xml

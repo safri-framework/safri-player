@@ -29,6 +29,7 @@ public:
     void setCurrentMedia(int pos);
     void deleteMedia(int pos);
     void insertMediaAt(int position, QList<Item *> items);
+    void appendMedia(Media* media);
     bool isSafedPlaylist();
 
 
