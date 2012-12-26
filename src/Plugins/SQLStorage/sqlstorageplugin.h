@@ -4,14 +4,17 @@
 #include "SQLStorage_global.h"
 #include "iplugin.h"
 
-class SQLSTORAGESHARED_EXPORT SQLStoragePlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class SQLSTORAGESHARED_EXPORT SQLStoragePlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        SQLStoragePlugin();
-        bool initialize(QStringList &arguments);
-};
+            SQLStoragePlugin();
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // SQLSTORAGEPLUGIN_H

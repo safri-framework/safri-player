@@ -4,16 +4,19 @@
 #include "TestPlugin_global.h"
 #include "iplugin.h"
 
-class TESTPLUGINSHARED_EXPORT TestPlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class TESTPLUGINSHARED_EXPORT TestPlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        TestPlugin();
-        ~TestPlugin();
+            TestPlugin();
+            ~TestPlugin();
 
-        bool initialize(QStringList &arguments);
-};
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // TESTPLUGIN_H

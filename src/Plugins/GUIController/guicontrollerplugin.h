@@ -4,14 +4,17 @@
 #include "GUIController_global.h"
 #include "iplugin.h"
 
-class GUICONTROLLERSHARED_EXPORT GUIControllerPlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class GUICONTROLLERSHARED_EXPORT GUIControllerPlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        GUIControllerPlugin();
-        bool initialize(QStringList &arguments);
-};
+            GUIControllerPlugin();
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // GUICONTROLLERPLUGIN_H

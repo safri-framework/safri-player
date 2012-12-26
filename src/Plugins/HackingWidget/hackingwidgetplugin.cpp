@@ -3,6 +3,8 @@
 #include <QDebug>
 #include "hackingwidget.h"
 
+using namespace Plugins;
+
 HackingWidgetPlugin::HackingWidgetPlugin()
 {
 }

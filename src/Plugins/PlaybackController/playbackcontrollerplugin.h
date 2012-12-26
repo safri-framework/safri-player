@@ -4,16 +4,19 @@
 #include "PlaybackController_global.h"
 #include "iplugin.h"
 
-class PLAYBACKCONTROLLERSHARED_EXPORT PlaybackControllerPlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class PLAYBACKCONTROLLERSHARED_EXPORT PlaybackControllerPlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        PlaybackControllerPlugin();
-        ~PlaybackControllerPlugin();
+            PlaybackControllerPlugin();
+            ~PlaybackControllerPlugin();
 
-        bool initialize(QStringList &arguments);
-};
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // PLAYBACKCONTROLLERPLUGIN_H

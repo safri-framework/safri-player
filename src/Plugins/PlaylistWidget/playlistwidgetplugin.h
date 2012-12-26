@@ -4,15 +4,18 @@
 #include "iplugin.h"
 #include "PlaylistWidget_global.h"
 
-class PLAYLISTWIDGETSHARED_EXPORT PlaylistWidgetPlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class PLAYLISTWIDGETSHARED_EXPORT PlaylistWidgetPlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        PlaylistWidgetPlugin();
+            PlaylistWidgetPlugin();
 
-        bool initialize(QStringList &arguments);
-};
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // PLAYLISTWIDGETPLUGIN_H

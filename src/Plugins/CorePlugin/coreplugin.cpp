@@ -4,7 +4,7 @@
 
 #include <QDebug>
 
-using namespace Core;
+using namespace Plugins;
 
 CorePlugin::CorePlugin()
 {
@@ -21,7 +21,7 @@ bool CorePlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
     qDebug() << "CorePlugin::initialize(...)";
 
     // create and store instance to ICore object
-    ICore::m_instance = new ICore();
+    Core::ICore::m_instance = new Core::ICore();
 
     return true;
 }

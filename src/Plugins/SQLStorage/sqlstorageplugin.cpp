@@ -1,6 +1,8 @@
 #include "sqlstorageplugin.h"
 #include "sqlstorageadapter.h"
 
+using namespace Plugins;
+
 SQLStoragePlugin::SQLStoragePlugin()
 {
 }

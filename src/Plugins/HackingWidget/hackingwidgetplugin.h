@@ -4,15 +4,18 @@
 #include "HackingWidget_global.h"
 #include "iplugin.h"
 
-class HACKINGWIDGETSHARED_EXPORT HackingWidgetPlugin : public PluginSystem::IPlugin
+namespace Plugins
 {
-    Q_OBJECT
-    Q_INTERFACES(PluginSystem::IPlugin)
-    public:
+    class HACKINGWIDGETSHARED_EXPORT HackingWidgetPlugin : public PluginSystem::IPlugin
+    {
+        Q_OBJECT
+        Q_INTERFACES(PluginSystem::IPlugin)
+        public:
 
-        HackingWidgetPlugin();
+            HackingWidgetPlugin();
 
-        bool initialize(QStringList &arguments);
-};
+            bool initialize(QStringList &arguments);
+    };
+}
 
 #endif // HACKINGWIDGETPLUGIN_H

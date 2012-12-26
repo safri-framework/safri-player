@@ -1,6 +1,8 @@
 #include "audiocollectionplugin.h"
 #include "audiocollectionbuilder.h"
 
+using namespace Plugins;
+
 AudioCollectionPlugin::AudioCollectionPlugin()
 {
 }

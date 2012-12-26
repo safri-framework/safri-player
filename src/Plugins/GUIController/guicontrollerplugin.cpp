@@ -1,6 +1,7 @@
 #include "guicontrollerplugin.h"
 #include "guicontroller.h"
 
+using namespace Plugins;
 
 GUIControllerPlugin::GUIControllerPlugin()
 {

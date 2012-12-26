@@ -3,6 +3,8 @@
 #include <QDebug>
 #include "phononbackend.h"
 
+using namespace Plugins;
+
 PhononBackendPlugin::PhononBackendPlugin()
 {
 }

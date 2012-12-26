@@ -1,5 +1,8 @@
 #include "sidebarplugintestplugin.h"
 #include "sidebarplugintest.h"
+
+using namespace Plugins;
+
 SidebarPluginTestPlugin::SidebarPluginTestPlugin()
 {
 }

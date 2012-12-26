@@ -5,10 +5,11 @@
 
 #include <QObject>
 
+namespace Plugins { class CorePlugin; }
+
 namespace Core
 {
     class IPlaybackController;
-    class CorePlugin;
     class IAudioBackend;
     class IPlaylistFactory;
     class IPlaylist;
@@ -18,7 +19,7 @@ namespace Core
     {
         Q_OBJECT
 
-        friend class CorePlugin;
+        friend class Plugins::CorePlugin;
 
         private:
 
@@ -40,7 +41,7 @@ namespace Core
 
         private:
 
-            static ICore* m_instance;
+            static Core::ICore* m_instance;
             IPlaybackController* m_playbackController;
             IAudioBackend* m_audioBackend;
             IPlaylistFactory* m_playlistFactory;

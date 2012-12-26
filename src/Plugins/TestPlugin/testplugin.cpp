@@ -10,6 +10,8 @@
 #include "Interfaces/IAudioBackend.h"
 #include <QFile>
 
+using namespace Plugins;
+
 TestPlugin::TestPlugin()
 {
     qDebug() << "TestPlugin()";

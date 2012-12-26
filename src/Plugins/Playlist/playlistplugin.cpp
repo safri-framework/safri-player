@@ -1,6 +1,8 @@
 #include "playlistplugin.h"
 #include "playlistfactory.h"
 
+using namespace Plugins;
+
 PlaylistPlugin::PlaylistPlugin()
 {
 }

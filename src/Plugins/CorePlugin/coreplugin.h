@@ -4,7 +4,7 @@
 #include "CorePlugin_global.h"
 #include "iplugin.h"
 
-namespace Core
+namespace Plugins
 {
     class COREPLUGINSHARED_EXPORT CorePlugin : public PluginSystem::IPlugin
     {

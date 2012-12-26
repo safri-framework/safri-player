@@ -3,6 +3,8 @@
 
 #include "playbackcontroller.h"
 
+using namespace Plugins;
+
 PlaybackControllerPlugin::PlaybackControllerPlugin()
 {
 }

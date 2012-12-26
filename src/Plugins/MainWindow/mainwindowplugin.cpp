@@ -1,5 +1,6 @@
 #include "mainwindowplugin.h"
 
+using namespace Plugins;
 
 bool MainWindowPlugin::initialize(QStringList &arguments)
 {

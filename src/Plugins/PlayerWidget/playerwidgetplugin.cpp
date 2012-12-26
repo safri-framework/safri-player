@@ -1,6 +1,8 @@
 #include "playerwidgetplugin.h"
 #include "playerwidgetfactory.h"
 
+using namespace Plugins;
+
 PlayerWidgetPlugin::PlayerWidgetPlugin()
 {
 }
