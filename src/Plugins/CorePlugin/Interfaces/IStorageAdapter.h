@@ -6,7 +6,6 @@
 #include "ITableModel.h"
 #include <QUrl>
 #include <QString>
-#include <QObject>
 
 namespace Core
 {
@@ -23,6 +22,7 @@ namespace Core
 
             virtual QString getStorageType() = 0;
             virtual QUrl getStoragePath() = 0;
+            virtual QString getContentType() = 0;
     };
 }
 

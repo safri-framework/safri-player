@@ -16,6 +16,7 @@ class AudioCollectionBuilder : public IMediaCollectionBuilder
         explicit AudioCollectionBuilder(QObject *parent = 0);
         IMediaCollection* buildMediaCollection(IStorageAdapter* storageAdapter, MetaInfo* metaInfoAdapter = 0);
         void storeMediaCollection(IMediaCollection* mediaCollection, IStorageAdapter* storageAdapter);
+        QString getCollectionType();
 
     private:
 

@@ -24,6 +24,7 @@ class SQLSTORAGESHARED_EXPORT SQLStorageAdapter : public Core::IStorageAdapter
 
         virtual QString getStorageType();
         virtual QUrl getStoragePath();
+        virtual QString getContentType();
 
         //! Specifies the minimum required database version
         static const int DATABASE_VERSION = 3;

@@ -20,11 +20,13 @@ TEMPLATE = lib
 DEFINES += SQLSTORAGE_LIBRARY
 
 SOURCES += sqlstorageplugin.cpp \
-    sqlstorageadapter.cpp
+    sqlstorageadapter.cpp \
+    sqlstoragefactory.cpp
 
 HEADERS += sqlstorageplugin.h\
         SQLStorage_global.h \
-    sqlstorageadapter.h
+    sqlstorageadapter.h \
+    sqlstoragefactory.h
 
 OTHER_FILES += \
     SQLStorage.xml

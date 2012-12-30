@@ -36,6 +36,11 @@ void AudioCollectionBuilder::storeMediaCollection(IMediaCollection *mediaCollect
 
 }
 
+QString AudioCollectionBuilder::getCollectionType()
+{
+    return "org.safri.collection.audio";
+}
+
 void AudioCollectionBuilder::buildGenres(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::GENRE);

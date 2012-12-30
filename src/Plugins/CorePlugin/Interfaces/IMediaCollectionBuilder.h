@@ -21,6 +21,7 @@ namespace Core
 
             virtual IMediaCollection* buildMediaCollection(IStorageAdapter* storageAdapter, MetaInfo* metaInfoAdapter = 0) = 0;
             virtual void storeMediaCollection(IMediaCollection* mediaCollection, IStorageAdapter* storageAdapter) = 0;
+            virtual QString getCollectionType() = 0;
     };
 }
 

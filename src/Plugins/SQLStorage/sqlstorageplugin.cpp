@@ -1,5 +1,5 @@
 #include "sqlstorageplugin.h"
-#include "sqlstorageadapter.h"
+#include "sqlstoragefactory.h"
 
 using namespace Plugins;
 
@@ -9,9 +9,7 @@ SQLStoragePlugin::SQLStoragePlugin()
 
 bool SQLStoragePlugin::initialize(QStringList &arguments)
 {
-    SQLStorageAdapter *sqlAdapter = new SQLStorageAdapter(QUrl());
-
-    addObject(sqlAdapter);
+    addObject(new SQLStorageFactory(this));
 }
 
 Q_EXPORT_PLUGIN2(SQLStoragePlugin, SQLStoragePlugin)

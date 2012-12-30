@@ -92,7 +92,7 @@ void SQLStorageAdapter::writeTableForDataItemType(Core::ITableModel *model, Core
 
 QString SQLStorageAdapter::getStorageType()
 {
-    return "org.safri.sqlite";
+    return STORAGE_TYPE;
 }
 
 QSqlDatabase &SQLStorageAdapter::getDatabase()
@@ -253,4 +253,9 @@ bool SQLStorageAdapter::checkIfDatabaseExists()
 QUrl SQLStorageAdapter::getStoragePath()
 {
     return QUrl();
+}
+
+QString SQLStorageAdapter::getContentType()
+{
+    return "org.safri.collection.audio";
 }
