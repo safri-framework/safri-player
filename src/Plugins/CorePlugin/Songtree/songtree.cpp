@@ -1,6 +1,6 @@
 #include "songtree.h"
 #include "songtreeitem.h"
-
+#include <qDebug>
 using namespace Core;
 
 #include <QDebug>
@@ -11,8 +11,12 @@ SongTree::SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy)
     this->hierarchy = hierarchy;
     rootNode = new SongTreeItem(hierarchy, this, this);
 
+    //for (int i = 0;  i < songs.size(); i++)
+    qDebug()<<"a"<<songs.size();
+
     for (int i = 0;  i < songs.size(); i++)
     {
+        qDebug()<<i;
         rootNode->addSong(songs.at(i));
     }
 }

@@ -223,6 +223,7 @@ QList<Core::Song *> AudioCollection::getSongs()
     m_lock.lockForRead();
         list = *m_songList;
     m_lock.unlock();
+    return list;
 }
 
 QList<Core::Artist *> AudioCollection::getArtists()

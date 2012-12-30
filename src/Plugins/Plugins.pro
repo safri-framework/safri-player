@@ -15,5 +15,7 @@ SUBDIRS += \
     MainWindow \
     GUIController \
     SidebarPluginTest \
-    PlaylistWidget
+    PlaylistWidget \
+    SongtreeWidget \
+    CollectionController
 

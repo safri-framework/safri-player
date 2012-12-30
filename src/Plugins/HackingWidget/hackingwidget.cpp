@@ -16,6 +16,15 @@
 #include "Interfaces/iplayerwidgetfactory.h"
 #include "Interfaces/iplaylistwidget.h"
 #include <QDebug>
+#include "Songtree/songtreemodel.h"
+
+#include "Songtree/songtree.h"
+#include "Songtree/CoreItemTypes/artistitemtype.h"
+#include "Songtree/CoreItemTypes/albumitemtype.h"
+#include "Songtree/CoreItemTypes/songitemtype.h"
+
+#include <QTreeView>
+
 
 HackingWidget::HackingWidget(QWidget *parent) :
     QWidget(parent),
@@ -168,4 +177,33 @@ void HackingWidget::on_pushButton_9_clicked()
 
     qDebug() << "Playlist size: " << playlist->getSize();
     Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playlist);
+}
+
+void HackingWidget::on_pushButton_10_clicked()
+{
+    on_pushButton_6_clicked();
+    QTreeView* view = new QTreeView();
+    qDebug()<<"1";
+    qDebug()<<audioCollection->getSongs().size();
+    QList<Song*> songlist =  audioCollection->getSongs();
+    qDebug()<<"2";
+    QList<ITreeItemType*>* itemList = new QList<ITreeItemType*>();
+    qDebug()<<"3";
+   itemList->append(new ArtistItemType());
+    qDebug()<<"4";
+   itemList->append(new AlbumItemType());
+    qDebug()<<"5";
+    itemList->append(new SongItemType());
+qDebug()<<"6"<<songlist.size();
+
+    SongTree* tree = new SongTree(songlist, itemList);
+    qDebug()<<"7";
+    SongTreeModel* model = new SongTreeModel(tree);
+    qDebug()<<"8";
+    view->setModel(model);
+    qDebug()<<"9";
+    view->show();
+
+
+
 }

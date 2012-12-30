@@ -40,6 +40,8 @@ SOURCES += coreplugin.cpp \
     Songtree/songtree.cpp \
     Songtree/songtreeitem.cpp \
     Songtree/changedflags.cpp \
+    Songtree/songtreemodel.cpp \ 
+    Songtree/changedflags.cpp \
     Interfaces/istorageadapterfactory.cpp
 
 HEADERS += coreplugin.h\
@@ -77,6 +79,9 @@ HEADERS += coreplugin.h\
     Songtree/CoreItemTypes/albumitemtype.h \
     Songtree/songtree.h \
     Songtree/songtreeitem.h \
+    Songtree/changedflags.h \
+    Songtree/songtreemodel.h \
+    Interfaces/ICollectionController.h \
     Songtree/changedflags.h \
     Interfaces/istorageadapterfactory.h
 
