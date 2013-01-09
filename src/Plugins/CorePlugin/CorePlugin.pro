@@ -81,7 +81,6 @@ HEADERS += coreplugin.h\
     Songtree/changedflags.h \
     Songtree/songtreemodel.h \
     Interfaces/ICollectionController.h \
-    Songtree/changedflags.h \
     Interfaces/istorageadapterfactory.h
 
 OTHER_FILES += \

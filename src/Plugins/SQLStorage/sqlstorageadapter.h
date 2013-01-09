@@ -33,9 +33,8 @@ class SQLSTORAGESHARED_EXPORT SQLStorageAdapter : public Core::IStorageAdapter
 
         QUrl sqlFilePath;
         QSqlDatabase database;
-        QSqlDatabase& getDatabase();
-        QSqlDatabase& getNewDatabase();
 
+        bool openDatabase();
         bool createDatabase(QSqlDatabase &db);
         bool checkDatabaseVersion();
         bool checkIfDatabaseExists();

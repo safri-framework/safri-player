@@ -4,15 +4,17 @@
 #include "Interfaces/IAudioBackend.h"
 #include "Interfaces/IPlaylistFactory.h"
 #include "Interfaces/iguicontroller.h"
+#include "Interfaces/ICollectionController.h"
 
 #include <QDebug>
 #include <QDesktopServices>
 
 using namespace Core;
 
-ICore* ICore::m_instance;
+ICore* ICore::m_instance = 0;
 
 ICore::ICore()
+    : m_playbackController(0), m_audioBackend(0), m_playlistFactory(0), m_guiController(0), m_collectionController(0)
 {
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
@@ -61,6 +63,13 @@ void ICore::objectAddedToObjectPool(QObject *object)
         qDebug() << "ICore::IGUIController class added";
         m_guiController = guiController;
     }
+
+    ICollectionController *collectionController = qobject_cast<ICollectionController*>(object);
+    if (collectionController != 0)
+    {
+        qDebug() << "ICore::ICollectionController class added";
+        m_collectionController = collectionController;
+    }
 }
 
 IPlaylist *ICore::createPlaylist()
@@ -76,6 +85,11 @@ IPlaylist *ICore::createPlaylist()
 IGUIController *ICore::guiController()
 {
     return m_instance->m_guiController;
+}
+
+ICollectionController *ICore::collectionController()
+{
+    return m_instance->m_collectionController;
 }
 
 QString ICore::storageDirectory()

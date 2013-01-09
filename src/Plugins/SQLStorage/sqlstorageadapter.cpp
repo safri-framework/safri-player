@@ -8,6 +8,10 @@
 SQLStorageAdapter::SQLStorageAdapter(QUrl filePath)
     : sqlFilePath(filePath)
 {
+    if (!openDatabase())
+    {
+        qDebug() << "Database error";
+    }
 }
 
 SQLStorageAdapter::~SQLStorageAdapter()
@@ -16,24 +20,17 @@ SQLStorageAdapter::~SQLStorageAdapter()
 
 Core::ITableModel *SQLStorageAdapter::loadTable(QString tableName)
 {
-    if ( !checkIfDatabaseExists() )
-    {
-        qDebug() << "Database doesn't exist";
-        return 0;
-    }
-
-    if ( !checkDatabaseVersion() )
-    {
-        qDebug() << "Database version mismatch";
-        return 0;
-    }
-
     QString queryStmt = "SELECT COUNT(*) FROM " + tableName;
     int querySize, recordSize;
 
     qDebug() << queryStmt;
 
-    QSqlQuery query( getDatabase() );
+    if (!database.open())
+    {
+        return 0;
+    }
+
+    QSqlQuery query( database );
 
 
     if ( !query.exec(queryStmt))
@@ -95,39 +92,34 @@ QString SQLStorageAdapter::getStorageType()
     return STORAGE_TYPE;
 }
 
-QSqlDatabase &SQLStorageAdapter::getDatabase()
+bool SQLStorageAdapter::openDatabase()
 {
     if ( !database.open() )
     {
         database = QSqlDatabase::addDatabase("QSQLITE", "safri");
-        database.setDatabaseName(Core::ICore::storageDirectory() + "sqlitedatabasev2.db");
+        database.setDatabaseName(sqlFilePath.toString());
     }
 
     if( !database.open() )
     {
         qDebug() << database.lastError();
         qFatal("Failed to connect to database.");
+        return false;
     }
 
-    return database;
-}
-
-QSqlDatabase &SQLStorageAdapter::getNewDatabase()
-{
-    database.close();
-
-    QDir dir(Core::ICore::storageDirectory());
-
-    dir.remove("sqlitedatabasev2_old.db");
-    dir.rename("sqlitedatabasev2.db", "sqlitedatabasev2_old.db");
-
-    if( !database.open() )
+    if ( !checkIfDatabaseExists() )
     {
-        qDebug() << database.lastError();
-        qFatal("Failed to connect to database.");
+        qDebug() << "Database doesn't exist";
+        return false;
     }
 
-    return database;
+    if ( !checkDatabaseVersion() )
+    {
+        qDebug() << "Database version mismatch";
+        return false;
+    }
+
+    return true;
 }
 
 bool SQLStorageAdapter::createDatabase(QSqlDatabase &db)
@@ -216,7 +208,12 @@ bool SQLStorageAdapter::createDatabase(QSqlDatabase &db)
 
 bool SQLStorageAdapter::checkDatabaseVersion()
 {
-    QSqlQuery query( getDatabase() );
+    if (!database.open())
+    {
+        return false;
+    }
+
+    QSqlQuery query( database );
     QString queryStmt = "SELECT DATABASE_VERSION FROM DATABASE_INFO";
 
     if ( !query.exec(queryStmt))
@@ -234,7 +231,12 @@ bool SQLStorageAdapter::checkDatabaseVersion()
 
 bool SQLStorageAdapter::checkIfDatabaseExists()
 {
-    QSqlQuery query( getDatabase() );
+    if (!database.open())
+    {
+        return false;
+    }
+
+    QSqlQuery query( database );
     QString queryStmt = "SELECT COUNT(type) FROM sqlite_master WHERE type='table' AND name='Artist';";
 
     if ( !query.exec(queryStmt))
