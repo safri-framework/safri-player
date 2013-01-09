@@ -216,6 +216,11 @@ InfoContainer *AudioCollection::getInfoContainerByName(QString name)
     return 0;
 }
 
+QString AudioCollection::getContentType()
+{
+    return "org.safri.collection.audio";
+}
+
 
 QList<Core::Song *> AudioCollection::getSongs()
 {

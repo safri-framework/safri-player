@@ -3,10 +3,11 @@
 #include <QList>
 #include <QUrl>
 #include "IMediaCollection.h"
+#include "CorePlugin_global.h"
 
 namespace Core
 {
-    class ICollectionController : public QObject
+    class COREPLUGINSHARED_EXPORT ICollectionController : public QObject
     {
         Q_OBJECT
 
@@ -24,6 +25,7 @@ namespace Core
 
     };
 }
+Q_DECLARE_INTERFACE(Core::ICollectionController, "Core::ICollectionController")
 
 
 

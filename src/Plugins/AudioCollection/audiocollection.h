@@ -40,6 +40,7 @@ public:
     //path to *.db File
     QUrl getDatabaseLocation();
     InfoContainer* getInfoContainerByName(QString name);
+    QString getContentType();
 
 
     // ------------------- Audio Collection Interface

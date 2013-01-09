@@ -24,7 +24,7 @@ namespace Core
         virtual QString getHash() = 0;
         virtual QUrl getDatabaseLocation() = 0;
         virtual InfoContainer* getInfoContainerByName(QString name) = 0;
-
+        virtual QString getContentType() = 0;
         virtual void lockForWrite() = 0;
         virtual void lockForRead() = 0;
         virtual void unlock() = 0;
