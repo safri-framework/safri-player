@@ -40,7 +40,7 @@ macx {
     } else {
 
         unix {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/media/audacity-test-file.mp3\" \"$$DESTDIR/audacity-test-file.mp3\"
+            QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/audacity-test-file.mp3\" \"$$DESTDIR/audacity-test-file.mp3\"
         }
     }
 }

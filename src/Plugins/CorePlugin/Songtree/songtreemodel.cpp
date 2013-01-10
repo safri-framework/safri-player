@@ -500,6 +500,8 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
     }
+
+    return QVariant();
 }
 
 QModelIndex SongTreeModel::index(int row, int column, const QModelIndex &parent) const

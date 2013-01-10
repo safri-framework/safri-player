@@ -24,6 +24,7 @@ TestPlugin::~TestPlugin()
 
 bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
 {
+    /*
     qDebug() << "TestPlugin::initialize(...)";
 
     Core::Genre *genre = new Core::Genre(1, "Rock");
@@ -52,6 +53,7 @@ bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
     Core::ICore::audioBackend()->setVolume(100);
 
     qDebug() << QString::number(totalTime / 1000.0f);
+    */
 
     return true;
 }

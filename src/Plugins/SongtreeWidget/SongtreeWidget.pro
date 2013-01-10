@@ -27,3 +27,6 @@ HEADERS +=\
 FORMS += \
     SongtreeWidget.ui
 
+OTHER_FILES += \
+    SongTreeWidget.xml
+

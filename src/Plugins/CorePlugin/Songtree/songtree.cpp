@@ -1,9 +1,8 @@
 #include "songtree.h"
 #include "songtreeitem.h"
-#include <qDebug>
-using namespace Core;
-
 #include <QDebug>
+
+using namespace Core;
 
 SongTree::SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy)
 {

@@ -1,7 +1,7 @@
 #ifndef ISIDEBARPLUGIN_H
 #define ISIDEBARPLUGIN_H
 
-#include "..\CorePlugin_global.h"
+#include "../CorePlugin_global.h"
 #include <QObject>
 #include <QString>
 

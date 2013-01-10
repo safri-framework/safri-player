@@ -1,7 +1,7 @@
 #ifndef IGUICONTROLLER_H
 #define IGUICONTROLLER_H
 
-#include "..\CorePlugin_global.h"
+#include "../CorePlugin_global.h"
 #include <QObject>
 #include <QList>
 
