@@ -19,6 +19,8 @@ class PlaylistModel : public QAbstractTableModel
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
         QVariant data(const QModelIndex &index, int role) const;
 
+        Core::IPlaylist* getPlaylist();
+
     private:
 
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;

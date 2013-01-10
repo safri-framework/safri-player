@@ -121,3 +121,13 @@ DataItem::DATA_ITEM_TYPE DataItem::stringToType(QString type)
 
     return DataItem::NONE;
 }
+
+IMediaCollection *DataItem::getMediaCollection()
+{
+    return mediaCollection;
+}
+
+void DataItem::setMediaCollection(IMediaCollection *sMediaCollection)
+{
+    mediaCollection = sMediaCollection;
+}

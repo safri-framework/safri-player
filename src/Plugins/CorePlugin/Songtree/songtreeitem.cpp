@@ -469,6 +469,7 @@ SongTreeItem * SongTreeItem::getOrInsertChildItem(SongTreeItem *sampleItem)
     int maxLevel = hierarchy->size() - 1;
 
     ITreeItemType* nextLevelType;
+    Q_UNUSED(nextLevelType)
 
     nextLevelType = hierarchy->at(level+1);
     SongTreeItem* nextItem;

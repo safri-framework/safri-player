@@ -24,6 +24,7 @@ QString DecadeItemType::getNodeName(Song* song)
 
 DataItem* DecadeItemType::getNodeDataItem(Song *song)
 {
+    Q_UNUSED(song)
     return 0;
 }
 

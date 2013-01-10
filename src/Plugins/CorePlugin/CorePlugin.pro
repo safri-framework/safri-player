@@ -41,7 +41,8 @@ SOURCES += coreplugin.cpp \
     Songtree/songtreeitem.cpp \
     Songtree/changedflags.cpp \
     Songtree/songtreemodel.cpp \ 
-    Interfaces/istorageadapterfactory.cpp
+    Interfaces/istorageadapterfactory.cpp \
+    Songtree/CoreItemTypes/mediacollectionitemtype.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -81,7 +82,8 @@ HEADERS += coreplugin.h\
     Songtree/changedflags.h \
     Songtree/songtreemodel.h \
     Interfaces/ICollectionController.h \
-    Interfaces/istorageadapterfactory.h
+    Interfaces/istorageadapterfactory.h \
+    Songtree/CoreItemTypes/mediacollectionitemtype.h
 
 OTHER_FILES += \
     Core.xml

@@ -175,11 +175,23 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuPlugin">
+    <property name="title">
+     <string>Plugin</string>
+    </property>
+    <addaction name="actionPlugins_show"/>
+   </widget>
+   <addaction name="menuPlugin"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionPlugins_show">
+   <property name="text">
+    <string>Plugins anzeigen</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

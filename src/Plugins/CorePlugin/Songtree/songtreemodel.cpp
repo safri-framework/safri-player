@@ -144,6 +144,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             return false;
 
         int beginRow;
+        Q_UNUSED(beginRow)
 
         if (row != -1)
             beginRow = row;

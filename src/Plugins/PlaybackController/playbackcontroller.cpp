@@ -110,6 +110,8 @@ void PlaybackController::playStateSlot()
     m_playAction->setDisabled(true);
     m_pauseAction->setDisabled(false);
 
+    currentMedia = playlist->getCurrentMedia();
+
     if(currentState == m_pause)
     {
         audioBackend->play();

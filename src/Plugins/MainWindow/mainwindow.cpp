@@ -10,6 +10,11 @@
 #include "icore.h"
 #include <QWidget>
 
+#include "../CorePlugin/CoreData/song.h"
+#include "../CorePlugin/iplaylist.h"
+
+#include "../../PluginSystem/pluginmanager.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), visiblePlugins(0)
@@ -37,6 +42,11 @@ MainWindow::MainWindow(QWidget *parent) :
         addPlugin(pluginList.at(i));
     }
     connect(guiController, SIGNAL(playlistWidgetChanged()), this, SLOT(changePlaylistWidget()));
+
+    changePlayerWidget();
+    changePlaylistWidget();
+
+    showTestPlaylist();
 }
 
 MainWindow::~MainWindow()
@@ -103,6 +113,34 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
             showSidebar(false);
         }
     }
+}
+
+void MainWindow::showTestPlaylist()
+{
+    Core::Song *testMp31 = new Core::Song(1, "Test", 2012, "/home/sascha/hold_the_line.mp3", this);
+    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "/home/sascha/htl_solo.mp3", this);
+
+    Core::Artist *artist = new Core::Artist(1, "Artist Foo", this);
+    Core::Album  *album = new Core::Album(1, "Album Foo", this);
+    Core::Genre *genre = new Core::Genre(1, "Genre Foo", this);
+
+    testMp31->setAlbum(album);
+    testMp31->setArtist(artist);
+    testMp31->setGenre(genre);
+
+    testMp32->setAlbum(album);
+    testMp32->setArtist(artist);
+    testMp32->setGenre(genre);
+
+    QList<Core::Item*> songs;
+    songs.append(testMp31);
+    songs.append(testMp32);
+
+    Core::IPlaylist *playList = Core::ICore::createPlaylist();
+
+    playList->insertMediaAt(0, songs);
+
+    Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
 }
 
 void MainWindow::sideBarButtonClicked(bool checked)
@@ -193,4 +231,9 @@ void MainWindow::showSidebar(bool visible)
         splitter->setSizes(list);
     }
 
+}
+
+void MainWindow::on_actionPlugins_show_triggered()
+{
+    PluginSystem::PluginManager::instance()->showPluginViewer();
 }

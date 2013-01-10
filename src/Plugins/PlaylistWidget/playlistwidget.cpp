@@ -2,6 +2,8 @@
 #include "ui_playlistwidget.h"
 #include "playlistmodel.h"
 #include <QDebug>
+#include "../CorePlugin/iplaybackcontroller.h"
+#include "../CorePlugin/icore.h"
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) :
     IPlaylistWidget(parent),
@@ -20,10 +22,9 @@ void PlaylistWidget::showPlaylist(Core::IPlaylist *playlist)
     QAbstractItemModel* model = ui->playlistView->model();
     delete model;
 
-    qDebug() << "PlaylistWidget::showPlaylist()";
+    playlistModel = new PlaylistModel(playlist, this);
 
-    model = new PlaylistModel(playlist, this);
-    ui->playlistView->setModel(model);
+    ui->playlistView->setModel(playlistModel);
 }
 
 
@@ -40,4 +41,15 @@ Core::IPlaylist *PlaylistWidget::newPlaylist()
 
 void PlaylistWidget::showCurrentPlaylist()
 {
+}
+
+void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
+{
+    qDebug() << QString::number(index.row());
+
+    Core::ICore::playbackController()->stopAction()->trigger();
+
+    Core::ICore::playbackController()->setPlaylist(playlistModel->getPlaylist());
+    Core::ICore::playbackController()->getPlaylist()->setCurrentMedia(index.row());
+    Core::ICore::playbackController()->playAction()->trigger();
 }

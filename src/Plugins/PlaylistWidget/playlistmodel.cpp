@@ -109,6 +109,11 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+Core::IPlaylist *PlaylistModel::getPlaylist()
+{
+    return playlist;
+}
+
 QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 {
     int length;

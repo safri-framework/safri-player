@@ -9,6 +9,8 @@
 
 namespace Core
 {
+    class IMediaCollection;
+
     class COREPLUGINSHARED_EXPORT DataItem : public Item
     {
         Q_OBJECT
@@ -51,6 +53,8 @@ namespace Core
             static QString typeToString(DATA_ITEM_TYPE type);
             static DataItem::DATA_ITEM_TYPE stringToType(QString type);
 
+            IMediaCollection* getMediaCollection();
+            void setMediaCollection(IMediaCollection* sMediaCollection);
 
 
         protected:
@@ -66,6 +70,8 @@ namespace Core
 
             //! data items flagged as "temporary", will not be rewritten into the database.
             bool temporary;
+
+            IMediaCollection* mediaCollection;
 
     };
 }

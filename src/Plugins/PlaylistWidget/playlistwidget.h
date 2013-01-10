@@ -1,9 +1,13 @@
 #ifndef PLAYLISTWIDGET_H
 #define PLAYLISTWIDGET_H
 
+#include <QModelIndex>
+
 #include "Interfaces/iplaylistwidget.h"
 
 namespace Ui { class PlaylistWidget; }
+
+class PlaylistModel;
 
 class PlaylistWidget : public Core::IPlaylistWidget
 {
@@ -22,8 +26,14 @@ class PlaylistWidget : public Core::IPlaylistWidget
 
         virtual void itemsSelected(QList<Core::Item*> selection);
 
+    private slots:
+
+        void on_playlistView_doubleClicked(const QModelIndex &index);
+
     private:
-        Ui::PlaylistWidget *ui;
+
+            PlaylistModel* playlistModel;
+            Ui::PlaylistWidget *ui;
 };
 
 #endif // PLAYLISTWIDGET_H
