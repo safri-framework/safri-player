@@ -47,7 +47,8 @@ FORMS += \
     mainwindow.ui
 
 OTHER_FILES += \
-    stylesheet.css
+    stylesheet.css \
+    MainWindow.xml
 
 RESOURCES += \
     ressources.qrc

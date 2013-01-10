@@ -118,8 +118,8 @@ void PluginSpec::readXML(QString path)
         }
         else
         {
-            name    = domNodeList.at( 0 ).toElement().attribute("name");
-            version = domNodeList.at( 0 ).toElement().attribute( "version" );
+            name        = domNodeList.at( 0 ).toElement().attribute("name");
+            version     = domNodeList.at( 0 ).toElement().attribute( "version" );
 
             domNodeList = doc.elementsByTagName("vendor");
             vendor = domNodeList.at(0).toElement().text();

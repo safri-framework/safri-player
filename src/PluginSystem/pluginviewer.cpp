@@ -7,10 +7,11 @@
 
 using namespace PluginSystem;
 
-PluginViewer::PluginViewer(QList<PluginSystem::PluginSpec *> &plugins, QWidget *parent) :
+PluginViewer::PluginViewer(QList<PluginSystem::PluginSpec *> plugins, QWidget *parent) :
     QDialog(parent), ui(new Ui::PluginViewer), plugins(plugins)
 {
     ui->setupUi(this);
+
     PluginviewerModel* model = new PluginviewerModel(plugins, this);
     ui->pluginTableView->setModel(model);
 }
@@ -33,5 +34,4 @@ void PluginSystem::PluginViewer::on_btnDetails_clicked()
 
     PluginSpecViewer *viewer = new PluginSpecViewer(pluginSpec, this);
     viewer->show();
-
 }

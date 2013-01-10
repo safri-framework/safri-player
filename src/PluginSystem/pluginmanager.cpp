@@ -3,16 +3,18 @@
 #include "pluginviewer.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QDir>
 #include <QDirIterator>
 #include <QPluginLoader>
+#include <QTextStream>
 
 using namespace PluginSystem;
 
 PluginManager *PluginManager::m_instance = 0;
 
-PluginManager::PluginManager(QString corePluginName, QStringList pluginPaths)
-    : QObject(0), pluginPaths(pluginPaths), corePluginName(corePluginName)
+PluginManager::PluginManager(QString corePluginName, QStringList pluginPaths, QString selectedPluginsFile)
+    : QObject(0), pluginPaths(pluginPaths), corePluginName(corePluginName), selectedPluginsFile(selectedPluginsFile)
 {
     qDebug() << "PluginManager(QStringList pluginPaths)";
     m_instance = this;
@@ -45,8 +47,9 @@ bool PluginManager::loadPlugins()
     QStringList pluginSpecNameFilters;
     pluginSpecNameFilters.append("*.xml");
     QString filename;
-    PluginSpec *pluginSpec, *corePluginSpec;
+    PluginSpec *pluginSpec;
     QList<PluginSpec*> pluginsToLoad;
+    bool disablePluginViewer = false;
 
     // Load plugin specs
     for (int i = 0; i < pluginPaths.size(); i++)
@@ -62,36 +65,60 @@ bool PluginManager::loadPlugins()
 
             pluginSpec = new PluginSpec(filename);
 
-            if (pluginSpec->getName() == corePluginName)
-            {
-                corePluginSpec = pluginSpec;
-            }
-            else
-            {
-                pluginsToLoad.append(pluginSpec);
-            }
+            pluginMap.insert(pluginSpec->getVendor() + "." + pluginSpec->getName(), pluginSpec);
         }
     }
 
-    // Load plugins
-    if (!loadPlugin(corePluginSpec))
-        return false;
+    // First load the core plugin
+    pluginSpec = pluginMap.value(corePluginName);
 
-    plugins.append(corePluginSpec);
-
-    for (int i = 0; i < pluginsToLoad.size(); i++)
+    if ( !(pluginSpec && loadPlugin(pluginSpec) ) )
     {
-        pluginSpec = pluginsToLoad.at(i);
-        loadPlugin(pluginSpec);
-        plugins.append(pluginSpec);
+        qDebug() << "could not load core plugin";
+        return false;
     }
+
+    qDebug() << "read selected Plugins file: " << selectedPluginsFile;
+    QFile selectedPlugins(selectedPluginsFile);
+    if (!selectedPlugins.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "could not open file";
+        return false;
+    }
+
+    QTextStream in(&selectedPlugins);
+    QString pluginToLoad = in.readLine();
+    while (!pluginToLoad.isNull())
+    {
+        if (!pluginToLoad.startsWith('#'))
+        {
+            pluginSpec = pluginMap.value(pluginToLoad);
+            if ( !(pluginSpec && loadPlugin(pluginSpec) ) )
+            {
+                qDebug() << "could not load plugin: " << pluginToLoad;
+                return false;
+            }
+
+            qDebug() << pluginSpec->getCategory();
+            if (pluginSpec->getCategory() == "GUI")
+            {
+                disablePluginViewer = true;
+            }
+        }
+
+        pluginToLoad = in.readLine();
+    }
+
+    if (!disablePluginViewer)
+        showPluginViewer();
 
     return true;
 }
 
 void PluginManager::showPluginViewer()
 {
-    PluginViewer* viewer = new PluginViewer(this->plugins);
+    PluginViewer* viewer = new PluginViewer(this->pluginMap.values());
+    //viewer->setVisible(true);
     viewer->show();
 }
 

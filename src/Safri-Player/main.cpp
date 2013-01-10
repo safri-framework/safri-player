@@ -1,4 +1,5 @@
 #include <QtGui/QApplication>
+#include <QDesktopServices>
 
 #include "pluginmanager.h"
 #include <QPluginLoader>
@@ -14,7 +15,15 @@ int main(int argc, char *argv[])
     QStringList paths;
     paths << "plugins/";
 
-    PluginSystem::PluginManager manager("Core", paths);
+    QString selectedPluginsFile = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+
+#ifdef Q_OS_LINUX
+    selectedPluginsFile.chop(2);
+#endif
+
+    selectedPluginsFile = selectedPluginsFile + "/.safri/selectedplugins.lst";
+
+    PluginSystem::PluginManager manager("Safri.Core", paths, selectedPluginsFile);
 
     manager.loadPlugins();
 

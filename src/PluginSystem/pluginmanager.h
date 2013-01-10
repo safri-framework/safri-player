@@ -6,6 +6,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QMap>
 #include <QStringList>
 
 namespace PluginSystem
@@ -17,7 +18,7 @@ namespace PluginSystem
         Q_OBJECT
         public:
 
-            PluginManager(QString corePluginName, QStringList pluginPaths);
+            PluginManager(QString corePluginName, QStringList pluginPaths, QString selectedPluginsFile);
 
             /**
                 \brief  Method the access the PluginManager instance.
@@ -76,7 +77,6 @@ namespace PluginSystem
 
         private:
 
-
             bool loadPlugin(PluginSpec* pluginSpec);
             static PluginManager *m_instance;
             QList<QObject*> objectPool;
@@ -84,6 +84,9 @@ namespace PluginSystem
 
             QString corePluginName;
             QList<PluginSpec*> plugins;
+            QMap<QString, PluginSpec*> pluginMap;
+
+            QString selectedPluginsFile;
     };
 }
 

@@ -11,7 +11,7 @@ namespace PluginSystem
     {
         Q_OBJECT
         public:
-            explicit PluginviewerModel(QList<PluginSpec*> &plugins, QObject *parent = 0);
+            explicit PluginviewerModel(QList<PluginSpec*> plugins, QObject *parent = 0);
 
             int rowCount(const QModelIndex &parent) const;
             int columnCount(const QModelIndex &parent) const;
@@ -20,7 +20,7 @@ namespace PluginSystem
 
         private:
 
-            QList<PluginSpec*> &plugins;
+            QList<PluginSpec*> plugins;
     };
 }
 #endif // PLUGINVIEWERMODEL_H

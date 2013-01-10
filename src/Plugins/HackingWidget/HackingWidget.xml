@@ -6,7 +6,7 @@
     <license>GNU</license>
     <description>Safri-Player Core Plugin</description>
     <url>www.safri-player.org</url>
-    <category>Safri Debug</category>
+    <category>GUI</category>
 
     <dependencyList>
         <dependency name="" version="">

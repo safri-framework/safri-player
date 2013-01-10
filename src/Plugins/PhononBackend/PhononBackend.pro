@@ -25,3 +25,6 @@ SOURCES += phononbackendplugin.cpp \
 HEADERS += phononbackendplugin.h\
         PhononBackend_global.h \
     phononbackend.h
+
+OTHER_FILES += \
+    PhononBackend.xml

@@ -1,6 +1,7 @@
 #include "coreplugin.h"
 
 #include "icore.h"
+#include "../PluginSystem/pluginmanager.h"
 
 #include <QDebug>
 

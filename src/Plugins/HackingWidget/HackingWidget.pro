@@ -24,3 +24,6 @@ HEADERS += hackingwidgetplugin.h\
 
 FORMS += \
     hackingwidget.ui
+
+OTHER_FILES += \
+    HackingWidget.xml

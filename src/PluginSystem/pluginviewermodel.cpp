@@ -2,7 +2,7 @@
 
 using namespace PluginSystem;
 
-PluginviewerModel::PluginviewerModel(QList<PluginSpec*> &plugins, QObject *parent) :
+PluginviewerModel::PluginviewerModel(QList<PluginSpec *> plugins, QObject *parent) :
     QAbstractTableModel(parent), plugins(plugins)
 {
 }

@@ -11,6 +11,8 @@ bool AudioCollectionPlugin::initialize(QStringList &arguments)
 {
     AudioCollectionBuilder* collectionBuilder = new AudioCollectionBuilder();
     addObject(collectionBuilder);
+
+    return true;
 }
 
 Q_EXPORT_PLUGIN2(AudioCollectionPlugin, AudioCollectionPlugin)

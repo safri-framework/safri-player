@@ -18,7 +18,7 @@ namespace PluginSystem
         Q_OBJECT
 
         public:
-            explicit PluginViewer(QList<PluginSpec*> &plugins, QWidget *parent = 0);
+            explicit PluginViewer(QList<PluginSpec*> plugins, QWidget *parent = 0);
             ~PluginViewer();
 
     private slots:
