@@ -1,0 +1,12 @@
+Safri.PhononBackend
+Safri.PlaybackController
+Safri.SQLStorage
+Safri.AudioCollection
+#Safri.CollectionController
+Safri.Playlist
+Safri.GUIController
+Safri.MainWindow
+Safri.PlaylistWidget
+Safri.PlayerWidget
+Safri.SidebarPluginTest
+#Safri.HackingWidget
