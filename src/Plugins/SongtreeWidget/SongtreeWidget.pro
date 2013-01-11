@@ -17,12 +17,14 @@ DEFINES += SONGTREEWIDGET_LIBRARY
 
 SOURCES += \
     SongtreeWidgetPlugin.cpp \
-    SongtreeWidget.cpp
+    SongtreeWidget.cpp \
+    songtreesidebarwrapper.cpp
 
 HEADERS +=\
         SongtreeWidget_global.h \
     SongtreeWidgetPlugin.h \
-    SongtreeWidget.h
+    SongtreeWidget.h \
+    songtreesidebarwrapper.h
 
 FORMS += \
     SongtreeWidget.ui

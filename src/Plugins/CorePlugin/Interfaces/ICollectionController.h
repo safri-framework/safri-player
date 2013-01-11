@@ -18,8 +18,11 @@ namespace Core
 
         signals:
 
-            void playerWidgetChanged();
-            void playlistWidgetChanged();
+            //void playerWidgetChanged();       ???
+            //void playlistWidgetChanged();     ???
+        void mediaCollectionRemoved(QUrl filename);
+        void mediaCollectionAdded(IMediaCollection* collection);
+        void mediaCollectionChanged(QUrl filename);
 
 
 

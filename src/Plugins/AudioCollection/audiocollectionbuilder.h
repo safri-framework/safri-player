@@ -20,6 +20,7 @@ class AudioCollectionBuilder : public IMediaCollectionBuilder
 
     private:
 
+        void fillMetaInfo(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
         void buildGenres(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
         void buildArtists(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
         void buildAlbums(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);

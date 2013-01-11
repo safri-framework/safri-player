@@ -41,6 +41,11 @@ QString AudioCollectionBuilder::getCollectionType()
     return "org.safri.collection.audio";
 }
 
+void AudioCollectionBuilder::fillMetaInfo(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
+{
+    mediaCollection->m_databaseLocation = storageAdapter->getStoragePath();
+}
+
 void AudioCollectionBuilder::buildGenres(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::GENRE);

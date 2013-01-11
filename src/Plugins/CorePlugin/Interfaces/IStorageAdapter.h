@@ -21,8 +21,11 @@ namespace Core
             virtual void writeTableForDataItemType(ITableModel* model, DataItem::DATA_ITEM_TYPE type) = 0;
 
             virtual QString getStorageType() = 0;
+
+            // Database location!
             virtual QUrl getStoragePath() = 0;
             virtual QString getContentType() = 0;
+
     };
 }
 

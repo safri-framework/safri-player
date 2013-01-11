@@ -1,25 +1,32 @@
-/*
+
 #include "SongtreeWidget.h"
 #include "ui_SongtreeWidget.h"
-#include "../CorePlugin/Interfaces/IStorageAdapter.h"
-#include "../CorePlugin/Interfaces/IMediaCollectionBuilder.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/albumitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/artistitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/songitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
 #include "../PluginSystem/pluginmanager.h"
 #include <QDebug>
-#include "core"
+#include <QTreeView>
+#include "../CorePlugin/icore.h"
+
 
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
-    QWidget(parent),
+    QWidget(parent), collController(0),
     ui(new Ui::SongtreeWidget)
 {
     ui->setupUi(this);
-    loadAudioCollection();
-    if(audioCollection)
-    {
 
+    collController = ICore::collectionController();
+    Q_ASSERT(collController);
+    connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
+    connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
+    buildHierarchy();
+    loadAudioCollections();
+    loadSongtreeModel();
 
-    }
-
+    this->ui->treeView->setModel(model);
 }
 
 SongtreeWidget::~SongtreeWidget()
@@ -28,37 +35,56 @@ SongtreeWidget::~SongtreeWidget()
 }
 
 
-void SongtreeWidget::loadAudioCollection()
+void SongtreeWidget::loadAudioCollections()
 {
-    Core::IStorageAdapter* storageAdapter;
-    QList<Core::IStorageAdapter*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapter>();
 
+   QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
+   for (int i = 0; i < mediaColl.size(); i++)
+   {
+       IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(mediaColl.at(i));
+       if(tempAudioColl)
+       {
+           audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
+       }
+   }
 
-    if (objects.size() > 0)
-    {
-        storageAdapter = objects.at(0);
-        qDebug() << storageAdapter->getStorageType();
-    }
-
-    QList<Core::IMediaCollectionBuilder*> collectionBuilders = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
-    Core::IMediaCollection *mediaCollection;
-
-    if (collectionBuilders.size() > 0)
-    {
-        Core::IMediaCollectionBuilder* builder = collectionBuilders.at(0);
-        this->mediaCollection = builder->buildMediaCollection(storageAdapter);
-    }
-    else
-    {
-        qDebug() << "No Collection Builders found!";
-    }
-
-    audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
 }
 
 void SongtreeWidget::loadSongtreeModel()
 {
 
-    model = new SongTreeModel();
+    QList<IAudioCollection*> audioCollList = audioCollMap.values();
+    for(int i = 0 ; i < audioCollList.size(); i++)
+    {
+        songList.append(audioCollList.at(i)->getSongs());
+    }
+
+    tree = new SongTree(songList, treeHierarchy);
+    model = new SongTreeModel(tree, this);
+
 }
-*/
+
+void SongtreeWidget::buildHierarchy()
+{
+     treeHierarchy = new QList<ITreeItemType*>();
+     treeHierarchy->append(new GenreItemType());
+     treeHierarchy->append(new ArtistItemType());
+     treeHierarchy->append(new AlbumItemType());
+     treeHierarchy->append(new SongItemType());
+}
+
+
+void SongtreeWidget::newAudioCollectionAvailable(QUrl collURL)
+{
+    IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(collController->getMediaCollection(collURL));
+    if (tempAudioColl)
+    {
+        audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
+    }
+}
+
+void SongtreeWidget::removeCollection(QUrl collURL)
+{
+
+}
+

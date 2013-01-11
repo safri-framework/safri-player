@@ -9,20 +9,23 @@
 Controller::CollectionController::CollectionController()
 {
 
+    // build List of Storage Adapters
     QList<Core::IStorageAdapterFactory*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapterFactory>();
     for (int i = 0; i < objects.size(); i++)
     {
         m_factoryMap.insert(objects.at(i)->getStorageType(), objects.at(i));
+        qDebug()<<objects.at(i)->getStorageType();
     }
 
 
-
+    // Build List of CollectionBuilders
     QList<Core::IMediaCollectionBuilder*> builderList = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
     for(int i = 0; i < builderList.size(); i++)
     {
         m_builderMap.insert(builderList.at(i)->getCollectionType(), builderList.at(i));
     }
 
+    qDebug()<<"Factorys:"<<m_factoryMap.size()<<"   Builders: "<<m_builderMap.size();
     loadExtensionMap();
 
 
@@ -47,13 +50,14 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
     IStorageAdapterFactory* storageFactory = 0;
 
     QString storageType = getStorageTypeByFilename(filename.toString());
+    qDebug()<<"requested type: "<<storageType;
     storageFactory = m_factoryMap.value(storageType);
     Q_ASSERT (storageFactory !=0);
     storageAdapter = storageFactory->createStorageAdapter(filename);
     if(storageFactory)
     {
           QString contentType = storageAdapter->getContentType();
-
+          qDebug()<<"contentType: "<<contentType;
           IMediaCollectionBuilder* audioBuilder = m_builderMap.value(contentType);
           IMediaCollection* collection = audioBuilder->buildMediaCollection(storageAdapter);
           m_collectionMap.insert(filename.toString(), collection);
@@ -89,9 +93,9 @@ QString Controller::CollectionController::getStorageTypeByFilename(QString filen
     QStringList tmp = filename.split(".");
     QString extension = tmp.last();
 
-    if(m_fileExtensionMap.contains(extension))
+    if(m_fileExtensionMap.contains("."+extension))
     {
-        return m_fileExtensionMap.value(extension);
+        return m_fileExtensionMap.value("."+extension);
     }
     else
     {

@@ -254,7 +254,7 @@ bool SQLStorageAdapter::checkIfDatabaseExists()
 
 QUrl SQLStorageAdapter::getStoragePath()
 {
-    return QUrl();
+    return QUrl(sqlFilePath);
 }
 
 QString SQLStorageAdapter::getContentType()

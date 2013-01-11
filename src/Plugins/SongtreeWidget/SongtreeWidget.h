@@ -1,16 +1,18 @@
-/*
+
 #ifndef SONGTREEWIDGET_H
 #define SONGTREEWIDGET_H
 #include "SongtreeWidget_global.h"
 #include "../CorePlugin/Interfaces/IAudioCollection.h"
 #include "../CorePlugin/Songtree/songtreemodel.h"
+#include "../CorePlugin/Songtree/songtree.h"
+#include "../CorePlugin/Interfaces/ICollectionController.h"
 #include <QWidget>
 
 namespace Ui {
 class SongtreeWidget;
 }
 
-class SongtreeWidget : public QWidget
+class SONGTREEWIDGETSHARED_EXPORT SongtreeWidget : public QWidget
 {
     Q_OBJECT
     
@@ -20,12 +22,22 @@ public:
     
 private:
     Ui::SongtreeWidget *ui;
-    Core::IAudioCollection* audioCollection;
+    ICollectionController* collController;
     SongTreeModel* model;
-    void loadAudioCollection();
+    SongTree* tree;
+    QList<Song*> songList;
+    QMap<QUrl, IAudioCollection*> audioCollMap;
+    void loadAudioCollections();
     void loadSongtreeModel();
+    void buildHierarchy();
+    QList<ITreeItemType*>*  treeHierarchy;
+
+
+private slots:
+    void newAudioCollectionAvailable(QUrl collURL);
+    void removeCollection(QUrl collURL);
 
 };
 
 #endif // SONGTREEWIDGET_H
-*/
+
