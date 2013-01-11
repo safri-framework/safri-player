@@ -219,7 +219,7 @@ void PlaybackController::setPlaylist(Core::IPlaylist *playlist)
     this->playlist = playlist;
     if(playlist->getSize()>0)
     {
-        currentMedia = playlist->getNextMedia();
+        currentMedia = playlist->getCurrentMedia();
         Q_EMIT hasData();
     }
 }

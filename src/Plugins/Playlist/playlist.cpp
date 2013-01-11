@@ -375,7 +375,11 @@ void Playlist::readTagsAtPosition(int position)
 
 Media* Playlist::getCurrentMedia()
 {
+    if(this->currentMedia == -1)
+        this->currentMedia++;
+
     return getMediaAt(currentMedia);
+
 }
 
 

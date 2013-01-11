@@ -3,7 +3,7 @@
 #include <QList>
 #include <QUrl>
 #include "IMediaCollection.h"
-#include "CorePlugin_global.h"
+#include "../CorePlugin_global.h"
 
 namespace Core
 {
