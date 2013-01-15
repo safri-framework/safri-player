@@ -3,6 +3,7 @@
 
 #include "GUIController_global.h"
 #include "Interfaces/iguicontroller.h"
+#include "Interfaces/IPlayerWidget.h"
 
 namespace Core
 {
@@ -18,7 +19,7 @@ class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
 
         explicit GUIController(QObject *parent = 0);
 
-        virtual QWidget* getPlayerWidget();
+        virtual IPlayerWidget* getPlayerWidget();
         virtual Core::IPlaylistWidget* getPlaylistWidget();
         virtual QList<Core::ISideBarPlugin*> getSideBarPlugins();
 
@@ -31,7 +32,7 @@ class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
         void switchPlayerWidgetFactory(Core::IPlayerWidgetFactory* factory);
         void switchPlaylistWidgetFactory(Core::IPlaylistWidgetFactory* factory);
 
-        QWidget* currentPlayerWidget;
+        IPlayerWidget* currentPlayerWidget;
         Core::IPlayerWidgetFactory *currentPlayerWidgetFactory;
 
         Core::IPlaylistWidget* currentPlaylistWidget;

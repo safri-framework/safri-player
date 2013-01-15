@@ -19,7 +19,7 @@ GUIController::GUIController(QObject *parent) :
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
 }
 
-QWidget *GUIController::getPlayerWidget()
+IPlayerWidget* GUIController::getPlayerWidget()
 {
     if (currentPlayerWidget == 0)
     {

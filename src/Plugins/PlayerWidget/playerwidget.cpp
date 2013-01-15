@@ -10,7 +10,7 @@
 #include "CoreData/media.h"
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
-    QWidget(parent), ui(new Ui::PlayerWidget), playbackController(Core::ICore::playbackController())
+    IPlayerWidget(parent), ui(new Ui::PlayerWidget), playbackController(Core::ICore::playbackController())
 {
     ui->setupUi(this);
 
@@ -46,11 +46,18 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(playbackController, SIGNAL(update(int)), this, SLOT(update(int)));
 
     ui->volumeSlider->setValue(playbackController->getVolume());
+    this->setMaximumHeight(100);
+    this->setMinimumHeight(100);
 }
 
 PlayerWidget::~PlayerWidget()
 {
     delete ui;
+}
+
+IPlayerWidget::PlayerWidgetPosition PlayerWidget::getPreferedPosition()
+{
+    return UNDER_PLAYLIST;
 }
 
 void PlayerWidget::on_volumeSlider_sliderMoved(int position)

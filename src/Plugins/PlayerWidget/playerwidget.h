@@ -2,17 +2,18 @@
 #define PLAYERWIDGET_H
 
 #include <QWidget>
+#include "Interfaces/IPlayerWidget.h"
 
 namespace Ui { class PlayerWidget; }
 namespace Core { class IPlaybackController; class Media; }
 
-class PlayerWidget : public QWidget
+class PlayerWidget : public IPlayerWidget
 {
     Q_OBJECT
     public:
         explicit PlayerWidget(QWidget *parent = 0);
         ~PlayerWidget();
-
+        virtual PlayerWidgetPosition getPreferedPosition();
     private slots:
 
         void on_volumeSlider_sliderMoved(int position);

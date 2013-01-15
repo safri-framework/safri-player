@@ -1,0 +1,183 @@
+QWidget[type="inner_mainframe"]
+{
+    border-image: url(:backgrounds/SAFRI_UI/background.png) 2px 2px 2px 2px;
+    border-width:2px;
+
+}
+
+QWidget[type="mainframe"]
+{
+border-top: 1px solid green;
+border-bottom: 1px solid red;
+min-height:96px;
+max-height:96px;
+}
+
+
+QWidget[type="display"]
+{
+border-image: url(:backgrounds/SAFRI_UI/Display_bg.png) 12px 12px 12px 12px;
+
+min-width:380px;
+max-width:380;
+min-height:64px;
+max-height:64px;
+}
+
+
+QPushButton[type="player_button"][button_size ="little"]
+{
+    min-width:25px;
+    max-width:25px;
+    min-height:25px;
+    max-height:25px;
+    border-image: url(:buttons/SAFRI_UI/round_tiny_button_normal.png);
+}
+
+QPushButton:pressed[type="player_button"][button_size ="little"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_tiny_button_pressed.png);
+}
+
+
+QPushButton[type="player_button"][button_size ="little"][side="r"]
+{
+    min-height:23px;
+    max-height:23px;
+    min-width:24px;
+    max-width:24px;
+    padding-bottom:2px;
+    padding-left:1px;
+
+}
+
+
+
+
+
+QPushButton[type="player_button"][button_size ="middle"]
+{
+    min-width:35px;
+    max-width:35px;
+    min-height:35px;
+    max-height:35px;
+    border-image: url(:buttons/SAFRI_UI/round_middle_button_normal.png);
+}
+
+QPushButton:pressed[type="player_button"][button_size ="middle"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_middle_button_pressed.png);
+}
+
+
+QPushButton[type="player_button"][button_size ="middle"][side="r"]
+{
+/*
+
+    min-height:23px;
+    max-height:23px;
+    */
+    min-width:32px;
+    max-width:32px;
+
+
+    padding-bottom:0px;
+    padding-left:3px;
+}
+
+/*
+QPushButton[type="player_button"][button_size ="middle"][side="l"]
+{
+
+    min-height:23px;
+    max-height:23px;
+    min-width:33px;
+    max-width:33px;
+    padding-bottom:2px;
+    padding-left:2px;
+}
+*/
+
+QPushButton[type="player_button"][button_size ="big"]
+{
+    min-width:41px;
+    max-width:41px;
+    min-height:43px;
+    max-height:43px;
+    padding-left:4px;
+    padding-bottom:2px;
+    border-image: url(:buttons/SAFRI_UI/round_big_button_normal.png);
+}
+
+QPushButton:pressed[type="player_button"][button_size ="big"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_big_button_pressed.png);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+QSlider
+{
+
+     min-height:15px;
+     max-height:15px;
+     min-width:183px;
+     max-width:183px;
+}
+
+
+
+
+ QSlider::handle:horizontal {
+     background-image: url(:slider/SAFRI_UI/slider_handle.png);
+     margin-top:-4px;
+     margin-bottom:-3px;
+     width: 16px;
+     height: 15px;
+
+ }
+
+
+ QSlider::groove:horizontal {
+     border-image:  url(:slider/SAFRI_UI/slider_background_empty.png) 0px 4px 4px 0px;
+     border-width: 0px 4px 0px 4px;
+     min-height:8px;
+     max-height:8px;
+     margin-top:4px;
+     margin-bottom:3px;
+     padding-left:-4px;
+     padding-right:-4px;
+
+ }
+
+
+ QSlider::sub-page:horizontal {
+    border-image:  url(:slider/SAFRI_UI/slider_background_filled.png) 0px 4px 4px 0px;
+     border-width: 0px 4px 0px 4px;
+     min-height:8px;
+     max-height:8px;
+     margin-top:4px;
+     margin-bottom:3px;
+ }
+
+
+
+
+
+
+
+
+

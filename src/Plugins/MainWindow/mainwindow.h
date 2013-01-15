@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include "pluginmanager.h"
 #include <QSplitter>
-
+#include <Interfaces/IPlayerWidget.h>
 
 namespace Ui {
 class MainWindow;

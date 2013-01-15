@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>SAFRI_UI/next_icon_1.png</file>
+        <file>SAFRI_UI/next_icon_2.png</file>
+        <file>SAFRI_UI/play_icon.png</file>
+        <file>SAFRI_UI/previous_icon_1.png</file>
+        <file>SAFRI_UI/previous_icon_2.png</file>
+        <file>SAFRI_UI/repeat_icon.png</file>
+        <file>SAFRI_UI/shuffle_icon.png</file>
+    </qresource>
+    <qresource prefix="/backgrounds">
+        <file>SAFRI_UI/background.png</file>
+        <file>SAFRI_UI/Display_bg.png</file>
+    </qresource>
+    <qresource prefix="/slider">
+        <file>SAFRI_UI/slider_background_empty.png</file>
+        <file>SAFRI_UI/slider_background_filled.png</file>
+        <file>SAFRI_UI/slider_handle.png</file>
+    </qresource>
+    <qresource prefix="/buttons">
+        <file>SAFRI_UI/round_big_button_normal.png</file>
+        <file>SAFRI_UI/round_big_button_pressed.png</file>
+        <file>SAFRI_UI/round_middle_button_normal.png</file>
+        <file>SAFRI_UI/round_middle_button_pressed.png</file>
+        <file>SAFRI_UI/round_tiny_button_normal.png</file>
+        <file>SAFRI_UI/round_tiny_button_pressed.png</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file>styles.css</file>
+    </qresource>
+</RCC>

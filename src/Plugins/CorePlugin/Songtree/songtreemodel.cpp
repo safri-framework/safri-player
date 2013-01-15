@@ -113,7 +113,7 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
         }
     }
 
-    mimeData->setData("SongTreeItem", encodedData);
+    mimeData->setData("Item", encodedData);
     mimeData->setUrls(urlList);
     return mimeData;
 
@@ -140,7 +140,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         if (action == Qt::IgnoreAction)
             return true;
 
-        if (!data->hasFormat("SongTreeItem"))
+        if (!data->hasFormat("Item"))
             return false;
 
         int beginRow;
@@ -153,7 +153,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         else
             beginRow = rowCount(QModelIndex());
 
-        QByteArray encodedData = data->data("SongTreeItem");
+        QByteArray encodedData = data->data("Item");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
         QList<SongTreeItem*> draggedItems;
@@ -280,7 +280,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 QStringList SongTreeModel::mimeTypes() const
 {
     QStringList types;
-    types << "SongTreeItem";
+    types << "Item";
     return types;
 }
 

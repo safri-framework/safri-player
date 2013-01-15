@@ -42,7 +42,8 @@ SOURCES += coreplugin.cpp \
     Songtree/changedflags.cpp \
     Songtree/songtreemodel.cpp \ 
     Interfaces/istorageadapterfactory.cpp \
-    Songtree/CoreItemTypes/mediacollectionitemtype.cpp
+    Songtree/CoreItemTypes/mediacollectionitemtype.cpp \
+    Interfaces/IPlayerWidget.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -83,7 +84,8 @@ HEADERS += coreplugin.h\
     Songtree/songtreemodel.h \
     Interfaces/ICollectionController.h \
     Interfaces/istorageadapterfactory.h \
-    Songtree/CoreItemTypes/mediacollectionitemtype.h
+    Songtree/CoreItemTypes/mediacollectionitemtype.h \
+    Interfaces/IPlayerWidget.h
 
 OTHER_FILES += \
     Core.xml

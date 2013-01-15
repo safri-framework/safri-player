@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 #include "iplaylist.h"
-
+#include <QStringList>
 namespace Core { class Song; }
 
 class PlaylistModel : public QAbstractTableModel
@@ -18,8 +18,11 @@ class PlaylistModel : public QAbstractTableModel
 
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
         QVariant data(const QModelIndex &index, int role) const;
-
+        virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+        virtual Qt::ItemFlags flags(const QModelIndex &index) const;
         Core::IPlaylist* getPlaylist();
+        virtual Qt::DropActions supportedDropActions() const;
+        QStringList mimeTypes() const;
 
     private:
 

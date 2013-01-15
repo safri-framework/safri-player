@@ -17,5 +17,6 @@ SUBDIRS += \
     SidebarPluginTest \
     PlaylistWidget \
     SongtreeWidget \
-    CollectionController
+    CollectionController \
+    PlayerWidgetII
 

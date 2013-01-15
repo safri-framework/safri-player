@@ -472,6 +472,7 @@ void AudioCollection::insertSong(Song* song)
 {
     m_lock.lockForWrite();
         m_songList->append(song);
+        song->setMediaCollection(this);
         m_IDtoSongMap->insert(song->getID(), song);
         m_nameToSongMap->insert(song->getName(), song);
     m_lock.unlock();

@@ -156,12 +156,20 @@ void MainWindow::sideBarButtonClicked(bool checked)
 
 void MainWindow::changePlayerWidget()
 {
-    QWidget* playerWidget = guiController->getPlayerWidget();
+    IPlayerWidget* playerWidget = guiController->getPlayerWidget();
 
     //playerWidget->setParent(ui->player_frame->layout());
     //qDebug()<< "Nullpointer: " << ui->player_frame->layout();
 
-    ui->playerWidget->layout()->addWidget(playerWidget);
+
+    if(playerWidget->getPreferedPosition() == IPlayerWidget::UNDER_PLAYLIST )
+    {
+        ui->playerWidget->layout()->addWidget(playerWidget);
+    }
+    else
+    {
+        ui->playerWidget_bottom->layout()->addWidget(playerWidget);
+    }
 
     //ui->player_frame->layout()->addWidget(playerWidget);
     //playerWidget->show();

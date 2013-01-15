@@ -2,6 +2,8 @@
 #define PLAYERWIDGETFACTORY_H
 
 #include "Interfaces/iplayerwidgetfactory.h"
+#include "Interfaces/IPlayerWidget.h"
+
 
 class PlayerWidgetFactory : public Core::IPlayerWidgetFactory
 {
@@ -9,8 +11,10 @@ class PlayerWidgetFactory : public Core::IPlayerWidgetFactory
 
         explicit PlayerWidgetFactory();
 
-        virtual QWidget* createWidget();
+
+        virtual IPlayerWidget* createWidget();
         virtual QString getName();
+
 };
 
 #endif // PLAYERWIDGETFACTORY_H

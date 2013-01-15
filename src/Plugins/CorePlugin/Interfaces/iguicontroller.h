@@ -4,7 +4,7 @@
 #include "../CorePlugin_global.h"
 #include <QObject>
 #include <QList>
-
+#include "../Interfaces/IPlayerWidget.h"
 class QWidget;
 
 namespace Core
@@ -19,7 +19,7 @@ namespace Core
 
             virtual ~IGUIController();
 
-            virtual QWidget* getPlayerWidget() = 0;
+            virtual IPlayerWidget* getPlayerWidget() = 0;
             virtual IPlaylistWidget* getPlaylistWidget() = 0;
             virtual QList<ISideBarPlugin*> getSideBarPlugins() = 0;
 

@@ -1,7 +1,10 @@
 #include "playlistmodel.h"
 #include "CoreData/media.h"
 #include "CoreData/song.h"
+#include "CoreData/item.h"
+#include "CoreData/media.h"
 #include <QDebug>
+#include <QMimeData>
 
 PlaylistModel::PlaylistModel(Core::IPlaylist *playlist, QObject *parent) :
     QAbstractTableModel(parent), playlist(playlist)
@@ -28,6 +31,75 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     }
 
     return 0;
+}
+
+bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    QList<Core::Media*> mediaList;
+
+    if (data->hasFormat("Item"))
+    {
+
+        QByteArray encodedData = data->data("Item");
+        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+        QList<Core::Item*> draggedItems;
+
+
+        while (!stream.atEnd()) {
+            qint64 id;
+            int row;
+            int column;
+            QString text;
+            qint64 pointer;
+            stream >> id >> row >> column >> text >> pointer ;
+            //newItems[id][row][column] = text;
+            Core::Item* item = (Core::Item*) pointer;
+            draggedItems.append(item);
+
+
+        }
+
+
+
+        for ( int i = 0; i < draggedItems.size(); i++)
+        {
+            mediaList.append(draggedItems.at(i)->getMedia());
+        }
+
+
+        for(int i=0; i<mediaList.size(); i++)
+        {
+            qDebug()<<mediaList.at(i)->getName();
+        }
+
+
+
+    }
+}
+
+Qt::DropActions PlaylistModel::supportedDropActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
+}
+
+
+QStringList PlaylistModel::mimeTypes() const
+{
+    QStringList types = QAbstractItemModel::mimeTypes();
+    types << "text/uri-list";
+
+    return types;
+}
+
+Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
+{
+    Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
+
+    if (index.isValid())
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+    else
+        return Qt::ItemIsDropEnabled | defaultFlags;
 }
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const

@@ -5,6 +5,7 @@
 #include "../CorePlugin/Songtree/CoreItemTypes/artistitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/songitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/mediacollectionitemtype.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
 #include "../PluginSystem/pluginmanager.h"
 #include <QDebug>
@@ -67,6 +68,7 @@ void SongtreeWidget::loadSongtreeModel()
 void SongtreeWidget::buildHierarchy()
 {
      treeHierarchy = new QList<ITreeItemType*>();
+     treeHierarchy->append(new MediaCollectionItemType());
      treeHierarchy->append(new GenreItemType());
      treeHierarchy->append(new ArtistItemType());
      treeHierarchy->append(new AlbumItemType());

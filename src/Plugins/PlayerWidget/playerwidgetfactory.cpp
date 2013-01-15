@@ -5,7 +5,7 @@ PlayerWidgetFactory::PlayerWidgetFactory()
 {
 }
 
-QWidget *PlayerWidgetFactory::createWidget()
+IPlayerWidget *PlayerWidgetFactory::createWidget()
 {
     return new PlayerWidget;
 }

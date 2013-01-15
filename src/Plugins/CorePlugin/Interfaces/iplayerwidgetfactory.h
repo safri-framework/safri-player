@@ -4,6 +4,9 @@
 #include <QWidget>
 
 #include "../CorePlugin_global.h"
+#include "IPlayerWidget.h"
+
+
 
 namespace Core
 {
@@ -14,8 +17,9 @@ namespace Core
 
             virtual ~IPlayerWidgetFactory();
 
-            virtual QWidget* createWidget() = 0;
+            virtual IPlayerWidget* createWidget() = 0;
             virtual QString getName() = 0;
+
     };
 }
 

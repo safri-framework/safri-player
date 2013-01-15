@@ -6,7 +6,7 @@
 #include <QList>
 
 namespace Core
-{
+{    
     class IPlaylist;
     class Item;
 
@@ -21,7 +21,6 @@ namespace Core
             virtual void showPlaylist(IPlaylist *playlist) = 0;
             virtual void showCurrentPlaylist() = 0;
             virtual IPlaylist* newPlaylist() = 0;
-
         public slots:
 
             virtual void itemsSelected(QList<Item*> selection) = 0;

@@ -9,7 +9,7 @@ PlayerWidgetPlugin::PlayerWidgetPlugin()
 
 bool PlayerWidgetPlugin::initialize(QStringList &arguments)
 {
-    addObject(new PlayerWidgetFactory());
+   addObject(new PlayerWidgetFactory());
     return true;
 }
 
