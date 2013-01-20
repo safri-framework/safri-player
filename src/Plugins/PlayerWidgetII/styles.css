@@ -78,7 +78,6 @@ QPushButton:pressed[type="player_button"][button_size ="middle"]
 
 
 
-
 QPushButton[type="player_button"][button_size ="big"]
 {
     min-width:45px;

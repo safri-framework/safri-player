@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun 20. Jan 18:42:19 2013
+** Created: Sun 20. Jan 21:09:35 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,7 +20,6 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QSpacerItem>
-#include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
@@ -57,12 +56,12 @@ public:
     QVBoxLayout *verticalLayout_7;
     QMenuBar *menubar;
     QMenu *menuPlugin;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+        MainWindow->setEnabled(true);
         MainWindow->resize(800, 600);
         actionPlugins_show = new QAction(MainWindow);
         actionPlugins_show->setObjectName(QString::fromUtf8("actionPlugins_show"));
@@ -193,9 +192,6 @@ public:
         menuPlugin = new QMenu(menubar);
         menuPlugin->setObjectName(QString::fromUtf8("menuPlugin"));
         MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuPlugin->menuAction());
         menuPlugin->addAction(actionPlugins_show);

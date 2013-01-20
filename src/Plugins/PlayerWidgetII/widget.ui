@@ -266,7 +266,7 @@ By the way</string>
           </spacer>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider">
+          <widget class="QSlider" name="volume_slider">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>

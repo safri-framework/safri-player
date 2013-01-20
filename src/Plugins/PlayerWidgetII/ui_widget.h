@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created: Sun 20. Jan 17:53:13 2013
+** Created: Sun 20. Jan 20:24:21 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,7 +48,7 @@ public:
     QPushButton *next;
     QPushButton *repeat;
     QSpacerItem *horizontalSpacer;
-    QSlider *horizontalSlider;
+    QSlider *volume_slider;
 
     void setupUi(QWidget *Widget)
     {
@@ -176,11 +176,11 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer);
 
-        horizontalSlider = new QSlider(widget_3);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        volume_slider = new QSlider(widget_3);
+        volume_slider->setObjectName(QString::fromUtf8("volume_slider"));
+        volume_slider->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_2->addWidget(horizontalSlider);
+        horizontalLayout_2->addWidget(volume_slider);
 
 
         horizontalLayout->addWidget(widget_3);

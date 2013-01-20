@@ -28,6 +28,10 @@ private slots:
     void stateChanged(playState state);
     void on_seek_slider_sliderMoved(int position);
 
+
+
+    void on_volume_slider_sliderMoved(int position);
+
 private:
     IPlaybackController* m_pbController;
     Ui::Widget *ui;
