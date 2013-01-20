@@ -3,5 +3,13 @@
         <file>stylesheet.css</file>
     </qresource>
     <qresource prefix="/icons"/>
-    <qresource prefix="/border_images"/>
+    <qresource prefix="/border_images">
+        <file>SAFRI_UI/sidebar_background.png</file>
+        <file>SAFRI_UI/search_fokus.png</file>
+        <file>SAFRI_UI/search_normal.png</file>
+    </qresource>
+    <qresource prefix="/buttons">
+        <file>SAFRI_UI/tab_normal.png</file>
+        <file>SAFRI_UI/tab_selected.png</file>
+    </qresource>
 </RCC>

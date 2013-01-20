@@ -140,7 +140,26 @@
           </property>
           <item>
            <widget class="QWidget" name="widget_frame" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_4"/>
+            <property name="type" stdset="0">
+             <string>frame</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
+            </layout>
            </widget>
           </item>
           <item>
@@ -151,7 +170,25 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="type" stdset="0">
+             <string>frame</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_2" stretch="80,0">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
              <item>
               <widget class="QWidget" name="playlistWidget" native="true">
                <property name="sizePolicy">

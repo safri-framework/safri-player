@@ -7,10 +7,14 @@
         <file>SAFRI_UI/previous_icon_2.png</file>
         <file>SAFRI_UI/repeat_icon.png</file>
         <file>SAFRI_UI/shuffle_icon.png</file>
+        <file>SAFRI_UI/pause_icon2.png</file>
     </qresource>
     <qresource prefix="/backgrounds">
         <file>SAFRI_UI/background.png</file>
         <file>SAFRI_UI/Display_bg.png</file>
+        <file>SAFRI_UI/background_3.png</file>
+        <file>SAFRI_UI/seeker_filled.png</file>
+        <file>SAFRI_UI/seeker_groove.png</file>
     </qresource>
     <qresource prefix="/slider">
         <file>SAFRI_UI/slider_background_empty.png</file>
@@ -24,8 +28,16 @@
         <file>SAFRI_UI/round_middle_button_pressed.png</file>
         <file>SAFRI_UI/round_tiny_button_normal.png</file>
         <file>SAFRI_UI/round_tiny_button_pressed.png</file>
+        <file>SAFRI_UI/round_big_button_hover.png</file>
+        <file>SAFRI_UI/round_middle_button_hover.png</file>
+        <file>SAFRI_UI/round_tiny_button_hover.png</file>
     </qresource>
     <qresource prefix="/style">
         <file>styles.css</file>
+    </qresource>
+    <qresource prefix="/seeker">
+        <file>SAFRI_UI/seeker_filled.png</file>
+        <file>SAFRI_UI/seeker_groove.png</file>
+        <file>SAFRI_UI/seeker_handle.png</file>
     </qresource>
 </RCC>

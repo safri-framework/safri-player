@@ -1,3 +1,47 @@
+QWidget[type="frame"]
+{
+    background-color:#d3d3d3;
+}
+
+
+QHeaderView
+{
+    min-height:20;
+    max-height:20;
+}
+
+QHeaderView::section
+{
+   /* f1f1f1 0.5 e4e4e4 d9d9d9 */
+
+padding-left:10px;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                    stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+border-top: none;
+border-right: 1px solid #818181;
+border-bottom: 1px solid #818181;
+border-left:none;
+
+min-height:19;
+max-height:19;
+
+
+}
+QHeaderView::section:last, QHeaderView::section:only-one
+{
+border-right: none;
+
+}
+
+QLineEdit[type="search"]
+{
+    border-image: url(:border_images/SAFRI_UI/search_normal.png) 0px 10px 0px 25px;
+    border-width:0px 10px 0px 25px;
+    min-height:21px;
+    max-height:21px;
+}
+
+
 QToolBar[type="playlistToolbar"], QToolBar[type="playerControls"]
 {
     border:none;
@@ -27,8 +71,8 @@ QWidget[place="widget_left"][type="frame"]
 
 QSplitter:handle
 {
-    height: 1px;
-    background-color: grey;
+    height: 10px;
+    background-color:#d3d3d3;
     /*
     border-style: solid;
     border-right-width: 1px;
@@ -63,49 +107,35 @@ PlayerWidget
 QWidget[place="menu_left"][type="frame"]
 {
 
-  background: qlineargradient(
-                x1: 0, y1: 0, x2: 1, y2: 0,
-                stop: 0 #E0E0E0, stop:  1.0 white);
-/*
-
-   background: qlineargradient(
-                x1: 0, y1: 0, x2: 1, y2: 0,
-                stop: 1.0 #F0F0F0, stop:  0 #64828F);
-
-*/
-
-
-
-
-   border-style: solid;
-    border-right-width: 1px;
-border-color: grey;
+    background-image: url(:border_images/SAFRI_UI/sidebar_background.png);
+    min-width:77px;
+    max-width:77px;
 
 }
 
 
 QPushButton[place="menu_left"][type="menu_button"]
 {
-        background-color: transparent;
-        border-top-width: 1px;
-        border-style: solid;
-        border-color: grey;
-        min-height: 60px;
-        max-height:60px;
+    min-width:66px;
+    max-width:66px;
+    min-height:70px;
+    max-height:70px;
+    margin-left:11px;
+    margin-bottom: -1px;
 
-
+    border-image: url(:buttons/SAFRI_UI/tab_normal.png);
 }
 
 
 QPushButton[place="menu_left"][type="menu_button_last"]
 {
-        background-color: transparent;
-        border-bottom-width: 1px;
-        border-top-width: 1px;
-        border-style: solid;
-        border-color: grey;
-        min-height: 60px;
-        max-height:60px;
+    min-width:66px;
+    max-width:66px;
+    min-height:70px;
+    max-height:70px;
+    margin-left:11px;
+
+    border-image: url(:buttons/SAFRI_UI/tab_normal.png);
 
 
 }
@@ -115,24 +145,16 @@ QPushButton[place="menu_left"][type="menu_button_last"]
 QPushButton:checked[place="menu_left"][type="menu_button"]
 {
 
- background: qlineargradient(
-                x1: 0, y1: 0, x2: 1, y2: 0,
-                stop: 1.0 #F0F0F0, stop:  0 #64828F);
-color: black;
-
-
+border-image: url(:buttons/SAFRI_UI/tab_selected.png);
 
 }
+
 
 QPushButton:checked[place="menu_left"][type="menu_button_last"]
 {
-
-   background: qlineargradient(
-                x1: 0, y1: 0, x2: 1, y2: 0,
-                stop: 1.0 #F0F0F0, stop:  0 #64828F);
-color: black;
-
+    border-image: url(:buttons/SAFRI_UI/tab_selected.png);
 }
+
 
 QTreeView[place="widget_left"][type="songtree_view"]
 {

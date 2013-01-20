@@ -124,11 +124,13 @@ void PlaybackController::playStateSlot()
         qDebug()<<"x -> Play";
     }
     currentState = m_play;
+    Q_EMIT stateChanged(Core::PLAY);
 }
 
 void PlaybackController::pauseStateSlot()
 {
     currentState = m_pause;
+    Q_EMIT stateChanged(Core::PAUSE);
     m_pauseAction->setDisabled(true);
     m_playAction->setEnabled(true);
     audioBackend->pause();
@@ -139,6 +141,7 @@ void PlaybackController::pauseStateSlot()
 void PlaybackController::stopStateSlot()
 {
     currentState = m_stop;
+    Q_EMIT stateChanged(Core::STOP);
     m_playAction->setEnabled(true);
     m_playPauseAction->setEnabled(true);
     m_pauseAction->setEnabled(false);
@@ -150,19 +153,26 @@ void PlaybackController::stopStateSlot()
 
 void PlaybackController::currentSongFinished()
 {
+    qDebug()<<playlist->getCurrentMediaPosition();
+    qDebug()<<playlist->getSize();
     if (!stopped)
     {
        m_stopAction->trigger();
-       Core::Media* nextMedia = playlist->getNextMedia();
+
        //nextSong->ReadTags(); TODO
-       if (nextMedia != currentMedia)
+
+
+       //if (nextMedia != currentMedia) // Was passiert, wenn zweimal der gleiche Zeiger in der PLaylist liegt? Fixversuch:
+       if(playlist->getCurrentMediaPosition()+1 < playlist->getSize()) //check obs noch mit random funzt
        {
+           Core::Media* nextMedia = playlist->getNextMedia();
+           qDebug()<<"nextSong";
            currentMedia = nextMedia;
            m_playPauseAction->trigger();          
        }
        else
        {
-           m_stopAction->trigger();
+           m_stopAction->trigger();           
        }
     }
 }
@@ -175,6 +185,7 @@ void PlaybackController::noDataSlot()
     m_nextAction->setDisabled(true);
     m_previousAction->setDisabled(true);
     m_playPauseAction->setDisabled(true);
+    Q_EMIT stateChanged(Core::NODATA);
 
 }
 

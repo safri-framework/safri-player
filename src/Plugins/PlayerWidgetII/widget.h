@@ -22,12 +22,16 @@ public:
     ~Widget();
 
 private slots:
-    void mediaChanged(Media* media);
+    void mediaChanged(Core::Media* media);
     void update(int currentTime);
+    void actionChanged();
+    void stateChanged(playState state);
+    void on_seek_slider_sliderMoved(int position);
 
 private:
     IPlaybackController* m_pbController;
     Ui::Widget *ui;
+
 };
 
 #endif // WIDGET_H

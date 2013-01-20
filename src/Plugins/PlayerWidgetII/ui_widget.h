@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created: Tue 15. Jan 21:31:37 2013
+** Created: Sun 20. Jan 17:53:13 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,18 +31,15 @@ public:
     QVBoxLayout *verticalLayout;
     QWidget *widget;
     QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer_3;
     QWidget *widget_4;
-    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout_2;
     QSlider *seek_slider;
-    QSpacerItem *horizontalSpacer;
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_2;
     QLabel *label;
     QSpacerItem *horizontalSpacer_5;
-    QLabel *label_3;
-    QSpacerItem *horizontalSpacer_2;
+    QLabel *time_label;
     QWidget *widget_3;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *random;
@@ -50,13 +47,14 @@ public:
     QPushButton *play;
     QPushButton *next;
     QPushButton *repeat;
-    QSpacerItem *horizontalSpacer_4;
+    QSpacerItem *horizontalSpacer;
+    QSlider *horizontalSlider;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
-        Widget->resize(750, 305);
+        Widget->resize(1123, 305);
         verticalLayout = new QVBoxLayout(Widget);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -64,31 +62,30 @@ public:
         widget = new QWidget(Widget);
         widget->setObjectName(QString::fromUtf8("widget"));
         horizontalLayout = new QHBoxLayout(widget);
-        horizontalLayout->setSpacing(6);
+        horizontalLayout->setSpacing(30);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_3);
-
+        horizontalLayout->setContentsMargins(30, -1, 30, -1);
         widget_4 = new QWidget(widget);
         widget_4->setObjectName(QString::fromUtf8("widget_4"));
-        horizontalLayout_3 = new QHBoxLayout(widget_4);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        verticalLayout_2 = new QVBoxLayout(widget_4);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         seek_slider = new QSlider(widget_4);
         seek_slider->setObjectName(QString::fromUtf8("seek_slider"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(1);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(seek_slider->sizePolicy().hasHeightForWidth());
+        seek_slider->setSizePolicy(sizePolicy);
+        seek_slider->setMaximum(1000);
         seek_slider->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_3->addWidget(seek_slider);
+        verticalLayout_2->addWidget(seek_slider);
 
 
         horizontalLayout->addWidget(widget_4);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
 
         widget_2 = new QWidget(widget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
@@ -111,37 +108,38 @@ public:
 
         horizontalLayout_4->addItem(horizontalSpacer_5);
 
-        label_3 = new QLabel(widget_2);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        time_label = new QLabel(widget_2);
+        time_label->setObjectName(QString::fromUtf8("time_label"));
+        QFont font;
+        font.setPointSize(20);
+        time_label->setFont(font);
 
-        horizontalLayout_4->addWidget(label_3);
+        horizontalLayout_4->addWidget(time_label);
 
 
         horizontalLayout->addWidget(widget_2);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_2);
-
         widget_3 = new QWidget(widget);
         widget_3->setObjectName(QString::fromUtf8("widget_3"));
         horizontalLayout_2 = new QHBoxLayout(widget_3);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setSpacing(5);
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         random = new QPushButton(widget_3);
         random->setObjectName(QString::fromUtf8("random"));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/icons/SAFRI_UI/shuffle_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         random->setIcon(icon);
+        random->setCheckable(true);
 
         horizontalLayout_2->addWidget(random);
 
         previous = new QPushButton(widget_3);
         previous->setObjectName(QString::fromUtf8("previous"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/icons/SAFRI_UI/previous_icon_2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/icons/SAFRI_UI/previous_icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
         previous->setIcon(icon1);
+        previous->setIconSize(QSize(17, 14));
 
         horizontalLayout_2->addWidget(previous);
 
@@ -149,16 +147,19 @@ public:
         play->setObjectName(QString::fromUtf8("play"));
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/icons/SAFRI_UI/play_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/icons/SAFRI_UI/play_icon.png"), QSize(), QIcon::Normal, QIcon::On);
         play->setIcon(icon2);
-        play->setIconSize(QSize(17, 19));
+        play->setIconSize(QSize(19, 19));
+        play->setCheckable(false);
 
         horizontalLayout_2->addWidget(play);
 
         next = new QPushButton(widget_3);
         next->setObjectName(QString::fromUtf8("next"));
         QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/icons/SAFRI_UI/next_icon_2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/icons/SAFRI_UI/next_icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
         next->setIcon(icon3);
+        next->setIconSize(QSize(17, 14));
 
         horizontalLayout_2->addWidget(next);
 
@@ -171,12 +172,18 @@ public:
 
         horizontalLayout_2->addWidget(repeat);
 
+        horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+        horizontalSlider = new QSlider(widget_3);
+        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        horizontalSlider->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_2->addWidget(horizontalSlider);
+
 
         horizontalLayout->addWidget(widget_3);
-
-        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_4);
 
 
         verticalLayout->addWidget(widget);
@@ -192,11 +199,12 @@ public:
         Widget->setWindowTitle(QApplication::translate("Widget", "Widget", 0, QApplication::UnicodeUTF8));
         Widget->setProperty("type", QVariant(QApplication::translate("Widget", "mainframe", 0, QApplication::UnicodeUTF8)));
         widget->setProperty("type", QVariant(QApplication::translate("Widget", "inner_mainframe", 0, QApplication::UnicodeUTF8)));
+        seek_slider->setProperty("type", QVariant(QApplication::translate("Widget", "seeker", 0, QApplication::UnicodeUTF8)));
         widget_2->setProperty("type", QVariant(QApplication::translate("Widget", "display", 0, QApplication::UnicodeUTF8)));
         label_2->setText(QString());
         label->setText(QApplication::translate("Widget", "Red hot chili Peppers \n"
 "By the way", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("Widget", "2:47", 0, QApplication::UnicodeUTF8));
+        time_label->setText(QString());
         random->setText(QString());
         random->setProperty("type", QVariant(QApplication::translate("Widget", "player_button", 0, QApplication::UnicodeUTF8)));
         random->setProperty("button_size", QVariant(QApplication::translate("Widget", "little", 0, QApplication::UnicodeUTF8)));

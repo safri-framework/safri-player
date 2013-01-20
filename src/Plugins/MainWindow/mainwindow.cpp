@@ -117,8 +117,8 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
 
 void MainWindow::showTestPlaylist()
 {
-    Core::Song *testMp31 = new Core::Song(1, "Test", 2012, "/home/sascha/hold_the_line.mp3", this);
-    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "/home/sascha/htl_solo.mp3", this);
+    Core::Song *testMp31 = new Core::Song(1, "Test", 2012, "D:/Musik/Musik/Red Hot Chili Peppers/Red Hot Chili Peppers - Live/Live At Slane Castle (Audio DVD)/Around The World.mp3", this);
+    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "D:/Musik/Musik/Red Hot Chili Peppers/Red Hot Chili Peppers - Live/Live At Slane Castle (Audio DVD)/Parallel Universe.mp3", this);
 
     Core::Artist *artist = new Core::Artist(1, "Artist Foo", this);
     Core::Album  *album = new Core::Album(1, "Album Foo", this);

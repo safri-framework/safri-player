@@ -13,6 +13,7 @@ PhononBackend::PhononBackend()
 
     mediaObject->setTickInterval(1000);
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(tick(qint64)));
+    connect(mediaObject, SIGNAL(finished()), this, SIGNAL(mediaFinished()));
 }
 
 int PhononBackend::getTotalTime()

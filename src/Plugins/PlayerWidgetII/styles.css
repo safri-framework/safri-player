@@ -1,6 +1,6 @@
 QWidget[type="inner_mainframe"]
 {
-    border-image: url(:backgrounds/SAFRI_UI/background.png) 2px 2px 2px 2px;
+    border-image: url(:backgrounds/SAFRI_UI/background_3.png) 2px 2px 2px 2px;
     border-width:2px;
 
 }
@@ -9,19 +9,17 @@ QWidget[type="mainframe"]
 {
 border-top: 1px solid green;
 border-bottom: 1px solid red;
-min-height:96px;
-max-height:96px;
+min-height:93px;
+max-height:93px;
 }
 
 
 QWidget[type="display"]
 {
 border-image: url(:backgrounds/SAFRI_UI/Display_bg.png) 12px 12px 12px 12px;
-
-min-width:380px;
-max-width:380;
-min-height:64px;
-max-height:64px;
+border-width:12px;
+min-height:40px;
+max-height:40px;
 }
 
 
@@ -34,25 +32,24 @@ QPushButton[type="player_button"][button_size ="little"]
     border-image: url(:buttons/SAFRI_UI/round_tiny_button_normal.png);
 }
 
+QPushButton:hover[type="player_button"][button_size ="little"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_tiny_button_hover.png);
+}
+
+
 QPushButton:pressed[type="player_button"][button_size ="little"]
 {
 
     border-image: url(:buttons/SAFRI_UI/round_tiny_button_pressed.png);
 }
 
-
-QPushButton[type="player_button"][button_size ="little"][side="r"]
+QPushButton:checked[type="player_button"][button_size ="little"]
 {
-    min-height:23px;
-    max-height:23px;
-    min-width:24px;
-    max-width:24px;
-    padding-bottom:2px;
-    padding-left:1px;
 
+    border-image: url(:buttons/SAFRI_UI/round_tiny_button_pressed.png);
 }
-
-
 
 
 
@@ -65,6 +62,12 @@ QPushButton[type="player_button"][button_size ="middle"]
     border-image: url(:buttons/SAFRI_UI/round_middle_button_normal.png);
 }
 
+QPushButton:hover[type="player_button"][button_size="middle"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_middle_button_hover.png);
+}
+
 QPushButton:pressed[type="player_button"][button_size ="middle"]
 {
 
@@ -72,43 +75,28 @@ QPushButton:pressed[type="player_button"][button_size ="middle"]
 }
 
 
-QPushButton[type="player_button"][button_size ="middle"][side="r"]
-{
-/*
-
-    min-height:23px;
-    max-height:23px;
-    */
-    min-width:32px;
-    max-width:32px;
 
 
-    padding-bottom:0px;
-    padding-left:3px;
-}
 
-/*
-QPushButton[type="player_button"][button_size ="middle"][side="l"]
-{
-
-    min-height:23px;
-    max-height:23px;
-    min-width:33px;
-    max-width:33px;
-    padding-bottom:2px;
-    padding-left:2px;
-}
-*/
 
 QPushButton[type="player_button"][button_size ="big"]
 {
-    min-width:41px;
-    max-width:41px;
-    min-height:43px;
-    max-height:43px;
+    min-width:45px;
+    max-width:45px;
+    min-height:45px;
+    max-height:45px;
+  /*
     padding-left:4px;
     padding-bottom:2px;
+*/
     border-image: url(:buttons/SAFRI_UI/round_big_button_normal.png);
+}
+
+
+QPushButton:hover[type="player_button"][button_size ="big"]
+{
+
+    border-image: url(:buttons/SAFRI_UI/round_big_button_hover.png);
 }
 
 QPushButton:pressed[type="player_button"][button_size ="big"]
@@ -132,12 +120,10 @@ QPushButton:pressed[type="player_button"][button_size ="big"]
 QSlider
 {
 
-     min-height:15px;
-     max-height:15px;
-     min-width:183px;
-     max-width:183px;
-}
+     min-height:16px;
+     max-height:16px;
 
+}
 
 
 
@@ -146,16 +132,16 @@ QSlider
      margin-top:-4px;
      margin-bottom:-3px;
      width: 16px;
-     height: 15px;
+     height: 16px;
 
  }
 
 
  QSlider::groove:horizontal {
-     border-image:  url(:slider/SAFRI_UI/slider_background_empty.png) 0px 4px 4px 0px;
+     border-image:  url(:slider/SAFRI_UI/slider_background_empty.png) 0px 4px 0px 4px;
      border-width: 0px 4px 0px 4px;
-     min-height:8px;
-     max-height:8px;
+     min-height:9px;
+     max-height:9px;
      margin-top:4px;
      margin-bottom:3px;
      padding-left:-4px;
@@ -167,13 +153,43 @@ QSlider
  QSlider::sub-page:horizontal {
     border-image:  url(:slider/SAFRI_UI/slider_background_filled.png) 0px 4px 4px 0px;
      border-width: 0px 4px 0px 4px;
-     min-height:8px;
-     max-height:8px;
+     min-height:9px;
+     max-height:9px;
      margin-top:4px;
      margin-bottom:3px;
  }
 
 
+
+
+ QSlider::handle:horizontal[type="seeker"] {
+     background:none;
+     margin-top:3px;
+     margin-bottom:3px;
+     width: 8px;
+     height: 9px;
+
+
+ }
+
+
+ QSlider::groove:horizontal[type="seeker"]  {
+     border-image:  url(:seeker/SAFRI_UI/seeker_groove.png) 0px 4px 0px 4px;
+     border-width: 0px 4px 0px 4px;
+     min-height:10px;
+     max-height:10px;
+
+ }
+
+
+ QSlider::sub-page:horizontal[type="seeker"]  {
+    border-image:  url(:seeker/SAFRI_UI/seeker_filled.png) 0px 1px 0px 4px;
+     border-width: 0px 1px 0px 4px;
+     min-height:10px;
+     max-height:10px;
+     padding-left:5px;
+     min-width:5px;
+}
 
 
 

@@ -142,6 +142,9 @@ namespace Core
 
         virtual void disconnectPlaylist() = 0;
 
+
+        virtual int getCurrentMediaPosition() = 0;
+
     signals:
 
        // void positionOfActuallyPlayingSongChanged(int from, int to);

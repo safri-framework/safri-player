@@ -343,6 +343,11 @@ void Playlist::appendMedia(Media* media)
     Q_EMIT MediaInserted(position, 1);
 }
 
+int Playlist::getCurrentMediaPosition()
+{
+    return currentMedia;
+}
+
 
 
 int Playlist::getSize()
