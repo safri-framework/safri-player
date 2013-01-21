@@ -1,5 +1,4 @@
 #include "song.h"
-
 using namespace Core;
 
 QMap<QString, Song*> Song::songsByName;

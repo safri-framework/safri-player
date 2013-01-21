@@ -4,6 +4,7 @@
 #include "icore.h"
 #include <QDebug>
 #include <QIcon>
+#include "../CorePlugin/CoreData/song.h"
 
 Widget::Widget(QWidget *parent) :
     IPlayerWidget(parent),
@@ -50,7 +51,12 @@ void Widget::mediaChanged(Core::Media *media)
     int totalTime = m_pbController->getMediaTotalTime();
     ui->seek_slider->setMaximum(totalTime);
     ui->seek_slider->setValue(0);
-    qDebug()<<media->getType()<<"  TYPE";
+    if ( media->getType() == Core::Media::SONG)
+    {
+        Core::Song* song = qobject_cast<Core::Song*>(media);
+        if(song)
+        ui->infoLabel->setText(song->getArtist()->getName() + "\n" + song->getName());
+    }
 
 }
 

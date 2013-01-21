@@ -15,7 +15,6 @@ SongTree::SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy)
 
     for (int i = 0;  i < songs.size(); i++)
     {
-        qDebug()<<i;
         rootNode->addSong(songs.at(i));
     }
 }

@@ -1,6 +1,7 @@
 #include "audiocollectionbuilder.h"
 #include <Interfaces/ITableModel.h>
 #include <QList>
+#include <QDebug>
 
 AudioCollectionBuilder::AudioCollectionBuilder(QObject *parent) :
     IMediaCollectionBuilder(parent)
@@ -176,6 +177,7 @@ void AudioCollectionBuilder::buildSongs(IStorageAdapter *storageAdapter, AudioCo
     int idIndex = table->indexOfColumn("id");
     int nameIndex = table->indexOfColumn("song");
     int yearIndex = table->indexOfColumn("year");
+    int filenameIndex = table->indexOfColumn("filename");
     int artistIdIndex = table->indexOfColumn("artist_id");
     int genreIdIndex = table->indexOfColumn("genre_id");
     int albumIdIndex = table->indexOfColumn("album_id");
@@ -188,6 +190,7 @@ void AudioCollectionBuilder::buildSongs(IStorageAdapter *storageAdapter, AudioCo
     int genreID;
     int albumID;
     QString name;
+    QString filename;
     Song* song;
     Artist* artist;
     Genre* genre;
@@ -201,13 +204,14 @@ void AudioCollectionBuilder::buildSongs(IStorageAdapter *storageAdapter, AudioCo
         artistID = table->data(table->index(i,artistIdIndex)).toInt();
         genreID = table->data(table->index(i, genreIdIndex)).toInt();
         albumID = table->data(table->index(i, albumIdIndex)).toInt();
-
+        filename = table->data(table->index(i, filenameIndex)).toString();
         if (id > latestID)
         {
             latestID = id;
         }
 
-        song = new Song(id, name, year, mediaCollection);
+        song = new Song(id, name, year, filename, mediaCollection);
+
 
         artist = mediaCollection->getArtistByID(artistID);
         genre = mediaCollection->getGenreByID(genreID);
