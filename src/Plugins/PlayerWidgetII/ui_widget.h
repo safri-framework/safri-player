@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created: Sun 20. Jan 20:24:21 2013
+** Created: Sun 20. Jan 23:01:22 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,7 +37,7 @@ public:
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_2;
-    QLabel *label;
+    QLabel *infoLabel;
     QSpacerItem *horizontalSpacer_5;
     QLabel *time_label;
     QWidget *widget_3;
@@ -99,10 +99,10 @@ public:
 
         horizontalLayout_4->addWidget(label_2);
 
-        label = new QLabel(widget_2);
-        label->setObjectName(QString::fromUtf8("label"));
+        infoLabel = new QLabel(widget_2);
+        infoLabel->setObjectName(QString::fromUtf8("infoLabel"));
 
-        horizontalLayout_4->addWidget(label);
+        horizontalLayout_4->addWidget(infoLabel);
 
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -111,7 +111,10 @@ public:
         time_label = new QLabel(widget_2);
         time_label->setObjectName(QString::fromUtf8("time_label"));
         QFont font;
+        font.setFamily(QString::fromUtf8("Corbel"));
         font.setPointSize(20);
+        font.setBold(true);
+        font.setWeight(75);
         time_label->setFont(font);
 
         horizontalLayout_4->addWidget(time_label);
@@ -202,9 +205,11 @@ public:
         seek_slider->setProperty("type", QVariant(QApplication::translate("Widget", "seeker", 0, QApplication::UnicodeUTF8)));
         widget_2->setProperty("type", QVariant(QApplication::translate("Widget", "display", 0, QApplication::UnicodeUTF8)));
         label_2->setText(QString());
-        label->setText(QApplication::translate("Widget", "Red hot chili Peppers \n"
+        infoLabel->setText(QApplication::translate("Widget", "Red hot chili Peppers \n"
 "By the way", 0, QApplication::UnicodeUTF8));
+        infoLabel->setProperty("type", QVariant(QApplication::translate("Widget", "info_label", 0, QApplication::UnicodeUTF8)));
         time_label->setText(QString());
+        time_label->setProperty("type", QVariant(QApplication::translate("Widget", "display_label", 0, QApplication::UnicodeUTF8)));
         random->setText(QString());
         random->setProperty("type", QVariant(QApplication::translate("Widget", "player_button", 0, QApplication::UnicodeUTF8)));
         random->setProperty("button_size", QVariant(QApplication::translate("Widget", "little", 0, QApplication::UnicodeUTF8)));

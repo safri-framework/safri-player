@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun 20. Jan 21:09:35 2013
+** Created: Sun 20. Jan 23:27:46 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -62,7 +62,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(800, 600);
+        MainWindow->resize(983, 600);
         actionPlugins_show = new QAction(MainWindow);
         actionPlugins_show->setObjectName(QString::fromUtf8("actionPlugins_show"));
         centralwidget = new QWidget(MainWindow);
@@ -85,7 +85,7 @@ public:
         verticalLayout_5->setSpacing(0);
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalSpacer_2 = new QSpacerItem(42, 28, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        verticalSpacer_2 = new QSpacerItem(42, 35, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         verticalLayout_5->addItem(verticalSpacer_2);
 
@@ -188,7 +188,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 983, 21));
         menuPlugin = new QMenu(menubar);
         menuPlugin->setObjectName(QString::fromUtf8("menuPlugin"));
         MainWindow->setMenuBar(menubar);

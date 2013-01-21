@@ -7,9 +7,21 @@
         <file>SAFRI_UI/sidebar_background.png</file>
         <file>SAFRI_UI/search_fokus.png</file>
         <file>SAFRI_UI/search_normal.png</file>
+        <file>SAFRI_UI/scrollbar_handle.png</file>
+        <file>SAFRI_UI/scrollbar_handle_horizontal.png</file>
+        <file>SAFRI_UI/dropdown_normal.png</file>
+        <file>SAFRI_UI/dropdown_pressed.png</file>
+        <file>SAFRI_UI/dropdown_normal_bg.png</file>
+        <file>SAFRI_UI/dropdown_pressed_bg.png</file>
+        <file>SAFRI_UI/line_edit.png</file>
+        <file>SAFRI_UI/dropdown_arrow.png</file>
+        <file>SAFRI_UI/tiny_button_pressed.png</file>
+        <file>SAFRI_UI/tiny_button_normal1.png</file>
+        <file>SAFRI_UI/tiny_button_hover_2.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>SAFRI_UI/tab_normal.png</file>
         <file>SAFRI_UI/tab_selected.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

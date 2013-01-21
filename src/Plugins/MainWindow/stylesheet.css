@@ -4,6 +4,165 @@ QWidget[type="frame"]
 }
 
 
+  QScrollBar:horizontal {
+      border: none;
+      background: white;
+      height: 11px;
+      margin: 0px;
+  }
+
+  QScrollBar::handle:horizontal {
+    border-image: url(:border_images/SAFRI_UI/scrollbar_handle_horizontal.png) 0px 5px 0px 5px;
+    border-width: 0px 5px 0px 5px;
+    margin-bottom:1px;
+  }
+
+
+  QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal  {
+
+      background: white;
+      height: 0px;
+      subcontrol-origin: margin;
+  }
+
+
+
+QPushButton[type="tiny"]
+{
+    min-height:21px;
+    max-height:21px;
+    min-width::26px;
+    max-width:26px;
+    border-image: url(:border_images/SAFRI_UI/tiny_button_normal1.png);
+
+
+}
+QPushButton:hover[type="tiny"]
+{
+    border-image: url(:border_images/SAFRI_UI/tiny_button_hover_2.png);
+
+
+}
+QPushButton:pressed[type="tiny"],QPushButton:checked[type="tiny"]
+{
+    border-image: url(:border_images/SAFRI_UI/tiny_button_pressed.png);
+
+
+}
+/*
+
+
+*/
+QComboBox
+{
+    min-height: 21px;
+    max-height: 21px;
+
+    border-image: url(:border_images/SAFRI_UI/dropdown_normal_bg.png) 0px 5px 0px 5px;
+    border-width: 0px 5px 0px 5px;
+
+}
+
+QComboBox:on
+{
+    border-image: url(:border_images/SAFRI_UI/dropdown_pressed_bg.png);
+}
+
+ QComboBox::down-arrow {
+     image: url(:border_images/SAFRI_UI/dropdown_arrow.png);
+     background:none;
+ }
+
+
+ QComboBox::drop-down {
+     subcontrol-origin: padding;
+     subcontrol-position: top right;
+     width: 15px;
+    background-color:transparent;
+    border:none;
+ }
+
+
+QMenuBar
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #686868, stop: 0.5 #545454 stop: 0.51 #494949 stop: 1.0 #4b4b4b);
+    padding-left: 77px;
+
+}
+
+
+
+QMenuBar::item
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #686868, stop: 0.5 #545454 stop: 0.51 #494949 stop: 1.0 #4b4b4b);
+    color: #e5e5ea
+
+}
+
+QMenuBar::item:selected
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #4b4b4b, stop: 1 #686868);
+
+    color: #e5e5ea;
+    border-width:0 1px 0 1px 0;
+    border-style:solid;
+    border-color: black;
+
+}
+
+
+
+
+  QScrollBar:vertical {
+      border: none;
+      background: white;
+      width: 11px;
+      margin: 20px 0px 0px 0px;
+
+  }
+  QScrollBar::handle:vertical {
+    border-image: url(:border_images/SAFRI_UI/scrollbar_handle.png) 5px 0px 5px 0px;
+    border-width: 5px 0px 5px 0px;
+    margin-right:1px;
+    margin-bottom:1px;
+  }
+
+
+  QScrollBar::add-line:vertical {
+
+    border-bottom: none;
+      background: red;
+      height: 0px;
+      subcontrol-position: bottom;
+
+      subcontrol-origin: margin;
+  }
+
+  QScrollBar::sub-line:vertical {
+      border-bottom: 1px solid #818181;
+      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+      stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+      height: 19px;
+      subcontrol-position: top;
+      subcontrol-origin: margin;
+  }
+  /*
+  QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+      border: 2px solid grey;
+      width: 3px;
+      height: 3px;
+      background: white;
+  }
+*/
+  QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+      background: none;
+  }
+
+
+
 QHeaderView
 {
     min-height:20;
@@ -89,13 +248,14 @@ QWebView
    border-width: 5px;
 }
 
-
+/*
 QTreeView[type="playlistView"]
 {
 
     border-color:transparent;
+    padding-bottom:1px;
 }
-
+*/
 
 PlayerWidget
 {
@@ -156,13 +316,15 @@ QPushButton:checked[place="menu_left"][type="menu_button_last"]
 }
 
 
+/*
+
 QTreeView[place="widget_left"][type="songtree_view"]
 {
         border-width:0px;
         border-color:transparent;
 
 }
-
+*/
 QWidget[place="webview_frame"]
 {
 
@@ -201,9 +363,17 @@ QPushButton[type="nav_bar_button"][place="left_widget"]
 
 
 */
+QWidget[type="treeView"]
+{
+    border: none;
 
+}
 
-
+QWidget[type="treeViewFrame"]
+{
+    border: 1px solid #3f3f3f;
+    padding:1px;
+}
 
 /*
 

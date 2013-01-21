@@ -50,6 +50,8 @@ void Widget::mediaChanged(Core::Media *media)
     int totalTime = m_pbController->getMediaTotalTime();
     ui->seek_slider->setMaximum(totalTime);
     ui->seek_slider->setValue(0);
+    qDebug()<<media->getType()<<"  TYPE";
+
 }
 
 

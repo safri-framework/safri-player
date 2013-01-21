@@ -80,10 +80,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="infoLabel">
            <property name="text">
             <string>Red hot chili Peppers 
 By the way</string>
+           </property>
+           <property name="type" stdset="0">
+            <string>info_label</string>
            </property>
           </widget>
          </item>
@@ -104,11 +107,17 @@ By the way</string>
           <widget class="QLabel" name="time_label">
            <property name="font">
             <font>
+             <family>Corbel</family>
              <pointsize>20</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="type" stdset="0">
+            <string>display_label</string>
            </property>
           </widget>
          </item>
