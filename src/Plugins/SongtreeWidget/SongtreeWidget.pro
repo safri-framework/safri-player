@@ -32,3 +32,6 @@ FORMS += \
 OTHER_FILES += \
     SongTreeWidget.xml
 
+RESOURCES += \
+    ressources.qrc
+

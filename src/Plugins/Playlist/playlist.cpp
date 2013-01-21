@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <qglobal.h>
 #include <QFile>
-
+#include <QDebug>
 using namespace Core;
 
 Playlist::Playlist(QObject *parent) :
@@ -267,6 +267,8 @@ void Playlist::deleteMedia(int value)
 
 void Playlist::insertMediaAt(int position, QList<Item*> items)
 {
+
+    qDebug()<<"insertMediaAt aus Playlist";
     QList<Media*> media;
     for(int i = 0; i < items.size(); i++)
     {

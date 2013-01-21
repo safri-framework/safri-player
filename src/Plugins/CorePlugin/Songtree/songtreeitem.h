@@ -9,6 +9,8 @@
 #include "../CoreData/dataitem.h"
 #include "../Interfaces/itreeitemtype.h"
 #include "changedflags.h"
+#include "../CoreData/item.h"
+#include "../CoreData/media.h"
 
 //#define DEBUG
 
@@ -16,7 +18,7 @@ namespace Core
 {
     class SongTree;
 
-    class COREPLUGINSHARED_EXPORT SongTreeItem : public QObject
+    class COREPLUGINSHARED_EXPORT SongTreeItem : public Item
     {
         Q_OBJECT
         public:
@@ -122,6 +124,7 @@ namespace Core
             int getTreeLevel();
             int getNumberOfChilds() const;
             SongTreeItem* getParentItem() const;
+            QList<Media*> getMedia();
 
     #ifdef DEBUG
             long ID;

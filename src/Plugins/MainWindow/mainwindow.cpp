@@ -80,6 +80,7 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
             {
                 tabButton->setProperty("place","menu_left");
                 tabButton->setProperty("type","menu_button_last");
+                tabButton->setIconSize(QSize(48,48));
             }
             else
             {

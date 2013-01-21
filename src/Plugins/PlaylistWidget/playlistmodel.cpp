@@ -4,11 +4,18 @@
 #include "CoreData/item.h"
 #include "CoreData/media.h"
 #include <QDebug>
+#include "Songtree/songtreeitem.h"
 #include <QMimeData>
 
 PlaylistModel::PlaylistModel(Core::IPlaylist *playlist, QObject *parent) :
     QAbstractTableModel(parent), playlist(playlist)
 {
+    connect(playlist, SIGNAL(MediaInserted(int,int)), this, SLOT(songsInserted(int,int)));
+    connect(playlist, SIGNAL(MediaDataChanged(int)), this, SLOT(songDataChanged(int)));
+    connect(playlist, SIGNAL(MediaDeleted(int)), this, SLOT(songDeleted(int)));
+    connect(playlist, SIGNAL(MediaMoved(int,int)), this, SLOT(songMoved(int,int)));
+    connect(playlist, SIGNAL(changeActualPlayingMarker(int,int)), this, SLOT(positionOfActuallyPlayingSongChanged(int,int)));
+
 }
 
 
@@ -51,26 +58,33 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             int row;
             int column;
             QString text;
-            qint64 pointer;
+            qint64 pointer = 0;
             stream >> id >> row >> column >> text >> pointer ;
             //newItems[id][row][column] = text;
-            Core::Item* item = (Core::Item*) pointer;
-            draggedItems.append(item);
+            Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
+            draggedItems.append(static_cast<Core::Item*>(treeItem));
+            //draggedItems.append(item);
+            qDebug()<<pointer;
 
 
         }
 
-
-
+        qDebug()<<draggedItems.size();
+        qDebug() << draggedItems.at(0)->getMedia().size();
+/*
         for ( int i = 0; i < draggedItems.size(); i++)
         {
-            mediaList.append(draggedItems.at(i)->getMedia());
+
         }
+*/
+        int row = parent.row();
+        if(row < 0)
+           row = 0;
 
-
-        for(int i=0; i<mediaList.size(); i++)
+        for(int i=0; i<draggedItems.size(); i++)
         {
-            qDebug()<<mediaList.at(i)->getName();
+
+            playlist->insertMediaAt(row, draggedItems);
         }
 
 
@@ -91,6 +105,52 @@ QStringList PlaylistModel::mimeTypes() const
 
     return types;
 }
+
+
+
+void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
+{
+    // remove the playing symbol from the old playing song
+    Q_EMIT dataChanged( index(from, 0), index(from, 4) );
+
+    // set the playing symbol to the new playing song
+    Q_EMIT dataChanged( index(to, 0), index(to, 4) );
+}
+
+void PlaylistModel::songsInserted(int position, int count)
+{
+    qDebug()<<"INSERTED "<<count<< "songs";
+    beginInsertRows( QModelIndex(), position, position + count);
+    endInsertRows();
+}
+
+void PlaylistModel::songMoved(int from, int to)
+{
+    //beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);
+    //endMoveRows();
+    // This version was not working by moving a song from one line to the next.
+
+
+
+    Q_EMIT dataChanged( index(from, 0), index(from, 4) );
+    Q_EMIT dataChanged( index(to, 0), index(to, 4) );
+
+}
+
+void PlaylistModel::songDeleted(int value)
+{
+    beginRemoveRows(QModelIndex(), value, value);
+    endRemoveRows();
+}
+
+void PlaylistModel::songDataChanged(int position)
+{
+    Q_EMIT dataChanged( index(position, 0), index(position, 6));
+}
+
+
+
+
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
 {

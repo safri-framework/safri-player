@@ -41,8 +41,14 @@ int Album::createNewID()
 
 QList<Media *> Album::getMedia()
 {
-    //TODO:
-    return QList<Media*>();
+    QList<Media*> media;
+    for(int i = 0; i < songs.size(); i++)
+    {
+        Media* song = static_cast<Media*>(songs.at(i));
+        if(song)
+            media.append(song);
+    }
+    return media;
 }
 
 Album::Album(int sID, QString sName, QObject *parent) :

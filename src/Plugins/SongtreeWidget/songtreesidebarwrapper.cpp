@@ -2,14 +2,15 @@
 #include <QPushButton>
 #include "SongtreeWidget.h"
 #include <QDebug>
+#include <QIcon>
 SongTreeSidebarWrapper::SongTreeSidebarWrapper()
 {
     this->name = "Songtree";
     QPushButton* button = new QPushButton();
     button->setCheckable(true);
-    button->setText("SongTree");
     button->setProperty("style", QVariant("tabStyle"));
     connect(button, SIGNAL(clicked(bool)), this, SIGNAL(show(bool)));
+    button->setIcon(QIcon(":icons/ressources/music_icon.png"));
     menuBarWidget = button;
     sideBarWidget = new SongtreeWidget();
     //sideBarWidget->show();

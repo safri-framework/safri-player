@@ -12,7 +12,7 @@ using namespace Core;
 #endif
 
 SongTreeItem::SongTreeItem(ITreeItemType* type, int level, QList<ITreeItemType*>* hierarchy, SongTreeItem* parentItem, Song* song, SongTree* songTree, QObject *parent)
-    : QObject(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
+    : Item(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
       dataItemPtr(type->getNodeDataItem(song)), name(type->getNodeName(song)), type(type), level(level), hierarchy(hierarchy), songTree(songTree), hash(type->getHash(song))
 {
 #ifdef DEBUG
@@ -23,7 +23,7 @@ SongTreeItem::SongTreeItem(ITreeItemType* type, int level, QList<ITreeItemType*>
 }
 
 SongTreeItem::SongTreeItem(QList<ITreeItemType*>* hierarchy, SongTree* songTree, QObject *parent)
-    : QObject(parent), parentItem(0), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
+    : Item(parent), parentItem(0), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
       dataItemPtr(0), name("ROOT"), type(0), level(-1), hierarchy(hierarchy), songTree(songTree), hash("")
 {
 #ifdef DEBUG
@@ -34,7 +34,7 @@ SongTreeItem::SongTreeItem(QList<ITreeItemType*>* hierarchy, SongTree* songTree,
 }
 
 SongTreeItem::SongTreeItem(SongTreeItem *sample, SongTreeItem *parentItem, QObject *parent)
-    : QObject(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
+    : Item(parent), parentItem(parentItem), childs(new QList<SongTreeItem*>()), childMap(new QMap<QString, SongTreeItem*>()),
       dataItemPtr(sample->dataItemPtr), name(sample->name), type(sample->type), level(sample->level), hierarchy(sample->hierarchy), songTree(sample->songTree), hash(sample->hash)
 {
 #ifdef DEBUG
@@ -88,6 +88,18 @@ QString SongTreeItem::getName()
 SongTreeItem* SongTreeItem::getParentItem() const
 {
     return parentItem;
+}
+
+QList<Media *> SongTreeItem::getMedia()
+{
+    QList<Media*> media;
+    QList<Song*> songs = this->getSongs();
+    for(int i = 0; i < songs.size(); i++)
+    {
+        media.append(songs.at(i));
+    }
+    qDebug()<<"getMedia"<<media.size();
+    return media;
 }
 
 void SongTreeItem::addSong(Song* song)

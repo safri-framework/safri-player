@@ -23,6 +23,8 @@ void PlaylistWidget::showPlaylist(Core::IPlaylist *playlist)
     delete model;
 
     playlistModel = new PlaylistModel(playlist, this);
+    connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
+
 
     ui->playlistView->setModel(playlistModel);
 }

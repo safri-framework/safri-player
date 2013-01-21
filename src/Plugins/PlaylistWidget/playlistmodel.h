@@ -24,7 +24,19 @@ class PlaylistModel : public QAbstractTableModel
         virtual Qt::DropActions supportedDropActions() const;
         QStringList mimeTypes() const;
 
+
+private slots:
+
+        void positionOfActuallyPlayingSongChanged(int from, int to);
+        void songsInserted(int position, int count);
+        void songMoved(int from, int to);
+        void songDeleted(int value);
+        void songDataChanged(int position);
+
     private:
+
+
+
 
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;
 
