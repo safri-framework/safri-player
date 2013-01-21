@@ -80,18 +80,39 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="infoLabel">
+          <widget class="QLabel" name="time_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Advent</family>
+             <pointsize>36</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+             <stylestrategy>PreferAntialias</stylestrategy>
+             <kerning>false</kerning>
+            </font>
+           </property>
            <property name="text">
-            <string>Red hot chili Peppers 
-By the way</string>
+            <string/>
            </property>
            <property name="type" stdset="0">
-            <string>info_label</string>
+            <string>display_label</string>
            </property>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_5">
+          <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -104,20 +125,20 @@ By the way</string>
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="time_label">
+          <widget class="QLabel" name="infoLabel">
            <property name="font">
             <font>
-             <family>Corbel</family>
-             <pointsize>20</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
+             <pointsize>14</pointsize>
             </font>
            </property>
            <property name="text">
-            <string/>
+            <string>Safri III</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
            <property name="type" stdset="0">
-            <string>display_label</string>
+            <string>info_label</string>
            </property>
           </widget>
          </item>

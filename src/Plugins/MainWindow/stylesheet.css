@@ -27,7 +27,7 @@ QWidget[type="frame"]
 
 
 
-QPushButton[type="tiny"]
+QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
 {
     min-height:21px;
     max-height:21px;
@@ -195,9 +195,16 @@ border-right: none;
 QLineEdit[type="search"]
 {
     border-image: url(:border_images/SAFRI_UI/search_normal.png) 0px 10px 0px 25px;
+
     border-width:0px 10px 0px 25px;
     min-height:21px;
     max-height:21px;
+}
+
+
+QLineEdit:focus[type="search"]
+{
+    border-image: url(:border_images/SAFRI_UI/search_fokus.png);
 }
 
 

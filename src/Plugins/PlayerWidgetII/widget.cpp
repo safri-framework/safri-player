@@ -72,11 +72,12 @@ void Widget::update(int currentTime)
     int sec = tmp % 60;
 
     QString minStr = QString::number(min);
+    /*
     if (min <10)
     {
         minStr = "0"+minStr;
     }
-
+*/
 
 
     QString secStr = QString::number(sec);

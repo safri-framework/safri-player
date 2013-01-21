@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created: Sun 20. Jan 23:01:22 2013
+** Created: Tue 22. Jan 00:06:54 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,9 +37,9 @@ public:
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_2;
-    QLabel *infoLabel;
-    QSpacerItem *horizontalSpacer_5;
     QLabel *time_label;
+    QSpacerItem *horizontalSpacer_2;
+    QLabel *infoLabel;
     QWidget *widget_3;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *random;
@@ -99,25 +99,37 @@ public:
 
         horizontalLayout_4->addWidget(label_2);
 
-        infoLabel = new QLabel(widget_2);
-        infoLabel->setObjectName(QString::fromUtf8("infoLabel"));
-
-        horizontalLayout_4->addWidget(infoLabel);
-
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_5);
-
         time_label = new QLabel(widget_2);
         time_label->setObjectName(QString::fromUtf8("time_label"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(time_label->sizePolicy().hasHeightForWidth());
+        time_label->setSizePolicy(sizePolicy1);
+        time_label->setMinimumSize(QSize(100, 0));
         QFont font;
-        font.setFamily(QString::fromUtf8("Corbel"));
-        font.setPointSize(20);
-        font.setBold(true);
-        font.setWeight(75);
+        font.setFamily(QString::fromUtf8("Advent"));
+        font.setPointSize(36);
+        font.setBold(false);
+        font.setWeight(50);
+        font.setKerning(false);
+        font.setStyleStrategy(QFont::PreferAntialias);
         time_label->setFont(font);
 
         horizontalLayout_4->addWidget(time_label);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_2);
+
+        infoLabel = new QLabel(widget_2);
+        infoLabel->setObjectName(QString::fromUtf8("infoLabel"));
+        QFont font1;
+        font1.setPointSize(14);
+        infoLabel->setFont(font1);
+        infoLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        horizontalLayout_4->addWidget(infoLabel);
 
 
         horizontalLayout->addWidget(widget_2);
@@ -205,11 +217,10 @@ public:
         seek_slider->setProperty("type", QVariant(QApplication::translate("Widget", "seeker", 0, QApplication::UnicodeUTF8)));
         widget_2->setProperty("type", QVariant(QApplication::translate("Widget", "display", 0, QApplication::UnicodeUTF8)));
         label_2->setText(QString());
-        infoLabel->setText(QApplication::translate("Widget", "Red hot chili Peppers \n"
-"By the way", 0, QApplication::UnicodeUTF8));
-        infoLabel->setProperty("type", QVariant(QApplication::translate("Widget", "info_label", 0, QApplication::UnicodeUTF8)));
         time_label->setText(QString());
         time_label->setProperty("type", QVariant(QApplication::translate("Widget", "display_label", 0, QApplication::UnicodeUTF8)));
+        infoLabel->setText(QApplication::translate("Widget", "Safri III", 0, QApplication::UnicodeUTF8));
+        infoLabel->setProperty("type", QVariant(QApplication::translate("Widget", "info_label", 0, QApplication::UnicodeUTF8)));
         random->setText(QString());
         random->setProperty("type", QVariant(QApplication::translate("Widget", "player_button", 0, QApplication::UnicodeUTF8)));
         random->setProperty("button_size", QVariant(QApplication::translate("Widget", "little", 0, QApplication::UnicodeUTF8)));
