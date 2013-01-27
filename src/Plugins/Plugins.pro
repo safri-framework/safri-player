@@ -7,16 +7,15 @@ SUBDIRS += \
         TestPlugin \
     	Playlist\
     	PlaybackController \
-    PhononBackend \
-    HackingWidget \
-    SQLStorage \
-    AudioCollection \
-    PlayerWidget \
-    MainWindow \
-    GUIController \
-    SidebarPluginTest \
-    PlaylistWidget \
-    SongtreeWidget \
-    CollectionController \
-    PlayerWidgetII
-
+    	PhononBackend \
+    	HackingWidget \
+    	SQLStorage \
+    	AudioCollection \
+    	PlayerWidget \
+    	MainWindow \
+    	GUIController \
+    	SidebarPluginTest \
+    	PlaylistWidget \
+    	SongtreeWidget \
+    	CollectionController \
+    	PlayerWidgetII

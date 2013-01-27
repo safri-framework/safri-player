@@ -31,3 +31,6 @@ FORMS += \
 
 OTHER_FILES += \
     PlaylistWidget.xml
+
+RESOURCES += \
+    ressources.qrc

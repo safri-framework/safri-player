@@ -236,6 +236,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
             return dataSongDisplayRole(song, index.column());
             break;
+
+        case Qt::DecorationRole:
+
+            //if (playlist->isCurrentMedia())
+
+            break;
+
+        default:
+
+            break;
     }
 
     return QVariant();

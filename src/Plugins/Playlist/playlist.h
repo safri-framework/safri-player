@@ -67,7 +67,7 @@ private:
 
 signals:
 
-    void changeActualPlayingMarker(int from, int to);
+    void changeCurrentPlayingMarker(int from, int to);
 
     void MediaInserted(int position, int count);
 

@@ -47,11 +47,12 @@ void PlaylistWidget::showCurrentPlaylist()
 
 void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
 {
-    qDebug() << QString::number(index.row());
+    Core::IPlaylist* playlist = playlistModel->getPlaylist();
+    playlist->setCurrentMedia(index.row());
 
-    Core::ICore::playbackController()->stopAction()->trigger();
+    Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
 
-    Core::ICore::playbackController()->setPlaylist(playlistModel->getPlaylist());
-    Core::ICore::playbackController()->getPlaylist()->setCurrentMedia(index.row());
-    Core::ICore::playbackController()->playAction()->trigger();
+    playbackConntroller->stopAction()->trigger();
+    playbackConntroller->setPlaylist(playlist);
+    playbackConntroller->playAction()->trigger();
 }
