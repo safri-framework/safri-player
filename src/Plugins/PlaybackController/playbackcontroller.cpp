@@ -15,8 +15,8 @@ PlaybackController::PlaybackController()
     m_stop  = new QState();
     m_noData = new QState();
     currentState = m_noData;
-    audioBackend =  Core::ICore::audioBackend();
-    if (!audioBackend)
+    mediaBackend =  Core::ICore::audioBackend();
+    if (!mediaBackend)
     {
         qFatal("Null Pointer Exception in PlaybackController");
         return;
@@ -36,7 +36,7 @@ PlaybackController::PlaybackController()
     machine->start();
 
 
-    connect(audioBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
+    connect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
 }
 
 void PlaybackController::setupSignalAndSlots()
@@ -45,7 +45,7 @@ void PlaybackController::setupSignalAndSlots()
     connect(m_play, SIGNAL(entered()), this, SLOT(playStateSlot()));
     connect(m_pause, SIGNAL(entered()), this, SLOT(pauseStateSlot()));
     connect(m_stop, SIGNAL(entered()), this, SLOT(stopStateSlot()));
-    connect(audioBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));
+    connect(mediaBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));
     connect(m_nextAction,SIGNAL(triggered()) ,this, SLOT(nextActionSlot()));
     connect(m_previousAction,SIGNAL(triggered()) ,this, SLOT(previousActionSlot()));
 
@@ -114,12 +114,12 @@ void PlaybackController::playStateSlot()
 
     if(currentState == m_pause)
     {
-        audioBackend->play();
+        mediaBackend->play();
         qDebug()<<"Pause->Play";
     }
     else
     {
-        audioBackend->play(currentMedia->getURL());
+        mediaBackend->play(currentMedia->getURL());
         Q_EMIT mediaChanged(currentMedia);
         qDebug()<<"x -> Play";
     }
@@ -133,7 +133,7 @@ void PlaybackController::pauseStateSlot()
     Q_EMIT stateChanged(Core::PAUSE);
     m_pauseAction->setDisabled(true);
     m_playAction->setEnabled(true);
-    audioBackend->pause();
+    mediaBackend->pause();
     m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
     stopped = false;
 }
@@ -148,7 +148,7 @@ void PlaybackController::stopStateSlot()
     m_stopAction->setDisabled(true);
     stopped = true;
     m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
-    audioBackend->stop();
+    mediaBackend->stop();
 }
 
 void PlaybackController::currentSongFinished()
@@ -282,12 +282,12 @@ QList<QAction *> PlaybackController::getAdditionalActions()
 
 int PlaybackController::getMediaTotalTime()
 {
-    return audioBackend->getTotalTime();
+    return mediaBackend->getTotalTime();
 }
 
 int PlaybackController::getVolume()
 {
-    return audioBackend->getVolume();
+    return mediaBackend->getVolume();
 }
 
 void PlaybackController::playMedia(Core::Media* media)
@@ -297,12 +297,12 @@ void PlaybackController::playMedia(Core::Media* media)
 
 void PlaybackController::seek(int playTime)
 {
-    audioBackend->seek(playTime);
+    mediaBackend->seek(playTime);
 }
 
 void PlaybackController::setVolume(int volume)
 {
-    audioBackend->setVolume(volume);
+    mediaBackend->setVolume(volume);
 }
 
 

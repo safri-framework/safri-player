@@ -5,7 +5,7 @@
 #include <QCoreApplication>
 #include <QEventLoop>
 
-PhononBackend::PhononBackend()
+PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 {
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     mediaObject = new Phonon::MediaObject(this);
@@ -66,6 +66,11 @@ void PhononBackend::setVolume(int percent)
 int PhononBackend::getVolume()
 {
     return audioOutput->volume() * 100.0f;
+}
+
+QStringList PhononBackend::getSupportedMimeTypes()
+{
+      return Phonon::BackendCapabilities::availableMimeTypes();
 }
 
 void PhononBackend::tick(qint64 ms)

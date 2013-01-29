@@ -1,7 +1,7 @@
 #include "icore.h"
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
-#include "Interfaces/IAudioBackend.h"
+#include "Interfaces/IMediaBackend.h"
 #include "Interfaces/IPlaylistFactory.h"
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/ICollectionController.h"
@@ -30,7 +30,7 @@ IPlaybackController* ICore::playbackController()
     return m_instance->m_playbackController;
 }
 
-IAudioBackend *ICore::audioBackend()
+IMediaBackend *ICore::audioBackend()
 {
     return m_instance->m_audioBackend;
 }
@@ -44,11 +44,11 @@ void ICore::objectAddedToObjectPool(QObject *object)
         m_playbackController = pbc;
     }
 
-    IAudioBackend *audio_backend = qobject_cast<IAudioBackend*>(object);
-    if (audio_backend != 0)
+    IMediaBackend *media_backend = qobject_cast<IMediaBackend*>(object);
+    if (media_backend != 0)
     {
         qDebug() << "IAudioBackend class added";
-        m_audioBackend = audio_backend;
+        m_audioBackend = media_backend;
     }
 
     IPlaylistFactory *playlistFactory = qobject_cast<IPlaylistFactory*>(object);

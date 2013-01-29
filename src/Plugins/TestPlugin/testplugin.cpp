@@ -7,7 +7,7 @@
 #include "CoreData/genre.h"
 #include "iplaybackcontroller.h"
 #include "icore.h"
-#include "Interfaces/IAudioBackend.h"
+#include "Interfaces/IMediaBackend.h"
 #include <QFile>
 
 using namespace Plugins;

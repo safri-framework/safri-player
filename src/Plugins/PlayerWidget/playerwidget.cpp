@@ -60,6 +60,16 @@ IPlayerWidget::PlayerWidgetPosition PlayerWidget::getPreferedPosition()
     return UNDER_PLAYLIST;
 }
 
+void PlayerWidget::setVolumeEnabled(bool value)
+{
+    this->ui->volumeSlider->setEnabled(value);
+}
+
+void PlayerWidget::setSeekerEnabled(bool value)
+{
+    this->ui->seekSlider->setEnabled(value);
+}
+
 void PlayerWidget::on_volumeSlider_sliderMoved(int position)
 {
     playbackController->setVolume(position);

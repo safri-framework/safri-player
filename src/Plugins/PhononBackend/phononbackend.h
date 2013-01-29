@@ -1,16 +1,17 @@
 #ifndef PHONONBACKEND_H
 #define PHONONBACKEND_H
 
-#include "Interfaces/IAudioBackend.h"
+#include "Interfaces/IMediaBackend.h"
 #include <phonon>
 
-class PhononBackend : public Core::IAudioBackend
+class PhononBackend : public Core::IMediaBackend
 {
     Q_OBJECT
     public:
 
 
-        PhononBackend();
+        PhononBackend(QObject* parent = 0);
+
 
         virtual int getTotalTime();
         virtual int getCurrentTime();
@@ -21,6 +22,7 @@ class PhononBackend : public Core::IAudioBackend
         virtual void stop();
         virtual void setVolume(int percent);
         virtual int getVolume();
+        virtual QStringList getSupportedMimeTypes();
 
     private:
 

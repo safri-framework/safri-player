@@ -1,7 +1,7 @@
 #ifndef PLAYBACKCONTROLLER_H
 #define PLAYBACKCONTROLLER_H
 #include <QStateMachine>
-#include "Interfaces/IAudioBackend.h"
+#include "Interfaces/IMediaBackend.h"
 #include "iplaybackcontroller.h"
 #include <QAction>
 #include <CoreData/media.h>
@@ -60,7 +60,7 @@ private:
         QAction *m_playAction;
 
         QState* currentState;
-        Core::IAudioBackend* audioBackend;
+        Core::IMediaBackend* mediaBackend;
         Core::Media* currentMedia;
         void setupActions();
         void setupTransitions();

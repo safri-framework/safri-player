@@ -10,7 +10,7 @@ namespace Plugins { class CorePlugin; }
 namespace Core
 {
     class IPlaybackController;
-    class IAudioBackend;
+    class IMediaBackend;
     class IPlaylistFactory;
     class IPlaylist;
     class IGUIController;
@@ -30,7 +30,7 @@ namespace Core
 
             static ICore* instance();
             static IPlaybackController* playbackController();
-            static IAudioBackend* audioBackend();
+            static IMediaBackend* audioBackend();
             static IPlaylist* createPlaylist();
             static IGUIController* guiController();
             static ICollectionController* collectionController();
@@ -44,7 +44,7 @@ namespace Core
 
             static Core::ICore* m_instance;
             IPlaybackController* m_playbackController;
-            IAudioBackend* m_audioBackend;
+            IMediaBackend* m_audioBackend;
             IPlaylistFactory* m_playlistFactory;
             IGUIController* m_guiController;
             ICollectionController* m_collectionController;

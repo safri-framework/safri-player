@@ -172,10 +172,11 @@ QSlider
 
  QSlider::handle:horizontal[type="seeker"] {
      background:none;
-     margin-top:3px;
-     margin-bottom:3px;
+     margin-top:0px;
+     margin-bottom:0px;
      width: 8px;
      height: 9px;
+
 
 
  }

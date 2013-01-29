@@ -23,6 +23,11 @@ public:
     IPlayerWidget(QWidget* parent);
     virtual PlayerWidgetPosition getPreferedPosition() = 0;
      virtual ~IPlayerWidget();
+
+public slots:
+        virtual void setVolumeEnabled(bool value) = 0;
+        virtual void setSeekerEnabled(bool value) = 0;
+
 };
 
 #endif // IPLAYERWIDGET_H

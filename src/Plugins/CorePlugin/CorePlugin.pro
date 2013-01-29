@@ -43,7 +43,8 @@ SOURCES += coreplugin.cpp \
     Songtree/songtreemodel.cpp \ 
     Interfaces/istorageadapterfactory.cpp \
     Songtree/CoreItemTypes/mediacollectionitemtype.cpp \
-    Interfaces/IPlayerWidget.cpp
+    Interfaces/IPlayerWidget.cpp \
+    Interfaces/IMediaBackend.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -57,8 +58,6 @@ HEADERS += coreplugin.h\
     CoreData/dataitem.h \
     CoreData/item.h \
     CoreData/media.h \
-    Interfaces/IMediaBackend.h \
-    Interfaces/IAudioBackend.h \
     Interfaces/IPlaylistFactory.h \
     Interfaces/IMediaCollection.h \
     Interfaces/IMediaCollectionBuilder.h \
@@ -85,7 +84,8 @@ HEADERS += coreplugin.h\
     Interfaces/ICollectionController.h \
     Interfaces/istorageadapterfactory.h \
     Songtree/CoreItemTypes/mediacollectionitemtype.h \
-    Interfaces/IPlayerWidget.h
+    Interfaces/IPlayerWidget.h \
+    Interfaces/IMediaBackend.h
 
 OTHER_FILES += \
     Core.xml

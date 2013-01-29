@@ -44,6 +44,16 @@ Widget::~Widget()
     delete ui;
 }
 
+void Widget::setSeekerEnabled(bool value)
+{
+    this->ui->seek_slider->setEnabled(value);
+}
+
+void Widget::setVolumeEnabled(bool value)
+{
+    this->ui->volume_slider->setEnabled(value);
+}
+
 
 IPlayerWidget::PlayerWidgetPosition  Widget::getPreferedPosition()
 {

@@ -20,7 +20,8 @@ public:
     explicit Widget(QWidget *parent = 0);
     virtual PlayerWidgetPosition getPreferedPosition();
     ~Widget();
-
+    void setSeekerEnabled(bool value);
+    void setVolumeEnabled(bool value);
 private slots:
     void mediaChanged(Core::Media* media);
     void update(int currentTime);
