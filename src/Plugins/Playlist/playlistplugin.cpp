@@ -9,6 +9,7 @@ PlaylistPlugin::PlaylistPlugin()
 
 bool PlaylistPlugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED(arguments)
     addObject(new PlaylistFactory() );
     return true;
 }

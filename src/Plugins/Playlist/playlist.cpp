@@ -27,7 +27,8 @@ Playlist::Playlist(QList<Item*> items, QObject *parent) :
 Playlist::Playlist(QString m3ufile, QObject *parent) :
        IPlaylist(parent), safedPlaylist(true),  currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
 {
-/*
+    Q_UNUSED(m3ufile)
+    /*
 
     QFile m3u( m3ufile );
 

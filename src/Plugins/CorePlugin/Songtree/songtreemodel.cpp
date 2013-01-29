@@ -128,6 +128,7 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 
 bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+    Q_UNUSED(column)
     SongTreeItem* item  = (SongTreeItem*) parent.internalPointer();
 
 
@@ -286,6 +287,7 @@ QStringList SongTreeModel::mimeTypes() const
 
 int SongTreeModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return 1;
 }
 
@@ -333,12 +335,11 @@ QModelIndex SongTreeModel::parent(const QModelIndex &index) const
 
 QVariant SongTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    Q_UNUSED(section)
 
     if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
     {
-
-            return "";
-
+        return "";
     }
 
     return QVariant();
@@ -611,6 +612,7 @@ void SongTreeModel::beginMoveItem(SongTreeItem *srcParent, int srcRow, SongTreeI
 
 void SongTreeModel::endMoveItem(SongTreeItem *destParent)
 {
+    Q_UNUSED(destParent)
     endMoveRows();
 }
 

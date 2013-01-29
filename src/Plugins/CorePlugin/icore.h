@@ -4,6 +4,7 @@
 #include "CorePlugin_global.h"
 
 #include <QObject>
+#include <QMap>
 
 namespace Plugins { class CorePlugin; }
 
@@ -15,6 +16,8 @@ namespace Core
     class IPlaylist;
     class IGUIController;
     class ICollectionController;
+    class IMediaBackend;
+    class Media;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -35,6 +38,9 @@ namespace Core
             static IGUIController* guiController();
             static ICollectionController* collectionController();
             static QString storageDirectory();
+            static IMediaBackend* getBackendForMedia(Media* media);
+            static IMediaBackend* getBackendForMimeType(QString mimeType);
+
 
         public slots:
 
@@ -48,6 +54,7 @@ namespace Core
             IPlaylistFactory* m_playlistFactory;
             IGUIController* m_guiController;
             ICollectionController* m_collectionController;
+            QMap<QString, IMediaBackend*> m_mediaBackends;
     };
 }
 

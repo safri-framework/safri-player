@@ -114,6 +114,8 @@ namespace Core
 
             QUrl getURL();
 
+            QString getMimeType();
+
         private:
 
             Artist* interpret;

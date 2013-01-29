@@ -18,6 +18,7 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 
 int PhononBackend::getTotalTime()
 {
+    // EVIL HACK: wait 'n pray....
     QTime dieTime = QTime::currentTime().addMSecs(500);
     while( QTime::currentTime() < dieTime )
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);

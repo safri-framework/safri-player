@@ -18,6 +18,8 @@ namespace Core
                 : DataItem(sID, sName, sType, temp, parent) {}
 
             virtual QUrl getURL() = 0;
+
+            virtual QString getMimeType() = 0;
     };
 }
 

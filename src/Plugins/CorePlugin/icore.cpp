@@ -32,6 +32,7 @@ IPlaybackController* ICore::playbackController()
 
 IMediaBackend *ICore::audioBackend()
 {
+    qDebug() << "WARNING:deprecated function";
     return m_instance->m_audioBackend;
 }
 
@@ -101,6 +102,16 @@ QString ICore::storageDirectory()
 #endif
 
     return  storageLocation + "/.safri/";
+}
+
+IMediaBackend *ICore::getBackendForMedia(Media *media)
+{
+    return m_instance->m_mediaBackends.value(media->getMimeType(), 0);
+}
+
+IMediaBackend *ICore::getBackendForMimeType(QString mimeType)
+{
+    return m_instance->m_mediaBackends.value(mimeType, 0);
 }
 
 

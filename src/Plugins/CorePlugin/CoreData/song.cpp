@@ -58,6 +58,12 @@ QUrl Song::getURL()
     return QUrl(filename);
 }
 
+QString Song::getMimeType()
+{
+    // TODO: read MimeType from database
+    return "audio/mpeg";
+}
+
 Song::Song(int sID, QString sName, int year, QString filename, QObject *parent) :
     Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year)
 {
