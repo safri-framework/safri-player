@@ -11,7 +11,11 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget),
     m_pbController(Core::ICore::playbackController())
 {
+    firstPlayback = false;
+
     ui->setupUi(this);
+    this->ui->infoLabel->setMinimumWidth(0);
+    this->ui->infoLabel->setMaximumWidth(0);
     QFile file;
     file.setFileName(":/style/styles.css");
     file.open(QFile::ReadOnly);
@@ -48,6 +52,11 @@ IPlayerWidget::PlayerWidgetPosition  Widget::getPreferedPosition()
 
 void Widget::mediaChanged(Core::Media *media)
 {
+    if(!firstPlayback)
+    {
+        this->ui->infoLabel->setMaximumWidth(350);
+        firstPlayback = true;
+    }
     int totalTime = m_pbController->getMediaTotalTime();
     ui->seek_slider->setMaximum(totalTime);
     ui->seek_slider->setValue(0);

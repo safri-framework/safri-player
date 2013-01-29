@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created: Tue 22. Jan 00:06:54 2013
+** Created: Wed 23. Jan 15:37:44 2013
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -89,6 +89,13 @@ public:
 
         widget_2 = new QWidget(widget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
+        widget_2->setSizePolicy(sizePolicy1);
+        widget_2->setMinimumSize(QSize(400, 0));
+        widget_2->setMaximumSize(QSize(400, 16777215));
         horizontalLayout_4 = new QHBoxLayout(widget_2);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -101,15 +108,15 @@ public:
 
         time_label = new QLabel(widget_2);
         time_label->setObjectName(QString::fromUtf8("time_label"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(time_label->sizePolicy().hasHeightForWidth());
-        time_label->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(time_label->sizePolicy().hasHeightForWidth());
+        time_label->setSizePolicy(sizePolicy2);
         time_label->setMinimumSize(QSize(100, 0));
         QFont font;
         font.setFamily(QString::fromUtf8("Advent"));
-        font.setPointSize(36);
+        font.setPointSize(28);
         font.setBold(false);
         font.setWeight(50);
         font.setKerning(false);
@@ -118,12 +125,14 @@ public:
 
         horizontalLayout_4->addWidget(time_label);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_2);
 
         infoLabel = new QLabel(widget_2);
         infoLabel->setObjectName(QString::fromUtf8("infoLabel"));
+        infoLabel->setMinimumSize(QSize(250, 0));
+        infoLabel->setMaximumSize(QSize(250, 16777215));
         QFont font1;
         font1.setPointSize(14);
         infoLabel->setFont(font1);
@@ -217,9 +226,9 @@ public:
         seek_slider->setProperty("type", QVariant(QApplication::translate("Widget", "seeker", 0, QApplication::UnicodeUTF8)));
         widget_2->setProperty("type", QVariant(QApplication::translate("Widget", "display", 0, QApplication::UnicodeUTF8)));
         label_2->setText(QString());
-        time_label->setText(QString());
+        time_label->setText(QApplication::translate("Widget", "Safri III", 0, QApplication::UnicodeUTF8));
         time_label->setProperty("type", QVariant(QApplication::translate("Widget", "display_label", 0, QApplication::UnicodeUTF8)));
-        infoLabel->setText(QApplication::translate("Widget", "Safri III", 0, QApplication::UnicodeUTF8));
+        infoLabel->setText(QString());
         infoLabel->setProperty("type", QVariant(QApplication::translate("Widget", "info_label", 0, QApplication::UnicodeUTF8)));
         random->setText(QString());
         random->setProperty("type", QVariant(QApplication::translate("Widget", "player_button", 0, QApplication::UnicodeUTF8)));
