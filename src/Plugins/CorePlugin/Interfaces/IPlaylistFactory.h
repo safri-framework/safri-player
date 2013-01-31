@@ -4,6 +4,7 @@
 #include "../CorePlugin_global.h"
 #include "../iplaylist.h"
 #include <QObject>
+#include <QSharedPointer>
 
 namespace Core
 {
@@ -12,7 +13,7 @@ namespace Core
         Q_OBJECT
         public:
 
-            virtual Core::IPlaylist* createPlaylist() = 0;
+            virtual QSharedPointer<Core::IPlaylist> createPlaylist() = 0;
     };
 }
 

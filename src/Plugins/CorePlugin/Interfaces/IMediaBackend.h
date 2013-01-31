@@ -35,8 +35,8 @@ namespace Core
             void stopped();
             void mediaFinished();
             void volumeChanged(int percent);
-            virtual void hasSeekableMedia(bool value);
-            virtual void hasVolumeAdjustableMedia(bool value);
+            void hasSeekableMedia(bool value);
+            void hasVolumeAdjustableMedia(bool value);
     };
 
 

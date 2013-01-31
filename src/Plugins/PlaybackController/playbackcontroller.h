@@ -15,8 +15,8 @@ class PlaybackController : public Core::IPlaybackController
 
         PlaybackController();
 
-        void setPlaylist(Core::IPlaylist* playlist);
-        Core::IPlaylist* getPlaylist();
+        void setPlaylist(QSharedPointer<Core::IPlaylist> playlist);
+        QSharedPointer<Core::IPlaylist> getPlaylist();
 
         QAction* playAction();
         QAction* playPauseAction();
@@ -32,7 +32,7 @@ class PlaybackController : public Core::IPlaybackController
 
 protected:
 
-        Core::IPlaylist *playlist;
+        QSharedPointer<Core::IPlaylist> playlist;
         void playMedia(Core::Media* media);
 
 public slots:

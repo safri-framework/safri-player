@@ -17,9 +17,10 @@ PlaylistWidget::~PlaylistWidget()
     delete ui;
 }
 
-void PlaylistWidget::showPlaylist(Core::IPlaylist *playlist)
+void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
     QAbstractItemModel* model = ui->playlistView->model();
+
     delete model;
 
     playlistModel = new PlaylistModel(playlist, this);
@@ -35,9 +36,9 @@ void PlaylistWidget::itemsSelected(QList<Core::Item *> selection)
 }
 
 
-Core::IPlaylist *PlaylistWidget::newPlaylist()
+QSharedPointer<Core::IPlaylist> PlaylistWidget::newPlaylist()
 {
-    return 0;
+    return QSharedPointer<Core::IPlaylist>();
 }
 
 
@@ -47,7 +48,7 @@ void PlaylistWidget::showCurrentPlaylist()
 
 void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
 {
-    Core::IPlaylist* playlist = playlistModel->getPlaylist();
+    QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
     playlist->setCurrentMedia(index.row());
 
     Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
@@ -55,4 +56,21 @@ void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
     playbackConntroller->stopAction()->trigger();
     playbackConntroller->setPlaylist(playlist);
     playbackConntroller->playAction()->trigger();
+}
+
+void PlaylistWidget::on_pushButton_clicked()
+{
+    QAbstractItemModel* model = ui->playlistView->model();
+
+     //TODO: Check if old Playlist will be deleted.
+
+
+    delete model;
+
+    QSharedPointer<Core::IPlaylist> pl = Core::ICore::createPlaylist();
+    playlistModel = new PlaylistModel(pl, this);
+    connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
+
+
+    ui->playlistView->setModel(playlistModel);
 }

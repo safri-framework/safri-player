@@ -225,7 +225,7 @@ void PlaybackController::shuffleActionSlot(bool value)
 }
 
 
-void PlaybackController::setPlaylist(Core::IPlaylist *playlist)
+void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
     this->playlist = playlist;
     if(playlist->getSize()>0)
@@ -235,7 +235,7 @@ void PlaybackController::setPlaylist(Core::IPlaylist *playlist)
     }
 }
 
-Core::IPlaylist *PlaybackController::getPlaylist()
+QSharedPointer<Core::IPlaylist> PlaybackController::getPlaylist()
 {
     qDebug() << "getPlaylist()";
     return this->playlist;

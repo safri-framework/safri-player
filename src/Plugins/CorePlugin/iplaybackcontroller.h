@@ -29,12 +29,12 @@ namespace Core
                 \brief  sets the given playlist as current
                 \param  the playlist
             */
-            virtual void setPlaylist(IPlaylist*) = 0;
+            virtual void setPlaylist(QSharedPointer<IPlaylist>) = 0;
 
             /**
                 \returns the current playlist
             */
-            virtual IPlaylist* getPlaylist() = 0;
+            virtual QSharedPointer<IPlaylist> getPlaylist() = 0;
 
             /**
                 \brief  will start to play the current media from the playlist

@@ -18,9 +18,9 @@ class PlaylistWidget : public Core::IPlaylistWidget
         explicit PlaylistWidget(QWidget *parent = 0);
         ~PlaylistWidget();
 
-        virtual void showPlaylist(Core::IPlaylist *playlist) ;
+        virtual void showPlaylist(QSharedPointer<Core::IPlaylist> playlist) ;
         virtual void showCurrentPlaylist();
-        virtual Core::IPlaylist* newPlaylist();
+        virtual QSharedPointer<Core::IPlaylist> newPlaylist();
 
     public slots:
 
@@ -30,7 +30,9 @@ class PlaylistWidget : public Core::IPlaylistWidget
 
         void on_playlistView_doubleClicked(const QModelIndex &index);
 
-    private:
+        void on_pushButton_clicked();
+
+private:
 
             PlaylistModel* playlistModel;
             Ui::PlaylistWidget *ui;

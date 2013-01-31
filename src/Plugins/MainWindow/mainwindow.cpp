@@ -137,7 +137,7 @@ void MainWindow::showTestPlaylist()
     songs.append(testMp31);
     songs.append(testMp32);
 
-    Core::IPlaylist *playList = Core::ICore::createPlaylist();
+    QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
 
     playList->insertMediaAt(0, songs);
 

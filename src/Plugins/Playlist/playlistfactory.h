@@ -12,7 +12,7 @@ class PLAYLISTSHARED_EXPORT PlaylistFactory : public Core::IPlaylistFactory
 
         PlaylistFactory();
 
-        virtual Core::IPlaylist* createPlaylist();
+        virtual QSharedPointer<Core::IPlaylist> createPlaylist();
 };
 
 #endif // PLAYLISTFACTORY_H

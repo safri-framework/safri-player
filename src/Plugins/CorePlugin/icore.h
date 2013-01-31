@@ -5,6 +5,8 @@
 
 #include <QObject>
 #include <QMap>
+#include <QSharedPointer>
+
 
 namespace Plugins { class CorePlugin; }
 
@@ -34,7 +36,7 @@ namespace Core
             static ICore* instance();
             static IPlaybackController* playbackController();
             static IMediaBackend* audioBackend();
-            static IPlaylist* createPlaylist();
+            static QSharedPointer<IPlaylist> createPlaylist();
             static IGUIController* guiController();
             static ICollectionController* collectionController();
             static QString storageDirectory();

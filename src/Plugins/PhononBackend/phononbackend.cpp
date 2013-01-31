@@ -39,6 +39,8 @@ void PhononBackend::seek(int ms)
 
 void PhononBackend::play(QUrl url)
 {
+    Q_EMIT hasSeekableMedia(true);
+    Q_EMIT hasVolumeAdjustableMedia(true);
     mediaObject->setCurrentSource(Phonon::MediaSource(url));
     mediaObject->play();
     qDebug() << "PhononBackend::play: " << url.toString();

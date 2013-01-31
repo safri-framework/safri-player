@@ -73,14 +73,14 @@ void ICore::objectAddedToObjectPool(QObject *object)
     }
 }
 
-IPlaylist *ICore::createPlaylist()
+QSharedPointer<IPlaylist> ICore::createPlaylist()
 {
     if (m_instance->m_playlistFactory != 0)
     {
         return m_instance->m_playlistFactory->createPlaylist();
     }
 
-    return 0;
+    return QSharedPointer<IPlaylist>();
 }
 
 IGUIController *ICore::guiController()

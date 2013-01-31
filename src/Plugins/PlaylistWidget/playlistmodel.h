@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 #include "iplaylist.h"
 #include <QStringList>
+#include <QSharedPointer>
+
 namespace Core { class Song; }
 
 class PlaylistModel : public QAbstractTableModel
@@ -11,7 +13,7 @@ class PlaylistModel : public QAbstractTableModel
     Q_OBJECT
     public:
 
-        explicit PlaylistModel(Core::IPlaylist* playlist, QObject *parent = 0);
+        explicit PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent = 0);
 
         int rowCount(const QModelIndex &parent) const;
         int columnCount(const QModelIndex &parent) const;
@@ -20,7 +22,7 @@ class PlaylistModel : public QAbstractTableModel
         QVariant data(const QModelIndex &index, int role) const;
         virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
         virtual Qt::ItemFlags flags(const QModelIndex &index) const;
-        Core::IPlaylist* getPlaylist();
+        QSharedPointer<Core::IPlaylist> getPlaylist();
         virtual Qt::DropActions supportedDropActions() const;
         QStringList mimeTypes() const;
 
@@ -40,7 +42,7 @@ private slots:
 
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;
 
-        Core::IPlaylist* playlist;
+        QSharedPointer<Core::IPlaylist> playlist;
 
 };
 

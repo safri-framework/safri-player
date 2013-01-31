@@ -66,7 +66,7 @@ void HackingWidget::on_pushButton_4_clicked()
     songs.append(testMp31);
     songs.append(testMp32);
 
-    Core::IPlaylist *playList = Core::ICore::createPlaylist();
+    QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
 
     playList->insertMediaAt(0, songs);
 
@@ -161,7 +161,7 @@ void HackingWidget::on_pushButton_9_clicked()
     QList<Core::Album*> albums = artist->getAlbums();
     QList<Core::Song*> songs;
 
-    Core::IPlaylist* playlist = Core::ICore::createPlaylist();
+    QSharedPointer<Core::IPlaylist> playlist = Core::ICore::createPlaylist();
 
 
     if (albums.size() > 0)

@@ -7,14 +7,15 @@
 #include "Songtree/songtreeitem.h"
 #include <QMimeData>
 
-PlaylistModel::PlaylistModel(Core::IPlaylist *playlist, QObject *parent) :
+
+PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent) :
     QAbstractTableModel(parent), playlist(playlist)
 {
-    connect(playlist, SIGNAL(MediaInserted(int,int)), this, SLOT(songsInserted(int,int)));
-    connect(playlist, SIGNAL(MediaDataChanged(int)), this, SLOT(songDataChanged(int)));
-    connect(playlist, SIGNAL(MediaDeleted(int)), this, SLOT(songDeleted(int)));
-    connect(playlist, SIGNAL(MediaMoved(int,int)), this, SLOT(songMoved(int,int)));
-    connect(playlist, SIGNAL(changeActualPlayingMarker(int,int)), this, SLOT(positionOfActuallyPlayingSongChanged(int,int)));
+    connect(playlist.data(), SIGNAL(MediaInserted(int,int)), this, SLOT(songsInserted(int,int)));
+    connect(playlist.data(), SIGNAL(MediaDataChanged(int)), this, SLOT(songDataChanged(int)));
+    connect(playlist.data(), SIGNAL(MediaDeleted(int)), this, SLOT(songDeleted(int)));
+    connect(playlist.data(), SIGNAL(MediaMoved(int,int)), this, SLOT(songMoved(int,int)));
+    connect(playlist.data(), SIGNAL(changeActualPlayingMarker(int,int)), this, SLOT(positionOfActuallyPlayingSongChanged(int,int)));
 
 }
 
@@ -251,7 +252,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-Core::IPlaylist *PlaylistModel::getPlaylist()
+QSharedPointer<Core::IPlaylist> PlaylistModel::getPlaylist()
 {
     return playlist;
 }

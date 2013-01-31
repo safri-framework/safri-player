@@ -5,7 +5,7 @@ PlaylistFactory::PlaylistFactory()
 {
 }
 
-Core::IPlaylist *PlaylistFactory::createPlaylist()
+QSharedPointer<Core::IPlaylist> PlaylistFactory::createPlaylist()
 {
-    return new Playlist(this);
+    return QSharedPointer<IPlaylist>((IPlaylist*) new Playlist(this));
 }
