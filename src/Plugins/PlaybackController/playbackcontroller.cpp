@@ -15,18 +15,11 @@ PlaybackController::PlaybackController()
     m_stop  = new QState();
     m_noData = new QState();
     currentState = m_noData;
-    mediaBackend =  Core::ICore::audioBackend();
-    if (!mediaBackend)
-    {
-        qFatal("Null Pointer Exception in PlaybackController");
-        return;
-    }
+    mediaBackend = 0;
 
     setupActions();
     setupTransitions();
     setupSignalAndSlots();
-
-
 
     machine->addState(m_play);
     machine->addState(m_pause);
@@ -34,9 +27,6 @@ PlaybackController::PlaybackController()
     machine->addState(m_noData);
     machine->setInitialState(m_noData);
     machine->start();
-
-
-    connect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
 }
 
 void PlaybackController::setupSignalAndSlots()
@@ -45,7 +35,6 @@ void PlaybackController::setupSignalAndSlots()
     connect(m_play, SIGNAL(entered()), this, SLOT(playStateSlot()));
     connect(m_pause, SIGNAL(entered()), this, SLOT(pauseStateSlot()));
     connect(m_stop, SIGNAL(entered()), this, SLOT(stopStateSlot()));
-    connect(mediaBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));
     connect(m_nextAction,SIGNAL(triggered()) ,this, SLOT(nextActionSlot()));
     connect(m_previousAction,SIGNAL(triggered()) ,this, SLOT(previousActionSlot()));
 
@@ -53,6 +42,35 @@ void PlaybackController::setupSignalAndSlots()
     connect(m_shuffleAction, SIGNAL(triggered(bool)), this, SLOT(shuffleActionSlot(bool)));
 
 }
+
+void PlaybackController::obtainMediaBackendForMedia(Core::Media *media)
+{
+    Core::IMediaBackend* tmpMediaBackend = Core::ICore::getBackendForMedia(media);
+
+    if (mediaBackend != tmpMediaBackend)
+    {
+        if (mediaBackend)
+        {
+            mediaBackend->stop();
+            disconnect(mediaBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));
+            disconnect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
+            disconnect(mediaBackend, SIGNAL(hasSeekableMedia(bool)), this, SIGNAL(hasSeekableMedia(bool)));
+            disconnect(mediaBackend, SIGNAL(hasVolumeAdjustableMedia(bool)), this, SIGNAL(hasVolumeAdjustableMedia(bool)));
+
+        }
+
+        mediaBackend = tmpMediaBackend;
+
+        if (mediaBackend)
+        {
+            connect(mediaBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));
+            connect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
+            connect(mediaBackend, SIGNAL(hasSeekableMedia(bool)), this, SIGNAL(hasSeekableMedia(bool)));
+            connect(mediaBackend, SIGNAL(hasVolumeAdjustableMedia(bool)), this, SIGNAL(hasVolumeAdjustableMedia(bool)));
+        }
+    }
+}
+
 void PlaybackController::setupActions()
 {
     m_shuffleAction = new QAction(QIcon(":icons/ressources/shuffle_icon.png"), tr("Shuffle"), this);
@@ -114,11 +132,23 @@ void PlaybackController::playStateSlot()
 
     if(currentState == m_pause)
     {
+        if (!mediaBackend)
+        {
+            return;
+        }
         mediaBackend->play();
         qDebug()<<"Pause->Play";
     }
     else
     {
+
+        obtainMediaBackendForMedia(currentMedia);
+
+        if (!mediaBackend)
+        {
+            return;
+        }
+
         mediaBackend->play(currentMedia->getURL());
         Q_EMIT mediaChanged(currentMedia);
         qDebug()<<"x -> Play";
@@ -133,7 +163,10 @@ void PlaybackController::pauseStateSlot()
     Q_EMIT stateChanged(Core::PAUSE);
     m_pauseAction->setDisabled(true);
     m_playAction->setEnabled(true);
-    mediaBackend->pause();
+    if (mediaBackend)
+    {
+        mediaBackend->pause();
+    }
     m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
     stopped = false;
 }
@@ -148,7 +181,11 @@ void PlaybackController::stopStateSlot()
     m_stopAction->setDisabled(true);
     stopped = true;
     m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
-    mediaBackend->stop();
+
+    if (mediaBackend)
+    {
+        mediaBackend->stop();
+    }
 }
 
 void PlaybackController::currentSongFinished()
@@ -224,7 +261,6 @@ void PlaybackController::shuffleActionSlot(bool value)
     playlist->setShuffle(value);
 }
 
-
 void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
     this->playlist = playlist;
@@ -237,7 +273,6 @@ void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 
 QSharedPointer<Core::IPlaylist> PlaybackController::getPlaylist()
 {
-    qDebug() << "getPlaylist()";
     return this->playlist;
 }
 
@@ -264,9 +299,7 @@ QAction* PlaybackController::stopAction()
 
 QAction* PlaybackController::nextAction()
 {
-
     return this->m_nextAction;
-
 }
 
 QAction* PlaybackController::previousAction()
@@ -282,27 +315,38 @@ QList<QAction *> PlaybackController::getAdditionalActions()
 
 int PlaybackController::getMediaTotalTime()
 {
-    return mediaBackend->getTotalTime();
+    if (mediaBackend)
+    {
+        return mediaBackend->getTotalTime();
+    }
+
+    return -1;
 }
 
 int PlaybackController::getVolume()
 {
-    return mediaBackend->getVolume();
-}
+    if (mediaBackend)
+    {
+        return mediaBackend->getVolume();
+    }
 
-void PlaybackController::playMedia(Core::Media* media)
-{
-    // TODO: AudioEngine play song
+    return -1;
 }
 
 void PlaybackController::seek(int playTime)
 {
-    mediaBackend->seek(playTime);
+    if (mediaBackend)
+    {
+        mediaBackend->seek(playTime);
+    }
 }
 
 void PlaybackController::setVolume(int volume)
 {
-    mediaBackend->setVolume(volume);
+    if (mediaBackend)
+    {
+        mediaBackend->setVolume(volume);
+    }
 }
 
 

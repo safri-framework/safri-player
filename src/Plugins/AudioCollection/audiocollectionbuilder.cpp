@@ -34,7 +34,8 @@ IMediaCollection *AudioCollectionBuilder::buildMediaCollection(IStorageAdapter *
 
 void AudioCollectionBuilder::storeMediaCollection(IMediaCollection *mediaCollection, IStorageAdapter *storageAdapter)
 {
-
+    Q_UNUSED(mediaCollection)
+    Q_UNUSED(storageAdapter)
 }
 
 QString AudioCollectionBuilder::getCollectionType()

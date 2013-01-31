@@ -84,6 +84,10 @@ namespace Core
 
             void stateChanged(playState state);
 
+            void hasSeekableMedia(bool value);
+
+            void hasVolumeAdjustableMedia(bool value);
+
     private slots:
 
 

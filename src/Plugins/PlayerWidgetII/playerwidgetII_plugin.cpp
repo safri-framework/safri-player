@@ -5,6 +5,7 @@ using namespace Plugins;
 
 bool PlayerWidgetII_Plugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED(arguments)
     addObject(new PLWidgetFactory());
     return true;
 

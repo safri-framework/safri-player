@@ -109,4 +109,5 @@ QString Controller::CollectionController::getStorageTypeByFilename(QString filen
 
 void Controller::CollectionController::objectAddedToObjectPool(QObject *object)
 {
+    Q_UNUSED(object)
 }

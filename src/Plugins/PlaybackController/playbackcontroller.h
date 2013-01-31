@@ -33,7 +33,6 @@ class PlaybackController : public Core::IPlaybackController
 protected:
 
         QSharedPointer<Core::IPlaylist> playlist;
-        void playMedia(Core::Media* media);
 
 public slots:
         void seek(int playTime);
@@ -67,6 +66,7 @@ private:
         void setupSignalAndSlots();
 
         bool stopped;
+        void obtainMediaBackendForMedia(Core::Media* media);
 
 private slots:
 

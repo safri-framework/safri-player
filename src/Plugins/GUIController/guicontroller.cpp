@@ -7,7 +7,6 @@
 GUIController::GUIController(QObject *parent) :
     currentPlayerWidget(0), currentPlayerWidgetFactory(0), currentPlaylistWidget(0)
 {
-
     QList<Core::IPlayerWidgetFactory*> playerFactories = PluginSystem::PluginManager::instance()->getObjects<Core::IPlayerWidgetFactory>();
     if (playerFactories.size() > 0)
     {

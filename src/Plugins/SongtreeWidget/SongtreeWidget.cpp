@@ -87,6 +87,6 @@ void SongtreeWidget::newAudioCollectionAvailable(QUrl collURL)
 
 void SongtreeWidget::removeCollection(QUrl collURL)
 {
-
+    Q_UNUSED(collURL)
 }
 

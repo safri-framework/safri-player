@@ -360,6 +360,7 @@ int Playlist::getSize()
 
 void Playlist::readTagsAtPosition(int position)
 {
+    Q_UNUSED(position)
 /*
 
   TODO

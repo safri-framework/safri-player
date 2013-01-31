@@ -63,21 +63,17 @@ QList<Core::DataItem *> AudioCollection::getByName(Core::DataItem::DATA_ITEM_TYP
         }
         case DataItem::ARTIST:
         {
-
             QList<Artist*> tmp = m_nameToArtistMap->values(name);
-            QList<DataItem*> list;
 
             for(int i = 0; i < tmp.size(); i++ )
             {
                 list.append(tmp.at(i));
             }
             break;
-
         }
         case DataItem::GENRE:
         {
             QList<Genre*> tmp = m_nameToGenreMap->values(name);
-            QList<DataItem*> list;
 
             for(int i = 0; i < tmp.size(); i++ )
             {
@@ -88,7 +84,6 @@ QList<Core::DataItem *> AudioCollection::getByName(Core::DataItem::DATA_ITEM_TYP
         case DataItem::SONG:
         {
             QList<Song*> tmp = m_nameToSongMap->values(name);
-            QList<DataItem*> list;
 
             for(int i = 0; i < tmp.size(); i++ )
             {
@@ -96,6 +91,9 @@ QList<Core::DataItem *> AudioCollection::getByName(Core::DataItem::DATA_ITEM_TYP
             }
             break;
         }
+        default:
+
+            break;
     }
     m_lock.unlock();
     return list;
@@ -119,6 +117,8 @@ Core::DataItem* AudioCollection::getByID(Core::DataItem::DATA_ITEM_TYPE type, in
     case DataItem::SONG:
         item = m_IDtoSongMap->value(id);
         break;
+    default:
+        break;
     }
     m_lock.unlock();
     return item;
@@ -130,40 +130,42 @@ QList<Core::DataItem *> AudioCollection::getDataItems(Core::DataItem::DATA_ITEM_
     m_lock.lockForRead();
     switch (type)
     {
-    case DataItem::ALBUM:
+        case DataItem::ALBUM:
 
-        for (int i = 0; i < m_albumList->size(); i++)
-        {
-            list.append(m_albumList->at(i));
-        }
+            for (int i = 0; i < m_albumList->size(); i++)
+            {
+                list.append(m_albumList->at(i));
+            }
 
-       break;
+           break;
 
-       case DataItem::ARTIST:
+        case DataItem::ARTIST:
 
+            for (int i = 0; i < m_artistList->size(); i++)
+            {
+                list.append(m_artistList->at(i));
+            }
+            break;
 
-        for (int i = 0; i < m_artistList->size(); i++)
-        {
-            list.append(m_artistList->at(i));
-        }
-        break;
+        case DataItem::GENRE:
 
-    case DataItem::GENRE:
+            for (int i = 0; i < m_genreList->size(); i++)
+            {
+                list.append(m_genreList->at(i));
+            }
+            break;
 
-        for (int i = 0; i < m_genreList->size(); i++)
-        {
-            list.append(m_genreList->at(i));
-        }
-        break;
+        case DataItem::SONG:
 
-        break;
-    case DataItem::SONG:
-        for (int i = 0; i < m_songList->size(); i++)
-        {
-            list.append(m_songList->at(i));
-        }
-        break;
+            for (int i = 0; i < m_songList->size(); i++)
+            {
+                list.append(m_songList->at(i));
+            }
+            break;
 
+        default:
+
+            break;
     }
     m_lock.unlock();
     return list;
@@ -213,6 +215,7 @@ QUrl AudioCollection::getDatabaseLocation()
 InfoContainer *AudioCollection::getInfoContainerByName(QString name)
 {
     //TODO
+    Q_UNUSED(name)
     return 0;
 }
 

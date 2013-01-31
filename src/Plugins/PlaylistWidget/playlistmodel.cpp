@@ -43,6 +43,9 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+    Q_UNUSED(action)
+    Q_UNUSED(row)
+    Q_UNUSED(column)
     QList<Core::Media*> mediaList;
 
     if (data->hasFormat("Item"))
@@ -91,6 +94,8 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 
     }
+
+    return true;
 }
 
 Qt::DropActions PlaylistModel::supportedDropActions() const

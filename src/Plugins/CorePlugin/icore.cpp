@@ -48,8 +48,15 @@ void ICore::objectAddedToObjectPool(QObject *object)
     IMediaBackend *media_backend = qobject_cast<IMediaBackend*>(object);
     if (media_backend != 0)
     {
-        qDebug() << "IAudioBackend class added";
+        qDebug() << "IMediaBackend class added";
         m_audioBackend = media_backend;
+
+        QStringList mimeTypes = media_backend->getSupportedMimeTypes();
+        for (int i = 0; i < mimeTypes.size(); i++)
+        {
+            qDebug() << "Added MediaBackend for MimeType: " << mimeTypes.at(i);
+            m_mediaBackends.insertMulti(mimeTypes.at(i), media_backend);
+        }
     }
 
     IPlaylistFactory *playlistFactory = qobject_cast<IPlaylistFactory*>(object);

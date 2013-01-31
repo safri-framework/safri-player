@@ -33,6 +33,7 @@ void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 
 void PlaylistWidget::itemsSelected(QList<Core::Item *> selection)
 {
+    Q_UNUSED(selection)
 }
 
 

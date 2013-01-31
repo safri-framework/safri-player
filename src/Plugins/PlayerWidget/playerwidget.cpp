@@ -77,6 +77,7 @@ void PlayerWidget::on_volumeSlider_sliderMoved(int position)
 
 void PlayerWidget::mediaChanged(Core::Media *media)
 {
+    Q_UNUSED(media)
     int totalTime = playbackController->getMediaTotalTime();
     ui->seekSlider->setMaximum(totalTime);
     ui->seekSlider->setValue(0);

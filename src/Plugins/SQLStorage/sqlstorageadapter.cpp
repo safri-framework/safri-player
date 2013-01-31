@@ -85,6 +85,8 @@ Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::D
 
 void SQLStorageAdapter::writeTableForDataItemType(Core::ITableModel *model, Core::DataItem::DATA_ITEM_TYPE type)
 {
+    Q_UNUSED(model)
+    Q_UNUSED(type)
 }
 
 QString SQLStorageAdapter::getStorageType()

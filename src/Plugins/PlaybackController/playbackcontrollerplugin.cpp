@@ -15,6 +15,7 @@ PlaybackControllerPlugin::~PlaybackControllerPlugin()
 
 bool PlaybackControllerPlugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED(arguments)
     qDebug() << "PlaybackControllerPlugin::initialize()";
 
     PlaybackController *pbc = new PlaybackController();
