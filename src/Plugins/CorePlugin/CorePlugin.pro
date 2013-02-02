@@ -46,7 +46,8 @@ SOURCES += coreplugin.cpp \
     Interfaces/IPlayerWidget.cpp \
     Interfaces/IMediaBackend.cpp \
     Interfaces/IMediaTagger.cpp \
-    Interfaces/IMediaTaggerFactory.cpp
+    Interfaces/IMediaTaggerFactory.cpp \
+    CoreData/mediainfocontainer.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -88,6 +89,7 @@ HEADERS += coreplugin.h\
     Songtree/CoreItemTypes/mediacollectionitemtype.h \
     Interfaces/IPlayerWidget.h \
     Interfaces/IMediaBackend.h \
+    CoreData/mediainfocontainer.h \
     Interfaces/IMediaTagger.h \
     Interfaces/IMediaTaggerFactory.h
 

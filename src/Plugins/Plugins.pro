@@ -18,4 +18,5 @@ SUBDIRS += \
     	PlaylistWidget \
     	SongtreeWidget \
     	CollectionController \
-    	PlayerWidgetII
+    	PlayerWidgetII \
+    TagLibMediaTagger
