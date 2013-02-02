@@ -36,10 +36,12 @@ unix {
 
 DEFINES += TAGLIBMEDIATAGGER_LIBRARY
 
-SOURCES += taglibmediataggerplugin.cpp
+SOURCES += taglibmediataggerplugin.cpp \
+    taglibmediatagger.cpp
 
 HEADERS += taglibmediataggerplugin.h\
-        TagLibMediaTagger_global.h
+        TagLibMediaTagger_global.h \
+    taglibmediatagger.h
 
 OTHER_FILES += \
     TagLibMediaTagger.xml

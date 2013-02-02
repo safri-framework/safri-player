@@ -3,9 +3,7 @@
 #include "../CorePlugin_global.h"
 #include <QObject>
 #include <QUrl>
-
-
-class MediaInfoContainer;
+#include "../CoreData/mediainfocontainer.h"
 
 
 namespace Core
@@ -24,7 +22,7 @@ namespace Core
 
 
     signals:
-        void mediaTagged(MediaInfoContainer* info);
+        void mediaTagged(MediaInfoContainer info);
         void unknownMedia(QUrl media);
 
 

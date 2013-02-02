@@ -5,14 +5,15 @@ using namespace Core;
 MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl, QObject *parent)
     : QObject(parent), mediaUrl(mediaUrl)
 {
+
 }
 
-void MediaInfoContainer::setMediaInfo(MediaInfoType type, QString info)
+void MediaInfoContainer::setMediaInfo(MediaInfoType type, QVariant info)
 {
     infoMap.insert(type, info);
 }
 
-QString MediaInfoContainer::getMediaInfo(MediaInfoType type)
+QVariant MediaInfoContainer::getMediaInfo(MediaInfoType type)
 {
     return infoMap.value(type);
 }

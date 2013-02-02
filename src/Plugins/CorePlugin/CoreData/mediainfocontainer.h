@@ -5,22 +5,24 @@
 #include "../CorePlugin_global.h"
 #include <QUrl>
 #include <QMap>
+#include <QVariant>
 
 namespace Core
 {
 
     enum MediaInfoType
     {
-        MimeType = 1,
-        Artist,
-        Album,
-        Genre,
-        Title,
-        Track,
-        Length,
-        Year,
-        FileSize,
-        BitRate
+        InfoMimeType = 1,
+        InfoArtist,
+        InfoAlbum,
+        InfoGenre,
+        InfoTitle,
+        InfoTrack,
+        InfoLength,
+        InfoYear,
+        InfoFileSize,
+        InfoBitRate,
+        InfoURL
     };
 
     class COREPLUGINSHARED_EXPORT MediaInfoContainer : public QObject
@@ -28,15 +30,15 @@ namespace Core
         Q_OBJECT
         public:
 
-            explicit MediaInfoContainer(QUrl mediaUrl, QObject *parent = 0);
+        explicit MediaInfoContainer(QUrl mediaUrl, QObject *parent = 0);
 
-            void setMediaInfo(MediaInfoType type, QString info);
-            QString getMediaInfo(MediaInfoType type);
+            void setMediaInfo(MediaInfoType type, QVariant info);
+            QVariant getMediaInfo(MediaInfoType type);
 
         private:
 
             QUrl mediaUrl;
-            QMap<MediaInfoType, QString> infoMap;
+            QMap<MediaInfoType, QVariant> infoMap;
     };
 }
 
