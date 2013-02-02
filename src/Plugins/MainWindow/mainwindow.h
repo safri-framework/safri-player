@@ -7,7 +7,7 @@
 #include "pluginmanager.h"
 #include <QSplitter>
 #include <Interfaces/IPlayerWidget.h>
-
+#include <QTimeLine>
 namespace Ui {
 class MainWindow;
 }
@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow
         QList<int> lastSplitterSize;
 
         void showTestPlaylist();
-
+        QTimeLine* closeSidebarTimeline;
     private slots:
 
         void sideBarButtonClicked(bool checked);
@@ -46,6 +46,10 @@ class MainWindow : public QMainWindow
         void showRequest(bool show);
 
         void on_actionPlugins_show_triggered();
+
+        void resizeSidebar(int l);
+
+
 
 public slots:
 

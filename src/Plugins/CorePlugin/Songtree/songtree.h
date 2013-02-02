@@ -4,6 +4,7 @@
 #include "../CorePlugin_global.h"
 #include <QObject>
 #include <QList>
+#include "../CoreData/media.h"
 
 namespace Core
 {
@@ -20,6 +21,7 @@ namespace Core
 
             SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy);
 
+
             void print();
 
             /**
@@ -35,6 +37,7 @@ namespace Core
         public slots:
 
             void addSong(Song* song);
+            void addItem(DataItem* item);
             void move(SongTreeItem *source, SongTreeItem *destination);
             void changesSaved();
 

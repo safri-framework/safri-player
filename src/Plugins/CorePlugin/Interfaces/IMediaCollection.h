@@ -5,6 +5,7 @@
 #include "../CoreData/dataitem.h"
 #include "../CoreData/media.h"
 #include <QUrl>
+#include "../CoreData/mediainfocontainer.h"
 
 class InfoContainer;
 namespace Core
@@ -31,7 +32,7 @@ namespace Core
             virtual void lockForWrite() = 0;
             virtual void lockForRead() = 0;
             virtual void unlock() = 0;
-
+            virtual void addMedia(MediaInfoContainer container) = 0;
             virtual void insertMedia(QUrl mediaUrl, IMediaTagger *tagger) = 0;
 
         signals:

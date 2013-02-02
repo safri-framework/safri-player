@@ -1,6 +1,7 @@
 #include "songtree.h"
 #include "songtreeitem.h"
 #include <QDebug>
+#include "../CoreData/song.h"
 
 using namespace Core;
 
@@ -37,6 +38,14 @@ bool SongTree::isDirty()
 void SongTree::addSong(Song *song)
 {
     rootNode->addSong(song);
+}
+
+void SongTree::addItem(DataItem *media)
+{
+    Song* song = qobject_cast<Song*>(media);
+    if(song)
+        addSong(song);
+
 }
 
 void SongTree::emitBeginMoveItem(SongTreeItem *srcParent, int srcRow, SongTreeItem *destParent, int destRow)

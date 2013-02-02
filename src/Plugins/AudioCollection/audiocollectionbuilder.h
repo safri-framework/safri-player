@@ -27,6 +27,7 @@ class AudioCollectionBuilder : public IMediaCollectionBuilder
         void buildSongs(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
 
         QMultiMap<int, int> loadArtistToAlbumMap(IStorageAdapter* storageAdapter);
+
 };
 
 #endif // AUDIOCOLLECTIONBUILDER_H

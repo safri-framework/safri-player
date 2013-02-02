@@ -17,3 +17,8 @@ QVariant MediaInfoContainer::getMediaInfo(MediaInfoType type)
 {
     return infoMap.value(type);
 }
+
+QUrl MediaInfoContainer::getURL()
+{
+    return this->mediaUrl;
+}

@@ -57,10 +57,16 @@ void SongtreeWidget::loadSongtreeModel()
     QList<IAudioCollection*> audioCollList = audioCollMap.values();
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
+
         songList.append(audioCollList.at(i)->getSongs());
     }
 
     tree = new SongTree(songList, treeHierarchy);
+
+    for(int i = 0 ; i < audioCollList.size(); i++)
+    {
+        connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
+    }
     model = new SongTreeModel(tree, this);
 
 }

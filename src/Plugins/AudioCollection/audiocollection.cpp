@@ -483,6 +483,77 @@ void AudioCollection::insertSong(Song* song)
 }
 
 
+void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
+{
+    AudioCollection* audioCollection = this;
+    bool isTemporary = false; //  functionality can be added here, if needed
+
+    if(audioCollection)
+    {
+        Song* song = 0;
+        Artist* artist = 0;
+        Album* album = 0;
+        Genre* genre = 0;
+
+        QString artistName = mediaInfo.getMediaInfo(InfoArtist).toString();
+        QString albumName = mediaInfo.getMediaInfo(InfoAlbum).toString();
+        QString genreName = mediaInfo.getMediaInfo(InfoGenre).toString();
+
+
+        song = audioCollection->getSongByPath(mediaInfo.getURL().toString());
+        if(!song) //Song doesn't already exists
+        {
+
+
+            song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt());
+
+            if(audioCollection->getArtistsByName(artistName).size() > 0) //Artist already exists!
+            {
+               artist = audioCollection->getArtistsByName(artistName).at(0);
+               QList<Album*> albumList = artist->getAlbumByName(albumName);
+               if(albumList.size() > 0 ) //Album already exists!
+               {
+                   album = albumList.at(0);
+               }
+               else //Album doesn't already exists!
+               {
+                   album = audioCollection->newAlbum(albumName);
+                   album->addArtist(artist);
+                   artist->addAlbum(album);
+               }
+            }
+            else    //Artist doesn't already exists -> the album can't exist too.
+            {
+                artist = audioCollection->newArtist(artistName);
+                album = audioCollection->newAlbum(albumName);
+                artist->addAlbum(album);
+                album->addArtist(artist);
+            }
+
+
+
+            QList<Genre*> genreList = audioCollection->getGenresByName(genreName);
+            if(genreList.size() > 0) //Genre already exists!
+            {
+                genre = genreList.at(0);
+            }
+            else
+            {
+                genre = audioCollection->newGenre(genreName);
+            }
+
+
+         genre->addSong(song);
+         song->setGenre(genre);
+         album->addSong(song);
+         song->setAlbum(album);
+
+         song->setArtist(artist);
+         Q_EMIT itemAdded(song);
+        }
+    }
+}
+
 
 
 int AudioCollection::newAlbumID()

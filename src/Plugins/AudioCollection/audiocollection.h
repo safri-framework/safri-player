@@ -41,7 +41,7 @@ class AudioCollection : public Core::IAudioCollection
         QUrl getDatabaseLocation();
         InfoContainer* getInfoContainerByName(QString name);
         QString getContentType();
-
+        void addMedia(MediaInfoContainer container);
         void insertMedia(QUrl mediaUrl, IMediaTagger *tagger);
 
 

@@ -125,6 +125,7 @@ QMultiMap<int, int> AudioCollectionBuilder::loadArtistToAlbumMap(IStorageAdapter
     return artistToAlbumMap;
 }
 
+
 void AudioCollectionBuilder::buildAlbums(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     QMultiMap<int, int> artistToAlbumMap = loadArtistToAlbumMap(storageAdapter);

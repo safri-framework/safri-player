@@ -38,7 +38,7 @@ namespace Core
             getType() const;
             int getID() const;
             QString getName() const;
-            bool getTemporary() const;
+            bool isTemporary() const;
 
 
             void setName(QString sName);

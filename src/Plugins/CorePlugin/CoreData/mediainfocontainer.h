@@ -22,7 +22,8 @@ namespace Core
         InfoYear,
         InfoFileSize,
         InfoBitRate,
-        InfoURL
+        InfoURL,
+        InfoTemporary
     };
 
     class COREPLUGINSHARED_EXPORT MediaInfoContainer
@@ -33,6 +34,7 @@ namespace Core
 
             void setMediaInfo(MediaInfoType type, QVariant info);
             QVariant getMediaInfo(MediaInfoType type);
+            QUrl getURL();
 
         private:
 

@@ -17,11 +17,12 @@ namespace Core
             explicit Artist(int sID, QString sName, QObject *parent = 0);
             explicit Artist(int sID, QString sName,bool temporary ,QObject *parent = 0);
             explicit Artist(Artist* artist, QObject *parent = 0);
+        QList<Album*> &getAlbums();
+        QList<Album*> getAlbumByName(QString name);
 
-        public slots:
+    public slots:
 
-            QList<Album*> &getAlbums();
-            QList<Album*> getAlbumByName(QString name);
+
             void addAlbum(Album* album);
             void removeAlbum(Album* album);
 
@@ -66,6 +67,9 @@ namespace Core
             static int latestID;
 
             QList<Media*> getMedia();
+
+
+
 
         private:
 

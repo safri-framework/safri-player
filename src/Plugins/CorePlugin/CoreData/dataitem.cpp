@@ -37,7 +37,7 @@ QString DataItem::getName() const
     return name;
 }
 
-bool DataItem::getTemporary() const
+bool DataItem::isTemporary() const
 {
     return temporary;
 }
