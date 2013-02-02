@@ -18,6 +18,7 @@ LIBS += -L"../../../bin/plugins/safri" -lCore
 win32 {
     INCLUDEPATH += C:\\taglib\\include
     LIBS += -L"C:\\taglib\\lib"
+    LIBS += -llibtag
 }
 
 macx {
