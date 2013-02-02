@@ -9,8 +9,12 @@ QWidget[type="mainframe"]
 {
 border-top: 1px solid green;
 border-bottom: 1px solid red;
-min-height:93px;
-max-height:93px;
+min-height:80px;
+max-height:80px;
+
+
+
+/*ex 93*/
 }
 
 
@@ -18,8 +22,10 @@ QWidget[type="display"]
 {
 border-image: url(:backgrounds/SAFRI_UI/Display_bg.png) 12px 12px 12px 12px;
 border-width:12px;
-min-height:40px;
-max-height:40px;
+min-height:30px;
+max-height:30px;
+
+/* ex: 40*/
 }
 
 QLabel[type="display_label"]

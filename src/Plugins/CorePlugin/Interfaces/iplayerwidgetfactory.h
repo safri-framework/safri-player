@@ -15,6 +15,7 @@ namespace Core
         Q_OBJECT
         public:
 
+            explicit IPlayerWidgetFactory(QObject* parent = 0);
             virtual ~IPlayerWidgetFactory();
 
             virtual IPlayerWidget* createWidget() = 0;

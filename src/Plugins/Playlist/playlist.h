@@ -19,7 +19,7 @@ public:
     explicit Playlist(QObject *parent = 0);
     explicit Playlist(QList<Item*> items, QObject *parent = 0);
     explicit Playlist(QString m3ufile, QObject *parent = 0);
-
+    ~Playlist();
 
 
     void setShuffle(bool value);

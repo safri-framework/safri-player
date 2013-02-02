@@ -33,6 +33,7 @@ QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
     max-height:21px;
     min-width::26px;
     max-width:26px;
+    padding-left: 2px;
     border-image: url(:border_images/SAFRI_UI/tiny_button_normal1.png);
 
 

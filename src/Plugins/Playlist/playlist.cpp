@@ -44,6 +44,11 @@ Playlist::Playlist(QString m3ufile, QObject *parent) :
 */
 }
 
+Playlist::~Playlist()
+{
+    qDebug()<<"DESTRUKTOR PLAYLIST";
+}
+
 
 
 

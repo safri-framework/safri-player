@@ -44,7 +44,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/istorageadapterfactory.cpp \
     Songtree/CoreItemTypes/mediacollectionitemtype.cpp \
     Interfaces/IPlayerWidget.cpp \
-    Interfaces/IMediaBackend.cpp
+    Interfaces/IMediaBackend.cpp \
+    Interfaces/IMediaTagger.cpp \
+    Interfaces/IMediaTaggerFactory.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -85,7 +87,9 @@ HEADERS += coreplugin.h\
     Interfaces/istorageadapterfactory.h \
     Songtree/CoreItemTypes/mediacollectionitemtype.h \
     Interfaces/IPlayerWidget.h \
-    Interfaces/IMediaBackend.h
+    Interfaces/IMediaBackend.h \
+    Interfaces/IMediaTagger.h \
+    Interfaces/IMediaTaggerFactory.h
 
 OTHER_FILES += \
     Core.xml

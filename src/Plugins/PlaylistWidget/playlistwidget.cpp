@@ -72,6 +72,5 @@ void PlaylistWidget::on_pushButton_clicked()
     playlistModel = new PlaylistModel(pl, this);
     connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
 
-
     ui->playlistView->setModel(playlistModel);
 }
