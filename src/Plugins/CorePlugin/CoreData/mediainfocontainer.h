@@ -25,12 +25,11 @@ namespace Core
         InfoURL
     };
 
-    class COREPLUGINSHARED_EXPORT MediaInfoContainer : public QObject
+    class COREPLUGINSHARED_EXPORT MediaInfoContainer
     {
-        Q_OBJECT
         public:
 
-        explicit MediaInfoContainer(QUrl mediaUrl, QObject *parent = 0);
+        explicit MediaInfoContainer(QUrl mediaUrl = QUrl());
 
             void setMediaInfo(MediaInfoType type, QVariant info);
             QVariant getMediaInfo(MediaInfoType type);

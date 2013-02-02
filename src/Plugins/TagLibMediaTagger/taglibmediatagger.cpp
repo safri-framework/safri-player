@@ -4,7 +4,12 @@
 #include <taglib/fileref.h>
 #include <taglib/id3v2tag.h>
 #include <QVariant>
+#include <QDebug>
+#include <QFileInfo>
+
 using namespace Core;
+
+
 TaglibMediaTagger::TaglibMediaTagger(QObject *parent):IMediaTagger(parent)
 {
 
@@ -43,7 +48,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
             track = ref.tag()->track();
             length = ref.audioProperties()->length();
             bitRate = ref.audioProperties()->bitrate();
-            comment = ref.tag()->comment();
+            comment = ref.tag()->comment().toCString();
 
 
         }
@@ -53,7 +58,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
             Q_EMIT unknownMedia(media);
         }
 
-        QFileInfo pathInfo( fileName );
+        QFileInfo pathInfo( filename );
 
         if (genre.trimmed().isEmpty()) genre ="Unbekannt";
         if (album.trimmed().isEmpty()) album ="Unbekannt";
@@ -67,7 +72,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTitle, title);
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
-        container.setMediaInfo(InfoFile);
+        //container.setMediaInfo(InfoFile);
        // Q_EMIT mediaTagged(container);
 
 

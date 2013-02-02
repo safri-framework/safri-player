@@ -47,7 +47,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/IMediaBackend.cpp \
     Interfaces/IMediaTagger.cpp \
     Interfaces/IMediaTaggerFactory.cpp \
-    CoreData/mediainfocontainer.cpp
+    CoreData/mediainfocontainer.cpp \
+    Interfaces/IMediaCollection.cpp \
+    Interfaces/IAudioCollection.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \

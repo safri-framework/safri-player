@@ -2,8 +2,8 @@
 
 using namespace Core;
 
-MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl, QObject *parent)
-    : QObject(parent), mediaUrl(mediaUrl)
+MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl)
+    : mediaUrl(mediaUrl)
 {
 
 }

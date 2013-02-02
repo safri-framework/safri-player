@@ -1,6 +1,8 @@
 #include "taglibmediataggerplugin.h"
 #include <QDebug>
-//#include "taglib.h"
+#include <taglib/tag.h>
+#include <taglib/fileref.h>
+#include <taglib/id3v2tag.h>
 
 using namespace Plugins;
 

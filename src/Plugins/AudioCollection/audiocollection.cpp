@@ -224,7 +224,6 @@ QString AudioCollection::getContentType()
     return "org.safri.collection.audio";
 }
 
-
 QList<Core::Song *> AudioCollection::getSongs()
 {
     QList<Song*> list;
@@ -507,4 +506,8 @@ int AudioCollection::newSongID()
 }
 
 
+void AudioCollection::insertMedia(QUrl mediaUrl, IMediaTagger *tagger)
+{
+
+}
 
