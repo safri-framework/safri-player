@@ -16,6 +16,11 @@ TaglibMediaTagger::TaglibMediaTagger(QObject *parent):IMediaTagger(parent)
 
 }
 
+TaglibMediaTagger::~TaglibMediaTagger()
+{
+    qDebug() << "TagLibMediaTagger destroyed";
+}
+
 void TaglibMediaTagger::tagMedia(QUrl media)
 {
 
@@ -73,9 +78,6 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
         //container.setMediaInfo(InfoFile);
-       // Q_EMIT mediaTagged(container);
-
-
-
+        Q_EMIT mediaTagged(container);
 }
 

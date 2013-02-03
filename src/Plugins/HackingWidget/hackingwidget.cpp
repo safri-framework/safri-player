@@ -25,6 +25,10 @@
 
 #include <QTreeView>
 
+#include "Interfaces/ICollectionController.h"
+#include "Interfaces/IMediaTagger.h"
+#include "CoreSupply/filesysteminserter.h"
+
 
 HackingWidget::HackingWidget(QWidget *parent) :
     QWidget(parent),
@@ -206,4 +210,21 @@ qDebug()<<"6"<<songlist.size();
 
 
 
+}
+
+void HackingWidget::on_pushButton_11_clicked()
+{
+    ICollectionController *cc = Core::ICore::collectionController();
+    QList<Core::IMediaTagger*> taggers = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaTagger>();
+
+    QList<IMediaCollection*> collections = cc->getCollections("org.safri.collection.audio");
+
+    IMediaCollection *collection = collections.at(0);
+    qDebug() << collection->getName();
+
+    Core::FileSystemInserter inserter(collection);
+
+    inserter.insertMedia(QUrl("/data/GunsNRoses"), taggers.at(0));
+
+  //  qDebug() << "Return from inserter.insertMedia";
 }

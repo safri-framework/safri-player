@@ -1,8 +1,5 @@
 #include "taglibmediataggerplugin.h"
-#include <QDebug>
-#include <taglib/tag.h>
-#include <taglib/fileref.h>
-#include <taglib/id3v2tag.h>
+#include "taglibmediatagger.h"
 
 using namespace Plugins;
 
@@ -12,8 +9,8 @@ TagLibMediaTaggerPlugin::TagLibMediaTaggerPlugin()
 
 bool TagLibMediaTaggerPlugin::initialize(QStringList &arguments)
 {
-
-
+    Q_UNUSED(arguments)
+    addObject(new TaglibMediaTagger());
     return true;
 }
 

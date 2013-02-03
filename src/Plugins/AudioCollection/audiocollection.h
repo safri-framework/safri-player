@@ -19,6 +19,7 @@ class AudioCollection : public Core::IAudioCollection
 
     public:
         explicit AudioCollection(QString name);
+        ~AudioCollection();
 
          // ------------------- Media Collection Interface
 
@@ -42,9 +43,6 @@ class AudioCollection : public Core::IAudioCollection
         InfoContainer* getInfoContainerByName(QString name);
         QString getContentType();
         void addMedia(MediaInfoContainer container);
-        void insertMedia(QUrl mediaUrl, IMediaTagger *tagger);
-
-
         // ------------------- Audio Collection Interface
 
         QList<Core::Song*> getSongs();
@@ -71,8 +69,6 @@ class AudioCollection : public Core::IAudioCollection
         Core::Genre* getGenreByID(int id);
         Core::Genre* newGenre(QString genre);
         void removeGenre(Genre* genre);
-
-
 
     private:
 

@@ -1,4 +1,5 @@
 #include "audiocollection.h"
+#include <QDebug>
 
 AudioCollection::AudioCollection(QString name):m_name(name),
     currentAlbumID(0),
@@ -20,6 +21,11 @@ AudioCollection::AudioCollection(QString name):m_name(name),
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
 
+}
+
+AudioCollection::~AudioCollection()
+{
+    qDebug() << "AudioCollection destroyed";
 }
 
 
@@ -549,6 +555,9 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
          song->setAlbum(album);
 
          song->setArtist(artist);
+
+         qDebug() << "Created Song " << song->getName();
+
          Q_EMIT itemAdded(song);
         }
     }
@@ -575,10 +584,3 @@ int AudioCollection::newSongID()
 {
     return ++currentSongID;
 }
-
-
-void AudioCollection::insertMedia(QUrl mediaUrl, IMediaTagger *tagger)
-{
-
-}
-

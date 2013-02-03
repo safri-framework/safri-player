@@ -4,6 +4,7 @@
 #include "../CorePlugin_global.h"
 #include "../CoreData/dataitem.h"
 #include "../CoreData/media.h"
+#include "../CoreData/mediainfocontainer.h"
 #include <QUrl>
 #include "../CoreData/mediainfocontainer.h"
 
@@ -17,6 +18,7 @@ namespace Core
         public:
 
             explicit IMediaCollection(QObject* parent);
+            virtual ~IMediaCollection();
 
             virtual QList<Core::DataItem*> getByName(DataItem::DATA_ITEM_TYPE type, QString name) = 0;
             virtual Core::DataItem* getByID(DataItem::DATA_ITEM_TYPE type, int id) = 0;
@@ -33,7 +35,6 @@ namespace Core
             virtual void lockForRead() = 0;
             virtual void unlock() = 0;
             virtual void addMedia(MediaInfoContainer container) = 0;
-            virtual void insertMedia(QUrl mediaUrl, IMediaTagger *tagger) = 0;
 
         signals:
 

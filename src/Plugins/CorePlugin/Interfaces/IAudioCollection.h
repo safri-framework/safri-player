@@ -15,6 +15,7 @@ namespace Core
         public:
 
             explicit IAudioCollection(QObject *parent = 0);
+            ~IAudioCollection();
 
             virtual QList<Core::Song*> getSongs() = 0;
             virtual Core::Song* getSongByID(int id) = 0;

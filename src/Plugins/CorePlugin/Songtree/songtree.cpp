@@ -42,6 +42,7 @@ void SongTree::addSong(Song *song)
 
 void SongTree::addItem(DataItem *media)
 {
+    qDebug() << "SongTree::addItem";
     Song* song = qobject_cast<Song*>(media);
     if(song)
         addSong(song);

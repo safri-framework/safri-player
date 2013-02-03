@@ -6,3 +6,7 @@ IAudioCollection::IAudioCollection(QObject *parent)
     : IMediaCollection(parent)
 {
 }
+
+IAudioCollection::~IAudioCollection()
+{
+}

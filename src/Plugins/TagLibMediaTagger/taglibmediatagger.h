@@ -9,7 +9,8 @@ class TaglibMediaTagger : public IMediaTagger
 Q_OBJECT
 public:
 
-    TaglibMediaTagger(QObject* parent);
+    TaglibMediaTagger(QObject* parent = 0);
+    ~TaglibMediaTagger();
 
 public slots:
      void tagMedia(QUrl media);

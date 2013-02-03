@@ -112,6 +112,7 @@ bool SQLStorageAdapter::openDatabase()
     if ( !checkIfDatabaseExists() )
     {
         qDebug() << "Database doesn't exist";
+        createDatabase(database);
         return false;
     }
 

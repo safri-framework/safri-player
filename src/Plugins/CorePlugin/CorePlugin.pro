@@ -49,7 +49,10 @@ SOURCES += coreplugin.cpp \
     Interfaces/IMediaTaggerFactory.cpp \
     CoreData/mediainfocontainer.cpp \
     Interfaces/IMediaCollection.cpp \
-    Interfaces/IAudioCollection.cpp
+    Interfaces/IAudioCollection.cpp \
+    Interfaces/imediainserter.cpp \
+    CoreSupply/filesysteminserter.cpp \
+    CoreSupply/filesysteminserterworker.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -93,7 +96,10 @@ HEADERS += coreplugin.h\
     Interfaces/IMediaBackend.h \
     CoreData/mediainfocontainer.h \
     Interfaces/IMediaTagger.h \
-    Interfaces/IMediaTaggerFactory.h
+    Interfaces/IMediaTaggerFactory.h \
+    Interfaces/imediainserter.h \
+    CoreSupply/filesysteminserter.h \
+    CoreSupply/filesysteminserterworker.h
 
 OTHER_FILES += \
     Core.xml
