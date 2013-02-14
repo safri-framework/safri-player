@@ -4,6 +4,8 @@
 #include <QModelIndex>
 
 #include "Interfaces/iplaylistwidget.h"
+#include <QPixmap>
+#include <QLabel>
 
 namespace Ui { class PlaylistWidget; }
 
@@ -25,6 +27,7 @@ class PlaylistWidget : public Core::IPlaylistWidget
     public slots:
 
         virtual void itemsSelected(QList<Core::Item*> selection);
+        void isAnimated(bool animated);
 
     private slots:
 
@@ -34,6 +37,8 @@ class PlaylistWidget : public Core::IPlaylistWidget
 
 private:
 
+        QPixmap screenshot;
+        QLabel screenshotLabel;
             PlaylistModel* playlistModel;
             Ui::PlaylistWidget *ui;
 };

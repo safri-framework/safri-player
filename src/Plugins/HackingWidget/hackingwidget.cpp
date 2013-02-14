@@ -224,7 +224,7 @@ void HackingWidget::on_pushButton_11_clicked()
 
     Core::FileSystemInserter inserter(collection);
 
-    inserter.insertMedia(QUrl("/data/GunsNRoses"), taggers.at(0));
+    inserter.insertMedia(QUrl("C:/Users/Friedemann Metzger/Desktop/Musik"), taggers.at(0));
 
   //  qDebug() << "Return from inserter.insertMedia";
 }

@@ -26,7 +26,6 @@ void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
     playlistModel = new PlaylistModel(playlist, this);
     connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
 
-
     ui->playlistView->setModel(playlistModel);
 }
 
@@ -34,6 +33,22 @@ void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 void PlaylistWidget::itemsSelected(QList<Core::Item *> selection)
 {
     Q_UNUSED(selection)
+}
+
+
+void PlaylistWidget::isAnimated(bool animated)
+{
+    if(animated)
+    {
+
+this->ui->playlistView->header()->setResizeMode(QHeaderView::Fixed);
+
+    }
+    else
+    {
+        this->ui->playlistView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+            this->ui->playlistView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+    }
 }
 
 

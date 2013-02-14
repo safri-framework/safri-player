@@ -8,6 +8,10 @@
 #include <QSplitter>
 #include <Interfaces/IPlayerWidget.h>
 #include <QTimeLine>
+
+
+#define ANIMATION_DURATION 300
+
 namespace Ui {
 class MainWindow;
 }
@@ -38,6 +42,7 @@ class MainWindow : public QMainWindow
 
         void showTestPlaylist();
         QTimeLine* closeSidebarTimeline;
+        QTimeLine* openSidebarTimeline;
     private slots:
 
         void sideBarButtonClicked(bool checked);
@@ -47,7 +52,8 @@ class MainWindow : public QMainWindow
 
         void on_actionPlugins_show_triggered();
 
-        void resizeSidebar(int l);
+        void closeSidebar(int l);
+        void openSidebar(int r);
 
 
 

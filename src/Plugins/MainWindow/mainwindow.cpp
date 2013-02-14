@@ -29,8 +29,13 @@ MainWindow::MainWindow(QWidget *parent) :
     lastSplitterSize.append(300);
     lastSplitterSize.append(700);
 
-    closeSidebarTimeline = new QTimeLine(500, this);
-    connect(closeSidebarTimeline, SIGNAL(frameChanged(int)), this, SLOT(resizeSidebar(int)));
+    closeSidebarTimeline = new QTimeLine(ANIMATION_DURATION, this);
+    closeSidebarTimeline->setUpdateInterval(20);
+    connect(closeSidebarTimeline, SIGNAL(frameChanged(int)), this, SLOT(closeSidebar(int)));
+
+    openSidebarTimeline = new QTimeLine(ANIMATION_DURATION, this);
+    openSidebarTimeline->setUpdateInterval(5);
+    connect(openSidebarTimeline, SIGNAL(frameChanged(int)), this, SLOT(openSidebar(int)));
 
 
     guiController = Core::ICore::guiController();
@@ -106,6 +111,7 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
         connect(plugin, SIGNAL(show(bool)), this, SLOT(showRequest(bool)));
         if(plugin->isVisible())
         {
+            qDebug()<<"VISIBLE";
             this->ui->widget_frame->layout()->addWidget(plugin->getSideBarWidget());
             plugin->getSideBarWidget()->show();
             visiblePlugins++;
@@ -114,8 +120,8 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
 
         if(visiblePlugins == 0)
         {
-            showSidebar(true);
-            showSidebar(false);
+            this->ui->widget_frame->setMaximumWidth(0);
+            this->ui->widget_frame->setMinimumWidth(0);
         }
     }
 }
@@ -230,14 +236,20 @@ void MainWindow::showSidebar(bool visible)
 {
     if(visible)
     {
-        this->ui->widget_frame->setMaximumWidth(3000);
-        this->ui->widget_frame->setMinimumWidth(200);
-        splitter->setSizes(lastSplitterSize);
+        guiController->getPlaylistWidget()->isAnimated(true);
+        //this->ui->widget_frame->hide();
+        this->ui->widget_frame->setMaximumWidth(0);
+        this->ui->widget_frame->setMinimumWidth(0);
+        openSidebarTimeline->setFrameRange( lastSplitterSize.at(0),0);
+        openSidebarTimeline->start();
+       // splitter->setSizes(lastSplitterSize);
+
     }
     else
     {
+        lastSplitterSize.clear();
+        lastSplitterSize.append(splitter->sizes());
         closeSidebarTimeline->setFrameRange(splitter->sizes().at(0), 0);
-
         closeSidebarTimeline->start();
 
     }
@@ -249,18 +261,31 @@ void MainWindow::on_actionPlugins_show_triggered()
     PluginSystem::PluginManager::instance()->showPluginViewer();
 }
 
-void MainWindow::resizeSidebar(int l)
+void MainWindow::closeSidebar(int l)
 {
-    qDebug()<<"TEST";
-    QList<int> list1 = splitter->sizes();
-    QList<int> list2 = splitter->sizes();
-    list2.append(l);
-    list2.append(list1.at(1)-l);
-    splitter->setSizes(list2);
-    if(l == 0)
-    {
-        this->ui->widget_frame->setMaximumWidth(0);
-        this->ui->widget_frame->setMinimumWidth(0);
-    }
 
+
+    this->ui->widget_frame->setMaximumWidth(l);
+    this->ui->widget_frame->setMinimumWidth(l);
+    if (l==0)
+        guiController->getPlaylistWidget()->isAnimated(false);
+
+}
+
+void MainWindow::openSidebar(int r)
+{
+
+    QList<int> list;
+    this->ui->widget_frame->setMaximumWidth(lastSplitterSize.at(0)-r);
+    list.append(lastSplitterSize.at(0)-r);
+            list.append( lastSplitterSize.at(1)+r);
+    splitter->setSizes(list);
+
+    if(r == 0)
+    {
+        this->ui->widget_frame->setMinimumWidth(200);
+        this->ui->widget_frame->setMaximumWidth(30000);
+        guiController->getPlaylistWidget()->isAnimated(false);
+        //this->ui->widget_frame->show();
+    }
 }
