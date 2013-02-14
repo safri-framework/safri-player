@@ -27,5 +27,7 @@ int main(int argc, char *argv[])
 
     manager.loadPlugins();
 
+    qDebug() << "Running main loop";
+
     return a.exec();
 }

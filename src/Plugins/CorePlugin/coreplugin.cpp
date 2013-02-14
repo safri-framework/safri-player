@@ -17,8 +17,9 @@ CorePlugin::~CorePlugin()
     qDebug() << "~CorePlugin";
 }
 
-bool CorePlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
+bool CorePlugin::initialize(QStringList  &arguments)
 {
+    Q_UNUSED(arguments)
     qDebug() << "CorePlugin::initialize(...)";
 
     // create and store instance to ICore object

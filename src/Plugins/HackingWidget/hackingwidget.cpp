@@ -222,9 +222,9 @@ void HackingWidget::on_pushButton_11_clicked()
     IMediaCollection *collection = collections.at(0);
     qDebug() << collection->getName();
 
-    Core::FileSystemInserter inserter(collection);
+    Core::FileSystemInserter* inserter = new Core::FileSystemInserter(collection);
 
-    inserter.insertMedia(QUrl("C:/Users/Friedemann Metzger/Desktop/Musik"), taggers.at(0));
+    inserter->insertMedia(QUrl("/data/GunsNRoses"), taggers.at(0));
 
   //  qDebug() << "Return from inserter.insertMedia";
 }

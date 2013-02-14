@@ -386,9 +386,9 @@ Genre *AudioCollection::newGenre(QString name)
 
 
 
-Song *AudioCollection::newSong(QString name, int year)
+Song *AudioCollection::newSong(QString name, int year, QUrl url)
 {
-    Song* song = new Song(newSongID(), name, year, this);
+    Song* song = new Song(newSongID(), name, year, "", this);
     insertSong(song);
     return song;
 
@@ -511,7 +511,7 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
         {
 
 
-            song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt());
+            song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt(), mediaInfo.getURL());
 
             if(audioCollection->getArtistsByName(artistName).size() > 0) //Artist already exists!
             {

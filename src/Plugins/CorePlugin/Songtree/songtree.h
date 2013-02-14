@@ -37,7 +37,7 @@ namespace Core
         public slots:
 
             void addSong(Song* song);
-            void addItem(DataItem* item);
+            void addItem(Core::DataItem* item);
             void move(SongTreeItem *source, SongTreeItem *destination);
             void changesSaved();
 

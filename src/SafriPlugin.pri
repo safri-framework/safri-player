@@ -7,6 +7,8 @@ isEmpty(PROVIDER) {
 
 DESTDIR = ../../../bin/plugins/$$PROVIDER
 
+CONFIG += thread
+
 # copy plugin spec to appropriate folder
 macx {
 

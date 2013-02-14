@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     changePlaylistWidget();
 
     showTestPlaylist();
+    this->setWindowTitle("Safri-Player");
 }
 
 MainWindow::~MainWindow()

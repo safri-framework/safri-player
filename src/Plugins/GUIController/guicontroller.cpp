@@ -44,6 +44,7 @@ Core::IPlaylistWidget *GUIController::getPlaylistWidget()
 
 QList<Core::ISideBarPlugin*> GUIController::getSideBarPlugins()
 {
+        //fettes TODO!
     return QList<Core::ISideBarPlugin*>();
 }
 

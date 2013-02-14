@@ -65,6 +65,7 @@ void SongtreeWidget::loadSongtreeModel()
 
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
+        qDebug() << "CONNECT itemAdded";
         connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
     }
     model = new SongTreeModel(tree, this);

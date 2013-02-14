@@ -11,6 +11,7 @@ QT       += core gui
 TARGET = Safri-Player
 CONFIG   -= console
 CONFIG   -= app_bundle
+CONFIG += thread
 
 TEMPLATE = app
 

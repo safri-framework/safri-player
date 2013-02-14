@@ -4,6 +4,8 @@ QT       += xml
 TARGET = PluginSystem
 TEMPLATE = lib
 
+CONFIG += thread
+
 DEFINES += PLUGINSYSTEM_LIBRARY
 DESTDIR = ../../lib
 

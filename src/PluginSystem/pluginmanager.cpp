@@ -109,8 +109,8 @@ bool PluginManager::loadPlugins()
         pluginToLoad = in.readLine();
     }
 
-    if (!disablePluginViewer)
-        showPluginViewer();
+    //if (!disablePluginViewer)
+    //    showPluginViewer();
 
     return true;
 }

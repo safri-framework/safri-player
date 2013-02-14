@@ -3,6 +3,6 @@
 using namespace Core;
 
 IMediaInserter::IMediaInserter() :
-    QObject()
+    QObject(0)
 {
 }

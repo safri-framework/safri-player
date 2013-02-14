@@ -21,7 +21,7 @@ namespace Core
             virtual Core::Song* getSongByID(int id) = 0;
             virtual QList<Core::Song*> getSongsByName(QString name) = 0;
             virtual Core::Song* getSongByPath(QString path) = 0;
-            virtual Song* newSong(QString name, int year) = 0;
+            //virtual Song* newSong(QString name, int year) = 0;
 
             virtual QList<Core::Artist*> getArtists() = 0;
             virtual QList<Core::Artist*> getArtistsByName(QString name) = 0;
