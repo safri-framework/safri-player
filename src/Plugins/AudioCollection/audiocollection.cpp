@@ -388,7 +388,7 @@ Genre *AudioCollection::newGenre(QString name)
 
 Song *AudioCollection::newSong(QString name, int year, QUrl url)
 {
-    Song* song = new Song(newSongID(), name, year, "", this);
+    Song* song = new Song(newSongID(), name, year, url.toString(), this);
     insertSong(song);
     return song;
 
@@ -484,7 +484,7 @@ void AudioCollection::insertSong(Song* song)
         m_IDtoSongMap->insert(song->getID(), song);
         m_nameToSongMap->insert(song->getName(), song);
     m_lock.unlock();
-    Q_EMIT itemAdded(song);
+    //Q_EMIT itemAdded(song);
 
 }
 
@@ -553,6 +553,8 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
          song->setGenre(genre);
          album->addSong(song);
          song->setAlbum(album);
+
+         song->setTrack(mediaInfo.getMediaInfo(InfoTrack).toInt());
 
          song->setArtist(artist);
 

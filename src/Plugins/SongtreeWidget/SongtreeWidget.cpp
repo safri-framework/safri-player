@@ -21,7 +21,9 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
 
     collController = ICore::collectionController();
     Q_ASSERT(collController);
-    connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
+
+    //TODO: No such slot
+    //connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
     buildHierarchy();
     loadAudioCollections();

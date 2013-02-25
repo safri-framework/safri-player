@@ -41,7 +41,7 @@ void PlaylistWidget::isAnimated(bool animated)
     if(animated)
     {
 
-this->ui->playlistView->header()->setResizeMode(QHeaderView::Fixed);
+//this->ui->playlistView->header()->setResizeMode(QHeaderView::Fixed);
 
     }
     else

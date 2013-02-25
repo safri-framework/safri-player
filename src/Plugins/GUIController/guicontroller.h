@@ -23,7 +23,7 @@ class GUICONTROLLERSHARED_EXPORT GUIController : public Core::IGUIController
         virtual Core::IPlaylistWidget* getPlaylistWidget();
         virtual QList<Core::ISideBarPlugin*> getSideBarPlugins();
 
-    public slots:
+    private slots:
 
         void objectAddedToObjectPool(QObject *object);
 

@@ -21,23 +21,18 @@ namespace Core
             virtual Core::Song* getSongByID(int id) = 0;
             virtual QList<Core::Song*> getSongsByName(QString name) = 0;
             virtual Core::Song* getSongByPath(QString path) = 0;
-            //virtual Song* newSong(QString name, int year) = 0;
 
             virtual QList<Core::Artist*> getArtists() = 0;
             virtual QList<Core::Artist*> getArtistsByName(QString name) = 0;
             virtual Core::Artist* getArtistByID(int id) = 0;
-            virtual Artist* newArtist(QString name) = 0;
 
             virtual QList<Core::Album*> getAlbums() = 0;
             virtual QList<Core::Album*> getAlbumsByName(QString name) = 0;
             virtual Core::Album* getAlbumByID(int id) = 0;
-            virtual Album* newAlbum(QString album) = 0;
 
             virtual QList<Core::Genre*> getGenres() = 0;
             virtual QList<Core::Genre*> getGenresByName(QString name) = 0;
             virtual Core::Genre* getGenreByID(int id) = 0;
-            virtual Genre* newGenre(QString genre) = 0;
-
     };
 }
 Q_DECLARE_INTERFACE(Core::IAudioCollection, "Core::IAudioCollection")

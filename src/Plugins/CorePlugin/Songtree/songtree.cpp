@@ -37,12 +37,12 @@ bool SongTree::isDirty()
 
 void SongTree::addSong(Song *song)
 {
+    qDebug() << "SongTree::addSong";
     rootNode->addSong(song);
 }
 
 void SongTree::addItem(Core::DataItem *media)
 {
-    qDebug() << "SongTree::addItem";
     Song* song = qobject_cast<Song*>(media);
     if(song)
         addSong(song);

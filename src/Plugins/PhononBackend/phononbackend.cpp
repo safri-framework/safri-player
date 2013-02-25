@@ -73,7 +73,7 @@ int PhononBackend::getVolume()
 
 QStringList PhononBackend::getSupportedMimeTypes()
 {
-      return Phonon::BackendCapabilities::availableMimeTypes();
+    return Phonon::BackendCapabilities::availableMimeTypes();
 }
 
 void PhononBackend::tick(qint64 ms)

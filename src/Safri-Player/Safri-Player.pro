@@ -45,3 +45,6 @@ macx {
         }
     }
 }
+
+RESOURCES += \
+    ressources.qrc

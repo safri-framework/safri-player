@@ -14,6 +14,7 @@ namespace Controller
     class COLLECTIONCONTROLLERSHARED_EXPORT  CollectionController:public Core::ICollectionController {
 
     public:
+
         CollectionController();
         QList<IMediaCollection*> getCollections(QString type);
         bool loadMediaCollection(QUrl filename);
@@ -28,19 +29,9 @@ namespace Controller
         QMap<QString, IMediaCollectionBuilder*> m_builderMap;
         QMap<QString, QString> m_fileExtensionMap;
 
-
-    signals:
-
-        void playerWidgetChanged();
-        void playlistWidgetChanged();
-
     private slots:
 
        void objectAddedToObjectPool(QObject* object);
-
-
-
-
 
     };
 }

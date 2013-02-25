@@ -20,18 +20,19 @@ FileSystemInserter::FileSystemInserter(IMediaCollection *collection) :
 
 FileSystemInserter::~FileSystemInserter()
 {
-
+    qDebug() << "~FileSystemInserter()";
 }
 
 void FileSystemInserter::start()
 {
     Q_EMIT mediaInsertionStarted(collection);
 
-    QFileInfo fileInfo(mediaUrlToInsert.toLocalFile());
+    QFileInfo fileInfo(mediaUrlToInsert.toString());
 
     if (fileInfo.isDir())
     {
-        QDir directory = fileInfo.absoluteDir();
+        QDir directory = mediaUrlToInsert.toString();
+
         QStringList filters;
 
         filters.append("*.mp3");
@@ -96,5 +97,6 @@ void FileSystemInserter::threadFinished()
 {
     qDebug() << "ENDE UND AUS";
     Q_EMIT mediaInsertionFinished(collection);
+    deleteLater();
 }
 

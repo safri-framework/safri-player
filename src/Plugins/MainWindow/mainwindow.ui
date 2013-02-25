@@ -269,11 +269,23 @@
     </property>
     <addaction name="actionPlugins_show"/>
    </widget>
+   <widget class="QMenu" name="menuHinzuf_gen">
+    <property name="title">
+     <string>Hinzufügen</string>
+    </property>
+    <addaction name="actionAdd_folder"/>
+   </widget>
    <addaction name="menuPlugin"/>
+   <addaction name="menuHinzuf_gen"/>
   </widget>
   <action name="actionPlugins_show">
    <property name="text">
     <string>Plugins anzeigen</string>
+   </property>
+  </action>
+  <action name="actionAdd_folder">
+   <property name="text">
+    <string>Musikordner hinzufügen</string>
    </property>
   </action>
  </widget>

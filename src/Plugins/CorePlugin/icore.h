@@ -44,7 +44,7 @@ namespace Core
             static IMediaBackend* getBackendForMimeType(QString mimeType);
 
 
-        public slots:
+        private slots:
 
             void objectAddedToObjectPool(QObject *object);
 

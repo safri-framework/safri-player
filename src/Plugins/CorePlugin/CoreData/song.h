@@ -61,55 +61,6 @@ namespace Core
 
         public:
 
-            /**
-                \brief      Provides access to songs by their name
-                \param      the name of the song
-                \returns    the song which is associated with the given name
-            */
-            static QList<Song*> getByName(QString name);
-
-            /**
-                \brief      Provides access to songs by their id
-                \param      the id of the song
-                \returns    the song which is associated with the given id
-            */
-            static Song* getByID(int id);
-
-            /**
-                \brief      Provides access to songs by their path
-                \param      the path of the song
-                \returns    the song which is associated with the given path
-            */
-            static Song* getByPath(QString path);
-
-            /**
-                \brief      Adds an song to the interal maps for accessing them
-                            by their specific keys (i.e. id, name, etc.)
-                \param      the song object
-              */
-            static void add(Song* song);
-
-            /**
-                \brief      Removes an song from the interal accessor maps
-                \param      the song object
-            */
-            static void remove(Song* song);
-
-            /**
-                \brief      Provides access to all Songs
-                \param      the list with songs
-            */
-            static QList<Song*> getAll();
-
-            /**
-                \brief      Generates a new song id
-                \return     the new generated song id
-            */
-            static int createNewID();
-
-            //! Static integer for the latest used ID
-            static int latestID;
-
             QList<Media*> getMedia();
 
             QUrl getURL();
@@ -125,15 +76,6 @@ namespace Core
             int year;
             int track;
             int length;
-
-            //! Static map for accessing songs by their names
-            static QMap<QString, Song*> songsByName;
-
-            //! Static map for accessing songs by their id
-            static QMap<int, Song*> songsByID;
-
-            //! Static map for accessing songs by their path
-            static QMap<QString, Song*> songsByPath;
     };
 }
 

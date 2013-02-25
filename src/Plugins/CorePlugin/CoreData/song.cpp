@@ -1,49 +1,6 @@
 #include "song.h"
 using namespace Core;
 
-QMap<QString, Song*> Song::songsByName;
-QMap<int, Song*> Song::songsByID;
-QMap<QString, Song*> Song::songsByPath;
-int Song::latestID;
-
-QList<Song*> Song::getByName(QString name)
-{
-    return songsByName.values(name);
-}
-
-Song* Song::getByID(int id)
-{
-    return songsByID.value(id);
-}
-
-QList<Song*> Song::getAll()
-{
-    return songsByID.values();
-}
-
-void Song::add(Song* song)
-{
-    songsByName.insert(song->getName(), song);
-    songsByID.insert(song->getID(), song);
-    songsByPath.insert(song->getFileName(), song);
-}
-
-void Song::remove(Song* song)
-{
-    songsByName.remove(song->getName());
-    songsByID.remove(song->getID());
-    songsByPath.remove(song->getFileName());
-}
-
-Song* Song::getByPath(QString path)
-{
-    return songsByPath.value(path);
-}
-
-int Song::createNewID()
-{
-    return ++latestID;
-}
 
 QList<Media *> Song::getMedia()
 {

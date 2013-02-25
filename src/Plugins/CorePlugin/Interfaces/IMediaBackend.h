@@ -12,6 +12,7 @@ namespace Core
         Q_OBJECT
 
         protected:
+
             IMediaBackend(QObject* parent);
 
         public:
@@ -38,9 +39,6 @@ namespace Core
             void hasSeekableMedia(bool value);
             void hasVolumeAdjustableMedia(bool value);
     };
-
-
-
 }
 
 Q_DECLARE_INTERFACE(Core::IMediaBackend, "Core::IMediaBackend")

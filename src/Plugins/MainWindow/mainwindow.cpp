@@ -13,7 +13,14 @@
 #include "../CorePlugin/CoreData/song.h"
 #include "../CorePlugin/iplaylist.h"
 
+#include "Interfaces/ICollectionController.h"
+#include "Interfaces/IMediaTagger.h"
+#include "CoreSupply/filesysteminserter.h"
+
 #include "../../PluginSystem/pluginmanager.h"
+
+#include <QFileDialog>
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -150,7 +157,7 @@ void MainWindow::showTestPlaylist()
 
     QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
 
-    playList->insertMediaAt(0, songs);
+    //playList->insertMediaAt(0, songs);
 
     Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
 }
@@ -288,5 +295,29 @@ void MainWindow::openSidebar(int r)
         this->ui->widget_frame->setMaximumWidth(30000);
         guiController->getPlaylistWidget()->isAnimated(false);
         //this->ui->widget_frame->show();
+    }
+}
+
+void MainWindow::on_actionAdd_folder_triggered()
+{
+
+    QString directory = QFileDialog::getExistingDirectory(this, tr("Select Music Files"),
+    QDesktopServices::storageLocation(QDesktopServices::MusicLocation));
+
+    if(!directory.isEmpty())
+    {
+        qDebug()<<directory;
+
+        Core::ICollectionController *cc = Core::ICore::collectionController();
+        QList<Core::IMediaTagger*> taggers = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaTagger>();
+
+        QList<Core::IMediaCollection*> collections = cc->getCollections("org.safri.collection.audio");
+
+        Core::IMediaCollection *collection = collections.at(0);
+        qDebug() << collection->getName();
+
+        Core::FileSystemInserter* inserter = new Core::FileSystemInserter(collection);
+
+        inserter->insertMedia(QUrl(directory), taggers.at(0));
     }
 }

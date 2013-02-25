@@ -12,20 +12,19 @@ namespace Core
     {
 
         Q_OBJECT
-    public:
-        explicit IMediaTagger(QObject* parent);
-        virtual ~IMediaTagger();
+        public:
 
+            explicit IMediaTagger(QObject* parent);
+            virtual ~IMediaTagger();
 
-    public slots:
-        virtual void tagMedia(QUrl media) = 0;
+        public slots:
 
+            virtual void tagMedia(QUrl media) = 0;
 
-    signals:
-        void mediaTagged(MediaInfoContainer info);
-        void unknownMedia(QUrl media);
+        signals:
 
-
+            void mediaTagged(MediaInfoContainer info);
+            void unknownMedia(QUrl media);
     };
 }
 

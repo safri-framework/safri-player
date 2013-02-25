@@ -21,7 +21,9 @@ namespace Core
             virtual void showPlaylist(QSharedPointer<IPlaylist> playlist) = 0;
             virtual void showCurrentPlaylist() = 0;
             virtual QSharedPointer<IPlaylist> newPlaylist() = 0;
+
         public slots:
+
             virtual void isAnimated(bool animated) = 0;
             virtual void itemsSelected(QList<Item*> selection) = 0;
     };

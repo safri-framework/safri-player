@@ -5,10 +5,14 @@
 #include <QPluginLoader>
 #include <QStringList>
 #include <QDebug>
+#include <QFileInfo>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //a.setApplicationName("Safri-Player");
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "\n\n";
 
@@ -22,6 +26,13 @@ int main(int argc, char *argv[])
 #endif
 
     selectedPluginsFile = selectedPluginsFile + "/.safri/selectedplugins.lst";
+
+    QFileInfo fileInfo(selectedPluginsFile);
+
+    if (!fileInfo.exists())
+    {
+        QFile::copy(":/defaults/selectedplugins.lst", selectedPluginsFile);
+    }
 
     PluginSystem::PluginManager manager("Safri.Core", paths, selectedPluginsFile);
 

@@ -9,6 +9,8 @@ CONFIG += thread
 DEFINES += PLUGINSYSTEM_LIBRARY
 DESTDIR = ../../lib
 
+DEFINES += QT_NO_DEBUG_OUTPUT
+
 SOURCES += \
         iplugin.cpp \
         pluginmanager.cpp \

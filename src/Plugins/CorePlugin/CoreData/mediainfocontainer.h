@@ -30,7 +30,7 @@ namespace Core
     {
         public:
 
-        explicit MediaInfoContainer(QUrl mediaUrl = QUrl());
+            explicit MediaInfoContainer(QUrl mediaUrl = QUrl());
 
             void setMediaInfo(MediaInfoType type, QVariant info);
             QVariant getMediaInfo(MediaInfoType type);

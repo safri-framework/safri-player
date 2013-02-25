@@ -3,42 +3,6 @@
 
 using namespace Core;
 
-QMap<QString, Album*> Album::albumsByName;
-QMap<int, Album*> Album::albumsByID;
-int Album::latestID = 0;
-
-QList<Album*> Album::getByName(QString name)
-{
-    return albumsByName.values(name);
-}
-
-Album* Album::getByID(int id)
-{
-    return albumsByID.value(id);
-}
-
-QList<Album *> Album::getAll()
-{
-    return albumsByID.values();
-}
-
-void Album::add(Album* album)
-{
-    albumsByName.insert(album->getName(), album);
-    albumsByID.insert(album->getID(), album);
-}
-
-void Album::remove(Album* album)
-{
-    albumsByName.remove(album->getName());
-    albumsByID.remove(album->getID());
-}
-
-int Album::createNewID()
-{
-    return ++latestID;
-}
-
 QList<Media *> Album::getMedia()
 {
     QList<Media*> media;
@@ -58,7 +22,7 @@ Album::Album(int sID, QString sName, QObject *parent) :
 }
 
 Album::Album(Album* album, QObject *parent) :
-    DataItem(createNewID(),album->getName(),album->getType(), parent)
+    DataItem(-1 /* TODO */,album->getName(),album->getType(), parent)
 {
 
 }

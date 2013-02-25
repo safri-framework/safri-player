@@ -79,7 +79,6 @@ namespace Core
             /**
                 \brief  this signal can be used to update your disply in the GUI
             */
-
             void update(int currentTime);
 
             void stateChanged(playState state);
@@ -88,21 +87,18 @@ namespace Core
 
             void hasVolumeAdjustableMedia(bool value);
 
-    private slots:
+        private slots:
 
+                virtual void playStateSlot() = 0;
+                virtual void pauseStateSlot()= 0;
+                virtual void stopStateSlot() = 0;
+                virtual void currentSongFinished() = 0;
+                virtual void noDataSlot() = 0;
 
+        public slots:
 
-            virtual void playStateSlot() = 0;
-            virtual void pauseStateSlot()= 0;
-            virtual void stopStateSlot() = 0;
-            virtual void currentSongFinished() = 0;
-            virtual void noDataSlot() = 0;
-
-    public slots:
-            virtual void seek(int playTime) = 0;
-            virtual void setVolume(int volume) = 0;
-
-
+                virtual void seek(int playTime) = 0;
+                virtual void setVolume(int volume) = 0;
 
     };
 

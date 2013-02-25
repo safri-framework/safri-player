@@ -3,41 +3,6 @@
 
 using namespace Core;
 
-QMap<QString, Artist*> Artist::artistsByName;
-QMap<int, Artist*> Artist::artistsByID;
-int Artist::latestID = 0;
-
-Artist* Artist::getByName(QString name)
-{
-    return artistsByName.value(name);
-}
-
-Artist* Artist::getByID(int id)
-{
-    return artistsByID.value(id);
-}
-
-QList<Artist *> Artist::getAll()
-{
-    return artistsByID.values();
-}
-
-void Artist::add(Artist* artist)
-{
-    artistsByName.insert(artist->getName(), artist);
-    artistsByID.insert(artist->getID(), artist);
-}
-
-void Artist::remove(Artist* artist)
-{
-    artistsByName.remove(artist->getName());
-    artistsByID.remove(artist->getID());
-}
-
-int Artist::createNewID()
-{
-    return ++latestID;
-}
 
 QList<Media *> Artist::getMedia()
 {
@@ -57,7 +22,7 @@ Artist::Artist(int sID, QString sName, bool temporary, QObject *parent):
 }
 
 Artist::Artist(Artist* artist, QObject *parent) :
-    DataItem(createNewID(), artist->getName(), DataItem::ARTIST, parent)
+    DataItem(-1 /* TODO */, artist->getName(), DataItem::ARTIST, parent)
 {
 
 }

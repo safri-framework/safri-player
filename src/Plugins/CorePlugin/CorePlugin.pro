@@ -51,7 +51,8 @@ SOURCES += coreplugin.cpp \
     Interfaces/IMediaCollection.cpp \
     Interfaces/IAudioCollection.cpp \
     Interfaces/imediainserter.cpp \
-    CoreSupply/filesysteminserter.cpp
+    CoreSupply/filesysteminserter.cpp \
+    iplaylist.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \

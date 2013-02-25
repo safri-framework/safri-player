@@ -15,7 +15,7 @@ IMediaCollection *AudioCollectionBuilder::buildMediaCollection(IStorageAdapter *
 
     if(!metaInfoAdapter)
     {
-        name = "SafriInitialCollection";
+        name = "Safri Musik Sammlung";
     }
     else
     {
@@ -51,6 +51,12 @@ void AudioCollectionBuilder::fillMetaInfo(IStorageAdapter *storageAdapter, Audio
 void AudioCollectionBuilder::buildGenres(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::GENRE);
+
+    if (table == 0)
+    {
+        return;
+    }
+
     int idIndex = table->indexOfColumn("id");
     int nameIndex = table->indexOfColumn("genre");
     int numberOfGenres = table->rowCount();
@@ -78,6 +84,12 @@ void AudioCollectionBuilder::buildGenres(IStorageAdapter *storageAdapter, AudioC
 void AudioCollectionBuilder::buildArtists(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::ARTIST);
+
+    if (table == 0)
+    {
+        return;
+    }
+
     int idIndex = table->indexOfColumn("id");
     int nameIndex = table->indexOfColumn("artist");
     int numberOfArtist = table->rowCount();
@@ -103,6 +115,12 @@ void AudioCollectionBuilder::buildArtists(IStorageAdapter *storageAdapter, Audio
 QMultiMap<int, int> AudioCollectionBuilder::loadArtistToAlbumMap(IStorageAdapter *storageAdapter)
 {
     ITableModel* table = storageAdapter->loadTable("ArtistToAlbum");
+
+    if (table == 0)
+    {
+        return QMultiMap<int, int>();
+    }
+
     QMultiMap<int, int> artistToAlbumMap;
     int rows = table->rowCount();
 
@@ -130,6 +148,12 @@ void AudioCollectionBuilder::buildAlbums(IStorageAdapter *storageAdapter, AudioC
 {
     QMultiMap<int, int> artistToAlbumMap = loadArtistToAlbumMap(storageAdapter);
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::ALBUM);
+
+    if (table == 0)
+    {
+        return;
+    }
+
     int latestID = 0;
 
     int numberOfAlbums = table->rowCount();
@@ -176,6 +200,12 @@ void AudioCollectionBuilder::buildAlbums(IStorageAdapter *storageAdapter, AudioC
 void AudioCollectionBuilder::buildSongs(IStorageAdapter *storageAdapter, AudioCollection *mediaCollection)
 {
     ITableModel* table = storageAdapter->loadTableForDataItemType(DataItem::SONG);
+
+    if (table == 0)
+    {
+        return;
+    }
+
     int idIndex = table->indexOfColumn("id");
     int nameIndex = table->indexOfColumn("song");
     int yearIndex = table->indexOfColumn("year");

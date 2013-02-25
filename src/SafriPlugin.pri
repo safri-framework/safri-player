@@ -7,6 +7,8 @@ isEmpty(PROVIDER) {
 
 DESTDIR = ../../../bin/plugins/$$PROVIDER
 
+DEFINES += QT_NO_DEBUG_OUTPUT
+
 CONFIG += thread
 
 # copy plugin spec to appropriate folder

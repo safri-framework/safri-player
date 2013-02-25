@@ -33,9 +33,7 @@ namespace Core
 
             ~DataItem();
 
-            DataItem::DATA_ITEM_TYPE
-
-            getType() const;
+            DataItem::DATA_ITEM_TYPE getType() const;
             int getID() const;
             QString getName() const;
             bool isTemporary() const;

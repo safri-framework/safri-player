@@ -8,6 +8,7 @@
 #include <QDirIterator>
 #include <QPluginLoader>
 #include <QTextStream>
+#include <QFileInfo>
 
 using namespace PluginSystem;
 
@@ -51,6 +52,8 @@ bool PluginManager::loadPlugins()
     QList<PluginSpec*> pluginsToLoad;
     bool disablePluginViewer = false;
 
+    bool useDefaultPluginSet = false;
+
     // Load plugin specs
     for (int i = 0; i < pluginPaths.size(); i++)
     {
@@ -83,11 +86,26 @@ bool PluginManager::loadPlugins()
     if (!selectedPlugins.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "could not open file";
-        return false;
+        useDefaultPluginSet = true;
     }
 
-    QTextStream in(&selectedPlugins);
-    QString pluginToLoad = in.readLine();
+    QString pluginToLoad;
+    QTextStream  in(&selectedPlugins);
+    QStringList defaultPluginSet;
+    int defaultPluginNr = 0;
+
+    defaultPluginSet << "Safri.PhononBackend" << "Safri.PlaybackController" << "Safri.SQLStorage" << "Safri.AudioCollection"
+                     << "Safri.CollectionController" << "Safri.Playlist" << "Safri.GUIController" << "Safri.PlayerWidgetII"
+                     << "Safri.PlaylistWidget" << "Safri.MainWindow" << "Safri.SongtreeWidget" << "Safri.TagLibMediaTagger";
+
+    if (useDefaultPluginSet)
+    {
+        pluginToLoad = defaultPluginSet.at(defaultPluginNr++);
+    }
+    else
+    {
+        pluginToLoad = in.readLine();
+    }
     while (!pluginToLoad.isNull())
     {
         if (!pluginToLoad.startsWith('#'))
@@ -106,7 +124,22 @@ bool PluginManager::loadPlugins()
             }
         }
 
-        pluginToLoad = in.readLine();
+        if (useDefaultPluginSet)
+        {
+            if (defaultPluginNr < defaultPluginSet.size())
+            {
+               pluginToLoad = defaultPluginSet.at(defaultPluginNr++);
+            }
+            else
+            {
+                pluginToLoad = QString();
+            }
+
+        }
+        else
+        {
+            pluginToLoad = in.readLine();
+        }
     }
 
     //if (!disablePluginViewer)

@@ -14,6 +14,7 @@ namespace Core
     {
         Q_OBJECT
         public:
+
             Item(QObject *parent) : QObject(parent) {}
             virtual QList<Media*> getMedia() = 0;
     };
