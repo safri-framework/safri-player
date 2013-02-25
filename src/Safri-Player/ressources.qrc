@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/defaults">
+        <file>selectedplugins.lst</file>
+    </qresource>
+</RCC>
