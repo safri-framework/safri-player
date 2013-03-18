@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/test">
+        <file>qml/functions.js</file>
+        <file>qml/main.qml</file>
+        <file>qml/MusicSelection.qml</file>
+        <file>qml/Player.qml</file>
+        <file>qml/PlayerButton.qml</file>
+        <file>qml/images/bl.png</file>
+        <file>qml/images/element_musicSelection_left.png</file>
+        <file>qml/images/header.png</file>
+        <file>qml/images/header2.png</file>
+        <file>qml/images/ico_pause.png</file>
+        <file>qml/images/ico_play.png</file>
+        <file>qml/images/player.png</file>
+    </qresource>
+</RCC>

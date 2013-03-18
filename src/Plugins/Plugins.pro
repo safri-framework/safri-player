@@ -19,4 +19,5 @@ SUBDIRS += \
     	SongtreeWidget \
     	CollectionController \
     	PlayerWidgetII \
-    TagLibMediaTagger
+        TagLibMediaTagger \
+        SafriMobileGuiQML
