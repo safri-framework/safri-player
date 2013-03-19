@@ -23,4 +23,3 @@ bool PhononBackendPlugin::initialize(QStringList __attribute__ ((unused)) &argum
     return true;
 }
 
-Q_EXPORT_PLUGIN2(PhononBackendPlugin, PhononBackendPlugin)

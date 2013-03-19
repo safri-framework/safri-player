@@ -14,4 +14,3 @@ bool SongtreeWidgetPlugin::initialize(QStringList &arguments)
     return true;
 }
 
-Q_EXPORT_PLUGIN2(SongtreeWidgetPlugin, SongtreeWidgetPlugin)

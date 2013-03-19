@@ -1,10 +1,10 @@
-QT       += gui
+QT       += gui widgets
 QT       += xml
 
 TARGET = PluginSystem
 TEMPLATE = lib
 
-CONFIG += thread
+CONFIG += thread console
 
 DEFINES += PLUGINSYSTEM_LIBRARY
 DESTDIR = ../../lib

@@ -44,5 +44,6 @@ HEADERS += taglibmediataggerplugin.h\
     taglibmediatagger.h
 
 OTHER_FILES += \
-    TagLibMediaTagger.xml
+    TagLibMediaTagger.xml \
+    taglibmediatagger.json
 

@@ -10,6 +10,8 @@ TEMPLATE = lib
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 
+QT += widgets
+
 INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
@@ -29,7 +31,8 @@ FORMS += \
 
 OTHER_FILES += \
     PlayerWidget.xml \
-    ressources/stylesheet.css
+    ressources/stylesheet.css \
+    playerwidget.json
 
 RESOURCES += \
     ressources.qrc

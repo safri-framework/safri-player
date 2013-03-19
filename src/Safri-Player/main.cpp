@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QDesktopServices>
 
 #include "pluginmanager.h"
@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QFile>
+#include <QUrl>
 
 int main(int argc, char *argv[])
 {
@@ -19,13 +20,13 @@ int main(int argc, char *argv[])
     QStringList paths;
     paths << "plugins/";
 
-    QString selectedPluginsFile = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-
+    QString selectedPluginsFile =  QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
 #ifdef Q_OS_LINUX
     selectedPluginsFile.chop(2);
 #endif
 
-    selectedPluginsFile = selectedPluginsFile + "/.safri/selectedplugins.lst";
+    selectedPluginsFile = selectedPluginsFile+("/selectedplugins.lst");
+    qDebug()<<selectedPluginsFile;
 
     QFileInfo fileInfo(selectedPluginsFile);
 
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     manager.loadPlugins();
 
     qDebug() << "Running main loop";
+    qDebug() <<   QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
 
     return a.exec();
 }

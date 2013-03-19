@@ -1,7 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include "Interfaces/IPlayerWidget.h"
 #include "iplaybackcontroller.h"
 #include "CoreData/media.h"

@@ -27,3 +27,6 @@ HEADERS += safrimobileguiqml.h\
 RESOURCES += \
     QMLResources.qrc
 
+OTHER_FILES += \
+    safrimobileguiqml.json
+

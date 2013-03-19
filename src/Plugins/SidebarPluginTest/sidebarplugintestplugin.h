@@ -10,7 +10,7 @@ namespace Plugins
     {
         Q_OBJECT
         Q_INTERFACES(PluginSystem::IPlugin)
-
+    Q_PLUGIN_METADATA(IID "SidebarPluginTestPlugin" FILE "sidebarplugintest.json")
         public:
             SidebarPluginTestPlugin();
 
@@ -19,3 +19,5 @@ namespace Plugins
 }
 
 #endif // SIDEBARPLUGINTESTPLUGIN_H
+
+

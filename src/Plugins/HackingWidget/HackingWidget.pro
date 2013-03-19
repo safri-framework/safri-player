@@ -7,6 +7,8 @@
 TARGET = HackingWidget
 TEMPLATE = lib
 
+QT += widgets
+
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 
@@ -26,4 +28,5 @@ FORMS += \
     hackingwidget.ui
 
 OTHER_FILES += \
-    HackingWidget.xml
+    HackingWidget.xml \
+    hackingwidget.json

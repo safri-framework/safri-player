@@ -2,7 +2,7 @@
 #define SIDEBARPLUGINTEST_H
 
 #include "Interfaces/isidebarplugin.h"
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 using namespace Core;
 class SidebarPluginTest : public ISideBarPlugin

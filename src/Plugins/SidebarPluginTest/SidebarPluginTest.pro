@@ -21,3 +21,8 @@ include(../../SafriPlugin.pri)
 
 INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
+
+QT += widgets
+
+OTHER_FILES += \
+    sidebarplugintest.json

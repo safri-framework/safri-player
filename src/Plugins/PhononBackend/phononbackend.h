@@ -2,7 +2,10 @@
 #define PHONONBACKEND_H
 
 #include "Interfaces/IMediaBackend.h"
-#include <phonon>
+//#include <phonon>
+#include <QMediaPlayer>
+#define Qt5
+
 
 class PhononBackend : public Core::IMediaBackend
 {
@@ -26,8 +29,15 @@ class PhononBackend : public Core::IMediaBackend
 
     private:
 
+#ifndef Qt5
         Phonon::MediaObject *mediaObject;
         Phonon::AudioOutput *audioOutput;
+#endif
+
+#ifdef Qt5
+        QMediaPlayer* player;
+#endif
+
 
     private slots:
 

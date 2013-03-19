@@ -57,6 +57,7 @@ bool PluginManager::loadPlugins()
     // Load plugin specs
     for (int i = 0; i < pluginPaths.size(); i++)
     {
+        qDebug() << pluginPaths.at(i);
         QDir dir(pluginPaths.at(i));
         dir.setNameFilters(pluginSpecNameFilters);
         QDirIterator dirIterator(dir, QDirIterator::Subdirectories);

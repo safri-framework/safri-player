@@ -3,6 +3,7 @@
 
 #include "PluginSystem_global.h"
 
+#include <QWidget>
 #include <QDialog>
 #include <QList>
 #include <pluginspec.h>

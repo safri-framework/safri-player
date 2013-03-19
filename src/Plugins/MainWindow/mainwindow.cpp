@@ -302,7 +302,7 @@ void MainWindow::on_actionAdd_folder_triggered()
 {
 
     QString directory = QFileDialog::getExistingDirectory(this, tr("Select Music Files"),
-    QDesktopServices::storageLocation(QDesktopServices::MusicLocation));
+     QStandardPaths::standardLocations(QStandardPaths::MusicLocation).at(0));
 
     if(!directory.isEmpty())
     {

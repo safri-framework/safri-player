@@ -1,7 +1,7 @@
 #ifndef PLAYERWIDGET_H
 #define PLAYERWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include "Interfaces/IPlayerWidget.h"
 
 namespace Ui { class PlayerWidget; }

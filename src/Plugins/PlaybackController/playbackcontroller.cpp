@@ -3,8 +3,8 @@
 #include "iplaylist.h"
 #include "CoreData/song.h"
 #include "icore.h"
-#include <QStyle>
-#include <QApplication>
+#include <QtWidgets/QStyle>
+#include <QtWidgets/QApplication>
 #include <QDebug>
 
 PlaybackController::PlaybackController()

@@ -4,7 +4,7 @@
 #include "CorePlugin_global.h"
 
 #include <QObject>
-#include <QAction>
+#include <QtWidgets/QAction>
 
 namespace Core
 {

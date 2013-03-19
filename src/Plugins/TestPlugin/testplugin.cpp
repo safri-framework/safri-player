@@ -58,4 +58,4 @@ bool TestPlugin::initialize(QStringList __attribute__ ((unused)) &arguments)
     return true;
 }
 
-Q_EXPORT_PLUGIN2(TestPlugin, TestPlugin)
+

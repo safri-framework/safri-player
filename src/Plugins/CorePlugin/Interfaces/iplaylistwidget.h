@@ -2,7 +2,7 @@
 #define IPLAYLISTWIDGET_H
 
 #include "../CorePlugin_global.h"
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QList>
 
 namespace Core

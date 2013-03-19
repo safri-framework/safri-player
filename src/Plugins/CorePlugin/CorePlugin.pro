@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += gui
+QT       += gui widgets
 
 TARGET = Core
 TEMPLATE = lib
@@ -101,6 +101,7 @@ HEADERS += coreplugin.h\
     CoreSupply/filesysteminserter.h
 
 OTHER_FILES += \
-    Core.xml
+    Core.xml \
+    coreplugin.json
 
 FORMS +=

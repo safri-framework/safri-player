@@ -8,6 +8,7 @@
 
 #include <QDebug>
 #include <QDesktopServices>
+#include <QStandardPaths>
 
 using namespace Core;
 
@@ -102,7 +103,7 @@ ICollectionController *ICore::collectionController()
 
 QString ICore::storageDirectory()
 {
-    QString storageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    QString storageLocation = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
 
 #ifdef Q_OS_LINUX
     storageLocation.chop(2);

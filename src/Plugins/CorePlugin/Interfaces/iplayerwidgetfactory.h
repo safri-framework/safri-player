@@ -1,7 +1,7 @@
 #ifndef IPLAYERWIDGETFACTORY_H
 #define IPLAYERWIDGETFACTORY_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 #include "../CorePlugin_global.h"
 #include "IPlayerWidget.h"

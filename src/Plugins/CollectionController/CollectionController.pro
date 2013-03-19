@@ -26,3 +26,6 @@ HEADERS += CollectionController.h\
         CollectionController_global.h \
     CollectionControllerPlugin.h
 
+OTHER_FILES += \
+    collectioncontroller.json
+

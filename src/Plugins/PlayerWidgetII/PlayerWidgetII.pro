@@ -28,7 +28,8 @@ HEADERS +=\
     playerwidgetII_plugin.h
 
 OTHER_FILES += \
-    styles.css
+    styles.css \
+    playerwidgetII.json
 
 FORMS += \
     widget.ui
@@ -37,3 +38,4 @@ RESOURCES += \
     ressources.qrc \
     ressources.qrc
 
+QT += widgets

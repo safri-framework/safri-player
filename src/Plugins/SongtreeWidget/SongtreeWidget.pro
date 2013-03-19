@@ -30,8 +30,11 @@ FORMS += \
     SongtreeWidget.ui
 
 OTHER_FILES += \
-    SongTreeWidget.xml
+    SongTreeWidget.xml \
+    songtreewidget.json
 
 RESOURCES += \
     ressources.qrc
+
+QT += widgets
 

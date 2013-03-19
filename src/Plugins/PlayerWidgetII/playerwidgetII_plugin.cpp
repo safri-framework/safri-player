@@ -15,4 +15,3 @@ PlayerWidgetII_Plugin::PlayerWidgetII_Plugin()
 {
 }
 
-Q_EXPORT_PLUGIN2(PlayerWidgetII_Plugin, PlayerWidgetII_Plugin)

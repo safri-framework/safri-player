@@ -3,7 +3,7 @@
 #include <QStateMachine>
 #include "Interfaces/IMediaBackend.h"
 #include "iplaybackcontroller.h"
-#include <QAction>
+#include <QtWidgets/QAction>
 #include <CoreData/media.h>
 
 //using namespace Core;

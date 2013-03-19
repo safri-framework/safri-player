@@ -7,6 +7,8 @@
 TARGET = PlaylistWidget
 TEMPLATE = lib
 
+QT += widgets
+
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 
@@ -30,7 +32,8 @@ FORMS += \
     playlistwidget.ui
 
 OTHER_FILES += \
-    PlaylistWidget.xml
+    PlaylistWidget.xml \
+    playlistwidget.json
 
 RESOURCES += \
     ressources.qrc

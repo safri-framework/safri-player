@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += phonon
+QT       += multimedia
 
 QT       -= gui
 
@@ -27,4 +27,5 @@ HEADERS += phononbackendplugin.h\
     phononbackend.h
 
 OTHER_FILES += \
-    PhononBackend.xml
+    PhononBackend.xml \
+    phononbackend.json

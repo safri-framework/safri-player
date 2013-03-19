@@ -14,4 +14,3 @@ bool TagLibMediaTaggerPlugin::initialize(QStringList &arguments)
     return true;
 }
 
-Q_EXPORT_PLUGIN2(TagLibMediaTaggerPlugin, TagLibMediaTaggerPlugin)

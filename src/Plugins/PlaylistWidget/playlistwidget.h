@@ -5,7 +5,7 @@
 
 #include "Interfaces/iplaylistwidget.h"
 #include <QPixmap>
-#include <QLabel>
+#include <QtWidgets/QLabel>
 
 namespace Ui { class PlaylistWidget; }
 

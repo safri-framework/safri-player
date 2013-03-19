@@ -29,4 +29,5 @@ HEADERS += sqlstorageplugin.h\
     sqlstoragefactory.h
 
 OTHER_FILES += \
-    SQLStorage.xml
+    SQLStorage.xml \
+    sqlstorageplugin.json

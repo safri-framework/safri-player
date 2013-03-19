@@ -25,4 +25,3 @@ bool PlaybackControllerPlugin::initialize(QStringList &arguments)
     return true;
 }
 
-Q_EXPORT_PLUGIN2(PlaybackControllerPlugin, PlaybackControllerPlugin)

@@ -1,5 +1,5 @@
 #include "sidebarplugintest.h"
-#include <QPushButton>
+#include <QtWidgets/QPushButton>
 #include <QVariant>
 SidebarPluginTest::SidebarPluginTest(QString name, QWidget *parent)
 {

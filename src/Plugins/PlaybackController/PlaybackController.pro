@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += gui
+QT       += gui widgets
 
 TARGET = PlaybackController
 TEMPLATE = lib
@@ -23,3 +23,6 @@ SOURCES += playbackcontroller.cpp \
 HEADERS += playbackcontroller.h\
         PlaybackController_global.h \
     playbackcontrollerplugin.h
+
+OTHER_FILES += \
+    playbackcontroller.json

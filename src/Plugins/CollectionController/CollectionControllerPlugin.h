@@ -6,11 +6,13 @@
 
 class COLLECTIONCONTROLLERSHARED_EXPORT CollectionControllerPlugin : public PluginSystem::IPlugin
 {
+    Q_PLUGIN_METADATA(IID "CollectionControllerPlugin" FILE "collectioncontroller.json")
 public:
     CollectionControllerPlugin();
     bool initialize(QStringList &arguments);
 
+
 };
 
-Q_EXPORT_PLUGIN2(CollectionControllerPlugin, CollectionControllerPlugin)
+
 #endif // COLLECTIONCONTROLLERPLUGIN_H

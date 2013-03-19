@@ -23,4 +23,5 @@ HEADERS += guicontrollerplugin.h\
     guicontroller.h
 
 OTHER_FILES += \
-    GUIController.xml
+    GUIController.xml \
+    guicontroller.json

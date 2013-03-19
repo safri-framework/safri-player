@@ -27,4 +27,5 @@ INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
 OTHER_FILES += \
-    Playlist.xml
+    Playlist.xml \
+    playlistplugin.json

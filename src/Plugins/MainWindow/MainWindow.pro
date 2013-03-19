@@ -8,7 +8,7 @@ TARGET = MainWindow
 TEMPLATE = lib
 
 DEFINES += MAINWINDOW_LIBRARY
-
+QT += widgets
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 
@@ -48,7 +48,8 @@ FORMS += \
 
 OTHER_FILES += \
     stylesheet.css \
-    MainWindow.xml
+    MainWindow.xml \
+    mainwindow.json
 
 RESOURCES += \
     ressources.qrc

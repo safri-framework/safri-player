@@ -27,5 +27,6 @@ HEADERS += audiocollectionplugin.h\
     audiocollectionbuilder.h
 
 OTHER_FILES += \
-    AudioCollection.xml
+    AudioCollection.xml \
+    audiocollectionplugin.json
 

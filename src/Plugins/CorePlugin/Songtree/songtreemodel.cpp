@@ -19,7 +19,7 @@
 SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     QAbstractItemModel(parent), songTree(songTree)
 {
-    this->setSupportedDragActions(Qt::CopyAction);
+
     // QObject reparenting, to automatically delete the song tree
     // if the model gets deleted
     songTree->setParent(this);
@@ -39,13 +39,12 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     connect(songTree, SIGNAL(endRemoveItem()), this, SLOT(endRemoveItem()));
 
 
-    QHash<int, QByteArray> roles;
-    roles[iconRole] = "iconpath";
-    roles[coverRole] = "albumCover";
-    roles[Qt::DisplayRole] ="display";
 
-    this->setRoleNames(roles);
 }
+
+
+
+
 
 Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
 {
@@ -533,6 +532,17 @@ QModelIndex SongTreeModel::index(int row, int column, const QModelIndex &parent)
     }
 
 }
+
+QHash<int, QByteArray> SongTreeModel::roleNames()
+{
+    QHash<int, QByteArray> roles;
+    roles[iconRole] = "iconpath";
+    roles[coverRole] = "albumCover";
+    roles[Qt::DisplayRole] ="display";
+
+    return roles;
+}
+
 
 void SongTreeModel::insertItem(SongTreeItem *parent, int row)
 {

@@ -10,6 +10,8 @@ namespace Plugins
     {
         Q_OBJECT
         Q_INTERFACES(PluginSystem::IPlugin)
+        Q_PLUGIN_METADATA(IID "TagLibMediaTaggerPlugin" FILE "taglibmediatagger.json")
+
         public:
 
             TagLibMediaTaggerPlugin();

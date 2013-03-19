@@ -14,4 +14,4 @@ MainWindowPlugin::MainWindowPlugin()
 {
 }
 
-Q_EXPORT_PLUGIN2(MainWindowPlugin, MainWindowPlugin)
+

@@ -20,4 +20,4 @@ return true;
 
 }
 
-Q_EXPORT_PLUGIN2(SidebarPluginTestPlugin, SidebarPluginTestPlugin)
+
