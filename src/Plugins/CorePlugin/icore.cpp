@@ -109,7 +109,7 @@ QString ICore::storageDirectory()
     storageLocation.chop(2);
 #endif
 
-    return  storageLocation + "/.safri/";
+    return  storageLocation;
 }
 
 IMediaBackend *ICore::getBackendForMedia(Media *media)

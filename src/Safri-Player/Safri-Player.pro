@@ -9,7 +9,7 @@ SAFRI_VERSION = 0.3.1
 QT       += core gui widgets
 
 TARGET = Safri-Player
-CONFIG   -= console
+CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG += thread
 

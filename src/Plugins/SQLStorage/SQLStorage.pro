@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += sql
+QT       += sql widgets
 
-QT       -= gui
+#QT       -= gui
 
 PROVIDER = safri
 include(../../SafriPlugin.pri)

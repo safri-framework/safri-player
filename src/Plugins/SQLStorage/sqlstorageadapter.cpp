@@ -96,6 +96,8 @@ QString SQLStorageAdapter::getStorageType()
 
 bool SQLStorageAdapter::openDatabase()
 {
+    qDebug() << "Databasefile:"  << sqlFilePath.toString();
+
     if ( !database.open() )
     {
         database = QSqlDatabase::addDatabase("QSQLITE", "safri");
@@ -104,7 +106,8 @@ bool SQLStorageAdapter::openDatabase()
 
     if( !database.open() )
     {
-        qDebug() << database.lastError();
+        qDebug() << "Database error:";
+        qDebug() << database.lastError().driverText();
         qFatal("Failed to connect to database.");
         return false;
     }

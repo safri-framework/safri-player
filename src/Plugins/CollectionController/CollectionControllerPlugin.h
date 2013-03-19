@@ -6,7 +6,10 @@
 
 class COLLECTIONCONTROLLERSHARED_EXPORT CollectionControllerPlugin : public PluginSystem::IPlugin
 {
+    Q_OBJECT
+    Q_INTERFACES(PluginSystem::IPlugin)
     Q_PLUGIN_METADATA(IID "CollectionControllerPlugin" FILE "collectioncontroller.json")
+
 public:
     CollectionControllerPlugin();
     bool initialize(QStringList &arguments);

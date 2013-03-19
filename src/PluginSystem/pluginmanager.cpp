@@ -9,6 +9,7 @@
 #include <QPluginLoader>
 #include <QTextStream>
 #include <QFileInfo>
+#include <iostream>
 
 using namespace PluginSystem;
 
@@ -160,6 +161,8 @@ bool PluginManager::loadPlugin(PluginSpec *pluginSpec)
 {
     QStringList foo;
     qDebug() << "\n" << pluginSpec->getName();
+
+    std::cout << "\n" << pluginSpec->getName().toStdString();
 
     pluginSpec->loadLibrary();
 

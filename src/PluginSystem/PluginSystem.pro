@@ -9,7 +9,7 @@ CONFIG += thread console
 DEFINES += PLUGINSYSTEM_LIBRARY
 DESTDIR = ../../lib
 
-DEFINES += QT_NO_DEBUG_OUTPUT
+#DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += \
         iplugin.cpp \
