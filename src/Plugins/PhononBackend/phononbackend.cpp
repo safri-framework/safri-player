@@ -18,8 +18,10 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 #endif
 
 #ifdef Qt5
+    qDebug()<<Q_FUNC_INFO;
     player = new QMediaPlayer(this);
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));
+
 #endif
 
 
@@ -71,6 +73,7 @@ void PhononBackend::seek(int ms)
 
 void PhononBackend::play(QUrl url)
 {
+    qDebug()<<Q_FUNC_INFO<<""<<url;
     #ifndef Qt5
     Q_EMIT hasSeekableMedia(true);
     Q_EMIT hasVolumeAdjustableMedia(true);
@@ -95,6 +98,7 @@ void PhononBackend::play()
     #endif
 
 #ifdef Qt5
+    qDebug()<<"PLAY";
     player->play();
 #endif
 }
@@ -149,7 +153,12 @@ QStringList PhononBackend::getSupportedMimeTypes()
     return Phonon::BackendCapabilities::availableMimeTypes();
     #endif
     #ifdef Qt5
-   return player->supportedMimeTypes();
+
+        qDebug()<<player->supportedMimeTypes();
+        QStringList list;
+        list.append("audio/mpeg");
+        //return player->supportedMimeTypes();
+        return list;
     #endif
 }
 
