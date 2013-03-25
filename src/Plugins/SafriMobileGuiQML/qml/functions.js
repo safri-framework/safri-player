@@ -8,3 +8,8 @@ function myRGBA(r, g, b , a)
 
     return Qt.rgba(r, g, b,a)
 }
+
+function scale(x)
+{
+    return Math.round(x * 1.6)
+}

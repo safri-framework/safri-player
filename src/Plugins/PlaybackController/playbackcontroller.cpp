@@ -61,6 +61,7 @@ void PlaybackController::obtainMediaBackendForMedia(Core::Media *media)
 
         mediaBackend = tmpMediaBackend;
 
+        qDebug()<<Q_FUNC_INFO<<"HAAAALLLOOOO??"<<mediaBackend;
         if (mediaBackend)
         {
             connect(mediaBackend, SIGNAL(mediaFinished()), this, SLOT(currentSongFinished()));

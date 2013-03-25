@@ -1,6 +1,6 @@
 #include "safrimobileguiqml.h"
 #include <QDebug>
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include "safrimobileguiinstance.h"
 using namespace Plugins;
 

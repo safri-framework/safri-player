@@ -63,7 +63,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             int column;
             QString text;
             qint64 pointer = 0;
-            stream >> id >> row >> column >> text >> pointer ;
+            stream  >> pointer ;
             //newItems[id][row][column] = text;
             Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
             draggedItems.append(static_cast<Core::Item*>(treeItem));

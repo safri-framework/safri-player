@@ -7,7 +7,7 @@
 TARGET = SafriMobileGuiQML
 TEMPLATE = lib
 
-QT += declarative
+QT += quick widgets
 
 PROVIDER = safri
 include(../../SafriPlugin.pri)
@@ -28,5 +28,13 @@ RESOURCES += \
     QMLResources.qrc
 
 OTHER_FILES += \
-    safrimobileguiqml.json
+    safrimobileguiqml.json \
+    qml/PlayerButton.qml \
+    qml/Player.qml \
+    qml/MusicSelection.qml \
+    qml/main.qml \
+    qml/Home.qml \
+    qml/functions.js \
+    qml/Footer.qml \
+    qml/TreeView.qml
 

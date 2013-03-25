@@ -81,7 +81,7 @@ namespace Core
             */
             void update(int currentTime);
 
-            void stateChanged(playState state);
+            void stateChanged(Core::playState state);
 
             void hasSeekableMedia(bool value);
 

@@ -96,7 +96,7 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 
 
             QString text = data(index, Qt::DisplayRole).toString();
-            stream << index.internalId() << index.row() << index.column() << text << pointer ;
+            stream <<  pointer ;
 
             SongTreeItem* item = (SongTreeItem*) index.internalPointer();
             QList<Song*> songlist = item->getSongs();

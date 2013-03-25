@@ -64,6 +64,7 @@ void PlaylistWidget::showCurrentPlaylist()
 
 void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
 {
+    qDebug()<<"PLAY";
     QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
     playlist->setCurrentMedia(index.row());
 
