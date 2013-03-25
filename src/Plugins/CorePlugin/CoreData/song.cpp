@@ -12,7 +12,7 @@ QList<Media *> Song::getMedia()
 
 QUrl Song::getURL()
 {
-    return QUrl(filename);
+    return QUrl::fromLocalFile(filename);
 }
 
 QString Song::getMimeType()
