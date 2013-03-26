@@ -60,7 +60,7 @@ class COREPLUGINSHARED_EXPORT SongTreeModel : public QAbstractItemModel
         */
         QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
 
-        QHash<int, QByteArray> roleNames();
+        virtual QHash<int, QByteArray> roleNames() const;
 
 
 

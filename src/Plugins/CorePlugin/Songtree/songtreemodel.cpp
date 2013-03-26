@@ -40,6 +40,7 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
 
 
 
+
 }
 
 
@@ -379,8 +380,9 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
         case Qt::UserRole:
             return item->getSongs().size();
 
-        case coverRole:
 
+        case coverRole:
+        /*
             if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
             {
                 Album* album = (Album*) dataItemPtr;
@@ -390,6 +392,19 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
             {
                 return QVariant();
             }
+            */
+        if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
+        {
+
+            QString coverPath;
+            coverPath = ICore::storageDirectory() + "/covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
+            QImage image(coverPath);
+            if (image.isNull())
+            {
+                coverPath = "qrc:/images/ressources/default.png";
+            }
+            return QUrl::fromLocalFile(coverPath);
+        }
             break;
 
         case Qt::ToolTipRole:
@@ -472,9 +487,7 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
             {
 
                 QString coverPath;
-
-                coverPath = ICore::storageDirectory() + "covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
-
+                coverPath = ICore::storageDirectory() + "/covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
                 QImage image(coverPath);
                 if (image.isNull())
                 {
@@ -533,8 +546,9 @@ QModelIndex SongTreeModel::index(int row, int column, const QModelIndex &parent)
 
 }
 
-QHash<int, QByteArray> SongTreeModel::roleNames()
+QHash<int, QByteArray> SongTreeModel::roleNames() const
 {
+
     QHash<int, QByteArray> roles;
     roles[iconRole] = "iconpath";
     roles[coverRole] = "albumCover";

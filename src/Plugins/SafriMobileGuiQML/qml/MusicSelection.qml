@@ -114,7 +114,7 @@ Rectangle
                 {
                     height: MyJs.scale(50)
                     width: parent.width
-
+                    id: delegateRect
                     PlayerButton
                     {
                         width: MyJs.scale(20)
@@ -147,7 +147,8 @@ Rectangle
                             MyJs.myRGBA(255,255,255,5)
                         }
 
-                    id:delegateRect
+
+
 
                     Text
                     {
@@ -164,14 +165,22 @@ Rectangle
                     {
                         anchors.verticalCenter:  parent.verticalCenter
                         id: mainText
-                        x: 16
+                        x: delegateRect.height + 16
                         text: display
                         font.pixelSize: 42
                         color: "white"
                         opacity: 0.8
 
                     }
+                    Image
+                    {
+                        x:0
+                        anchors.verticalCenter: delegateRect.verticalCenter
+                        height: delegateRect.height;
+                        width: delegateRect.height;
 
+                        source: albumCover
+                    }
 
                 }
             }
