@@ -405,6 +405,10 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
             }
             return QUrl::fromLocalFile(coverPath);
         }
+        else
+        {
+            return QUrl();
+        }
             break;
 
         case Qt::ToolTipRole:

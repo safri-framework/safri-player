@@ -41,7 +41,6 @@
         <file>qml/images/open-in-new-window-inv.png</file>
         <file>qml/images/player_big.png</file>
         <file>qml/images/playlistHeader_big.png</file>
+        <file>qml/images/behind_player_menu_background.png</file>
     </qresource>
-    <qresource prefix="/new/prefix1"/>
-    <qresource prefix="/new/prefix2"/>
 </RCC>
