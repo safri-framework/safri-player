@@ -85,17 +85,17 @@ void SafriMobileGuiInstance::stateChanged(Core::playState state)
         prevButton->setProperty("enabled", true);
         silentButton->setProperty("enabled", true);
     }
-    else
-    {
-        playPauseButton->setProperty("enabled", false);
-        nextButton->setProperty("enabled", false);
-        prevButton->setProperty("enabled", false);
-        silentButton->setProperty("enabled", false);
-
-    }
 
     switch(state)
     {
+        case NODATA:
+        {
+            playPauseButton->setProperty("enabled", false);
+            nextButton->setProperty("enabled", false);
+            prevButton->setProperty("enabled", false);
+            silentButton->setProperty("enabled", false);
+        }
+
         case PLAY:
         {
             playPauseButton->setProperty("playing", true);

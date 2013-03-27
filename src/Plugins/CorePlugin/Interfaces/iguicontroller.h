@@ -17,6 +17,7 @@ namespace Core
         Q_OBJECT
         public:
 
+            IGUIController(QObject* parent);
             virtual ~IGUIController();
 
             virtual IPlayerWidget* getPlayerWidget() = 0;

@@ -144,8 +144,8 @@ bool PluginManager::loadPlugins()
         }
     }
 
-    //if (!disablePluginViewer)
-    //    showPluginViewer();
+    if (!disablePluginViewer)
+        showPluginViewer();
 
     return true;
 }

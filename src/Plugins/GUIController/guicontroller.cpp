@@ -2,10 +2,11 @@
 #include <pluginmanager.h>
 #include "Interfaces/iplayerwidgetfactory.h"
 #include "Interfaces/iplaylistwidgetfactory.h"
+#include "Interfaces/iplaylistwidget.h"
 #include <QDebug>
 
 GUIController::GUIController(QObject *parent) :
-    currentPlayerWidget(0), currentPlayerWidgetFactory(0), currentPlaylistWidget(0)
+    IGUIController(parent), currentPlayerWidget(0), currentPlayerWidgetFactory(0), currentPlaylistWidget(0)
 {
     QList<Core::IPlayerWidgetFactory*> playerFactories = PluginSystem::PluginManager::instance()->getObjects<Core::IPlayerWidgetFactory>();
     if (playerFactories.size() > 0)

@@ -3,9 +3,9 @@
 
 AudioCollection::AudioCollection(QString name):m_name(name),
     currentAlbumID(0),
-    currentSongID(0),
     currentArtistID(0),
-    currentGenreID(0)
+    currentGenreID(0),
+    currentSongID(0)
 {
     m_songList = new QList<Song*>;
     m_artistList = new QList<Artist*> ;
@@ -493,6 +493,8 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
 {
     AudioCollection* audioCollection = this;
     bool isTemporary = false; //  functionality can be added here, if needed
+
+    Q_UNUSED(isTemporary)
 
     if(audioCollection)
     {

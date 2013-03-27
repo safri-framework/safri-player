@@ -35,9 +35,8 @@ private slots:
 
 private:
     IPlaybackController* m_pbController;
-    Ui::Widget *ui;
     bool firstPlayback;
-
+    Ui::Widget *ui;
 };
 
 #endif // WIDGET_H

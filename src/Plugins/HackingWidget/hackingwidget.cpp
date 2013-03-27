@@ -105,7 +105,7 @@ void HackingWidget::on_pushButton_5_clicked()
 
 void HackingWidget::on_pushButton_6_clicked()
 {
-    Core::IStorageAdapter *storageAdapter;
+    Core::IStorageAdapter *storageAdapter = 0;
     QList<Core::IStorageAdapter*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapter>();
 
 
@@ -117,12 +117,12 @@ void HackingWidget::on_pushButton_6_clicked()
     }
 
     QList<Core::IMediaCollectionBuilder*> collectionBuilders = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
-    Core::IMediaCollection *mediaCollection;
+    Core::IMediaCollection *mediaCollection = 0;
 
     if (collectionBuilders.size() > 0)
     {
         Core::IMediaCollectionBuilder* builder = collectionBuilders.at(0);
-        mediaCollection = builder->buildMediaCollection(storageAdapter);
+        mediaCollection = builder->buildMediaCollection(storageAdapter);   
     }
     else
     {

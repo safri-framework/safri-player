@@ -8,8 +8,8 @@
 
 Widget::Widget(QWidget *parent) :
     IPlayerWidget(parent),
-    ui(new Ui::Widget),
-    m_pbController(Core::ICore::playbackController())
+    m_pbController(Core::ICore::playbackController()),
+    ui(new Ui::Widget)
 {
     firstPlayback = false;
 
@@ -136,17 +136,18 @@ void Widget::stateChanged(playState state)
         this->ui->previous->setEnabled(true);
         this->ui->next->setEnabled(true);
     }
-    else
-    {
-        this->ui->play->setEnabled(false);
-        this->ui->previous->setEnabled(false);
-        this->ui->next->setEnabled(false);
-        this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/play_icon.png"));
-        return;
-    }
 
     switch(state)
     {
+        case NODATA:
+        {
+            this->ui->play->setEnabled(false);
+            this->ui->previous->setEnabled(false);
+            this->ui->next->setEnabled(false);
+            this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/play_icon.png"));
+            return;
+        }
+
         case PLAY:
         {
         qDebug()<<"PAUSE_ICON";

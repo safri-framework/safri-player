@@ -14,8 +14,9 @@
 
 
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
-    QWidget(parent), collController(0),
-    ui(new Ui::SongtreeWidget)
+    QWidget(parent),
+    ui(new Ui::SongtreeWidget),
+    collController(0)
 {
     ui->setupUi(this);
 

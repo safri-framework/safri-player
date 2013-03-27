@@ -11,8 +11,13 @@ SafriMobileGuiQML::SafriMobileGuiQML()
 
 bool SafriMobileGuiQML::initialize(QStringList &arguments)
 {
+
     qDebug()<<"HalloPlugin LALA";
     SafriMobileGuiInstance* instance = new SafriMobileGuiInstance();
 
+    Q_UNUSED(arguments)
+    Q_UNUSED(instance)
+
+    return true;
 }
 

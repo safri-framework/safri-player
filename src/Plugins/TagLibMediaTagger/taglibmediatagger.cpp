@@ -37,10 +37,12 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         int length;
         int bitRate;
 
+        Q_UNUSED(bitRate)
 
         const char * encodedName = filename.constData();
 
-            TagLib::FileRef ref = TagLib::FileRef( encodedName );
+        TagLib::FileRef ref = TagLib::FileRef( encodedName );
+
         if (ref.file()->isValid())
         {
 
@@ -61,6 +63,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         {
             qDebug()<<"File Error";
             Q_EMIT unknownMedia(media);
+            return;
         }
 
         QFileInfo pathInfo( filename );
@@ -77,6 +80,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTitle, title);
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
+        container.setMediaInfo(InfoYear, year);
         //container.setMediaInfo(InfoFile);
         Q_EMIT mediaTagged(container);
 }

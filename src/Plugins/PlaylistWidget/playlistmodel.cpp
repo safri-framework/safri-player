@@ -58,9 +58,9 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 
         while (!stream.atEnd()) {
-            qint64 id;
-            int row;
-            int column;
+            //qint64 id;
+            //int row;
+            //int column;
             QString text;
             qint64 pointer = 0;
             stream  >> pointer ;

@@ -6,3 +6,9 @@ IGUIController::~IGUIController()
 {
 
 }
+
+
+IGUIController::IGUIController(QObject *parent)
+    : QObject(parent)
+{
+}
