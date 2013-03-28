@@ -142,7 +142,7 @@ Rectangle
                         {
 
                             height: MyJs.scale(50)
-                            width: parent.width
+                            width: parent.width-subMenu.x-subMenu.width+10
                             id: delegateRect
                             z: -4
                             PlayerButton
@@ -188,7 +188,7 @@ Rectangle
                                 text: display
                                 font.pixelSize: 42
                                 color: "black"
-                                opacity: 0.3
+                                opacity: 0.4
 
                             }
                             Text

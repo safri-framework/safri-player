@@ -166,7 +166,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             int column;
             QString text;
             qint64 pointer;
-            stream >> id >> row >> column >> text >> pointer ;
+            stream >> pointer ;
             //newItems[id][row][column] = text;
             SongTreeItem* item = (SongTreeItem*) pointer;
             draggedItems.append(item);
