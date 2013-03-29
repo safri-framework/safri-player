@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Shoutcast.png</file>
+    </qresource>
+</RCC>

@@ -21,4 +21,5 @@ SUBDIRS += \
     	CollectionController \
     	PlayerWidgetII \
         TagLibMediaTagger \
-        SafriMobileGuiQML
+        SafriMobileGuiQML \
+    ShoutCastPlugin

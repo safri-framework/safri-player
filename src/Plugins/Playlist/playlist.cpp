@@ -24,12 +24,12 @@ Playlist::Playlist(QList<Item*> items, QObject *parent) :
     }
 }
 
-Playlist::Playlist(QString m3ufile, QObject *parent) :
+Playlist::Playlist(QString plsfile, QObject *parent) :
        IPlaylist(parent), safedPlaylist(true),  currentMedia(-1), currentMediaTransactionRequested(false), currentMediaTransaction(0), shuffle(false), shuffleCounter(-1)
 {
-    Q_UNUSED(m3ufile)
-    /*
+    Q_UNUSED(plsfile)
 
+/*
     QFile m3u( m3ufile );
 
     m3u.open(QIODevice::ReadOnly);
@@ -39,9 +39,9 @@ Playlist::Playlist(QString m3ufile, QObject *parent) :
         QString path = fileStream.readLine();
         if (path.at(0)!='#') SongList.append(new AudioFile(path));
     }
-
-
 */
+
+
 }
 
 Playlist::~Playlist()

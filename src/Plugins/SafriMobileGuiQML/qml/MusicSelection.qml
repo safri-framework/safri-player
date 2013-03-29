@@ -7,6 +7,7 @@ Rectangle
 {
     id: selectionWindow
     signal playModelIndex(variant mIndex)
+    signal changeHierarchy(int val)
     width: parent.width
     height: parent.height
 

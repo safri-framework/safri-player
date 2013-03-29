@@ -30,7 +30,7 @@ Widget::Widget(QWidget *parent) :
     //connect(m_pbController->previousAction(), SIGNAL(changed()), this, SLOT(actionChanged()));
     //connect(m_pbController->playPauseAction(), SIGNAL(changed()), this, SLOT(actionChanged()));
 
-    connect(m_pbController, SIGNAL(stateChanged(playState)), this, SLOT(stateChanged(playState)));
+    connect(m_pbController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
     connect(m_pbController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(mediaChanged(Core::Media*)));
     connect(m_pbController, SIGNAL(update(int)), this, SLOT(update(int)));
 
@@ -62,6 +62,7 @@ IPlayerWidget::PlayerWidgetPosition  Widget::getPreferedPosition()
 
 void Widget::mediaChanged(Core::Media *media)
 {
+    newMedia = true;
     if(!firstPlayback)
     {
         this->ui->infoLabel->setMaximumWidth(350);
@@ -76,12 +77,18 @@ void Widget::mediaChanged(Core::Media *media)
         if(song)
         ui->infoLabel->setText(song->getArtist()->getName() + "\n" + song->getName());
     }
-
 }
 
 
 void Widget::update(int currentTime)
 {
+    if(newMedia)
+    {
+        int totalTime = m_pbController->getMediaTotalTime();
+        ui->seek_slider->setMaximum(totalTime);
+        newMedia = false;
+    }
+
     ui->seek_slider->setValue(currentTime);
 
     int tmp = currentTime/1000;

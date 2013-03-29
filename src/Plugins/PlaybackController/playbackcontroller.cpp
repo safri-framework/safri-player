@@ -160,6 +160,7 @@ void PlaybackController::playStateSlot()
 
 void PlaybackController::pauseStateSlot()
 {
+    qDebug()<<"PAUSE state";
     currentState = m_pause;
     Q_EMIT stateChanged(Core::PAUSE);
     m_pauseAction->setDisabled(true);
@@ -269,6 +270,10 @@ void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
     {
         currentMedia = playlist->getCurrentMedia();
         Q_EMIT hasData();
+    }
+    else
+    {
+        qDebug()<<"leere Playliste";
     }
 }
 

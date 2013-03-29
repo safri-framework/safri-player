@@ -30,6 +30,7 @@ private slots:
     void stateChanged(Core::playState state);
     void playModelIndex(QVariant var);
     void testPlay();
+
 private:
     QQuickItem* playPauseButton;
     QQuickItem* prevButton;

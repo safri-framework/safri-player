@@ -13,6 +13,7 @@ SongTreeSidebarWrapper::SongTreeSidebarWrapper()
     button->setIcon(QIcon(":icons/ressources/music_icon.png"));
     menuBarWidget = button;
     sideBarWidget = new SongtreeWidget();
+    sideBarWidget->setMinimumHeight(300);
     //sideBarWidget->show();
 
     qDebug()<<"HIER BIN ICH";

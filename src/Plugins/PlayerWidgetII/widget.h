@@ -26,7 +26,7 @@ private slots:
     void mediaChanged(Core::Media* media);
     void update(int currentTime);
     void actionChanged();
-    void stateChanged(playState state);
+    void stateChanged(Core::playState state);
     void on_seek_slider_sliderMoved(int position);
 
 
@@ -36,6 +36,7 @@ private slots:
 private:
     IPlaybackController* m_pbController;
     bool firstPlayback;
+    bool newMedia;
     Ui::Widget *ui;
 };
 

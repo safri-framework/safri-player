@@ -10,15 +10,11 @@
 #include "Songtree/CoreItemTypes/songitemtype.h"
 #include "Songtree/CoreItemTypes/mediacollectionitemtype.h"
 #include "Songtree/CoreItemTypes/genreitemtype.h"
-
 #include "Interfaces/ICollectionController.h"
-
 #include "Interfaces/IStorageAdapter.h"
 #include "Interfaces/IPlaylistFactory.h"
 #include "Interfaces/IMediaCollectionBuilder.h"
-
 #include "pluginmanager.h"
-
 #include "iplaybackcontroller.h"
 #include <QModelIndex>
 
@@ -27,25 +23,17 @@ SafriMobileGuiInstance::SafriMobileGuiInstance():model(0)
     QQuickView *view = new QQuickView;
     view->setSource(QUrl("qrc:/test/qml/main.qml"));
     view->show();
-
     test();
     model = getSongtreeModel();
-
-
     QQmlContext* context = view->rootContext();
     context->setContextProperty("musicModel", model);
-
     playPauseButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("playStop"));
     nextButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
     prevButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("prevButton"));
     silentButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("silentButton"));
     songTree = qobject_cast<QQuickItem*>(view->rootObject());
 
-
-
     Core::IPlaybackController* controller  = Core::ICore::playbackController();
-
-
 
     connect(controller, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
     connect(playPauseButton, SIGNAL(buttonClicked()), controller->playPauseAction(), SLOT(trigger()));
@@ -60,19 +48,16 @@ SafriMobileGuiInstance::SafriMobileGuiInstance():model(0)
 
     if(songTree)
     {
-
         connect(songTree, SIGNAL(play(QVariant)), this, SLOT(playModelIndex(QVariant)));
-    }else
+    }
+    else
         qDebug()<<"NIX GEFUNDEN )= ";
-
 }
 
 void SafriMobileGuiInstance::playPauseSlot()
 {
     qDebug()<<"PLAY PAUSE";
 }
-
-
 
 void SafriMobileGuiInstance::stateChanged(Core::playState state)
 {
@@ -128,11 +113,10 @@ void SafriMobileGuiInstance::playModelIndex(QVariant var)
     QModelIndex index = var.value<QModelIndex>();
     SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
     QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
-   QList<Core::Item*> items;
-   items.append(static_cast<Core::Item*>(item));
+    QList<Core::Item*> items;
+    items.append(static_cast<Core::Item*>(item));
 
     playList->insertMediaAt(0,items);
-
     IPlaybackController* playbackController = Core::ICore::playbackController();
     playbackController->stopAction()->trigger();
     playbackController->setPlaylist(playList);
@@ -168,7 +152,7 @@ SongTreeModel *SafriMobileGuiInstance::getSongtreeModel()
 {
 
 
-   ICollectionController* collController = ICore::collectionController();
+    ICollectionController* collController = ICore::collectionController();
     QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
     for (int i = 0; i < mediaColl.size(); i++)
     {
