@@ -16,8 +16,8 @@ INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
 win32 {
-    INCLUDEPATH += C:\\taglib\\include
-    LIBS += -L"C:\\taglib\\lib"
+    INCLUDEPATH += C:\\taglib-1.8\\include
+    LIBS += -L"C:\\taglib-1.8\\lib"
     LIBS += -llibtag
 }
 
