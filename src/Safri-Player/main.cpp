@@ -1,4 +1,5 @@
 #include <QtWidgets/QApplication>
+//#include <QGuiApplication>
 #include <QDesktopServices>
 
 #include "pluginmanager.h"

@@ -21,7 +21,7 @@ ShoutCastSideBar::ShoutCastSideBar(QWidget *parent)
     menuBarWidget = button;
     sideBarWidget = new QWebView();
 
-    sideBarWidget->load(QUrl("http://www.shoutcast.com/Internet-Radio/fusion"));
+    sideBarWidget->load(QUrl("http://www.liveradio.de/"));
     sideBarWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(sideBarWidget, SIGNAL(linkClicked(QUrl)), this, SLOT(linkClicked(QUrl)));
     opener = new PlsOpener(this);
@@ -31,7 +31,6 @@ ShoutCastSideBar::~ShoutCastSideBar()
 {
     delete sideBarWidget;
 }
-
 
 QWidget *ShoutCastSideBar::getSideBarWidget()
 {
@@ -58,19 +57,10 @@ bool ShoutCastSideBar::isVisible()
 void ShoutCastSideBar::linkClicked(QUrl url)
 {
     qDebug()<<"LINK CLICKED"<< url;
-    opener->playPlsFromWebUrl(QUrl("http://yp.shoutcast.com/sbin/tunein-station.pls?id=111772"));
-    if(url.toString().endsWith(".pls"))
+    //opener->playPlsFromWebUrl(QUrl("http://www.soundcloud.com"));
+    if(url.toString().contains(".pls"))
     {
-
-
-
-        //controller->setPlaylist();
-
-
-
-
-
-        qDebug()<<("PLS!");
+        opener->playPlsFromWebUrl(url);
     }
     else
        sideBarWidget->load(url);

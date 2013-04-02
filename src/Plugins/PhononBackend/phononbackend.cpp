@@ -20,6 +20,7 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 #ifdef Qt5
     qDebug()<<Q_FUNC_INFO;
     player = new QMediaPlayer(this);
+    player->setVolume(100);
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));
 
 #endif
@@ -143,7 +144,15 @@ int PhononBackend::getVolume()
     #endif
 
 #ifdef Qt5
-    return player->volume();
+    if(player->volume() > 0)
+    {
+        qDebug()<<"VOLUME!!?";
+        return player->volume();
+    }
+    else
+    {
+        return 100;
+    }
 #endif
 }
 

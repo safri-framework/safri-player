@@ -6,6 +6,7 @@
 #include <QtWebKitWidgets/QWebView>
 #include <QUrl>
 #include "plsopener.h"
+
 using namespace Core;
 class ShoutCastSideBar : public ISideBarPlugin
 {
@@ -14,18 +15,20 @@ class ShoutCastSideBar : public ISideBarPlugin
 public:
     ShoutCastSideBar(QWidget *parent = 0);
     ~ShoutCastSideBar();
-
      QWidget* getSideBarWidget();
      QString getName();
      QWidget* getMenuBarWidget();
      bool isVisible();
+
 private:
 
      QWebView* sideBarWidget;
      QWidget* menuBarWidget;
      QString name;
      PlsOpener* opener;
+
 private slots:
+
      void linkClicked(QUrl url);
 
 };

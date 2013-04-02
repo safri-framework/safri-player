@@ -34,6 +34,7 @@ Widget::Widget(QWidget *parent) :
     connect(m_pbController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(mediaChanged(Core::Media*)));
     connect(m_pbController, SIGNAL(update(int)), this, SLOT(update(int)));
 
+    qDebug()<<"Current Volume"<<m_pbController->getVolume();
     ui->volume_slider->setValue(m_pbController->getVolume());
 
 
