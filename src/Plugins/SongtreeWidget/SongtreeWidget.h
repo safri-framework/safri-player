@@ -4,6 +4,7 @@
 #include "SongtreeWidget_global.h"
 #include "../CorePlugin/Interfaces/IAudioCollection.h"
 #include "../CorePlugin/Songtree/songtreemodel.h"
+#include "../CorePlugin/Songtree/songtreeproxymodel.h"
 #include "../CorePlugin/Songtree/songtree.h"
 #include "../CorePlugin/Interfaces/ICollectionController.h"
 #include <QWidget>
@@ -31,12 +32,12 @@ private:
     void loadSongtreeModel();
     void buildHierarchy();
     QList<ITreeItemType*>*  treeHierarchy;
-
+    SongtreeProxyModel* proxy;
 
 private slots:
     void newAudioCollectionAvailable(QUrl collURL);
     void removeCollection(QUrl collURL);
-
+    void returnPressed();
     void on_treeView_doubleClicked(const QModelIndex &index);
 };
 

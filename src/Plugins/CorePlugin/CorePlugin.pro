@@ -52,7 +52,8 @@ SOURCES += coreplugin.cpp \
     Interfaces/IAudioCollection.cpp \
     Interfaces/imediainserter.cpp \
     CoreSupply/filesysteminserter.cpp \
-    iplaylist.cpp
+    iplaylist.cpp \
+    Songtree/songtreeproxymodel.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -98,7 +99,8 @@ HEADERS += coreplugin.h\
     Interfaces/IMediaTagger.h \
     Interfaces/IMediaTaggerFactory.h \
     Interfaces/imediainserter.h \
-    CoreSupply/filesysteminserter.h
+    CoreSupply/filesysteminserter.h \
+    Songtree/songtreeproxymodel.h
 
 OTHER_FILES += \
     Core.xml \

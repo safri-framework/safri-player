@@ -37,15 +37,7 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     connect(songTree, SIGNAL(endInsertItem()), this, SLOT(endInsertItem()));
     connect(songTree, SIGNAL(beginRemoveItem(SongTreeItem*,int)), this, SLOT(beginRemoveItem(SongTreeItem*,int)));
     connect(songTree, SIGNAL(endRemoveItem()), this, SLOT(endRemoveItem()));
-
-
-
-
 }
-
-
-
-
 
 Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
 {

@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <QTreeView>
 #include "../CorePlugin/icore.h"
-
+#include <QtWidgets/QPushButton>
 
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
     QWidget(parent),
@@ -27,11 +27,29 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     Q_ASSERT(collController);
     //TODO: No such slot
     //connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
+
+    /*QPushButton* button = new QPushButton();
+    button->setParent(ui->lineEdit);
+    button->setMinimumSize(20, 20);
+    button->setMaximumSize(20,20);
+    button->setText("");
+    button->show();
+    button->move(50, 5);
+    */
+
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
     buildHierarchy();
     loadAudioCollections();
     loadSongtreeModel();
-    this->ui->treeView->setModel(model);
+    proxy = new SongtreeProxyModel();
+
+    proxy->setSourceModel(model);
+    proxy->setDynamicSortFilter(true);
+    connect(this->ui->lineEdit, SIGNAL(textEdited(QString)), proxy, SLOT(setFilterRegExp(QString)));
+    connect(proxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
+    connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
+    this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->ui->treeView->setModel(proxy);
 }
 
 SongtreeWidget::~SongtreeWidget()
@@ -96,11 +114,23 @@ void SongtreeWidget::removeCollection(QUrl collURL)
     Q_UNUSED(collURL)
 }
 
+void SongtreeWidget::returnPressed()
+{
+    if(this->ui->lineEdit->text().size() > 0)
+    {
+        this->ui->treeView->expandAll();
+    }
+    else
+    {
+        this->ui->treeView->collapseAll();
+    }
+}
+
 
 void SongtreeWidget::on_treeView_doubleClicked(const QModelIndex &index)
 {
 
-    SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
+    SongTreeItem* item = static_cast<SongTreeItem*>(proxy->mapToSource(index).internalPointer());
     QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
     QList<Core::Item*> items;
     items.append(static_cast<Core::Item*>(item));
