@@ -78,6 +78,10 @@ void Widget::mediaChanged(Core::Media *media)
         if(song)
         ui->infoLabel->setText(song->getArtist()->getName() + "\n" + song->getName());
     }
+    else
+    {
+        ui->infoLabel->setText(media->getName());
+    }
 }
 
 

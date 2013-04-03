@@ -5,6 +5,7 @@
 #include "iplaylist.h"
 #include <QStringList>
 #include <QSharedPointer>
+#include <QMimeData>
 
 namespace Core { class Song; }
 
@@ -25,7 +26,7 @@ class PlaylistModel : public QAbstractTableModel
         QSharedPointer<Core::IPlaylist> getPlaylist();
         virtual Qt::DropActions supportedDropActions() const;
         QStringList mimeTypes() const;
-
+        QMimeData* mimeData(const QModelIndexList &indexes) const;
 
 private slots:
 

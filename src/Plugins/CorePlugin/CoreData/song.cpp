@@ -22,19 +22,19 @@ QString Song::getMimeType()
 }
 
 Song::Song(int sID, QString sName, int year, QString filename, QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year)
+    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year), track(-1), length(-1)
 {
 
 }
 
 Song::Song(int sID, QString sName, int year,  QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), year(year)
+    Media(sID, sName, DataItem::SONG, parent), year(year), track(-1), length(-1)
 {
 
 }
 
 Song::Song(int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent):
-    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year)
+    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year), track(1), length(-1)
 {
 
 }

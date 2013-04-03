@@ -37,6 +37,7 @@ private slots:
     void newAudioCollectionAvailable(QUrl collURL);
     void removeCollection(QUrl collURL);
 
+    void on_treeView_doubleClicked(const QModelIndex &index);
 };
 
 #endif // SONGTREEWIDGET_H

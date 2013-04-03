@@ -5,6 +5,7 @@
 #include <QCoreApplication>
 #include <QEventLoop>
 
+
 PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 {
 #ifndef Qt5

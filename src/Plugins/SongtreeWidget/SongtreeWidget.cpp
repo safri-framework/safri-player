@@ -7,6 +7,10 @@
 #include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/mediacollectionitemtype.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
+#include "../CorePlugin/iplaylist.h"
+#include "../CorePlugin/iplaybackcontroller.h"
+#include "Interfaces/iguicontroller.h"
+#include "Interfaces/iplaylistwidget.h"
 #include "../PluginSystem/pluginmanager.h"
 #include <QDebug>
 #include <QTreeView>
@@ -19,17 +23,14 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     collController(0)
 {
     ui->setupUi(this);
-
     collController = ICore::collectionController();
     Q_ASSERT(collController);
-
     //TODO: No such slot
     //connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
     buildHierarchy();
     loadAudioCollections();
     loadSongtreeModel();
-
     this->ui->treeView->setModel(model);
 }
 
@@ -41,7 +42,6 @@ SongtreeWidget::~SongtreeWidget()
 
 void SongtreeWidget::loadAudioCollections()
 {
-
    QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
    for (int i = 0; i < mediaColl.size(); i++)
    {
@@ -51,16 +51,13 @@ void SongtreeWidget::loadAudioCollections()
            audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
        }
    }
-
 }
 
 void SongtreeWidget::loadSongtreeModel()
 {
-
     QList<IAudioCollection*> audioCollList = audioCollMap.values();
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
-
         songList.append(audioCollList.at(i)->getSongs());
     }
 
@@ -72,7 +69,6 @@ void SongtreeWidget::loadSongtreeModel()
         connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
     }
     model = new SongTreeModel(tree, this);
-
 }
 
 void SongtreeWidget::buildHierarchy()
@@ -100,3 +96,19 @@ void SongtreeWidget::removeCollection(QUrl collURL)
     Q_UNUSED(collURL)
 }
 
+
+void SongtreeWidget::on_treeView_doubleClicked(const QModelIndex &index)
+{
+
+    SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
+    QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
+    QList<Core::Item*> items;
+    items.append(static_cast<Core::Item*>(item));
+
+    playList->insertMediaAt(0,items);
+    IPlaybackController* playbackController = Core::ICore::playbackController();
+    Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
+    playbackController->stopAction()->trigger();
+    playbackController->setPlaylist(playList);
+    playbackController->playAction()->trigger();
+}

@@ -5,7 +5,7 @@
 #include "CoreData/media.h"
 #include <QDebug>
 #include "Songtree/songtreeitem.h"
-#include <QMimeData>
+
 
 
 PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent) :
@@ -16,7 +16,6 @@ PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *
     connect(playlist.data(), SIGNAL(MediaDeleted(int)), this, SLOT(songDeleted(int)));
     connect(playlist.data(), SIGNAL(MediaMoved(int,int)), this, SLOT(songMoved(int,int)));
     connect(playlist.data(), SIGNAL(changeActualPlayingMarker(int,int)), this, SLOT(positionOfActuallyPlayingSongChanged(int,int)));
-
 }
 
 
@@ -37,40 +36,30 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
             return 0;
         }
     }
-
-    return 0;
-}
+    return 0;}
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+
     Q_UNUSED(action)
     Q_UNUSED(row)
     Q_UNUSED(column)
     QList<Core::Media*> mediaList;
 
+    qDebug()<<"DROP";
     if (data->hasFormat("Item"))
     {
-
         QByteArray encodedData = data->data("Item");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
-
         QList<Core::Item*> draggedItems;
 
-
         while (!stream.atEnd()) {
-            //qint64 id;
-            //int row;
-            //int column;
-            QString text;
+
             qint64 pointer = 0;
             stream  >> pointer ;
-            //newItems[id][row][column] = text;
             Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
             draggedItems.append(static_cast<Core::Item*>(treeItem));
-            //draggedItems.append(item);
             qDebug()<<pointer;
-
-
         }
 
         qDebug()<<draggedItems.size();
@@ -87,12 +76,27 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
         for(int i=0; i<draggedItems.size(); i++)
         {
-
             playlist->insertMediaAt(row, draggedItems);
         }
+    }
 
+    if(data->hasFormat("MediaFromPlaylist"))
+    {
+        QByteArray encodedData = data->data("MediaFromPlaylist");
+        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+        QList<Core::Media*> draggedItems;
+        int draggedFromRow = 0;
+        while (!stream.atEnd())
+        {
+            qint64 pointer = 0;
+            stream  >> pointer >> draggedFromRow ;
+            Core::Media* mediaItem =(Core::Media*) pointer;
+            draggedItems.append(mediaItem);
+            qDebug()<< pointer << draggedFromRow;
+        }
 
-
+        qDebug()<<"TO:"<<parent.row();
+        playlist->moveMedia(draggedFromRow, parent.row());
     }
 
     return true;
@@ -155,7 +159,31 @@ void PlaylistModel::songDataChanged(int position)
 }
 
 
+QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
+{
+    QList<QUrl> filenames;
+    QMimeData *mimeData;
+    QByteArray encodedData;
 
+    mimeData = QAbstractItemModel::mimeData(indexes);
+    Core::Media* mediaAtIndex;
+    foreach (QModelIndex index, indexes)
+    {
+        if (index.isValid())
+        {
+            mediaAtIndex = playlist->getMediaAt(index.row());
+            int row = index.row();
+            filenames.append( mediaAtIndex->getURL().toLocalFile());
+            qint64 pointer = (qint64) mediaAtIndex;
+            QDataStream stream(&encodedData, QIODevice::WriteOnly);
+            stream <<  pointer << row;
+        }
+    }
+
+    mimeData->setData("MediaFromPlaylist", encodedData);
+    mimeData->setUrls(filenames);
+    return mimeData;
+}
 
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
@@ -165,7 +193,16 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
     if (index.isValid())
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     else
-        return Qt::ItemIsDropEnabled | defaultFlags;
+    {
+        if(playlist->getSize() > 0)
+        {
+            return defaultFlags;
+        }
+        else
+        {
+            return Qt::ItemIsDropEnabled;
+        }
+    }
 }
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
@@ -209,7 +246,6 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
                 return "Länge";
         }
     }
-
     return QVariant();
 }
 
@@ -264,6 +300,7 @@ QSharedPointer<Core::IPlaylist> PlaylistModel::getPlaylist()
 
 QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 {
+
     int length;
     int minutes;
     int seconds;
