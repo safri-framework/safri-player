@@ -20,13 +20,15 @@ DEFINES += PLAYLISTWIDGET_LIBRARY
 SOURCES += playlistwidgetplugin.cpp \
     playlistwidget.cpp \
     playlistwidgetfactory.cpp \
-    playlistmodel.cpp
+    playlistmodel.cpp \
+    playlistitemdelegate.cpp
 
 HEADERS += playlistwidgetplugin.h\
         PlaylistWidget_global.h \
     playlistwidget.h \
     playlistwidgetfactory.h \
-    playlistmodel.h
+    playlistmodel.h \
+    playlistitemdelegate.h
 
 FORMS += \
     playlistwidget.ui

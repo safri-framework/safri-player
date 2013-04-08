@@ -42,6 +42,7 @@ class PhononBackend : public Core::IMediaBackend
     private slots:
 
         void tick(qint64 ms);
+        void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 };
 
 #endif // PHONONBACKEND_H

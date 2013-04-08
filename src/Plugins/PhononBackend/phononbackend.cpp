@@ -23,7 +23,7 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
     player = new QMediaPlayer(this);
     player->setVolume(100);
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));
-
+    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(mediaStatusChanged(QMediaPlayer::MediaStatus)));
 #endif
 
 
@@ -87,9 +87,10 @@ void PhononBackend::play(QUrl url)
 #ifdef Qt5
     Q_EMIT hasSeekableMedia(player->isSeekable());
     Q_EMIT hasVolumeAdjustableMedia(true);
-
+    player->setMedia(QMediaContent());
     player->setMedia(url);
     player->play();
+
 #endif
 }
 
@@ -179,4 +180,18 @@ void PhononBackend::tick(qint64 ms)
     Q_EMIT update(ms);
 
 
+}
+
+void PhononBackend::mediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+    switch (status)
+    {
+        case QMediaPlayer::EndOfMedia:
+            Q_EMIT mediaFinished();
+            break;
+        default:
+        qDebug()<<status;
+
+
+    }
 }

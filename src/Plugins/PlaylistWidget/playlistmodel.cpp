@@ -279,9 +279,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return dataSongDisplayRole(song, index.column());
             break;
 
-        case Qt::DecorationRole:
+        case Qt::UserRole:
 
-            //if (playlist->isCurrentMedia())
+            if (playlist->isCurrentMedia(index.row()))
+                    return true;
 
             break;
 
@@ -313,6 +314,9 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
         case 0:
 
             track = song->getTrack();
+
+            if(track < 0)
+                return "";
 
             if (track < 10)
             {

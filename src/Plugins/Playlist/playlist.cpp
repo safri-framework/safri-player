@@ -46,6 +46,7 @@ Playlist::Playlist(QString plsfile, QObject *parent) :
 
 Playlist::~Playlist()
 {
+    mediaList.clear();
     qDebug()<<"DESTRUKTOR PLAYLIST";
 }
 

@@ -37,12 +37,7 @@ private slots:
         void songDataChanged(int position);
 
     private:
-
-
-
-
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;
-
         QSharedPointer<Core::IPlaylist> playlist;
 
 };

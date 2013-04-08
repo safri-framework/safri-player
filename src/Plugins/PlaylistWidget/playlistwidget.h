@@ -23,24 +23,25 @@ class PlaylistWidget : public Core::IPlaylistWidget
         virtual void showPlaylist(QSharedPointer<Core::IPlaylist> playlist) ;
         virtual void showCurrentPlaylist();
         virtual QSharedPointer<Core::IPlaylist> newPlaylist();
+        bool isCurrentPlayingPlaylist();
 
     public slots:
-
         virtual void itemsSelected(QList<Core::Item*> selection);
         void isAnimated(bool animated);
 
     private slots:
-
         void on_playlistView_doubleClicked(const QModelIndex &index);
-
         void on_pushButton_clicked();
+        void on_pushButton_2_clicked();
 
-private:
-
+    private:
+        void setPlaylist(QSharedPointer<Core::IPlaylist> pl);
         QPixmap screenshot;
         QLabel screenshotLabel;
-            PlaylistModel* playlistModel;
-            Ui::PlaylistWidget *ui;
+        PlaylistModel* playlistModel;
+        Ui::PlaylistWidget *ui;
+        QSharedPointer<Core::IPlaylist> currentPL;
+        bool isCurrentPl;
 };
 
 #endif // PLAYLISTWIDGET_H
