@@ -56,7 +56,7 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
     storageAdapter = storageFactory->createStorageAdapter(filename);
     if(storageFactory)
     {
-          QString contentType = storageAdapter->getContentType();
+          QString contentType = storageAdapter->getCollectionType();
           qDebug()<<"contentType: "<<contentType;
           IMediaCollectionBuilder* audioBuilder = m_builderMap.value(contentType);
           IMediaCollection* collection = audioBuilder->buildMediaCollection(storageAdapter);
@@ -85,7 +85,7 @@ IMediaCollection *Controller::CollectionController::getMediaCollection(QUrl file
 
 void Controller::CollectionController::loadExtensionMap()
 {
-    m_fileExtensionMap.insert(".db","org.safri.sqlite");
+    m_fileExtensionMap.insert(".db","org.safri.sqlite.audio");
 }
 
 QString Controller::CollectionController::getStorageTypeByFilename(QString filename)

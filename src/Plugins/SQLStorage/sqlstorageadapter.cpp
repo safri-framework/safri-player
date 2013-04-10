@@ -5,13 +5,10 @@
 #include <QElapsedTimer>
 #include "CoreData/dataitemtablemodel.h"
 
-SQLStorageAdapter::SQLStorageAdapter(QUrl filePath)
-    : sqlFilePath(filePath)
+SQLStorageAdapter::SQLStorageAdapter(QUrl filePath, QObject *parent)
+    : IStorageAdapter(parent), sqlFilePath(filePath), currentTransaction(TA_NONE)
 {
-    if (!openDatabase())
-    {
-        qDebug() << "Database error";
-    }
+
 }
 
 SQLStorageAdapter::~SQLStorageAdapter()
@@ -83,19 +80,116 @@ Core::ITableModel *SQLStorageAdapter::loadTableForDataItemType(Core::DataItem::D
     return loadTable(Core::DataItem::typeToString(type));
 }
 
-void SQLStorageAdapter::writeTableForDataItemType(Core::ITableModel *model, Core::DataItem::DATA_ITEM_TYPE type)
+bool SQLStorageAdapter::beginWrite()
 {
-    Q_UNUSED(model)
-    Q_UNUSED(type)
+
+    if (currentTransaction != TA_NONE)
+    {
+        qDebug() << "Can't begin write: Current database transaction running!";
+        return false;
+    }
+
+    currentTransaction = TA_WRITE;
+    database.close();
+
+    QString tempFilePath = sqlFilePath.toString().append(".tmp");
+
+    QDir dir(sqlFilePath.path());
+    dir.remove(tempFilePath);   // remove any existent temporary database
+
+    qDebug() << "removed old temp file";
+
+    database.setDatabaseName(tempFilePath);
+
+    if( !database.open() )
+    {
+        qDebug() << "Database error:";
+        qDebug() << database.lastError().driverText();
+        qFatal("Failed to connect to database.");
+
+        database.setDatabaseName(sqlFilePath.toString());
+        currentTransaction = TA_NONE;
+
+        return false;
+    }
+
+    if ( !createDatabase() )
+    {
+        qDebug() << "Database error:";
+        qDebug() << database.lastError().driverText();
+        qFatal("Could not create database structure");
+
+        database.setDatabaseName(sqlFilePath.toString());
+        dir.remove(tempFilePath);
+
+        currentTransaction = TA_NONE;
+
+        return false;
+    }
+
+    QSqlQuery query(database);
+    if ( !query.exec("BEGIN") )
+    {
+       qDebug() << "ERROR: " << "BEGIN" << query.lastError();
+       return false;
+    }
+
+
+    return true;
 }
 
-QString SQLStorageAdapter::getStorageType()
+bool SQLStorageAdapter::endWrite()
 {
-    return STORAGE_TYPE;
+    if (currentTransaction == TA_WRITE)
+    {
+
+        QSqlQuery query(database);
+        if ( !query.exec("COMMIT") )
+        {
+           qDebug() << "ERROR: " << "COMMIT" << query.lastError();
+           return false;
+        }
+
+        database.close();
+        QString filePath = sqlFilePath.toString();
+        QDir dir(sqlFilePath.path());
+
+        dir.remove(filePath);
+        dir.rename(filePath + ".tmp", filePath);
+
+        currentTransaction = TA_NONE;
+        return true;
+    }
+
+    return false;
 }
 
-bool SQLStorageAdapter::openDatabase()
+bool SQLStorageAdapter::abortWrite()
 {
+    if (currentTransaction == TA_WRITE)
+    {
+        QString tempFilePath = sqlFilePath.toString().append(".tmp");
+
+        QDir dir(sqlFilePath.path());
+        dir.remove(tempFilePath);
+        database.setDatabaseName(sqlFilePath.toString());
+
+        currentTransaction = TA_NONE;
+
+        return true;
+    }
+
+    return false;
+}
+
+bool SQLStorageAdapter::beginRead()
+{
+    if (currentTransaction != TA_NONE)
+    {
+        qDebug() << "Can't begin read: Current database transaction running!";
+        return false;
+    }
+
     qDebug() << "Databasefile:"  << sqlFilePath.toString();
 
     if ( !database.open() )
@@ -115,7 +209,7 @@ bool SQLStorageAdapter::openDatabase()
     if ( !checkIfDatabaseExists() )
     {
         qDebug() << "Database doesn't exist";
-        createDatabase(database);
+        createDatabase();
         return false;
     }
 
@@ -125,145 +219,30 @@ bool SQLStorageAdapter::openDatabase()
         return false;
     }
 
-    return true;
-}
-
-bool SQLStorageAdapter::createDatabase(QSqlDatabase &db)
-{
-    qDebug()<<db.open();
-
-    QSqlQuery query( db );
-
-    QString createAlbum = "CREATE TABLE Album \
-            ( \
-                    id INTEGER PRIMARY KEY, \
-                    album VARCHAR(300), \
-                    year INTEGER, \
-                    album_cover TEXT,  \
-                    number_of_cds INTEGER,  \
-                    number_of_tracks INTEGER, \
-                    is_complete BOOLEAN,  \
-                    info VARCHAR(1000),  \
-                    is_live BOOLEAN \
-            );";
-    QString createArtist = "CREATE TABLE Artist \
-            ( \
-                    id	INTEGER NOT NULL CONSTRAINT pk_artist_id PRIMARY KEY, \
-                    artist	VARCHAR(300) NOT NULL, \
-                    info	VARCHAR(1000), \
-                    entire_discography BOOLEAN, \
-                    rating INTEGER \
-            );";
-    QString insertArtist = "INSERT INTO Artist VALUES(-1,'Unbekannt',NULL,NULL,NULL);";
-
-    QString createArtistToAlbum = "CREATE TABLE ArtistToAlbum (artist_id NUMERIC, album_id NUMERIC);";
-    QString createCD = "CREATE TABLE CD \
-                        ( \
-                                id	INTEGER NOT NULL CONSTRAINT pk_cd_id PRIMARY KEY, \
-                                album_id INTEGER CONSTRAINT fk_cd_album_id REFERENCES Album(id), \
-                                number	INTEGER NOT NULL, \
-                                number_of_tracks INTEGER \
-                        );";
-    QString createDatabaseInfo = "CREATE TABLE DATABASE_INFO (DATABASE_VERSION NUMERIC);";
-    QString insertVersion = "INSERT INTO DATABASE_INFO VALUES(3);";
-    QString createGenre = "CREATE TABLE Genre \
-            ( \
-                    id	INTEGER NOT NULL CONSTRAINT pk_genre_id PRIMARY KEY, \
-                    genre	VARCHAR(50) NOT NULL UNIQUE \
-            );";
-    QString createSong = "CREATE TABLE Song \
-            ( \
-                id INTEGER PRIMARY KEY, \
-                song VARCHAR(305), \
-                artist_id INTEGER, \
-                genre_id INTEGER, \
-                album_id INTEGER, \
-                cd_id INTEGER, \
-                year INTEGER, \
-                info VARCHAR(1000), \
-                songtext VARCHAR(10000), \
-                track_number INTEGER, \
-                length INTEGER, \
-                filename VARCHAR(1000), \
-                rating INTEGER, \
-                comment VARCHAR(1000) \
-            );";
-    QString createTag = "CREATE TABLE Tag \
-            ( \
-                    id	INTEGER NOT NULL CONSTRAINT pk_tag_id PRIMARY KEY, \
-                    tag	VARCHAR(140) NOT NULL UNIQUE \
-            );";
-
-    QStringList statements;
-    statements << createAlbum << createArtist << insertArtist << createArtistToAlbum << createCD << createDatabaseInfo \
-               << insertVersion << createGenre << createSong << createTag;
-
-    qDebug() << "Creating database...";
-
-    for (int i = 0; i < statements.size(); i++)
-    {
-        if ( !query.exec(statements.at(i)))
-        {
-            qDebug() << "ERROR: " << statements.at(i) << query.lastError();
-            return false;
-        }
-    }
+    currentTransaction = TA_READ;
 
     return true;
 }
 
-bool SQLStorageAdapter::checkDatabaseVersion()
+bool SQLStorageAdapter::endRead()
 {
-    if (!database.open())
-    {
-        return false;
-    }
-
-    QSqlQuery query( database );
-    QString queryStmt = "SELECT DATABASE_VERSION FROM DATABASE_INFO";
-
-    if ( !query.exec(queryStmt))
-    {
-        qDebug() << "ERROR: " << queryStmt << query.lastError();
-        return false;
-    }
-
-    query.next();
-
-    int databaseVersion = query.value( query.record().indexOf("DATABASE_VERSION") ).toInt();
-
-    return databaseVersion >= DATABASE_VERSION;
-}
-
-bool SQLStorageAdapter::checkIfDatabaseExists()
-{
-    if (!database.open())
-    {
-        return false;
-    }
-
-    QSqlQuery query( database );
-    QString queryStmt = "SELECT COUNT(type) FROM sqlite_master WHERE type='table' AND name='Artist';";
-
-    if ( !query.exec(queryStmt))
-    {
-        qDebug() << "ERROR: " << queryStmt << query.lastError();
-        return false;
-    }
-
-    query.next();
-
-    int tableCount = query.value(0).toInt();
-
-    return tableCount > 0;
+    database.close();
+    currentTransaction = TA_NONE;
+    return true;
 }
 
 QUrl SQLStorageAdapter::getStoragePath()
 {
-    return QUrl(sqlFilePath);
+    return sqlFilePath;
 }
 
-QString SQLStorageAdapter::getContentType()
+QString SQLStorageAdapter::getCollectionType()
 {
-    return "org.safri.collection.audio";
+    return AUDIO_COLLECTION_TYPE;
 }
+
+QString SQLStorageAdapter::getStorageType()
+{
+    return STORAGE_TYPE;
+}
+

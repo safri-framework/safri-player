@@ -21,12 +21,14 @@ DEFINES += SQLSTORAGE_LIBRARY
 
 SOURCES += sqlstorageplugin.cpp \
     sqlstorageadapter.cpp \
-    sqlstoragefactory.cpp
+    audiosqlstoragefactory.cpp \
+    audiosqlstorageadapter.cpp
 
 HEADERS += sqlstorageplugin.h\
         SQLStorage_global.h \
     sqlstorageadapter.h \
-    sqlstoragefactory.h
+    audiosqlstoragefactory.h \
+    audiosqlstorageadapter.h
 
 OTHER_FILES += \
     SQLStorage.xml \

@@ -4,12 +4,14 @@
 #include "SQLStorage_global.h"
 #include "Interfaces/istorageadapterfactory.h"
 
-class SQLSTORAGESHARED_EXPORT SQLStorageFactory : public Core::IStorageAdapterFactory
+class SQLSTORAGESHARED_EXPORT AudioSQLStorageFactory : public Core::IStorageAdapterFactory
 {
     public:
-        SQLStorageFactory(QObject *parent = 0);
+
+        AudioSQLStorageFactory(QObject *parent = 0);
 
         virtual QString getStorageType();
+        virtual QString getCollectionType();
         virtual Core::IStorageAdapter* createStorageAdapter(QUrl storagePath);
 };
 

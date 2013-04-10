@@ -26,6 +26,9 @@ class AudioCollectionBuilder : public IMediaCollectionBuilder
         void buildAlbums(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
         void buildSongs(IStorageAdapter* storageAdapter, AudioCollection* mediaCollection);
 
+        ITableModel* buildGenreTable(AudioCollection* mediaCollection);
+        ITableModel* buildArtistTable(AudioCollection* mediaCollection);
+
         QMultiMap<int, int> loadArtistToAlbumMap(IStorageAdapter* storageAdapter);
 
 };

@@ -14,6 +14,7 @@ namespace Core
             explicit IStorageAdapterFactory(QObject *parent = 0);
 
             virtual QString getStorageType() = 0;
+            virtual QString getCollectionType() = 0;
             virtual IStorageAdapter* createStorageAdapter(QUrl storagePath) = 0;
     };
 }

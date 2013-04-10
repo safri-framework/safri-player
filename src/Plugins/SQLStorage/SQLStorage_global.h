@@ -9,6 +9,7 @@
 #  define SQLSTORAGESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#define STORAGE_TYPE "org.safri.sqlite"
+#define STORAGE_TYPE          "org.safri.sqlite.audio"
+#define AUDIO_COLLECTION_TYPE "org.safri.collection.audio"
 
 #endif // SQLSTORAGE_GLOBAL_H

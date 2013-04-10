@@ -1,5 +1,5 @@
 #include "audiocollectionbuilder.h"
-#include <Interfaces/ITableModel.h>
+#include <CoreData/dataitemtablemodel.h>
 #include <QList>
 #include <QDebug>
 
@@ -24,10 +24,30 @@ IMediaCollection *AudioCollectionBuilder::buildMediaCollection(IStorageAdapter *
 
     AudioCollection* audioCollection = new AudioCollection(name);
 
-    buildGenres(storageAdapter, audioCollection);
-    buildArtists(storageAdapter, audioCollection);
-    buildAlbums(storageAdapter, audioCollection);
-    buildSongs(storageAdapter, audioCollection);
+    storageAdapter->beginRead();
+
+        buildGenres(storageAdapter, audioCollection);
+        buildArtists(storageAdapter, audioCollection);
+        buildAlbums(storageAdapter, audioCollection);
+        buildSongs(storageAdapter, audioCollection);
+
+    storageAdapter->endRead();
+
+    /*
+    storageAdapter->beginWrite();
+
+        Core::ITableModel* model;
+
+        model = buildGenreTable(audioCollection);
+        storageAdapter->writeTableForDataItemType(model, Core::DataItem::GENRE);
+        delete model;
+
+        model = buildArtistTable(audioCollection);
+        storageAdapter->writeTableForDataItemType(model, Core::DataItem::ARTIST);
+        delete model;
+
+    storageAdapter->endWrite();
+    */
 
     return audioCollection;
 }
@@ -262,6 +282,60 @@ void AudioCollectionBuilder::buildSongs(IStorageAdapter *storageAdapter, AudioCo
 
     mediaCollection->currentSongID = latestID;
     delete table;
+}
+
+ITableModel *AudioCollectionBuilder::buildGenreTable(AudioCollection *mediaCollection)
+{
+    QList<Core::Genre*> genres = mediaCollection->getGenres();
+    int genreCount = genres.size();
+    Core::DataItemTableModel* tableModel = new Core::DataItemTableModel(genreCount, 2);
+
+    tableModel->setHeaderData(0, Qt::Horizontal, "id");
+    tableModel->setHeaderData(1, Qt::Horizontal, "genre");
+
+    Core::Genre* genre;
+
+    for (int i = 0; i < genreCount; i++)
+    {
+        genre = genres.at(i);
+        tableModel->setData(tableModel->index(i, 0), genre->getID());
+        tableModel->setData(tableModel->index(i, 1), genre->getName());
+    }
+
+    return tableModel;
+}
+
+ITableModel *AudioCollectionBuilder::buildArtistTable(AudioCollection *mediaCollection)
+{
+    QList<Core::Artist*> artists = mediaCollection->getArtists();
+    int artistCount = artists.size();
+    Core::DataItemTableModel* tableModel = new Core::DataItemTableModel(artistCount - 1, 2); // subtract the "unknown" artist
+
+    tableModel->setHeaderData(0, Qt::Horizontal, "id");
+    tableModel->setHeaderData(1, Qt::Horizontal, "artist");
+
+    Core::Artist* artist;
+    int tableRow = 0;
+
+    for (int i = 0; i < artistCount; i++)
+    {
+        artist = artists.at(i);
+
+        if (artist->getID() == -1)
+        {
+            // ommit default artist "unknown"
+            continue;
+        }
+
+        if (artist->getID() < 100)
+            qDebug() << artist->getID() << " : " << artist->getName() << " : " << tableRow;
+
+        tableModel->setData(tableModel->index(tableRow, 0), artist->getID());
+        tableModel->setData(tableModel->index(tableRow, 1), artist->getName());
+        tableRow++;
+    }
+
+    return tableModel;
 }
 
 

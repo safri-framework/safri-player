@@ -1,6 +1,7 @@
 #include "sqlstorageplugin.h"
-#include "sqlstoragefactory.h"
+#include "audiosqlstoragefactory.h"
 #include <QtWidgets/QWidget>
+
 using namespace Plugins;
 
 SQLStoragePlugin::SQLStoragePlugin()
@@ -9,9 +10,10 @@ SQLStoragePlugin::SQLStoragePlugin()
 
 bool SQLStoragePlugin::initialize(QStringList &arguments)
 {
-    Q_UNUSED(arguments)
-    addObject(new SQLStorageFactory(this));
 
+    Q_UNUSED(arguments)
+
+    addObject(new AudioSQLStorageFactory(this));
 
     return true;
 }
