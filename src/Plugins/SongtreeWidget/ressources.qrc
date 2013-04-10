@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/icons">
         <file>ressources/music_icon.png</file>
+        <file>ressources/artist_icon.png</file>
+        <file>ressources/default.png</file>
     </qresource>
 </RCC>

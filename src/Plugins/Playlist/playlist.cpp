@@ -229,7 +229,7 @@ void Playlist::setCurrentMedia(int value)
             currentMedia = value;
             currentMediaTransactionRequested = false;
 
-            Q_EMIT changeCurrentPlayingMarker(lastMedia, currentMedia);
+            Q_EMIT changeActualPlayingMarker(lastMedia, currentMedia);
         }
     }
 }

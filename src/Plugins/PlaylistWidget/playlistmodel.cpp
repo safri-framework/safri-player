@@ -5,7 +5,7 @@
 #include "CoreData/media.h"
 #include <QDebug>
 #include "Songtree/songtreeitem.h"
-
+#include <QSize>
 
 
 PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent) :
@@ -85,6 +85,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         QByteArray encodedData = data->data("MediaFromPlaylist");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
         QList<Core::Media*> draggedItems;
+        QList<int> draggedRows;
         int draggedFromRow = 0;
         while (!stream.atEnd())
         {
@@ -92,13 +93,15 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             stream  >> pointer >> draggedFromRow ;
             Core::Media* mediaItem =(Core::Media*) pointer;
             draggedItems.append(mediaItem);
+            draggedRows.append(draggedFromRow);
             qDebug()<< pointer << draggedFromRow;
         }
 
-        qDebug()<<"TO:"<<parent.row();
-        playlist->moveMedia(draggedFromRow, parent.row());
+        for(int i = 0; i < draggedRows.size(); i++)
+        {
+             playlist->moveMedia(draggedRows.at(i), parent.row()+i);
+        }
     }
-
     return true;
 }
 
@@ -120,9 +123,9 @@ QStringList PlaylistModel::mimeTypes() const
 
 void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
 {
+    Q_EMIT sizeHintChanged(index(to, 0));
     // remove the playing symbol from the old playing song
     Q_EMIT dataChanged( index(from, 0), index(from, 4) );
-
     // set the playing symbol to the new playing song
     Q_EMIT dataChanged( index(to, 0), index(to, 4) );
 }
@@ -136,15 +139,8 @@ void PlaylistModel::songsInserted(int position, int count)
 
 void PlaylistModel::songMoved(int from, int to)
 {
-    //beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);
-    //endMoveRows();
-    // This version was not working by moving a song from one line to the next.
-
-
-
     Q_EMIT dataChanged( index(from, 0), index(from, 4) );
     Q_EMIT dataChanged( index(to, 0), index(to, 4) );
-
 }
 
 void PlaylistModel::songDeleted(int value)
@@ -179,10 +175,14 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
             stream <<  pointer << row;
         }
     }
-
     mimeData->setData("MediaFromPlaylist", encodedData);
     mimeData->setUrls(filenames);
     return mimeData;
+}
+
+void PlaylistModel::moveSong(int from, int to)
+{
+    playlist->moveMedia(from, to);
 }
 
 
@@ -212,38 +212,54 @@ int PlaylistModel::columnCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return 7;
+    return 8;
 }
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
 
-    if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
+    if ( orientation == Qt::Horizontal)
     {
-
-        switch (section)
+        if( role == Qt::DisplayRole )
         {
 
+            switch (section)
+            {
+
+                case 1:
+                    return "#";
+
+                case 2:
+                    return "Interpret";
+
+                case 3:
+                    return "Titel";
+
+                case 4:
+                    return "Album";
+
+                case 5:
+                    return "Jahr";
+
+                case 6:
+                    return "Genre";
+
+                case 7:
+                    return "Länge";
+            }
+        }
+
+        if (role == Qt::SizeHintRole)
+        {
+            switch(section)
+            {
             case 0:
-                return "Track";
-
+                return QSize(20,20);
             case 1:
-                return "Interpret";
-
-            case 2:
-                return "Titel";
-
-            case 3:
-                return "Album";
-
-            case 4:
-                return "Jahr";
-
-            case 5:
-                return "Genre";
-
-            case 6:
-                return "Länge";
+                return QSize(20,20);
+            default:
+                return QVariant();
+            }
         }
     }
     return QVariant();
@@ -261,10 +277,26 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
     media = playlist->getMediaAt(index.row());
 
+
+
     if (media->getType() != Core::DataItem::SONG)
     {
+        if(role == Qt::DisplayRole)
+        {
+            if(index.column() == 3)
+                return media->getName();
+            else
+                return QVariant();
+        }
+        else if (role == Qt::UserRole)
+        {
+            if (playlist->isCurrentMedia(index.row()))
+                    return true;
+        }
         return QVariant();
+
     }
+
 
     song = qobject_cast<Core::Song*>(media);
     if (!song)
@@ -283,6 +315,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
             if (playlist->isCurrentMedia(index.row()))
                     return true;
+
+        case Qt::UserRole+1:
 
             break;
 
@@ -311,7 +345,7 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 
     switch (column)
     {
-        case 0:
+        case 1:
 
             track = song->getTrack();
 
@@ -325,27 +359,27 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 
             return song->getTrack();
 
-        case 1:
+        case 2:
 
             return song->getArtist()->getName();
 
-        case 2:
+        case 3:
 
             return song->getName();
 
-        case 3:
+        case 4:
 
             return song->getAlbum()->getName();
 
-        case 4:
+        case 5:
 
             return song->getYear();
 
-        case 5:
+        case 6:
 
             return song->getGenre()->getName();
 
-        case 6:
+        case 7:
 
             length = song->getLength();
 

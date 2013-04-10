@@ -5,12 +5,17 @@
 #include "../CorePlugin/iplaybackcontroller.h"
 #include "../CorePlugin/icore.h"
 #include "playlistitemdelegate.h"
+#include <QHeaderView>
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) :
     IPlaylistWidget(parent),
     ui(new Ui::PlaylistWidget)
 {
     ui->setupUi(this);
+    PlaylistItemDelegate* itemDelegate = new PlaylistItemDelegate(this, this);
+    ui->playlistView->setItemDelegate(itemDelegate);
+    ui->playlistView->setUniformRowHeights(false);
+    connect(Core::ICore::playbackController(), SIGNAL(newPlaylistInstalled(QSharedPointer<Core::IPlaylist>)), this, SLOT(newPlaylist(QSharedPointer<Core::IPlaylist>)));
 }
 
 PlaylistWidget::~PlaylistWidget()
@@ -20,14 +25,17 @@ PlaylistWidget::~PlaylistWidget()
 
 void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
-    QAbstractItemModel* model = ui->playlistView->model();
-    delete model;
-    playlistModel = new PlaylistModel(playlist, this);
-    connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
-    ui->playlistView->setModel(playlistModel);
-    PlaylistItemDelegate* itemDelegate = new PlaylistItemDelegate(this, this);
-    ui->playlistView->setItemDelegate(itemDelegate);
-
+    setPlaylist(playlist);
+    ui->playlistView->header()->setSectionResizeMode(0, QHeaderView::Fixed);
+    ui->playlistView->header()->setSectionResizeMode(1, QHeaderView::Fixed);
+    ui->playlistView->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->playlistView->header()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->playlistView->header()->setSectionResizeMode(4, QHeaderView::Stretch);
+    ui->playlistView->header()->setSectionResizeMode(7, QHeaderView::Fixed);
+    ui->playlistView->header()->resizeSection(0,25);
+    ui->playlistView->header()->resizeSection(1,25);
+    ui->playlistView->header()->resizeSection(7,35);
+    ui->playlistView->header()->setStretchLastSection(false);
 }
 
 
@@ -82,6 +90,9 @@ void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
     playbackConntroller->stopAction()->trigger();
     playbackConntroller->setPlaylist(playlist);
     playbackConntroller->playAction()->trigger();
+    isCurrentPl = true;
+    ui->pushButton_2->setChecked(true);
+    ui->pushButton_2->setDisabled(true);
 }
 
 void PlaylistWidget::on_pushButton_clicked()
@@ -95,6 +106,23 @@ void PlaylistWidget::on_pushButton_2_clicked()
     showCurrentPlaylist();
 }
 
+void PlaylistWidget::newPlaylist(QSharedPointer<Core::IPlaylist> pl)
+{
+    qDebug()<<"SIGNAL";
+    if(pl.data() ==  currentPL.data())
+    {
+        isCurrentPl = true;
+        ui->pushButton_2->setChecked(true);
+        ui->pushButton_2->setDisabled(true);
+    }
+    else
+    {
+        ui->pushButton_2->setChecked(false);
+        ui->pushButton_2->setEnabled(true);
+        isCurrentPl = false;
+    }
+}
+
 void PlaylistWidget::setPlaylist(QSharedPointer<Core::IPlaylist> pl)
 {
     QAbstractItemModel* model = ui->playlistView->model();
@@ -104,14 +132,22 @@ void PlaylistWidget::setPlaylist(QSharedPointer<Core::IPlaylist> pl)
         if(model)
         delete model;
         playlistModel = new PlaylistModel(pl, this);
+
         connect(playlistModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this->ui->playlistView, SLOT(dataChanged(QModelIndex,QModelIndex)));
         ui->playlistView->setModel(playlistModel);
 
         if(pl.data() == Core::ICore::playbackController()->getPlaylist().data())
+        {
             isCurrentPl = true;
+            ui->pushButton_2->setChecked(true);
+            ui->pushButton_2->setDisabled(true);
+        }
         else
+        {
+            ui->pushButton_2->setChecked(false);
+            ui->pushButton_2->setEnabled(true);
             isCurrentPl = false;
-
+        }
         currentPL = pl;
     }
     else

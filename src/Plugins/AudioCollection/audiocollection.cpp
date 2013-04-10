@@ -20,7 +20,6 @@ AudioCollection::AudioCollection(QString name):m_name(name),
     m_nameToArtistMap = new QMap<QString, Artist*>;
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
-
 }
 
 AudioCollection::~AudioCollection()
@@ -353,17 +352,12 @@ Core::Song* AudioCollection::getSongByPath(QString path)
 }
 
 
-
-
-
 Artist *AudioCollection::newArtist(QString name)
 {
     Artist* artist = new Artist(newArtistID(), name, this);
     insertArtist(artist);
     return artist;
 }
-
-
 
 
 Album *AudioCollection::newAlbum(QString name)
@@ -374,8 +368,6 @@ Album *AudioCollection::newAlbum(QString name)
 }
 
 
-
-
 Genre *AudioCollection::newGenre(QString name)
 {
     Genre* genre = new Genre(newGenreID(), name, this);
@@ -384,15 +376,13 @@ Genre *AudioCollection::newGenre(QString name)
 }
 
 
-
-
 Song *AudioCollection::newSong(QString name, int year, QUrl url)
 {
     Song* song = new Song(newSongID(), name, year, url.toString(), this);
     insertSong(song);
     return song;
-
 }
+
 
 void AudioCollection::removeSong(Song *song)
 {
@@ -403,7 +393,6 @@ void AudioCollection::removeSong(Song *song)
         m_IDtoSongMap->remove(song->getID());
     m_lock.unlock();
     Q_EMIT itemRemoved(song);
-
 }
 
 void AudioCollection::removeArtist(Artist *artist)
@@ -416,6 +405,7 @@ void AudioCollection::removeArtist(Artist *artist)
     Q_EMIT itemRemoved(artist);
 }
 
+
 void AudioCollection::removeAlbum(Album *album)
 {
     m_lock.lockForWrite();
@@ -425,6 +415,7 @@ void AudioCollection::removeAlbum(Album *album)
     m_lock.unlock();
     Q_EMIT itemRemoved(album);
 }
+
 
 void AudioCollection::removeGenre(Genre *genre)
 {
@@ -436,6 +427,7 @@ void AudioCollection::removeGenre(Genre *genre)
     Q_EMIT itemRemoved(genre);
 }
 
+
 void AudioCollection::insertGenre(Genre* genre)
 {
 
@@ -445,9 +437,7 @@ void AudioCollection::insertGenre(Genre* genre)
         m_nameToGenreMap->insert(genre->getName(), genre);
     m_lock.unlock();
     Q_EMIT itemAdded(genre);
-
 }
-
 
 
 void AudioCollection::insertArtist(Artist* artist)
@@ -458,9 +448,8 @@ void AudioCollection::insertArtist(Artist* artist)
         m_nameToArtistMap->insert(artist->getName(), artist);
     m_lock.unlock();
     Q_EMIT itemAdded(artist);
-
-
 }
+
 
 void AudioCollection::insertAlbum(Album* album)
 {
@@ -471,8 +460,6 @@ void AudioCollection::insertAlbum(Album* album)
         m_nameToAlbumMap->insert(album->getName(), album);
     m_lock.unlock();
     Q_EMIT itemAdded(album);
-
-
 }
 
 
@@ -485,7 +472,6 @@ void AudioCollection::insertSong(Song* song)
         m_nameToSongMap->insert(song->getName(), song);
     m_lock.unlock();
     //Q_EMIT itemAdded(song);
-
 }
 
 
@@ -511,10 +497,7 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
         song = audioCollection->getSongByPath(mediaInfo.getURL().toString());
         if(!song) //Song doesn't already exists
         {
-
-
             song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt(), mediaInfo.getURL());
-
             if(audioCollection->getArtistsByName(artistName).size() > 0) //Artist already exists!
             {
                artist = audioCollection->getArtistsByName(artistName).at(0);
@@ -537,7 +520,6 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
                 artist->addAlbum(album);
                 album->addArtist(artist);
             }
-
 
 
             QList<Genre*> genreList = audioCollection->getGenresByName(genreName);

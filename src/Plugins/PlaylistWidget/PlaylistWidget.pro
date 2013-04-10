@@ -21,14 +21,16 @@ SOURCES += playlistwidgetplugin.cpp \
     playlistwidget.cpp \
     playlistwidgetfactory.cpp \
     playlistmodel.cpp \
-    playlistitemdelegate.cpp
+    playlistitemdelegate.cpp \
+    playlistview.cpp
 
 HEADERS += playlistwidgetplugin.h\
         PlaylistWidget_global.h \
     playlistwidget.h \
     playlistwidgetfactory.h \
     playlistmodel.h \
-    playlistitemdelegate.h
+    playlistitemdelegate.h \
+    playlistview.h
 
 FORMS += \
     playlistwidget.ui

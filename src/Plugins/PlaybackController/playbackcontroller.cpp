@@ -117,8 +117,6 @@ void PlaybackController::setupTransitions()
 
 void PlaybackController::playStateSlot()
 {
-
-
     m_shuffleAction->setDisabled(false);
     m_nextAction->setDisabled(false);
     m_previousAction->setDisabled(false);
@@ -225,7 +223,6 @@ void PlaybackController::noDataSlot()
     m_previousAction->setDisabled(true);
     m_playPauseAction->setDisabled(true);
     Q_EMIT stateChanged(Core::NODATA);
-
 }
 
 void PlaybackController::audioBackendUpdate(int currentTime)
@@ -275,6 +272,7 @@ void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
     {
         qDebug()<<"leere Playliste";
     }
+    Q_EMIT newPlaylistInstalled(playlist);
 }
 
 QSharedPointer<Core::IPlaylist> PlaybackController::getPlaylist()

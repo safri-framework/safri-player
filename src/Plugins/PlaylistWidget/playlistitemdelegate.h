@@ -11,14 +11,7 @@ class PlaylistItemDelegate : public QItemDelegate
 public:
     explicit PlaylistItemDelegate(PlaylistWidget* plWidget, QObject *parent = 0);
     void paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
-    void drawBackground(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
-protected:
-
-
-signals:
-    
-public slots:
+    QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
     
 private:
     Core::IPlaybackController* playbackConntroller;

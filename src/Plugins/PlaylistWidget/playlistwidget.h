@@ -33,6 +33,7 @@ class PlaylistWidget : public Core::IPlaylistWidget
         void on_playlistView_doubleClicked(const QModelIndex &index);
         void on_pushButton_clicked();
         void on_pushButton_2_clicked();
+        void newPlaylist(QSharedPointer<Core::IPlaylist> pl);
 
     private:
         void setPlaylist(QSharedPointer<Core::IPlaylist> pl);

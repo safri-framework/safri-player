@@ -21,7 +21,6 @@ public:
     explicit Playlist(QString plfile, QObject *parent = 0);
     ~Playlist();
 
-
     void setShuffle(bool value);
     bool getShuffle();
     bool isCurrentMedia(int value);
@@ -33,32 +32,23 @@ public:
     int getCurrentMediaPosition();
     bool isSafedPlaylist();
 
-
     Media* getMediaAt(int value);
     Media* getNextMedia();
     Media* getPreviousMedia();
     Media* getCurrentMedia();
 
     int getSize();
-
     void readTagsAtPosition(int position);
     void disconnectPlaylist();
 
 private:
-
     bool safedPlaylist;
     int currentMedia;
     QList<Media*> mediaList;
-
-
-
     QReadWriteLock playlistLock;
-
     bool currentMediaTransactionRequested;
     int  currentMediaTransaction;
-
     void checkCurrentMediaTransaction();
-
     QList<Media*> shuffleHistory;
     bool shuffle;
     int shuffleCounter;
@@ -66,15 +56,9 @@ private:
 
 
 signals:
-
-    void changeCurrentPlayingMarker(int from, int to);
-
     void MediaInserted(int position, int count);
-
     void MediaMoved(int from, int to);
-
     void MediaDeleted(int value);
-
     void MediaDataChanged(int value);
 
 

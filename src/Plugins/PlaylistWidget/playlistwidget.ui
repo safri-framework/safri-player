@@ -58,7 +58,7 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QTreeView" name="playlistView">
+       <widget class="PlaylistView" name="playlistView">
         <property name="dragEnabled">
          <bool>true</bool>
         </property>
@@ -188,6 +188,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlaylistView</class>
+   <extends>QTreeView</extends>
+   <header>playlistview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="ressources.qrc"/>
  </resources>

@@ -483,7 +483,7 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
                 QImage image(coverPath);
                 if (image.isNull())
                 {
-                    image = QImage(":/images/ressources/default.png");
+                    image = QImage(":/icons/ressources/default.png");
                 }
                 return image;
             }

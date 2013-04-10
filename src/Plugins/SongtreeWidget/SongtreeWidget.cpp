@@ -137,8 +137,8 @@ void SongtreeWidget::on_treeView_doubleClicked(const QModelIndex &index)
 
     playList->insertMediaAt(0,items);
     IPlaybackController* playbackController = Core::ICore::playbackController();
-    Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
     playbackController->stopAction()->trigger();
     playbackController->setPlaylist(playList);
     playbackController->playAction()->trigger();
+    Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
 }
