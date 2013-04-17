@@ -6,3 +6,7 @@ IMediaCollectionStorage::IMediaCollectionStorage(QObject *parent) :
     QObject(parent)
 {
 }
+
+IMediaCollectionStorage::~IMediaCollectionStorage()
+{
+}

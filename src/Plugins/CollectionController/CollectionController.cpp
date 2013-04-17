@@ -1,110 +1,128 @@
 #include "CollectionController.h"
+
 #include "../Plugins/CorePlugin/icore.h"
-#include "../Plugins/CorePlugin/Interfaces/IStorageAdapter.h"
 #include "../PluginSystem/pluginmanager.h"
+#include "Interfaces/imediacollectionstoragefactory.h"
+#include "Interfaces/imediacollectionstorage.h"
+#include "Interfaces/IMediaCollection.h"
 #include <QStringList>
 #include <QDebug>
 
 
 Controller::CollectionController::CollectionController()
 {
+    // build list of storage factories
+    QList<Core::IMediaCollectionStorageFactory*> objects = PluginSystem::PluginManager::getObjects<Core::IMediaCollectionStorageFactory>();
+    int size = objects.size();
 
-    // build List of Storage Adapters
-    QList<Core::IStorageAdapterFactory*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapterFactory>();
-    for (int i = 0; i < objects.size(); i++)
+    for (int i = 0; i < size; i++)
     {
-        m_factoryMap.insert(objects.at(i)->getStorageType(), objects.at(i));
-        qDebug()<<objects.at(i)->getStorageType();
+        m_storageFactories.insert(objects.at(i)->getStorageType(), objects.at(i));
     }
 
-
-    // Build List of CollectionBuilders
-    QList<Core::IMediaCollectionBuilder*> builderList = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
-    for(int i = 0; i < builderList.size(); i++)
-    {
-        m_builderMap.insert(builderList.at(i)->getCollectionType(), builderList.at(i));
-    }
-
-    qDebug()<<"Factorys:"<<m_factoryMap.size()<<"   Builders: "<<m_builderMap.size();
     loadExtensionMap();
-
-
 }
 
 QList<IMediaCollection *> Controller::CollectionController::getCollections(QString type)
 {
+
     QList<IMediaCollection*> tempList;
     QList<IMediaCollection*> allCollections = m_collectionMap.values();
+
     for(int i = 0; i < allCollections.size(); i++)
     {
-        if(allCollections.at(i)->getContentType() == type)
+        if ( allCollections.at(i)->getContentType() == type )
+        {
             tempList.append(allCollections.at(i));
+        }
     }
+
     return tempList;
 }
 
 bool Controller::CollectionController::loadMediaCollection(QUrl filename)
 {
+    QString storageType = getStorageTypeByFilename(filename);
+    Core::IMediaCollectionStorageFactory*   storageFactory = 0;
+    Core::IMediaCollectionStorage*          collectionStorage = 0;
+    Core::IMediaCollection*                 mediaCollection;
 
-    Core::IStorageAdapter * storageAdapter = 0;
-    IStorageAdapterFactory* storageFactory = 0;
 
-    QString storageType = getStorageTypeByFilename(filename.toString());
-    qDebug()<<"requested type: "<<storageType;
-    storageFactory = m_factoryMap.value(storageType);
-    Q_ASSERT (storageFactory !=0);
-    storageAdapter = storageFactory->createStorageAdapter(filename);
-    if(storageFactory)
+    storageFactory = m_storageFactories.value(storageType);
+
+    if (storageFactory)
     {
-          QString contentType = storageAdapter->getCollectionType();
-          qDebug()<<"contentType: "<<contentType;
-          IMediaCollectionBuilder* audioBuilder = m_builderMap.value(contentType);
-          IMediaCollection* collection = audioBuilder->buildMediaCollection(storageAdapter);
-          m_collectionMap.insert(filename.toString(), collection);
-          return true;
+        collectionStorage = storageFactory->createMediaCollectionStorage(filename);
+        mediaCollection = collectionStorage->loadMediaCollection();
+
+        if (mediaCollection)
+        {
+            m_collectionMap.insert(filename.toString(), mediaCollection);
+            delete collectionStorage;
+            return true;
+        }
 
     }
-    else
-    {
-        qDebug()<<"Datenbank konnte nicht geladen werden.";
-        return false;
-    }
+
+    qDebug() << "could not load collection!";
+
+    return false;
 }
 
 IMediaCollection *Controller::CollectionController::getMediaCollection(QUrl filename)
 {
-    if(m_collectionMap.contains(filename.toString()))
+
+    if ( m_collectionMap.contains( filename.toString() ) )
     {
-        return m_collectionMap.value(filename.toString());
+        return m_collectionMap.value( filename.toString() );
     }
-    else
+
+    return 0;
+}
+
+bool Controller::CollectionController::saveCollections()
+{
+    bool result = true;
+    qDebug() << "CollectionController::saveCollections()";
+
+    QList<IMediaCollection*> allCollections = m_collectionMap.values();
+    Core::IMediaCollectionStorageFactory*   storageFactory = 0;
+    Core::IMediaCollectionStorage*          collectionStorage = 0;
+
+    for(int i = 0; i < allCollections.size(); i++)
     {
-        return 0;
+        storageFactory = m_storageFactories.value( getStorageTypeByFilename( allCollections.at(i)->getDatabaseLocation() ) );
+
+        if (storageFactory)
+        {
+            collectionStorage = storageFactory->createMediaCollectionStorage( allCollections.at(i)->getDatabaseLocation() );
+            collectionStorage->saveMediaCollection(allCollections.at(i));
+
+            delete collectionStorage;
+        }
     }
+
+    return result;
 }
 
 void Controller::CollectionController::loadExtensionMap()
 {
-    m_fileExtensionMap.insert(".db","org.safri.sqlite.audio");
+    m_fileExtensionMap.insert("db","org.safri.sqlite.audio");
 }
 
-QString Controller::CollectionController::getStorageTypeByFilename(QString filename)
+QString Controller::CollectionController::getStorageTypeByFilename(QUrl filename)
 {
-    QStringList tmp = filename.split(".");
+    QStringList tmp = filename.toString().split(".");
     QString extension = tmp.last();
 
-    if(m_fileExtensionMap.contains("."+extension))
+    if ( m_fileExtensionMap.contains( extension ) )
     {
-        return m_fileExtensionMap.value("."+extension);
+        return m_fileExtensionMap.value( extension );
     }
-    else
-    {
-        qDebug()<<"Unknown File Type";
-        return "";
-    }
+
+    qDebug()<<"Unknown File Type";
+    return "";
 }
-
-
 
 
 void Controller::CollectionController::objectAddedToObjectPool(QObject *object)

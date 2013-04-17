@@ -29,6 +29,7 @@ namespace Core
             virtual QUrl getRootPath() = 0;
             virtual QString getHash() = 0;
             virtual QUrl getDatabaseLocation() = 0;
+            virtual void setDatabaseLocation(QUrl url) = 0;
             virtual InfoContainer* getInfoContainerByName(QString name) = 0;
             virtual QString getContentType() = 0;
             virtual void lockForWrite() = 0;

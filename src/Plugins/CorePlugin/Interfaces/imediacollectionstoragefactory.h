@@ -7,7 +7,7 @@
 
 namespace Core
 {
-    class IMediaCollectionStorgae;
+    class IMediaCollectionStorage;
 
     class COREPLUGINSHARED_EXPORT IMediaCollectionStorageFactory : public QObject
     {
@@ -17,7 +17,7 @@ namespace Core
             explicit IMediaCollectionStorageFactory(QObject *parent = 0);
 
             virtual QString                     getStorageType() = 0;
-            virtual IMediaCollectionStorgae*    createMediaCollectionStorage(QUrl url) = 0;
+            virtual IMediaCollectionStorage*    createMediaCollectionStorage(QUrl url) = 0;
     };
 }
 

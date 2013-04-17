@@ -59,6 +59,8 @@ class MainWindow : public QMainWindow
 
         void on_actionAdd_folder_triggered();
 
+        void on_actionSave_triggered();
+
 public slots:
 
         void pluginAdded(QObject* plugin);

@@ -4,16 +4,15 @@
 #include "Interfaces/IAudioCollection.h"
 #include <QUrl>
 #include <QReadWriteLock>
-//#include "audiocollectionbuilder.h"
 #include "CoreData/dataitem.h"
 #include "CoreData/media.h"
 #include <QMap>
 
 using namespace Core;
+
 class AudioCollection : public Core::IAudioCollection
 {
     friend class AudioCollectionBuilder;
-
     Q_OBJECT
 
 
@@ -40,9 +39,12 @@ class AudioCollection : public Core::IAudioCollection
 
         //path to *.db File
         QUrl getDatabaseLocation();
+        void setDatabaseLocation(QUrl url);
+
         InfoContainer* getInfoContainerByName(QString name);
         QString getContentType();
         void addMedia(MediaInfoContainer container);
+
         // ------------------- Audio Collection Interface
 
         QList<Core::Song*> getSongs();
@@ -70,12 +72,12 @@ class AudioCollection : public Core::IAudioCollection
         Core::Genre* newGenre(QString genre);
         void removeGenre(Genre* genre);
 
-    private:
-
         void insertGenre(Core::Genre* genre);
+        void insertArtist(Core::Artist* artist);
         void insertAlbum(Core::Album* album);
         void insertSong(Core::Song* song);
-        void insertArtist(Core::Artist* artist);
+
+    private:
 
         QList<Song*>* m_songList;
         QList<Artist*>* m_artistList;
@@ -93,8 +95,6 @@ class AudioCollection : public Core::IAudioCollection
         QMap<QString, Album*>* m_nameToAlbumMap;
         QMap<QString, Genre*>* m_nameToGenreMap;
 
-
-
         QString m_name;
         QUrl m_rootPath;
         QUrl m_databaseLocation;
@@ -111,7 +111,6 @@ class AudioCollection : public Core::IAudioCollection
         int currentArtistID;
         int currentGenreID;
         int currentSongID;
-
 };
 
 #endif // AUDIOCOLLECTION_H

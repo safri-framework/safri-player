@@ -18,7 +18,9 @@ namespace Core
         Q_OBJECT
         public:
 
-            explicit IMediaCollectionStorage(QObject *parent = 0);
+            explicit                        IMediaCollectionStorage(QObject *parent = 0);
+
+            virtual                         ~IMediaCollectionStorage();
 
             /**
              * @brief   loadMediaCollection loads a MediaCollection from an url.

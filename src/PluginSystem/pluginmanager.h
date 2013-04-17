@@ -46,12 +46,12 @@ namespace PluginSystem
             /**
                 \brief  Returns all objects from the object pool
             */
-            QList<QObject*>& getObjects();
+            static QList<QObject*>& getObjects();
 
             /**
                 \brief  Retuns all objects with the given type from the object pool.
             */
-            template <typename T> QList<T *> getObjects()
+            template <typename T> QList<T *> static getObjects()
             {
                 QList<QObject *> all = getObjects();
                 QList<T *> result;
@@ -67,7 +67,6 @@ namespace PluginSystem
             }
 
             bool loadPlugins();
-
             void showPluginViewer();
 
         signals:

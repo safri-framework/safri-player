@@ -20,6 +20,8 @@ namespace Core
     class ICollectionController;
     class IMediaBackend;
     class Media;
+    class IMediaCollection;
+    class IMediaCollectionFactory;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -42,6 +44,7 @@ namespace Core
             static QString storageDirectory();
             static IMediaBackend* getBackendForMedia(Media* media);
             static IMediaBackend* getBackendForMimeType(QString mimeType);
+            static IMediaCollection* createMediaCollection(QString type, QString collectionName);
 
 
         private slots:
@@ -57,6 +60,7 @@ namespace Core
             IGUIController* m_guiController;
             ICollectionController* m_collectionController;
             QMap<QString, IMediaBackend*> m_mediaBackends;
+            QMap<QString, IMediaCollectionFactory*> m_collectionFactories;
     };
 }
 

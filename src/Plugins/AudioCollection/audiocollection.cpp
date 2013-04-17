@@ -1,4 +1,8 @@
 #include "audiocollection.h"
+#include "Interfaces/imediacollectionstoragefactory.h"
+#include "Interfaces/imediacollectionstorage.h"
+#include "pluginmanager.h"
+#include "icore.h"
 #include <QDebug>
 
 AudioCollection::AudioCollection(QString name):m_name(name),
@@ -214,7 +218,12 @@ QString AudioCollection::getHash()
 
 QUrl AudioCollection::getDatabaseLocation()
 {
-  return m_databaseLocation;
+    return m_databaseLocation;
+}
+
+void AudioCollection::setDatabaseLocation(QUrl url)
+{
+    m_databaseLocation = url;
 }
 
 InfoContainer *AudioCollection::getInfoContainerByName(QString name)
@@ -474,7 +483,6 @@ void AudioCollection::insertSong(Song* song)
     //Q_EMIT itemAdded(song);
 }
 
-
 void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
 {
     AudioCollection* audioCollection = this;
@@ -549,7 +557,41 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
     }
 }
 
+/*
+bool AudioCollection::save()
+{
+    qDebug() << "AudioCollection::save()";
 
+    if (!storage)
+    {
+        qDebug() << "No storage defined! Searching for some now...";
+        QList<Core::IMediaCollectionStorageFactory*> objects = PluginSystem::PluginManager::getObjects<Core::IMediaCollectionStorageFactory>();
+        Core::IMediaCollectionStorageFactory* factory = 0;
+        int size = objects.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            if ( objects.at(i)->getStorageType() == "org.safri.sqlite.audio" )
+            {
+                factory = objects.at(i);
+            }
+        }
+
+        if (factory)
+        {
+            qDebug() << "Storage factory found";
+
+            storage = factory->createMediaCollectionStorage(Core::ICore::storageDirectory() + "/sqlitedatabasev2.db");
+
+            return storage->saveMediaCollection(this);
+        }
+
+        return false;
+    }
+
+    return false;
+}
+*/
 
 int AudioCollection::newAlbumID()
 {

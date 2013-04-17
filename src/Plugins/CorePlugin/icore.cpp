@@ -5,6 +5,8 @@
 #include "Interfaces/IPlaylistFactory.h"
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/ICollectionController.h"
+#include "Interfaces/imediacollectionfactory.h"
+#include "CoreData/media.h"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -44,6 +46,7 @@ void ICore::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "IPlaybackController class added";
         m_playbackController = pbc;
+        return;
     }
 
     IMediaBackend *media_backend = qobject_cast<IMediaBackend*>(object);
@@ -58,12 +61,14 @@ void ICore::objectAddedToObjectPool(QObject *object)
             qDebug() << "Added MediaBackend for MimeType: " << mimeTypes.at(i);
             m_mediaBackends.insertMulti(mimeTypes.at(i), media_backend);
         }
+        return;
     }
 
     IPlaylistFactory *playlistFactory = qobject_cast<IPlaylistFactory*>(object);
     if (playlistFactory != 0)
     {
         m_playlistFactory = playlistFactory;
+        return;
     }
 
     IGUIController *guiController = qobject_cast<IGUIController*>(object);
@@ -71,6 +76,7 @@ void ICore::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "ICore::IGUIController class added";
         m_guiController = guiController;
+        return;
     }
 
     ICollectionController *collectionController = qobject_cast<ICollectionController*>(object);
@@ -78,6 +84,15 @@ void ICore::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "ICore::ICollectionController class added";
         m_collectionController = collectionController;
+        return;
+    }
+
+    IMediaCollectionFactory *collectionFactory = qobject_cast<IMediaCollectionFactory*>(object);
+    if (collectionFactory != 0)
+    {
+        qDebug() << "Core::IMediaCollectionFactory class added";
+        m_collectionFactories.insert(collectionFactory->getCollectionType(), collectionFactory);
+        return;
     }
 }
 
@@ -121,6 +136,18 @@ IMediaBackend *ICore::getBackendForMedia(Media *media)
 IMediaBackend *ICore::getBackendForMimeType(QString mimeType)
 {
     return m_instance->m_mediaBackends.value(mimeType, 0);
+}
+
+IMediaCollection *ICore::createMediaCollection(QString type, QString collectionName)
+{
+    IMediaCollectionFactory* factory = m_instance->m_collectionFactories.value(type);
+
+    if (factory != 0)
+    {
+        return factory->createMediaCollection(collectionName);
+    }
+
+    return 0;
 }
 
 

@@ -41,7 +41,7 @@ void PluginManager::removeObject(QObject *object)
 
 QList<QObject *> &PluginManager::getObjects()
 {
-    return objectPool;
+    return m_instance->objectPool;
 }
 
 bool PluginManager::loadPlugins()

@@ -19,12 +19,14 @@ DEFINES += AUDIOCOLLECTION_LIBRARY
 
 SOURCES += audiocollectionplugin.cpp \
     audiocollection.cpp \
-    audiocollectionbuilder.cpp
+    audiocollectionbuilder.cpp \
+    audiocollectionfactory.cpp
 
 HEADERS += audiocollectionplugin.h\
         AudioCollection_global.h \
     audiocollection.h \
-    audiocollectionbuilder.h
+    audiocollectionbuilder.h \
+    audiocollectionfactory.h
 
 OTHER_FILES += \
     AudioCollection.xml \

@@ -22,4 +22,5 @@ SUBDIRS += \
     	PlayerWidgetII \
         TagLibMediaTagger \
         SafriMobileGuiQML \
-    ShoutCastPlugin
+    ShoutCastPlugin \
+    AudioSQLStorage

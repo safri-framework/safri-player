@@ -325,3 +325,8 @@ void MainWindow::on_actionAdd_folder_triggered()
         inserter->insertMedia(QUrl(directory), taggers.at(0));
     }
 }
+
+void MainWindow::on_actionSave_triggered()
+{
+    Core::ICore::collectionController()->saveCollections();
+}

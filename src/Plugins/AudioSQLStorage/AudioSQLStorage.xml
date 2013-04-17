@@ -1,0 +1,15 @@
+<SafriPlugin name="AudioSQLStorage" version="0.1">
+
+				<vendor>Safri</vendor>
+
+				<copyright>Sa &amp; Fri</copyright>
+				<license>GNU</license>
+				<description>Safri-Player Core Plugin</description>
+				<url>www.safri-player.org</url>
+				<category>Safri Core</category>
+
+				<dependencyList>
+								<dependency name="" version="">
+				</dependencyList>
+
+</SafriPlugin>
