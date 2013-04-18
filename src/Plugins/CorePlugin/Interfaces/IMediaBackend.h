@@ -16,6 +16,13 @@ namespace Core
             IMediaBackend(QObject* parent);
 
         public:
+            enum BackendState
+            {
+                PLAYING,
+                PAUSED,
+                STOPPED,
+                BUFFERING
+            };
 
             virtual int getTotalTime();
             virtual int getCurrentTime();
@@ -30,10 +37,8 @@ namespace Core
 
         signals:
 
+            void internalBackendStateChanged(Core::IMediaBackend::BackendState state);
             void update(int currentTime);
-            void playing();
-            void paused();
-            void stopped();
             void mediaFinished();
             void volumeChanged(int percent);
             void hasSeekableMedia(bool value);

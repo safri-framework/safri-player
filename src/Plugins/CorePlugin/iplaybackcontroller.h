@@ -9,7 +9,7 @@
 namespace Core
 {
 
-    enum playState{PLAY, STOP, PAUSE, NODATA};
+    enum playState{PLAY, STOP, PAUSE, NODATA, BUFFERING};
 
     class IPlaylist;
     class Media;

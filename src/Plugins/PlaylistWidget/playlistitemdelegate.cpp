@@ -14,6 +14,10 @@ void PlaylistItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     if(plWidget->isCurrentPlayingPlaylist() && index.data(Qt::UserRole).toBool())
     {
         painter->fillRect(option.rect, QColor("#E1DBBD") );
+        if(index.column() == 0)
+        {
+            painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
+        }
     }
     QItemDelegate::paint(painter, option, index);
 }

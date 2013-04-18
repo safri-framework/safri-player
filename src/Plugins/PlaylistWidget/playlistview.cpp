@@ -32,8 +32,8 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
     else
     {
         qDebug()<<"blab";
-
     }
+
     QModelIndex index = this->indexAt(startDragPosition);
     if ((event->pos() - startDragPosition).manhattanLength() < QApplication::startDragDistance())
     {

@@ -26,16 +26,20 @@ PlaylistWidget::~PlaylistWidget()
 void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
     setPlaylist(playlist);
+    ui->playlistView->header()->setStretchLastSection(false);
     ui->playlistView->header()->setSectionResizeMode(0, QHeaderView::Fixed);
     ui->playlistView->header()->setSectionResizeMode(1, QHeaderView::Fixed);
     ui->playlistView->header()->setSectionResizeMode(2, QHeaderView::Stretch);
     ui->playlistView->header()->setSectionResizeMode(3, QHeaderView::Stretch);
     ui->playlistView->header()->setSectionResizeMode(4, QHeaderView::Stretch);
+    ui->playlistView->header()->resizeSection(7,50);
+    ui->playlistView->header()->resizeSection(6,43);
     ui->playlistView->header()->setSectionResizeMode(7, QHeaderView::Fixed);
+    ui->playlistView->header()->setSectionResizeMode(6, QHeaderView::Fixed);
     ui->playlistView->header()->resizeSection(0,25);
     ui->playlistView->header()->resizeSection(1,25);
-    ui->playlistView->header()->resizeSection(7,35);
-    ui->playlistView->header()->setStretchLastSection(false);
+
+
 }
 
 

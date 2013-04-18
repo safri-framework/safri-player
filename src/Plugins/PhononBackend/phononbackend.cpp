@@ -189,8 +189,21 @@ void PhononBackend::mediaStatusChanged(QMediaPlayer::MediaStatus status)
         case QMediaPlayer::EndOfMedia:
             Q_EMIT mediaFinished();
             break;
+    case QMediaPlayer::BufferingMedia:
+            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::BUFFERING);
+            break;
+    case QMediaPlayer::BufferedMedia:
+            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PLAYING);
+            break;
+    case QMediaPlayer::StoppedState:
+            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::STOPPED);
+            break;
+    case QMediaPlayer::PausedState:
+            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PAUSED);
+            break;
         default:
         qDebug()<<status;
+
 
 
     }

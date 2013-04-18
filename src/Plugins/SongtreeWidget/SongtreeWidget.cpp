@@ -20,7 +20,9 @@
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongtreeWidget),
-    collController(0)
+    collController(0),
+    model(0),
+    tree(0)
 {
     ui->setupUi(this);
     collController = ICore::collectionController();
@@ -37,19 +39,23 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     button->move(50, 5);
     */
 
-    connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
-    buildHierarchy();
-    loadAudioCollections();
-    loadSongtreeModel();
     proxy = new SongtreeProxyModel();
+    connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),  this, SLOT(loadSongtreeModel(int)));
+    buildHierarchy();
 
-    proxy->setSourceModel(model);
+
+    loadAudioCollections();
+    loadSongtreeModel(0);
+    //proxy->setSourceModel(model);
     proxy->setDynamicSortFilter(true);
     connect(this->ui->lineEdit, SIGNAL(textEdited(QString)), proxy, SLOT(setFilterRegExp(QString)));
     connect(proxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
     this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->treeView->setModel(proxy);
+
+
 }
 
 SongtreeWidget::~SongtreeWidget()
@@ -71,32 +77,85 @@ void SongtreeWidget::loadAudioCollections()
    }
 }
 
-void SongtreeWidget::loadSongtreeModel()
+void SongtreeWidget::loadSongtreeModel(int hierarchy)
 {
+
+    qDebug()<<hierarchy;
+    if(songList.size() > 0)
+    {
+        songList.clear();
+    }
     QList<IAudioCollection*> audioCollList = audioCollMap.values();
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
         songList.append(audioCollList.at(i)->getSongs());
     }
 
-    tree = new SongTree(songList, treeHierarchy);
+    if(tree)
+    {
+        delete tree;
+        tree = 0;
+    }
+    tree = new SongTree(songList, hierarchyList.value(hierarchy));
 
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
         qDebug() << "CONNECT itemAdded";
         connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
     }
+
+    if(model)
+    {
+        delete model;
+        model = 0;
+    }
     model = new SongTreeModel(tree, this);
+    proxy->setSourceModel(model);
 }
 
 void SongtreeWidget::buildHierarchy()
 {
-     treeHierarchy = new QList<ITreeItemType*>();
+     QList<ITreeItemType*>* treeHierarchy = new QList<ITreeItemType*>();
      treeHierarchy->append(new MediaCollectionItemType());
      treeHierarchy->append(new GenreItemType());
      treeHierarchy->append(new ArtistItemType());
      treeHierarchy->append(new AlbumItemType());
      treeHierarchy->append(new SongItemType());
+
+
+    hierarchyList.insert(0, treeHierarchy);
+
+    treeHierarchy = new QList<ITreeItemType*>();
+    treeHierarchy->append(new GenreItemType());
+    treeHierarchy->append(new ArtistItemType());
+    treeHierarchy->append(new AlbumItemType());
+    treeHierarchy->append(new SongItemType());
+
+
+    hierarchyList.insert(1, treeHierarchy);
+
+    treeHierarchy = new QList<ITreeItemType*>();
+
+    treeHierarchy->append(new ArtistItemType());
+    treeHierarchy->append(new AlbumItemType());
+    treeHierarchy->append(new SongItemType());
+
+    hierarchyList.insert(2, treeHierarchy);
+
+
+    treeHierarchy = new QList<ITreeItemType*>();
+    treeHierarchy->append(new AlbumItemType());
+    treeHierarchy->append(new SongItemType());
+
+
+    hierarchyList.insert(3, treeHierarchy);
+
+
+
+    ui->comboBox->addItem("Collection > Genre > Artist > Album > Song");
+    ui->comboBox->addItem("Genre > Artist > Album > Song");
+    ui->comboBox->addItem("Artist > Album > Song");
+    ui->comboBox->addItem("Album > Song");
 }
 
 

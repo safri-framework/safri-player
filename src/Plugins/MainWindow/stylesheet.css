@@ -58,7 +58,7 @@ QComboBox
 {
     min-height: 21px;
     max-height: 21px;
-
+    padding-left: 5px;
     border-image: url(:border_images/SAFRI_UI/dropdown_normal_bg.png) 0px 5px 0px 5px;
     border-width: 0px 5px 0px 5px;
 

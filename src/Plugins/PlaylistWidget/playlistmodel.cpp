@@ -71,12 +71,20 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         }
 */
         int row = parent.row();
-        if(row < 0)
-           row = 0;
 
-        for(int i=0; i<draggedItems.size(); i++)
+        if(parent.isValid())
         {
-            playlist->insertMediaAt(row, draggedItems);
+            for(int i=0; i<draggedItems.size(); i++)
+            {
+                playlist->insertMediaAt(row, draggedItems);
+            }
+        }
+        else
+        {
+            for(int i=0; i<draggedItems.size(); i++)
+            {
+                playlist->insertMediaAt(playlist->getSize(), draggedItems);
+            }
         }
     }
 
@@ -238,10 +246,10 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
                 case 4:
                     return "Album";
 
-                case 5:
+                case 6:
                     return "Jahr";
 
-                case 6:
+                case 5:
                     return "Genre";
 
                 case 7:
@@ -371,11 +379,11 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 
             return song->getAlbum()->getName();
 
-        case 5:
+        case 6:
 
             return song->getYear();
 
-        case 6:
+        case 5:
 
             return song->getGenre()->getName();
 

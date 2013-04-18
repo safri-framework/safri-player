@@ -23,6 +23,8 @@ public:
     void setSeekerEnabled(bool value);
     void setVolumeEnabled(bool value);
 
+
+
 private slots:
 
     void mediaChanged(Core::Media* media);
@@ -36,10 +38,14 @@ private slots:
     void on_volume_slider_sliderMoved(int position);
 
 private:
+    void showLoadingIndicator(QString msg);
+    void hideLoadingIndicator();
     IPlaybackController* m_pbController;
     bool firstPlayback;
     bool newMedia;
     Ui::Widget *ui;
+    QMovie* loaderGif;
+
 };
 
 #endif // WIDGET_H

@@ -4,15 +4,17 @@
 #include "icore.h"
 #include <QDebug>
 #include <QIcon>
+#include <QMovie>
+
 #include "../CorePlugin/CoreData/song.h"
 
 Widget::Widget(QWidget *parent) :
     IPlayerWidget(parent),
     m_pbController(Core::ICore::playbackController()),
-    ui(new Ui::Widget)
+    ui(new Ui::Widget),
+    loaderGif(0)
 {
     firstPlayback = false;
-
     ui->setupUi(this);
     this->ui->infoLabel->setMinimumWidth(0);
     this->ui->infoLabel->setMaximumWidth(0);
@@ -36,8 +38,7 @@ Widget::Widget(QWidget *parent) :
 
     qDebug()<<"Current Volume"<<m_pbController->getVolume();
     ui->volume_slider->setValue(m_pbController->getVolume());
-
-
+    this->showLoadingIndicator("HALLO (=");
 }
 
 Widget::~Widget()
@@ -47,12 +48,35 @@ Widget::~Widget()
 
 void Widget::setSeekerEnabled(bool value)
 {
-    this->ui->seek_slider->setEnabled(value);
+   // this->ui->seek_slider->setEnabled(value);
+    this->ui->seek_slider->setVisible(value);
 }
 
 void Widget::setVolumeEnabled(bool value)
 {
     this->ui->volume_slider->setEnabled(value);
+}
+
+void Widget::showLoadingIndicator(QString msg)
+{
+    this->ui->time_label->hide();
+    this->ui->loaderLabel->show();
+    if(!loaderGif)
+        loaderGif = new QMovie(":/other/SAFRI_UI/loader.gif");
+    this->ui->loaderLabel->setMovie(loaderGif);
+    loaderGif->start();
+
+}
+
+void Widget::hideLoadingIndicator()
+{
+    this->ui->time_label->show();
+    this->ui->loaderLabel->hide();
+    if(loaderGif)
+    {
+        delete loaderGif;
+        loaderGif = 0;
+    }
 }
 
 
@@ -164,6 +188,7 @@ void Widget::stateChanged(playState state)
         {
         qDebug()<<"PAUSE_ICON";
             this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/pause_icon2.png"));
+            this->hideLoadingIndicator();
             return;
         }
 
@@ -180,6 +205,11 @@ void Widget::stateChanged(playState state)
             this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/play_icon.png"));
             return;
         }
+
+    case BUFFERING:
+        qDebug()<<"B U F F E R I N G";
+        this->showLoadingIndicator("Buffering");
+        return;
 
     }
 }

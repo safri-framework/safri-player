@@ -79,6 +79,7 @@ private slots:
         void shuffleActionSlot(bool value);
         void noDataSlot();
         void audioBackendUpdate(int currentTime);
+        void backendStateChanged(Core::IMediaBackend::BackendState state);
 
 
 

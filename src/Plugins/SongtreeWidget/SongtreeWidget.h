@@ -29,16 +29,19 @@ private:
     QList<Song*> songList;
     QMap<QUrl, IAudioCollection*> audioCollMap;
     void loadAudioCollections();
-    void loadSongtreeModel();
+    QList<IAudioCollection*> audioCollList;
+
     void buildHierarchy();
-    QList<ITreeItemType*>*  treeHierarchy;
+    //QList<ITreeItemType*>*  treeHierarchy;
     SongtreeProxyModel* proxy;
+    QMap<int, QList<ITreeItemType*>*> hierarchyList;
 
 private slots:
     void newAudioCollectionAvailable(QUrl collURL);
     void removeCollection(QUrl collURL);
     void returnPressed();
     void on_treeView_doubleClicked(const QModelIndex &index);
+    void loadSongtreeModel(int hierarchy);
 };
 
 #endif // SONGTREEWIDGET_H

@@ -56,7 +56,7 @@ void PlaybackController::obtainMediaBackendForMedia(Core::Media *media)
             disconnect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
             disconnect(mediaBackend, SIGNAL(hasSeekableMedia(bool)), this, SIGNAL(hasSeekableMedia(bool)));
             disconnect(mediaBackend, SIGNAL(hasVolumeAdjustableMedia(bool)), this, SIGNAL(hasVolumeAdjustableMedia(bool)));
-
+            disconnect(mediaBackend, SIGNAL(internalBackendStateChanged(Core::IMediaBackend::BackendState)), this, SLOT(backendStateChanged(Core::IMediaBackend::BackendState)));
         }
 
         mediaBackend = tmpMediaBackend;
@@ -68,6 +68,7 @@ void PlaybackController::obtainMediaBackendForMedia(Core::Media *media)
             connect(mediaBackend, SIGNAL(update(int)), this, SLOT(audioBackendUpdate(int)));
             connect(mediaBackend, SIGNAL(hasSeekableMedia(bool)), this, SIGNAL(hasSeekableMedia(bool)));
             connect(mediaBackend, SIGNAL(hasVolumeAdjustableMedia(bool)), this, SIGNAL(hasVolumeAdjustableMedia(bool)));
+            connect(mediaBackend, SIGNAL(internalBackendStateChanged(Core::IMediaBackend::BackendState)), this, SLOT(backendStateChanged(Core::IMediaBackend::BackendState)));
         }
     }
 }
@@ -228,6 +229,21 @@ void PlaybackController::noDataSlot()
 void PlaybackController::audioBackendUpdate(int currentTime)
 {
     Q_EMIT update(currentTime);
+}
+
+void PlaybackController::backendStateChanged(Core::IMediaBackend::BackendState state)
+{
+    qDebug()<<"state"<< Q_FUNC_INFO;
+    switch (state)
+    {
+        case Core::IMediaBackend::BUFFERING:
+            qDebug()<<"BUFFERING";
+            Q_EMIT stateChanged(Core::BUFFERING);
+            break;
+        case Core::IMediaBackend::PLAYING:
+            Q_EMIT stateChanged(Core::PLAY);
+
+    }
 }
 
 void PlaybackController::nextActionSlot()

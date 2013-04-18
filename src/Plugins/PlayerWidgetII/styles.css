@@ -22,8 +22,6 @@ QWidget[type="display"]
 {
 border-image: url(:backgrounds/SAFRI_UI/Display_bg.png) 12px 12px 12px 12px;
 border-width:12px;
-min-height:30px;
-max-height:30px;
 
 /* ex: 40*/
 }
@@ -43,11 +41,12 @@ QLabel[type="info_label"]
 
 QPushButton[type="player_button"][button_size ="little"]
 {
-    min-width:25px;
-    max-width:25px;
     min-height:25px;
     max-height:25px;
-    border-image: url(:buttons/SAFRI_UI/round_tiny_button_normal.png);
+    min-width:25px;
+    max-width:25px;
+    border-image: url(:buttons/SAFRI_UI/round_tiny_button_normal.png) ;
+
 }
 
 QPushButton:hover[type="player_button"][button_size ="little"]
@@ -118,18 +117,6 @@ QPushButton:pressed[type="player_button"][button_size ="big"]
 
     border-image: url(:buttons/SAFRI_UI/round_big_button_pressed.png);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 QSlider
 {
@@ -206,9 +193,13 @@ QSlider
      min-width:5px;
 }
 
+QPushButton[ident="repeat"]
+{
 
+    padding-top: -1px;
+    padding-bottom: 1px;
 
-
+}
 
 
 

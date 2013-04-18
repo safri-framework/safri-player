@@ -40,4 +40,7 @@
         <file>SAFRI_UI/seeker_groove.png</file>
         <file>SAFRI_UI/seeker_handle.png</file>
     </qresource>
+    <qresource prefix="/other">
+        <file>SAFRI_UI/loader.gif</file>
+    </qresource>
 </RCC>
