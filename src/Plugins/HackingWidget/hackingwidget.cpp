@@ -7,17 +7,13 @@
 #include "CoreData/song.h"
 #include <QList>
 #include "iplaylist.h"
-#include "CoreData/dataitemtablemodel.h"
 #include "pluginmanager.h"
-#include "Interfaces/IStorageAdapter.h"
-#include "Interfaces/IMediaCollectionBuilder.h"
-#include "Interfaces/IAudioCollection.h"
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/iplayerwidgetfactory.h"
 #include "Interfaces/iplaylistwidget.h"
 #include <QDebug>
 #include "Songtree/songtreemodel.h"
-
+#include "Interfaces/IAudioCollection.h"
 #include "Songtree/songtree.h"
 #include "Songtree/CoreItemTypes/artistitemtype.h"
 #include "Songtree/CoreItemTypes/albumitemtype.h"
@@ -77,10 +73,6 @@ void HackingWidget::on_pushButton_4_clicked()
     playbackController->setPlaylist(playList);
     connect(playbackController, SIGNAL(update(int)), this, SLOT(update(int)));
 
-    Core::DataItemTableModel* model = new Core::DataItemTableModel(5000, 10, this);
-    ui->tableView->setModel(model);
-
-    model->setData(model->index(0, 0), "wusel dusel");
 
 }
 
@@ -105,39 +97,7 @@ void HackingWidget::on_pushButton_5_clicked()
 
 void HackingWidget::on_pushButton_6_clicked()
 {
-    Core::IStorageAdapter *storageAdapter = 0;
-    QList<Core::IStorageAdapter*> objects = PluginSystem::PluginManager::instance()->getObjects<Core::IStorageAdapter>();
 
-
-    if (objects.size() > 0)
-    {
-        storageAdapter = objects.at(0);
-        qDebug() << storageAdapter->getStorageType();
-        ui->tableView->setModel(storageAdapter->loadTableForDataItemType(Core::DataItem::SONG));
-    }
-
-    QList<Core::IMediaCollectionBuilder*> collectionBuilders = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaCollectionBuilder>();
-    Core::IMediaCollection *mediaCollection = 0;
-
-    if (collectionBuilders.size() > 0)
-    {
-        Core::IMediaCollectionBuilder* builder = collectionBuilders.at(0);
-        mediaCollection = builder->buildMediaCollection(storageAdapter);   
-    }
-    else
-    {
-        qDebug() << "No Collection Builders found!";
-    }
-
-    audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
-    Core::Artist *artist = audioCollection->getArtistByID(1);
-
-    qDebug() << artist->getName();
-
-    for (int i = 0; i < artist->getAlbums().size(); i++)
-    {
-        qDebug() << artist->getAlbums().at(i)->getName();
-    }
 
 }
 

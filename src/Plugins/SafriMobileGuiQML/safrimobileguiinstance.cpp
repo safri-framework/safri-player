@@ -11,9 +11,7 @@
 #include "Songtree/CoreItemTypes/mediacollectionitemtype.h"
 #include "Songtree/CoreItemTypes/genreitemtype.h"
 #include "Interfaces/ICollectionController.h"
-#include "Interfaces/IStorageAdapter.h"
 #include "Interfaces/IPlaylistFactory.h"
-#include "Interfaces/IMediaCollectionBuilder.h"
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
 #include <QModelIndex>

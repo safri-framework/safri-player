@@ -21,10 +21,6 @@ SOURCES += coreplugin.cpp \
     CoreData/song.cpp \
     icore.cpp \
     CoreData/dataitem.cpp \
-    CoreData/dataitemtablemodel.cpp \
-    Interfaces/IStorageAdapter.cpp \
-    Interfaces/IMediaCollectionBuilder.cpp \
-    Interfaces/ITableModel.cpp \
     Interfaces/iplayerwidgetfactory.cpp \
     Interfaces/isidebarplugin.cpp \
     Interfaces/iguicontroller.cpp \
@@ -41,7 +37,6 @@ SOURCES += coreplugin.cpp \
     Songtree/songtreeitem.cpp \
     Songtree/changedflags.cpp \
     Songtree/songtreemodel.cpp \ 
-    Interfaces/istorageadapterfactory.cpp \
     Songtree/CoreItemTypes/mediacollectionitemtype.cpp \
     Interfaces/IPlayerWidget.cpp \
     Interfaces/IMediaBackend.cpp \
@@ -72,11 +67,7 @@ HEADERS += coreplugin.h\
     CoreData/media.h \
     Interfaces/IPlaylistFactory.h \
     Interfaces/IMediaCollection.h \
-    Interfaces/IMediaCollectionBuilder.h \
-    Interfaces/IStorageAdapter.h \
     Interfaces/IAudioCollection.h \
-    CoreData/dataitemtablemodel.h \
-    Interfaces/ITableModel.h \
     Interfaces/iplayerwidgetfactory.h \
     Interfaces/isidebarplugin.h \
     Interfaces/iguicontroller.h \
@@ -94,7 +85,6 @@ HEADERS += coreplugin.h\
     Songtree/changedflags.h \
     Songtree/songtreemodel.h \
     Interfaces/ICollectionController.h \
-    Interfaces/istorageadapterfactory.h \
     Songtree/CoreItemTypes/mediacollectionitemtype.h \
     Interfaces/IPlayerWidget.h \
     Interfaces/IMediaBackend.h \
