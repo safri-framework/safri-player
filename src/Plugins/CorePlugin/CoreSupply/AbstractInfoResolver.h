@@ -11,7 +11,8 @@ class AbstractInfoResolver : public IInfoResolver
 public:
     explicit AbstractInfoResolver(QObject *parent = 0);
     virtual QStringList getSupportedInfoTypes() = 0;
-    virtual InfoRequest* getInfoForItem(QString type, Item* DataItem);
+    virtual InfoRequest* getInfoForItem(QString type, DataItem* item);
+    virtual void getInfo(QString type, DataItem* item) = 0;
     
 private:
     QMutex fifoMutex;

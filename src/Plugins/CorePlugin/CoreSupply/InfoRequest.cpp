@@ -1,6 +1,6 @@
 #include "InfoRequest.h"
 
-InfoRequest::InfoRequest(Item* relatedItem, QObject *parent) :
+InfoRequest::InfoRequest(DataItem* relatedItem, QObject *parent) :
     QObject(parent),
     relatedItem(relatedItem)
 {
@@ -18,7 +18,7 @@ bool InfoRequest::isInfoAvailable()
     return infoAvailable;
 }
 
-Item *InfoRequest::getRelatedItem()
+DataItem *InfoRequest::getRelatedItem()
 {
     return relatedItem;
 }

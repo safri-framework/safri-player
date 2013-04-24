@@ -4,15 +4,15 @@
 #include <QObject>
 #include <QVariant>
 
-class Item;
+class DataItem;
 class InfoRequest : public QObject
 {
     Q_OBJECT
 public:
-    explicit InfoRequest(Item* relatedItem, QObject *parent = 0);
+    explicit InfoRequest(DataItem* relatedItem, QObject *parent = 0);
     void setInfoData(QVariant info);
     bool isInfoAvailable();
-    Item* getRelatedItem();
+    DataItem* getRelatedItem();
     QVariant getInfo();
 
 signals:
@@ -20,7 +20,7 @@ signals:
 
 private:
     QVariant info;
-    Item* relatedItem;
+    DataItem* relatedItem;
     bool infoAvailable;
 
 public slots:
