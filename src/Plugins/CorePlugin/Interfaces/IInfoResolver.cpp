@@ -4,3 +4,7 @@ IInfoResolver::IInfoResolver(QObject *parent) :
     QObject(parent)
 {
 }
+
+IInfoResolver::~IInfoResolver()
+{
+}

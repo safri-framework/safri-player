@@ -21,7 +21,6 @@ SOURCES += coreplugin.cpp \
     CoreData/song.cpp \
     icore.cpp \
     CoreData/dataitem.cpp \
-
     Interfaces/iplayerwidgetfactory.cpp \
     Interfaces/isidebarplugin.cpp \
     Interfaces/iguicontroller.cpp \
