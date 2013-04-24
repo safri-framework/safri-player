@@ -273,11 +273,14 @@ void PlaybackController::previousActionSlot()
 
 void PlaybackController::shuffleActionSlot(bool value)
 {
-    playlist->setShuffle(value);
+    if(playlist)
+        playlist->setShuffle(value);
+
 }
 
 void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
+    playlist->setShuffle(m_shuffleAction->isChecked());
     this->playlist = playlist;
     if(playlist->getSize()>0)
     {
@@ -325,6 +328,11 @@ QAction* PlaybackController::nextAction()
 QAction* PlaybackController::previousAction()
 {
     return this->m_previousAction;
+}
+
+QAction *PlaybackController::shuffleAction()
+{
+    return this->m_shuffleAction;
 }
 
 QList<QAction *> PlaybackController::getAdditionalActions()

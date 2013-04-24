@@ -32,10 +32,10 @@ private slots:
     void actionChanged();
     void stateChanged(Core::playState state);
     void on_seek_slider_sliderMoved(int position);
-
-
-
     void on_volume_slider_sliderMoved(int position);
+    void on_random_toggled(bool checked);
+
+    void on_repeat_toggled(bool checked);
 
 private:
     void showLoadingIndicator(QString msg);

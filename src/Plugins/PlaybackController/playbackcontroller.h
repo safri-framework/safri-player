@@ -24,6 +24,7 @@ class PlaybackController : public Core::IPlaybackController
         QAction* stopAction();
         QAction* nextAction();
         QAction* previousAction();
+        QAction* shuffleAction();
         QList<QAction*> getAdditionalActions();
 
         int getMediaTotalTime();

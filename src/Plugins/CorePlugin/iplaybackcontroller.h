@@ -63,6 +63,8 @@ namespace Core
 
             virtual QAction* playPauseAction() = 0;
 
+            virtual QAction* shuffleAction() = 0;
+
             virtual QList<QAction*> getAdditionalActions() = 0;
 
             virtual int getMediaTotalTime() = 0;

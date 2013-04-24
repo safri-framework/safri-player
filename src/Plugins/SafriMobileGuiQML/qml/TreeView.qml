@@ -45,6 +45,8 @@ Rectangle
 
         id: viewA
         model: musicQMLModel
+        interactive: true
+
 
 
 

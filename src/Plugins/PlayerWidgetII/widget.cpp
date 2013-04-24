@@ -38,7 +38,7 @@ Widget::Widget(QWidget *parent) :
 
     qDebug()<<"Current Volume"<<m_pbController->getVolume();
     ui->volume_slider->setValue(m_pbController->getVolume());
-    this->showLoadingIndicator("HALLO (=");
+    //this->showLoadingIndicator("HALLO (=");
 }
 
 Widget::~Widget()
@@ -220,8 +220,19 @@ void Widget::on_seek_slider_sliderMoved(int position)
 }
 
 
-
 void Widget::on_volume_slider_sliderMoved(int position)
 {
     m_pbController->setVolume(position);
+}
+
+void Widget::on_random_toggled(bool checked)
+{
+    qDebug()<<"SHUFFLE "<<checked;
+    m_pbController->shuffleAction()->trigger();
+    //m_pbController->shuffleAction()->setChecked(checked);
+}
+
+void Widget::on_repeat_toggled(bool checked)
+{
+
 }
