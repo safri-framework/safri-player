@@ -3,13 +3,13 @@
 
 
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
-    IInfoResolver(parent)
+    IInfoResolver(parent), running(false)
 {
 }
 
 InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, DataItem* item)
 {
-    InfoRequest* request = new InfoRequest(item);
+    InfoRequest* request = new InfoRequest(type, item);
     if(running)
     {
         insertInFifo(request);
@@ -17,11 +17,25 @@ InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, DataItem* item)
     else
     {
         running = true;
+        currentRequest = request;
         getInfo(type, item);
-        //curr
     }
     return request;
+}
 
+void AbstractInfoResolver::setInfo(QVariant info)
+{
+    currentRequest->setInfoData(info);
+    currentRequest = 0;
+    if(hasRequest())
+    {
+        currentRequest = getNextRequest();
+        getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
+    }
+    else
+    {
+        running  = false;
+    }
 }
 
 void AbstractInfoResolver::insertInFifo(InfoRequest *request)
@@ -30,7 +44,6 @@ void AbstractInfoResolver::insertInFifo(InfoRequest *request)
     requestList.append(request);
     fifoMutex.unlock();
 }
-
 
 InfoRequest *AbstractInfoResolver::getNextRequest()
 {
@@ -48,5 +61,4 @@ bool AbstractInfoResolver::hasRequest()
     hasRequest = requestList.size() > 0;
     fifoMutex.unlock();
     return hasRequest;
-
 }

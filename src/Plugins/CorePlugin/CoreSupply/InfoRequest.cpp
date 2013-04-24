@@ -1,8 +1,9 @@
 #include "InfoRequest.h"
 
-InfoRequest::InfoRequest(DataItem* relatedItem, QObject *parent) :
+InfoRequest::InfoRequest(QString requestType, DataItem* relatedItem, QObject *parent) :
     QObject(parent),
-    relatedItem(relatedItem)
+    relatedItem(relatedItem),
+    requestType(requestType)
 {
 }
 
@@ -26,4 +27,9 @@ DataItem *InfoRequest::getRelatedItem()
 QVariant InfoRequest::getInfo()
 {
     return info;
+}
+
+QString InfoRequest::getRequestType()
+{
+    return requestType;
 }
