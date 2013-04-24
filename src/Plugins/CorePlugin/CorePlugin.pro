@@ -21,6 +21,7 @@ SOURCES += coreplugin.cpp \
     CoreData/song.cpp \
     icore.cpp \
     CoreData/dataitem.cpp \
+
     Interfaces/iplayerwidgetfactory.cpp \
     Interfaces/isidebarplugin.cpp \
     Interfaces/iguicontroller.cpp \
@@ -51,7 +52,9 @@ SOURCES += coreplugin.cpp \
     Songtree/songtreeproxymodel.cpp \
     Interfaces/imediacollectionstorage.cpp \
     Interfaces/imediacollectionstoragefactory.cpp \
-    Interfaces/imediacollectionfactory.cpp
+    Interfaces/imediacollectionfactory.cpp \
+    Interfaces/IInfoResolver.cpp \
+    CoreSupply/InfoRequest.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -97,7 +100,10 @@ HEADERS += coreplugin.h\
     Interfaces/imediacollectionstorage.h \
     Interfaces/imediacollectionstoragefactory.h \
     Interfaces/imediacollectionfactory.h \
-    CoreData/audio.h
+    CoreData/audio.h \
+    Interfaces/IInfoResolver.h \
+    CoreSupply/InfoTypeDefinition.h \
+    CoreSupply/InfoRequest.h
 
 OTHER_FILES += \
     Core.xml \
