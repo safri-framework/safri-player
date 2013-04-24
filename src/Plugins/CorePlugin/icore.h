@@ -9,6 +9,7 @@
 
 
 namespace Plugins { class CorePlugin; }
+namespace Controller { class InfoController; }
 
 namespace Core
 {
@@ -35,16 +36,17 @@ namespace Core
 
         public:
 
-            static ICore* instance();
-            static IPlaybackController* playbackController();
-            static IMediaBackend* audioBackend();
-            static QSharedPointer<IPlaylist> createPlaylist();
-            static IGUIController* guiController();
-            static ICollectionController* collectionController();
-            static QString storageDirectory();
-            static IMediaBackend* getBackendForMedia(Media* media);
-            static IMediaBackend* getBackendForMimeType(QString mimeType);
-            static IMediaCollection* createMediaCollection(QString type, QString collectionName);
+            static ICore*                       instance();
+            static Controller::InfoController*  infoController();
+            static IPlaybackController*         playbackController();
+            static IMediaBackend*               audioBackend();
+            static QSharedPointer<IPlaylist>    createPlaylist();
+            static IGUIController*              guiController();
+            static ICollectionController*       collectionController();
+            static QString                      storageDirectory();
+            static IMediaBackend*               getBackendForMedia(Media* media);
+            static IMediaBackend*               getBackendForMimeType(QString mimeType);
+            static IMediaCollection*            createMediaCollection(QString type, QString collectionName);
 
 
         private slots:
@@ -58,6 +60,7 @@ namespace Core
             IMediaBackend* m_audioBackend;
             IPlaylistFactory* m_playlistFactory;
             IGUIController* m_guiController;
+            Controller::InfoController*  m_infoController;
             ICollectionController* m_collectionController;
             QMap<QString, IMediaBackend*> m_mediaBackends;
             QMap<QString, IMediaCollectionFactory*> m_collectionFactories;

@@ -7,6 +7,7 @@
 #include "Interfaces/ICollectionController.h"
 #include "Interfaces/imediacollectionfactory.h"
 #include "CoreData/media.h"
+#include "CoreSupply/infocontroller.h"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -21,11 +22,17 @@ ICore::ICore()
 {
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
+    m_infoController = new Controller::InfoController(this);
 }
 
 ICore *ICore::instance()
 {
     return m_instance;
+}
+
+Controller::InfoController *ICore::infoController()
+{
+    return m_instance->m_infoController;
 }
 
 IPlaybackController* ICore::playbackController()
