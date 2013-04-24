@@ -13,7 +13,7 @@ public:
     explicit IInfoResolver(QObject *parent = 0);
     virtual ~IInfoResolver();
     virtual QStringList getSupportedInfoTypes() = 0;
-    virtual InfoRequest* getInfoForItem(Core::InfoType type, Item* DataItem) = 0;
+    virtual InfoRequest* getInfoForItem(QString type, Item* DataItem) = 0;
 
 signals:
     

@@ -53,7 +53,8 @@ SOURCES += coreplugin.cpp \
     Interfaces/imediacollectionstoragefactory.cpp \
     Interfaces/imediacollectionfactory.cpp \
     Interfaces/IInfoResolver.cpp \
-    CoreSupply/InfoRequest.cpp
+    CoreSupply/InfoRequest.cpp \
+    CoreSupply/AbstractInfoResolver.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -102,7 +103,8 @@ HEADERS += coreplugin.h\
     CoreData/audio.h \
     Interfaces/IInfoResolver.h \
     CoreSupply/InfoTypeDefinition.h \
-    CoreSupply/InfoRequest.h
+    CoreSupply/InfoRequest.h \
+    CoreSupply/AbstractInfoResolver.h
 
 OTHER_FILES += \
     Core.xml \

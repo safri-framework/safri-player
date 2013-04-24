@@ -1,7 +1,8 @@
 #include "InfoRequest.h"
 
-InfoRequest::InfoRequest(QObject *parent) :
-    QObject(parent)
+InfoRequest::InfoRequest(Item* relatedItem, QObject *parent) :
+    QObject(parent),
+    relatedItem(relatedItem)
 {
 }
 
@@ -15,6 +16,11 @@ void InfoRequest::setInfoData(QVariant info)
 bool InfoRequest::isInfoAvailable()
 {
     return infoAvailable;
+}
+
+Item *InfoRequest::getRelatedItem()
+{
+    return relatedItem;
 }
 
 QVariant InfoRequest::getInfo()
