@@ -8,17 +8,13 @@ class DataItem;
 class IInfoResolver : public QObject
 {
     Q_OBJECT
+    public:
 
-public:
-    explicit IInfoResolver(QObject *parent = 0);
-    virtual ~IInfoResolver();
-    virtual QStringList getSupportedInfoTypes() = 0;
-    virtual InfoRequest* getInfoForItem(QString type, DataItem* item) = 0;
+        explicit IInfoResolver(QObject *parent = 0);
+        virtual ~IInfoResolver();
 
-signals:
-    
-public slots:
-    
+        virtual QStringList getSupportedInfoTypes() = 0;
+        virtual InfoRequest* getInfoForItem(QString type, DataItem* item) = 0;
 };
 
 #endif // IINFORESOLVER_H

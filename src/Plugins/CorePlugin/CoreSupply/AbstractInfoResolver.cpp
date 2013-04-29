@@ -1,25 +1,41 @@
 #include "AbstractInfoResolver.h"
 #include "InfoRequest.h"
-
+#include <QThread>
+#include <QApplication>
+#include <QDebug>
 
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
-    IInfoResolver(parent), running(false)
+    IInfoResolver(parent), running(false), workerThread(0)
 {
 }
 
 InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, DataItem* item)
 {
     InfoRequest* request = new InfoRequest(type, item);
+
+    // TODO: mutex for bool running !?!!
     if(running)
     {
         insertInFifo(request);
     }
     else
     {
+        if (workerThread == 0)
+        {
+            qDebug() << "creating new thread";
+            workerThread = new QThread(this);
+        }
+
         running = true;
         currentRequest = request;
-        getInfo(type, item);
+
+        connect(workerThread, SIGNAL(started()), this, SLOT(workerThreadStarted()));
+        connect(workerThread, SIGNAL(finished()), this, SLOT(threadFinished()));
+        this->moveToThread(workerThread);
+
+        workerThread->start();
     }
+
     return request;
 }
 
@@ -35,6 +51,8 @@ void AbstractInfoResolver::setInfo(QVariant info)
     else
     {
         running  = false;
+        this->moveToThread(QApplication::instance()->thread());
+        workerThread->quit();
     }
 }
 
@@ -61,4 +79,17 @@ bool AbstractInfoResolver::hasRequest()
     hasRequest = requestList.size() > 0;
     fifoMutex.unlock();
     return hasRequest;
+}
+
+void AbstractInfoResolver::threadFinished()
+{
+    qDebug() << "Thread finished!";
+    delete workerThread;
+    workerThread = 0;
+}
+
+void AbstractInfoResolver::workerThreadStarted()
+{
+    // start work with current request
+    getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
 }

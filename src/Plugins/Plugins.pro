@@ -21,5 +21,5 @@ SUBDIRS += \
         TagLibMediaTagger \
         SafriMobileGuiQML \
     ShoutCastPlugin \
-    AudioSQLStorage \
-    TouchEventFilterPlugin
+				AudioSQLStorage
+#    TouchEventFilterPlugin
