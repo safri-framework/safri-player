@@ -8,6 +8,7 @@
 #include "Interfaces/imediacollectionfactory.h"
 #include "CoreData/media.h"
 #include "CoreSupply/infocontroller.h"
+#include "Settings/SettingsManager.h"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -23,6 +24,7 @@ ICore::ICore()
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
     m_infoController = new Controller::InfoController(this);
+    m_settingsManager = SettingsManager::getInstance();
 }
 
 ICore *ICore::instance()
@@ -33,6 +35,11 @@ ICore *ICore::instance()
 Controller::InfoController *ICore::infoController()
 {
     return m_instance->m_infoController;
+}
+
+SettingsManager *ICore::settingsManager()
+{
+    return m_instance->m_settingsManager;
 }
 
 IPlaybackController* ICore::playbackController()

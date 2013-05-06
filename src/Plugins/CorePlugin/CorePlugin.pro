@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += gui widgets
+QT       += gui widgets xml
 
 TARGET = Core
 TEMPLATE = lib
@@ -55,7 +55,10 @@ SOURCES += coreplugin.cpp \
 				CoreSupply/infocontroller.cpp \
 				Interfaces/IInfoResolver.cpp \
 				CoreSupply/InfoRequest.cpp \
-				CoreSupply/AbstractInfoResolver.cpp
+				CoreSupply/AbstractInfoResolver.cpp \
+    Settings/SettingsModule.cpp \
+    Interfaces/ISettingsModule.cpp \
+    Settings/SettingsManager.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -105,7 +108,10 @@ HEADERS += coreplugin.h\
 				CoreSupply/infocontroller.h \
 				Interfaces/IInfoResolver.h \
 				CoreSupply/InfoRequest.h \
-				CoreSupply/AbstractInfoResolver.h
+				CoreSupply/AbstractInfoResolver.h \
+    Settings/SettingsModule.h \
+    Interfaces/ISettingsModule.h \
+    Settings/SettingsManager.h
 
 OTHER_FILES += \
     Core.xml \

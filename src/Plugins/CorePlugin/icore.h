@@ -23,6 +23,7 @@ namespace Core
     class Media;
     class IMediaCollection;
     class IMediaCollectionFactory;
+    class SettingsManager;
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -38,6 +39,7 @@ namespace Core
 
             static ICore*                       instance();
             static Controller::InfoController*  infoController();
+            static SettingsManager*             settingsManager();
             static IPlaybackController*         playbackController();
             static IMediaBackend*               audioBackend();
             static QSharedPointer<IPlaylist>    createPlaylist();
@@ -62,6 +64,7 @@ namespace Core
             IGUIController* m_guiController;
             Controller::InfoController*  m_infoController;
             ICollectionController* m_collectionController;
+            SettingsManager* m_settingsManager;
             QMap<QString, IMediaBackend*> m_mediaBackends;
             QMap<QString, IMediaCollectionFactory*> m_collectionFactories;
     };
