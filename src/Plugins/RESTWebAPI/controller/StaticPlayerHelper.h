@@ -13,7 +13,7 @@ public:
 
     StaticPlayerHelper();
     static QJsonObject getStatus();
-    static QJsonObject getMedia(Core::Media* media);
+    static QJsonObject getMedia(Core::DataItem* media);
 };
 
 #endif // STATICPLAYERHELPER_H

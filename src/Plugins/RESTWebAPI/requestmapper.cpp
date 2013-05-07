@@ -20,26 +20,7 @@ void RequestMapper::service(HttpRequest& request, HttpResponse& response) {
     QByteArray path=request.getPath();
     qDebug("RequestMapper: path=%s",path.data());
 
-    if (path.startsWith("/dump")) {
-        DumpController().service(request, response);
-    }
-
-    else if (path.startsWith("/template")) {
-        TemplateController().service(request, response);
-    }
-
-    else if (path.startsWith("/form")) {
-        FormController().service(request, response);
-    }
-
-    else if (path.startsWith("/file")) {
-        FileUploadController().service(request, response);
-    }
-
-    else if (path.startsWith("/session")) {
-        SessionController().service(request, response);
-    }
-    else if (path.startsWith("/player")) {
+    if (path.startsWith("/player")) {
         PlayerController().service(request, response);
     }
     // All other pathes are mapped to the static file controller.
