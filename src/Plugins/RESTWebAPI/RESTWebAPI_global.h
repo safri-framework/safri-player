@@ -1,0 +1,12 @@
+#ifndef RESTWEBAPI_GLOBAL_H
+#define RESTWEBAPI_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(RESTWEBAPI_LIBRARY)
+#  define RESTWEBAPISHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define RESTWEBAPISHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // RESTWEBAPI_GLOBAL_H
