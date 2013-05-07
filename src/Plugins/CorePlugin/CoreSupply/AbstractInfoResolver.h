@@ -3,38 +3,41 @@
 
 #include <QMutex>
 #include "../Interfaces/IInfoResolver.h"
+#include "../CorePlugin_global.h"
 
 class QThread;
 
-class AbstractInfoResolver : public IInfoResolver
+namespace Core
 {
-    Q_OBJECT
+    class COREPLUGINSHARED_EXPORT AbstractInfoResolver : public IInfoResolver
+    {
+        Q_OBJECT
 
-    public:
+        public:
 
-        explicit AbstractInfoResolver(QObject *parent = 0);
+            explicit AbstractInfoResolver(QObject *parent = 0);
+                                                ~AbstractInfoResolver();
+            virtual QStringList                 getSupportedInfoTypes() = 0;
+            virtual InfoRequest*                getInfoForItem(QString type, Core::DataItem* item);
+            virtual void                        getInfo(QString type, Core::DataItem* item) = 0;
+            void                                setInfo(QVariant info);
 
-        virtual QStringList                 getSupportedInfoTypes() = 0;
-        virtual InfoRequest*                getInfoForItem(QString type, DataItem* item);
-        virtual void                        getInfo(QString type, DataItem* item) = 0;
-        void                                setInfo(QVariant info);
+        private:
 
-    private:
+            void                                insertInFifo(InfoRequest* request);
+            InfoRequest*                        getNextRequest();
+            bool                                hasRequest();
 
-        void                                insertInFifo(InfoRequest* request);
-        InfoRequest*                        getNextRequest();
-        bool                                hasRequest();
+            bool running;
+            QList<InfoRequest*> requestList;
+            QMutex  fifoMutex;
+            InfoRequest* currentRequest;
+            QThread* workerThread;
 
-        bool running;
-        QList<InfoRequest*> requestList;
-        QMutex  fifoMutex;
-        InfoRequest* currentRequest;
-        QThread* workerThread;
+        private slots:
 
-    private slots:
-
-        void threadFinished();
-        void workerThreadStarted();
-};
-
+            void threadFinished();
+            void workerThreadStarted();
+    };
+}
 #endif // ABSTRACTINFORESOLVER_H

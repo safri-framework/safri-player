@@ -18,13 +18,14 @@
 #include "Songtree/CoreItemTypes/artistitemtype.h"
 #include "Songtree/CoreItemTypes/albumitemtype.h"
 #include "Songtree/CoreItemTypes/songitemtype.h"
-
+#include "CoreSupply/infocontroller.h"
+#include "CoreSupply/InfoRequest.h"
 #include <QTreeView>
-
+#include <QVariant>
 #include "Interfaces/ICollectionController.h"
 #include "Interfaces/IMediaTagger.h"
 #include "CoreSupply/filesysteminserter.h"
-
+#include <QPixmap>
 
 HackingWidget::HackingWidget(QWidget *parent) :
     QWidget(parent),
@@ -187,4 +188,26 @@ void HackingWidget::on_pushButton_11_clicked()
     inserter->insertMedia(QUrl("/data/GunsNRoses/"), taggers.at(0));
 
   //  qDebug() << "Return from inserter.insertMedia";
+}
+
+void HackingWidget::on_pushButton_12_clicked()
+{
+    Controller::InfoController* controller = Core::ICore::infoController();
+    Album* album = new Album(4711, "By the way");
+    Artist* artist = new Artist(12, "Red Hot Chili Peppers");
+    album->addArtist(artist);
+
+    Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover", album);
+    connect(request, SIGNAL(infoDataAvailable()), this, SLOT(infoSlot()));
+
+}
+
+void HackingWidget::infoSlot()
+{
+    Core::InfoRequest* req = qobject_cast<InfoRequest*>(sender());
+    if(req)
+    {
+        QPixmap pixmap = req->getInfo().value<QPixmap>();
+        this->ui->coveLabel->setPixmap(pixmap);
+    }
 }

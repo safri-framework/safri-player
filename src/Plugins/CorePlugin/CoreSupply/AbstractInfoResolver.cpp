@@ -4,12 +4,14 @@
 #include <QApplication>
 #include <QDebug>
 
+
+using namespace Core;
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
     IInfoResolver(parent), running(false), workerThread(0)
 {
 }
 
-InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, DataItem* item)
+InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, Core::DataItem* item)
 {
     InfoRequest* request = new InfoRequest(type, item);
 
@@ -54,6 +56,10 @@ void AbstractInfoResolver::setInfo(QVariant info)
         this->moveToThread(QApplication::instance()->thread());
         workerThread->quit();
     }
+}
+
+AbstractInfoResolver::~AbstractInfoResolver()
+{
 }
 
 void AbstractInfoResolver::insertInFifo(InfoRequest *request)

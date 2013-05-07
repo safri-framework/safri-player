@@ -111,6 +111,10 @@ class AudioCollection : public Core::IAudioCollection
         int currentArtistID;
         int currentGenreID;
         int currentSongID;
+
+private slots:
+        void AlbumInsertedSlot(Album* album);
+        void AlbumCoverReceived();
 };
 
 #endif // AUDIOCOLLECTION_H

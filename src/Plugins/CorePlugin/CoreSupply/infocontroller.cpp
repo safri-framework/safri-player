@@ -4,6 +4,7 @@
 #include <QStringList>
 
 using namespace Controller;
+using namespace Core;
 
 InfoController::InfoController(QObject *parent) :
     QObject(parent)
@@ -29,7 +30,7 @@ InfoController::InfoController(QObject *parent) :
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
 }
 
-InfoRequest *InfoController::getInfoForItem(QString type, DataItem *item)
+InfoRequest *InfoController::getInfoForItem(QString type, Core::DataItem *item)
 {
     IInfoResolver* respondenResolver = resolver.value(type);
 

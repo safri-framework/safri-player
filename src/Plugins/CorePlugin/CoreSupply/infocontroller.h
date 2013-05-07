@@ -4,11 +4,11 @@
 #include <CorePlugin_global.h>
 #include <QObject>
 #include <QMap>
-
+/*
 class InfoRequest;
 class IInfoResolver;
 class DataItem;
-
+*/
 namespace Core
 {
     class IInfoResolver;
@@ -25,7 +25,7 @@ namespace Controller
 
             explicit                InfoController(QObject *parent = 0);
 
-            InfoRequest*            getInfoForItem(QString type, DataItem* item);
+            Core::InfoRequest*      getInfoForItem(QString type, Core::DataItem* item);
 
         private slots:
 
@@ -33,7 +33,7 @@ namespace Controller
 
         private:
 
-            QMap<QString, IInfoResolver*> resolver;
+            QMap<QString, Core::IInfoResolver*> resolver;
 
     };
 }

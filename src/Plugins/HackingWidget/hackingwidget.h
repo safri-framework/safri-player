@@ -41,6 +41,10 @@ private slots:
 
     void on_pushButton_11_clicked();
 
+    void on_pushButton_12_clicked();
+
+    void infoSlot();
+
 private:
     Ui::HackingWidget *ui;
     Core::IAudioCollection* audioCollection;

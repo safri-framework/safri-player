@@ -16,6 +16,8 @@ class PlayerWidget : public IPlayerWidget
         virtual PlayerWidgetPosition getPreferedPosition();
     void setVolumeEnabled(bool value);
     void setSeekerEnabled(bool value);
+
+
     private slots:
 
         void on_volumeSlider_sliderMoved(int position);

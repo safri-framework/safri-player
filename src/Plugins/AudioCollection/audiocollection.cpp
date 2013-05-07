@@ -3,6 +3,9 @@
 #include "Interfaces/imediacollectionstorage.h"
 #include "pluginmanager.h"
 #include "icore.h"
+#include "Interfaces/IInfoResolver.h"
+#include "CoreSupply/infocontroller.h"
+#include "CoreSupply/InfoRequest.h"
 #include <QDebug>
 
 AudioCollection::AudioCollection(QString name):m_name(name),
@@ -24,6 +27,8 @@ AudioCollection::AudioCollection(QString name):m_name(name),
     m_nameToArtistMap = new QMap<QString, Artist*>;
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
+
+    connect(this, SIGNAL(newAlbumInserted(Core::Album*)), this, SLOT(AlbumInsertedSlot(Album*)));
 }
 
 AudioCollection::~AudioCollection()
@@ -485,6 +490,10 @@ void AudioCollection::insertSong(Song* song)
 
 void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
 {
+    bool newArtist = false;
+    bool newAlbum  = false;
+    bool newGenre  = false;
+
     AudioCollection* audioCollection = this;
     bool isTemporary = false; //  functionality can be added here, if needed
 
@@ -519,6 +528,7 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
                    album = audioCollection->newAlbum(albumName);
                    album->addArtist(artist);
                    artist->addAlbum(album);
+                   newAlbum = true;
                }
             }
             else    //Artist doesn't already exists -> the album can't exist too.
@@ -527,6 +537,8 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
                 album = audioCollection->newAlbum(albumName);
                 artist->addAlbum(album);
                 album->addArtist(artist);
+                newAlbum = true;
+                newArtist = true;
             }
 
 
@@ -538,6 +550,7 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
             else
             {
                 genre = audioCollection->newGenre(genreName);
+                newGenre = true;
             }
 
 
@@ -553,6 +566,18 @@ void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
          qDebug() << "Created Song " << song->getName();
 
          Q_EMIT itemAdded(song);
+         Q_EMIT newSongInserted(song);
+
+         if(newArtist)
+             Q_EMIT newArtistInserted(artist);
+
+         if(newAlbum)
+             Q_EMIT newAlbumInserted(album);
+
+         if(newGenre)
+             Q_EMIT newGenreInserted(genre);
+
+
         }
     }
 }
@@ -611,4 +636,20 @@ int AudioCollection::newGenreID()
 int AudioCollection::newSongID()
 {
     return ++currentSongID;
+}
+
+void AudioCollection::AlbumInsertedSlot(Album *album)
+{
+    Controller::InfoController* controller = Core::ICore::infoController();
+    Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover", album);
+    connect(request, SIGNAL(infoDataAvailable()), this, SLOT(AlbumCoverReceived()));
+}
+
+void AudioCollection::AlbumCoverReceived()
+{
+    Core::InfoRequest* req = qobject_cast<InfoRequest*>(sender());
+    if(req)
+    {
+        // TODO
+    }
 }

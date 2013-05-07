@@ -12,7 +12,7 @@ bool TouchEventFilter::eventFilter(QObject *obj, QEvent *event)
 {
 
 
-    qDebug()<<event->type();
+  //  qDebug()<<event->type();
     return false;
 
     /*

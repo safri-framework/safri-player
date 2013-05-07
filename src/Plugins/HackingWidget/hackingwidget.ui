@@ -145,7 +145,7 @@
      <x>550</x>
      <y>40</y>
      <width>541</width>
-     <height>431</height>
+     <height>201</height>
     </rect>
    </property>
   </widget>
@@ -225,6 +225,32 @@
    </property>
    <property name="text">
     <string>Test Media Insert</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_12">
+   <property name="geometry">
+    <rect>
+     <x>384</x>
+     <y>440</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Test CoverLoad</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="coveLabel">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>292</y>
+     <width>171</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>COVER</string>
    </property>
   </widget>
  </widget>

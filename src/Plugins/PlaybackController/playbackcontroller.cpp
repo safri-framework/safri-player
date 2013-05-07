@@ -233,7 +233,7 @@ void PlaybackController::audioBackendUpdate(int currentTime)
 
 void PlaybackController::backendStateChanged(Core::IMediaBackend::BackendState state)
 {
-    qDebug()<<"state"<< Q_FUNC_INFO;
+    qDebug()<<"state"<< Q_FUNC_INFO<< "   STATE:"<< state;
     switch (state)
     {
         case Core::IMediaBackend::BUFFERING:

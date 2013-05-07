@@ -26,21 +26,17 @@ namespace Core
 
             explicit FileSystemInserter(IMediaCollection* collection);
             ~FileSystemInserter();
-
             void insertMedia(QUrl mediaUrl, IMediaTagger *tagger);
 
         signals:
-
             void finished();
 
         private slots:
-
             void start();
             void mediaTagged(MediaInfoContainer info);
             void threadFinished();
 
         private:
-
             QThread* thread;
             IMediaCollection* collection;
             QUrl mediaUrlToInsert;

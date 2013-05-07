@@ -1,5 +1,7 @@
 #include "InfoRequest.h"
 
+using namespace Core;
+
 InfoRequest::InfoRequest(QString requestType, DataItem* relatedItem, QObject *parent) :
     QObject(parent),
     relatedItem(relatedItem),

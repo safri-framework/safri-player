@@ -25,6 +25,7 @@ public:
 
 
 
+
 private slots:
 
     void mediaChanged(Core::Media* media);
@@ -38,13 +39,14 @@ private slots:
     void on_repeat_toggled(bool checked);
 
 private:
-    void showLoadingIndicator(QString msg);
-    void hideLoadingIndicator();
+
     IPlaybackController* m_pbController;
     bool firstPlayback;
     bool newMedia;
     Ui::Widget *ui;
     QMovie* loaderGif;
+    void showLoadingIndicator(QString msg);
+    void hideLoadingIndicator();
 
 };
 

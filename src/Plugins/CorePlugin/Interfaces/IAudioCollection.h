@@ -37,6 +37,13 @@ namespace Core
             virtual void                    insertArtist(Core::Artist* genre) = 0;
             virtual void                    insertAlbum(Core::Album* album) = 0;
             virtual void                    insertSong(Core::Song* song) = 0;
+
+    signals:
+
+            void newAlbumInserted(Core::Album*);
+            void newArtistInserted(Core::Artist*);
+            void newGenreInserted(Core::Genre*);
+            void newSongInserted(Core::Song*);
     };
 }
 Q_DECLARE_INTERFACE(Core::IAudioCollection, "Core::IAudioCollection")

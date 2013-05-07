@@ -1,34 +1,34 @@
 #ifndef INFOREQUEST_H
 #define INFOREQUEST_H
-
+#include "CoreData/dataitem.h"
+#include "../CorePlugin_global.h"
 #include <QObject>
 #include <QVariant>
 
-class DataItem;
-class InfoRequest : public QObject
+
+namespace Core
 {
-    Q_OBJECT
-public:
-    explicit InfoRequest(QString requestType, DataItem* relatedItem, QObject *parent = 0);
-    void setInfoData(QVariant info);
-    bool isInfoAvailable();
-    DataItem* getRelatedItem();
-    QVariant getInfo();
-    QString getRequestType();
+    class COREPLUGINSHARED_EXPORT InfoRequest : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit InfoRequest(QString requestType, Core::DataItem* relatedItem, QObject *parent = 0);
+        void setInfoData(QVariant info);
+        bool isInfoAvailable();
+        Core::DataItem* getRelatedItem();
+        QVariant getInfo();
+        QString getRequestType();
 
-signals:
-    void infoDataAvailable();
+    signals:
+        void infoDataAvailable();
 
-private:
-    QVariant info;
-    DataItem* relatedItem;
-    bool infoAvailable;
-    QString requestType;
+    private:
+        QVariant info;
+        Core::DataItem* relatedItem;
+        bool infoAvailable;
+        QString requestType;
 
-public slots:
-
-
-    
-};
+    };
+}
 
 #endif // INFOREQUEST_H
