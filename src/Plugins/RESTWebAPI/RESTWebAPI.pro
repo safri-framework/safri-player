@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += network
+QT       += network gui widgets
 
-QT       -= gui
+#QT       -= gui
 
 TARGET = RESTWebAPI
 TEMPLATE = lib
@@ -26,7 +26,11 @@ SOURCES += RESTWebAPIPlugin.cpp \
     controller/fileuploadcontroller.cpp \
     controller/dumpcontroller.cpp \
     static.cpp \
-    requestmapper.cpp
+    requestmapper.cpp \
+    controller/PlayerController.cpp \
+    controller/StaticPlayerHelper.cpp \
+    controller/PlaylistController.cpp \
+    controller/CollectionController.cpp
 
 HEADERS += RESTWebAPIPlugin.h\
         RESTWebAPI_global.h \
@@ -37,7 +41,11 @@ HEADERS += RESTWebAPIPlugin.h\
     controller/dumpcontroller.h \
     static.h \
     requestmapper.h \
-    documentcache.h
+    documentcache.h \
+    controller/PlayerController.h \
+    controller/StaticPlayerHelper.h \
+    controller/PlaylistController.h \
+    controller/CollectionController.h
 
 OTHER_FILES += \
     RESTWebAPI.xml \
