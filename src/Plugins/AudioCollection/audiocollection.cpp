@@ -8,6 +8,8 @@
 #include "CoreSupply/InfoRequest.h"
 #include <QDebug>
 
+#include <QCryptographicHash>
+
 AudioCollection::AudioCollection(QString name):m_name(name),
     currentAlbumID(0),
     currentArtistID(0),
@@ -217,8 +219,11 @@ QUrl AudioCollection::getRootPath()
 
 QString AudioCollection::getHash()
 {
-    //TODO
-    return QString::number(1);
+    QByteArray hash;
+    hash = QCryptographicHash::hash(m_databaseLocation.toEncoded(), QCryptographicHash::Md5);
+    hash = hash.toHex();
+
+    return QString(hash);
 }
 
 QUrl AudioCollection::getDatabaseLocation()

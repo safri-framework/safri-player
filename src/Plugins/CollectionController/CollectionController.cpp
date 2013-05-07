@@ -58,6 +58,7 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
         if (mediaCollection)
         {
             m_collectionMap.insert(filename.toString(), mediaCollection);
+            m_collectionHashMap.insert(mediaCollection->getHash(), mediaCollection);
             delete collectionStorage;
             return true;
         }
@@ -71,10 +72,19 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
 
 IMediaCollection *Controller::CollectionController::getMediaCollection(QUrl filename)
 {
-
     if ( m_collectionMap.contains( filename.toString() ) )
     {
         return m_collectionMap.value( filename.toString() );
+    }
+
+    return 0;
+}
+
+IMediaCollection *Controller::CollectionController::getMediaCollectionByHash(QString hash)
+{
+    if ( m_collectionHashMap.contains( hash ) )
+    {
+        return m_collectionHashMap.value( hash );
     }
 
     return 0;

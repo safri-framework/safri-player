@@ -19,6 +19,7 @@ namespace Core
             virtual QList<IMediaCollection*>        getCollections(QString type) = 0;
             virtual bool                            loadMediaCollection(QUrl filename) = 0;
             virtual IMediaCollection*               getMediaCollection(QUrl filename) = 0;
+            virtual IMediaCollection*               getMediaCollectionByHash(QString hash) = 0;
             virtual bool                            saveCollections() = 0;
 
         signals:

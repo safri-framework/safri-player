@@ -24,6 +24,7 @@ namespace Controller
         QList<IMediaCollection*>                        getCollections(QString type);
         bool                                            loadMediaCollection(QUrl filename);
         IMediaCollection*                               getMediaCollection(QUrl filename);
+        virtual IMediaCollection*                       getMediaCollectionByHash(QString hash);
         virtual bool                                    saveCollections();
 
     private slots:
@@ -36,6 +37,7 @@ namespace Controller
         QString                                         getStorageTypeByFilename(QUrl filename);
 
         QMap<QString, IMediaCollection*>                m_collectionMap;
+        QMap<QString, IMediaCollection*>                m_collectionHashMap;
         QMap<QString, IMediaCollectionStorageFactory*>  m_storageFactories;
         QMap<QString, QString>                          m_fileExtensionMap;
 
