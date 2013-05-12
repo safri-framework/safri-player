@@ -28,9 +28,11 @@ SOURCES += RESTWebAPIPlugin.cpp \
     static.cpp \
     requestmapper.cpp \
     controller/PlayerController.cpp \
-    controller/StaticPlayerHelper.cpp \
     controller/PlaylistController.cpp \
-    controller/CollectionController.cpp
+    controller/PlaylistHelper.cpp \
+    controller/SongtreeHelper.cpp \
+    controller/SongTreeController.cpp \
+    controller/JSONSerializer.cpp
 
 HEADERS += RESTWebAPIPlugin.h\
         RESTWebAPI_global.h \
@@ -43,9 +45,11 @@ HEADERS += RESTWebAPIPlugin.h\
     requestmapper.h \
     documentcache.h \
     controller/PlayerController.h \
-    controller/StaticPlayerHelper.h \
     controller/PlaylistController.h \
-    controller/CollectionController.h
+    controller/PlaylistHelper.h \
+    controller/SongtreeHelper.h \
+    controller/SongTreeController.h \
+    controller/JSONSerializer.h
 
 OTHER_FILES += \
     RESTWebAPI.xml \

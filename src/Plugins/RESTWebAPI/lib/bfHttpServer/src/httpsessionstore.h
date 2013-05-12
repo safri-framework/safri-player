@@ -95,6 +95,9 @@ private:
     /** Used to synchronize threads */
     QMutex mutex;
 
+signals:
+    void sessionExpired(QByteArray id);
+
 private slots:
 
     /** Called every minute to cleanup expired sessions. */

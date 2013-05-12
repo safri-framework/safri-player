@@ -416,6 +416,13 @@ void SongTreeItem::moveToParent(SongTreeItem *destination)
     }
 }
 
+QList<SongTreeItem *> SongTreeItem::getChilds() const
+{
+    QList<SongTreeItem*> childs;
+    childs = QList<SongTreeItem*>(*this->childs);
+    return childs;
+}
+
 SongTreeItem* SongTreeItem::getOrInsertChildItem(Song *song)
 {
     int maxLevel = hierarchy->size() - 1;

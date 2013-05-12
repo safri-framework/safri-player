@@ -43,4 +43,7 @@
     <qresource prefix="/other">
         <file>SAFRI_UI/loader.gif</file>
     </qresource>
+    <qresource prefix="/font">
+        <file>SAFRI_UI/advent.ttf</file>
+    </qresource>
 </RCC>

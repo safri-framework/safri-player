@@ -5,6 +5,7 @@
 #include "requestmapper.h"
 #include "staticfilecontroller.h"
 #include "icore.h"
+#include "controller/PlaylistHelper.h"
 
 using namespace Plugins;
 
@@ -17,6 +18,7 @@ bool RESTWebAPIPlugin::initialize(QStringList &arguments)
     Q_UNUSED(arguments)
 
     QString configFileName = Core::ICore::storageDirectory() + "/restwebapi.ini";
+    PlaylistHelper::getInstance();
 
     // Configure template loader and cache
     QSettings* templateSettings=new QSettings(configFileName,QSettings::IniFormat, this);

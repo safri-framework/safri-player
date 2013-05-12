@@ -93,6 +93,7 @@ void HttpSessionStore::timerEvent() {
         if (now-lastAccess>expirationTime) {
             qDebug("HttpSessionStore: session %s expired",session.getId().data());
             sessions.erase(prev);
+            Q_EMIT sessionExpired(session.getId());
         }
     }
     mutex.unlock();

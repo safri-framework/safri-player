@@ -9,6 +9,8 @@ namespace Core
 {
     class COREPLUGINSHARED_EXPORT Media : public DataItem
     {
+        Q_OBJECT
+
         public:
 
             Media(int sID, QString sName, DATA_ITEM_TYPE sType, QObject *parent = 0)

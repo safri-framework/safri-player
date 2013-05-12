@@ -2,13 +2,17 @@
 #define PLAYLISTCONTROLLER_H
 
 #include <QObject>
+#include "httprequesthandler.h"
 
-class PlaylistController : public QObject
+class PlaylistController : public HttpRequestHandler
 {
     Q_OBJECT
+    Q_DISABLE_COPY(PlaylistController);
+
 public:
-    explicit PlaylistController(QObject *parent = 0);
-    
+    explicit PlaylistController();
+    void service(HttpRequest& request, HttpResponse& response);
+
 signals:
     
 public slots:

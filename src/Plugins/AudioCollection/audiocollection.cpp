@@ -449,8 +449,8 @@ void AudioCollection::removeGenre(Genre *genre)
 
 void AudioCollection::insertGenre(Genre* genre)
 {
-
     m_lock.lockForWrite();
+        genre->setMediaCollection(this);
         m_genreList->append(genre);
         m_IDtoGenreMap->insert(genre->getID(), genre);
         m_nameToGenreMap->insert(genre->getName(), genre);
@@ -461,7 +461,9 @@ void AudioCollection::insertGenre(Genre* genre)
 
 void AudioCollection::insertArtist(Artist* artist)
 {
+
     m_lock.lockForWrite();
+        artist->setMediaCollection(this);
         m_artistList->append(artist);
         m_IDtoArtistMap->insert(artist->getID(), artist);
         m_nameToArtistMap->insert(artist->getName(), artist);
@@ -472,8 +474,8 @@ void AudioCollection::insertArtist(Artist* artist)
 
 void AudioCollection::insertAlbum(Album* album)
 {
-
     m_lock.lockForWrite();
+        album->setMediaCollection(this);
         m_albumList->append(album);
         m_IDtoAlbumMap->insert(album->getID(), album);
         m_nameToAlbumMap->insert(album->getName(), album);

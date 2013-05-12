@@ -115,6 +115,8 @@ namespace Core
             */
             void moveToParent(SongTreeItem* destination);
 
+            QList<SongTreeItem*> getChilds() const;
+
             void print();
             QString getName();
             void addSong(Song* song);

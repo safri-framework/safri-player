@@ -4,16 +4,19 @@
 #include "CoreData/media.h"
 #include <QJsonObject>
 #include <QObject>
+#include <Songtree/songtreeitem.h>
 
-class StaticPlayerHelper : public QObject
+class JSONSerializer : public QObject
 {
     Q_OBJECT
 
 public:
 
-    StaticPlayerHelper();
+    JSONSerializer();
     static QJsonObject getStatus();
     static QJsonObject getMedia(Core::DataItem* media);
+    static QJsonObject getSongTreeItemForJsTree(Core::SongTreeItem* item, int id);
+    static QJsonObject generateErrorObject(QString errorMsg, QString function, bool ok);
 };
 
 #endif // STATICPLAYERHELPER_H
