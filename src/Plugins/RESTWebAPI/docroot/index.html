@@ -1,0 +1,340 @@
+<html>
+    <head>
+        <title>Use jsTree</title>
+		<style type="text/css" title="currentStyle">
+			@import "DataTables-1.9.4/media/css/demo_page.css";
+			@import "DataTables-1.9.4/media/css/demo_table.css";
+			@import "DataTables-1.9.4/examples/examples_support/themes/smoothness/jquery-ui-1.8.4.custom.css"
+		</style>
+		
+		<script type="text/javascript" language="javascript"src="jstree-v.pre1.0/_lib/jquery.js"></script>
+        <script type="text/javascript" language="javascript" src="jstree-v.pre1.0/jquery.jstree.js"></script>
+		
+		<!--
+		<script type="text/javascript" language="javascript" src="/DataTables-1.9.4/media/js/jquery.js"></script>
+		-->
+		
+		<script type="text/javascript" language="javascript" src="/jq-ui/ui/jquery-ui.js"></script>
+		<script type="text/javascript" language="javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" language="javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.rowReordering.js"></script>		
+		<script type="text/javascript" charset="utf-8">
+
+
+		function highlight(row) 
+		{	
+			var aTrs = oTable.fnGetNodes();	
+			oTable.$('tr.highlighted').removeClass('highlighted');
+			$('#example tr').eq(row+2).addClass( 'highlighted' );
+		}
+		var checker = window.setInterval("checkStatus()", 10000);
+		function checkStatus()
+		{
+			$.get
+			(
+				"/player",
+				{action : "getStatus"},
+				function(data) 
+				{
+					highlight(data.playlistPosition);
+				}
+			);
+		}
+
+		function playerCommand(command)
+		{
+		$.get
+			(
+				"/player",
+				{action : command},
+				function(data) 
+				{
+					checkStatus();
+					if(!data.success)
+					alert(data.error);
+				}
+			);
+		}
+
+
+		function moveSong(from, to)
+		{
+			$.get
+			(
+				"/playlist",
+				{action : "move", from: from, to: to},
+				function(data) 
+				{
+					if(!data.success)
+					{
+						alert("Fehler");
+					}
+				}
+			);
+		}
+		
+		function insertNode(nodeID, target)
+		{
+			$.get
+			(
+				"/songtree",
+				{action : "insertNodeInPl", id: nodeID, pos: target},
+				function(data) 
+				{
+					if(!data.success)
+					{
+						alert("Fehler");
+					}
+					else					
+					{
+						var scrollPos=$(".dataTables_scrollBody").scrollTop();
+						$('#example').dataTable().fnReloadAjax();						
+					}
+				}				
+			);
+		}
+			var oTable;
+			$(document).ready(
+			function() 
+			{
+				oTable  = $('#example').dataTable( {
+					"bJQueryUI": true,
+					"sScrollY": "700px",
+					"bPaginate": false,
+					"bSortClasses": false,
+					"bSort":false,
+					"sAjaxSource": "/playlist?action=getPlayingPlaylist",
+					"sAjaxDataProp": "playingPlaylist",
+					"aoColumns": [
+						{ "mData": "name"},
+						{ "mData": "artist"},
+						{ "mData": "album"},
+						{ "mData": "genre" }
+					]
+				} ).rowReordering();
+				
+		var startPosition;
+		var endPosition;
+		$("#example tbody").sortable({
+    	cursor: "move",
+	    start:function(event, ui){
+	      startPosition = ui.item.prevAll().length;
+	    },
+	    update: function(event, ui) {
+	       endPosition = ui.item.prevAll().length;
+			moveSong(startPosition, endPosition);
+	     }
+		});
+		
+	
+			$("#treeViewDiv").jstree({
+			"json_data" : {
+            "ajax" : {
+			"cache" : "false",
+               "url":function(n)
+				{
+						var id=0;
+						var url = "/songtree";
+						if(n == -1)
+						{
+								url = url + "?id=-1";
+								return url;
+						}
+						else if(n.attr)
+						{								
+								url = url + "?id=" + n.attr("treeItemId");								
+								return url;
+						}
+				},
+				"success" : function(ops) 
+				{
+                  data = []
+                  for( opnum in ops ){
+                    var op = ops[opnum]
+                    node = {
+                        "data" : op.text,
+                        "metadata" :  op ,
+						"attr" :{ "treeItemId":op.treeItemId},
+                    };
+					if(op.isLeaf == false)
+					{
+						node.state = "closed";
+					}
+                    data.push( node );
+                  }
+                  return data; 
+				},	
+            }
+        },
+				"themes" : {
+			"theme" : "apple",
+			"dots" : false,
+			"icons" : false
+		},
+		  "dnd" : {
+                "drop_target" : "#example",
+                "drop_finish" : function (data) 
+				{					
+					var id2 = data.r.closest('tr').prevAll().length;					
+					var from = data.o.attr("treeItemId");					
+					insertNode(from, id2);					
+                }
+            },
+        "plugins" : [ "themes", "json_data","dnd" ]
+ });			
+					
+$.fn.dataTableExt.oApi.fnReloadAjax = function ( oSettings, sNewSource, fnCallback, bStandingRedraw )
+{
+	if ( sNewSource !== undefined && sNewSource !== null ) {
+		oSettings.sAjaxSource = sNewSource;
+	}
+
+	// Server-side processing should just call fnDraw
+	if ( oSettings.oFeatures.bServerSide ) {
+		this.fnDraw();
+		return;
+	}
+
+	this.oApi._fnProcessingDisplay( oSettings, true );
+	var that = this;
+	var iStart = oSettings._iDisplayStart;
+	var aData = [];
+
+	this.oApi._fnServerParams( oSettings, aData );
+
+	oSettings.fnServerData.call( oSettings.oInstance, oSettings.sAjaxSource, aData, function(json) {
+		/* Clear the old information from the table */
+		that.oApi._fnClearTable( oSettings );
+
+		/* Got the data - add it to the table */
+		var aData =  (oSettings.sAjaxDataProp !== "") ?
+			that.oApi._fnGetObjectDataFn( oSettings.sAjaxDataProp )( json ) : json;
+
+		for ( var i=0 ; i < aData.length ; i++ )
+		{
+			that.oApi._fnAddData( oSettings, aData[i] );
+		}
+		
+		oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+
+		that.fnDraw(false);
+
+		if ( bStandingRedraw === true )
+		{
+			oSettings._iDisplayStart = iStart;
+			that.oApi._fnCalculateEnd( oSettings );
+			that.fnDraw( false );
+		}
+
+		that.oApi._fnProcessingDisplay( oSettings, false );
+		checkStatus();
+		/* Callback user function - for event handlers etc */
+		if ( typeof fnCallback == 'function' && fnCallback !== null )
+		{
+			fnCallback( oSettings );
+		}
+	}, oSettings );
+};
+});
+</script>
+<style type="text/css" media="screen">
+/*
+	table.dataTable td.sorting_1{ background-color: white; border:1px lightgrey; }
+    table.dataTable td{ background-color: white;  border:1px lightgrey;}
+    table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
+    table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
+*/
+	table.dataTable tr.highlighted{background-color: blue;}
+	tr { height: 50px } 
+
+#sidebar
+{
+	float:left;
+}
+#playlist
+{
+	float:right;
+	width:890px;
+	overflow:hidden;
+}
+#container
+{
+	margin: 1em auto;
+    width: 1200px;
+	height: 1200px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid black;
+}
+#header
+{
+	width: 1000px;
+	height: 200px;
+	background-color:white;
+}
+#mainContent
+{
+	height: 1000px;
+	background-color: white;	
+}
+#treeViewDiv
+{
+	background-color:white;
+	overflow:auto;
+	height:800px;
+	width:300px;
+}
+</style>
+    </head>
+    <body>
+	
+	<div id="container">
+	<div id="header">
+	    <input type="button" name="Prev" value="Prev"
+      onclick="playerCommand('previous')">
+	  
+
+	  	    <input type="button" name="Next" value="Next"
+      onclick="playerCommand('next')">
+	  
+	  	    <input type="button" name="Pause" value="Pause"
+      onclick="playerCommand('pause')">
+	  
+	  	  	    <input type="button" name="Play" value="Play"
+      onclick="playerCommand('play')">
+	  
+	  
+	  
+	</div>
+	<div id="mainContent">
+		<div id="sidebar">
+			<div id="treeViewDiv" class="auto">
+			</div>
+		</div>
+
+		<div id="playlist">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th width="35%">Song</th>
+						<th width="25%">Artist</th>
+						<th width="25%">Album</th>
+						<th width="15%">Genre</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Song</th>
+						<th>Artist</th>
+						<th>Album</th>
+						<th>Genre</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+
+    </body>
+</html>

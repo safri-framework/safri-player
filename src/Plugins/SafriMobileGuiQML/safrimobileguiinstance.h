@@ -31,6 +31,7 @@ private slots:
     void playModelIndex(QVariant var);
     void testPlay();
 
+
 private:
     QQuickItem* playPauseButton;
     QQuickItem* prevButton;

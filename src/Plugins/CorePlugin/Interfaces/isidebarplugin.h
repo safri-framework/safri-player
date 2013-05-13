@@ -19,6 +19,8 @@ namespace Core
             virtual QWidget* getSideBarWidget() = 0;
             virtual QString getName() = 0;
             virtual QWidget* getMenuBarWidget() = 0;
+
+            // defines if widget will be visible at start
             virtual bool isVisible() = 0;
 
         signals:

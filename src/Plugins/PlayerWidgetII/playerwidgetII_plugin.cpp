@@ -10,7 +10,6 @@ bool PlayerWidgetII_Plugin::initialize(QStringList &arguments)
     addObject(new PLWidgetFactory());
     qDebug()<< QFontDatabase::addApplicationFont(":/font/SAFRI_UI/advent.ttf");
     return true;
-
 }
 
 PlayerWidgetII_Plugin::PlayerWidgetII_Plugin()

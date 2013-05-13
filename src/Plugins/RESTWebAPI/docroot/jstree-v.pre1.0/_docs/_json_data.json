@@ -1,0 +1,884 @@
+[
+    {
+        "attr": {
+            "id": 0,
+            "row": 0
+        },
+        "data": "Unbekannt"
+    },
+    {
+        "attr": {
+            "id": 1,
+            "row": 1
+        },
+        "data": "General New Age"
+    },
+    {
+        "attr": {
+            "id": 2,
+            "row": 2
+        },
+        "data": "Rock"
+    },
+    {
+        "attr": {
+            "id": 3,
+            "row": 3
+        },
+        "data": "Hip-Hop"
+    },
+    {
+        "attr": {
+            "id": 4,
+            "row": 4
+        },
+        "data": "Unknown"
+    },
+    {
+        "attr": {
+            "id": 5,
+            "row": 5
+        },
+        "data": "Hardcore Punk"
+    },
+    {
+        "attr": {
+            "id": 6,
+            "row": 6
+        },
+        "data": "Hardcore"
+    },
+    {
+        "attr": {
+            "id": 7,
+            "row": 7
+        },
+        "data": "Rave Music"
+    },
+    {
+        "attr": {
+            "id": 8,
+            "row": 8
+        },
+        "data": "soundtrack"
+    },
+    {
+        "attr": {
+            "id": 9,
+            "row": 9
+        },
+        "data": "Pop"
+    },
+    {
+        "attr": {
+            "id": 10,
+            "row": 10
+        },
+        "data": "Alternative"
+    },
+    {
+        "attr": {
+            "id": 11,
+            "row": 11
+        },
+        "data": "Jazz"
+    },
+    {
+        "attr": {
+            "id": 12,
+            "row": 12
+        },
+        "data": "Rap & Hip-Hop"
+    },
+    {
+        "attr": {
+            "id": 13,
+            "row": 13
+        },
+        "data": "free R&B"
+    },
+    {
+        "attr": {
+            "id": 14,
+            "row": 14
+        },
+        "data": "DJBooth.net"
+    },
+    {
+        "attr": {
+            "id": 15,
+            "row": 15
+        },
+        "data": "Alternative Rock"
+    },
+    {
+        "attr": {
+            "id": 16,
+            "row": 16
+        },
+        "data": "Blues"
+    },
+    {
+        "attr": {
+            "id": 17,
+            "row": 17
+        },
+        "data": "Metal"
+    },
+    {
+        "attr": {
+            "id": 18,
+            "row": 18
+        },
+        "data": "Rock & Roll"
+    },
+    {
+        "attr": {
+            "id": 19,
+            "row": 19
+        },
+        "data": "Alternative Rock Alt. Rock"
+    },
+    {
+        "attr": {
+            "id": 20,
+            "row": 20
+        },
+        "data": "Hard Rock"
+    },
+    {
+        "attr": {
+            "id": 21,
+            "row": 21
+        },
+        "data": "Dance & DJ"
+    },
+    {
+        "attr": {
+            "id": 22,
+            "row": 22
+        },
+        "data": "Hip Hop/Rap"
+    },
+    {
+        "attr": {
+            "id": 23,
+            "row": 23
+        },
+        "data": "Rap"
+    },
+    {
+        "attr": {
+            "id": 24,
+            "row": 24
+        },
+        "data": "R&B"
+    },
+    {
+        "attr": {
+            "id": 25,
+            "row": 25
+        },
+        "data": "Hip-Hop/Rap"
+    },
+    {
+        "attr": {
+            "id": 26,
+            "row": 26
+        },
+        "data": "Reggae"
+    },
+    {
+        "attr": {
+            "id": 27,
+            "row": 27
+        },
+        "data": "Hardcore Rap"
+    },
+    {
+        "attr": {
+            "id": 28,
+            "row": 28
+        },
+        "data": "genre"
+    },
+    {
+        "attr": {
+            "id": 29,
+            "row": 29
+        },
+        "data": "Funk"
+    },
+    {
+        "attr": {
+            "id": 30,
+            "row": 30
+        },
+        "data": "%m"
+    },
+    {
+        "attr": {
+            "id": 31,
+            "row": 31
+        },
+        "data": "General Rock"
+    },
+    {
+        "attr": {
+            "id": 32,
+            "row": 32
+        },
+        "data": "HipHop"
+    },
+    {
+        "attr": {
+            "id": 33,
+            "row": 33
+        },
+        "data": "Hip Hop"
+    },
+    {
+        "attr": {
+            "id": 34,
+            "row": 34
+        },
+        "data": "misc"
+    },
+    {
+        "attr": {
+            "id": 35,
+            "row": 35
+        },
+        "data": "Electronic"
+    },
+    {
+        "attr": {
+            "id": 36,
+            "row": 36
+        },
+        "data": "Trance"
+    },
+    {
+        "attr": {
+            "id": 37,
+            "row": 37
+        },
+        "data": "Ambient"
+    },
+    {
+        "attr": {
+            "id": 38,
+            "row": 38
+        },
+        "data": "rock"
+    },
+    {
+        "attr": {
+            "id": 39,
+            "row": 39
+        },
+        "data": "Instrumental Pop"
+    },
+    {
+        "attr": {
+            "id": 40,
+            "row": 40
+        },
+        "data": "Techno"
+    },
+    {
+        "attr": {
+            "id": 41,
+            "row": 41
+        },
+        "data": "African"
+    },
+    {
+        "attr": {
+            "id": 42,
+            "row": 42
+        },
+        "data": "folk"
+    },
+    {
+        "attr": {
+            "id": 43,
+            "row": 43
+        },
+        "data": "Speech"
+    },
+    {
+        "attr": {
+            "id": 44,
+            "row": 44
+        },
+        "data": "Classical"
+    },
+    {
+        "attr": {
+            "id": 45,
+            "row": 45
+        },
+        "data": "reggae"
+    },
+    {
+        "attr": {
+            "id": 46,
+            "row": 46
+        },
+        "data": "Samba"
+    },
+    {
+        "attr": {
+            "id": 47,
+            "row": 47
+        },
+        "data": "General Folk"
+    },
+    {
+        "attr": {
+            "id": 48,
+            "row": 48
+        },
+        "data": "Latin"
+    },
+    {
+        "attr": {
+            "id": 49,
+            "row": 49
+        },
+        "data": "Industrial Metal"
+    },
+    {
+        "attr": {
+            "id": 50,
+            "row": 50
+        },
+        "data": "General Reggae"
+    },
+    {
+        "attr": {
+            "id": 51,
+            "row": 51
+        },
+        "data": "Mashup"
+    },
+    {
+        "attr": {
+            "id": 52,
+            "row": 52
+        },
+        "data": "Bootleg"
+    },
+    {
+        "attr": {
+            "id": 53,
+            "row": 53
+        },
+        "data": "Hip Hop/Rock"
+    },
+    {
+        "attr": {
+            "id": 54,
+            "row": 54
+        },
+        "data": "Mash Up"
+    },
+    {
+        "attr": {
+            "id": 55,
+            "row": 55
+        },
+        "data": "Jazz+Funk"
+    },
+    {
+        "attr": {
+            "id": 56,
+            "row": 56
+        },
+        "data": "Club"
+    },
+    {
+        "attr": {
+            "id": 57,
+            "row": 57
+        },
+        "data": "Ethnic"
+    },
+    {
+        "attr": {
+            "id": 58,
+            "row": 58
+        },
+        "data": "General Pop"
+    },
+    {
+        "attr": {
+            "id": 59,
+            "row": 59
+        },
+        "data": "Comedy"
+    },
+    {
+        "attr": {
+            "id": 60,
+            "row": 60
+        },
+        "data": "Electronica"
+    },
+    {
+        "attr": {
+            "id": 61,
+            "row": 61
+        },
+        "data": "Dance"
+    },
+    {
+        "attr": {
+            "id": 62,
+            "row": 62
+        },
+        "data": "Heavy Metal"
+    },
+    {
+        "attr": {
+            "id": 63,
+            "row": 63
+        },
+        "data": "Soundtrack"
+    },
+    {
+        "attr": {
+            "id": 64,
+            "row": 64
+        },
+        "data": "Dance-Pop"
+    },
+    {
+        "attr": {
+            "id": 65,
+            "row": 65
+        },
+        "data": "Alternative Pop/Rock"
+    },
+    {
+        "attr": {
+            "id": 66,
+            "row": 66
+        },
+        "data": "House"
+    },
+    {
+        "attr": {
+            "id": 67,
+            "row": 67
+        },
+        "data": "Singer Songwriter"
+    },
+    {
+        "attr": {
+            "id": 68,
+            "row": 68
+        },
+        "data": "Crossover"
+    },
+    {
+        "attr": {
+            "id": 69,
+            "row": 69
+        },
+        "data": "Alternative & Punk"
+    },
+    {
+        "attr": {
+            "id": 70,
+            "row": 70
+        },
+        "data": "Ska Punk"
+    },
+    {
+        "attr": {
+            "id": 71,
+            "row": 71
+        },
+        "data": "Soul"
+    },
+    {
+        "attr": {
+            "id": 72,
+            "row": 72
+        },
+        "data": "Top 40"
+    },
+    {
+        "attr": {
+            "id": 73,
+            "row": 73
+        },
+        "data": "RnB"
+    },
+    {
+        "attr": {
+            "id": 74,
+            "row": 74
+        },
+        "data": "Sonstiges"
+    },
+    {
+        "attr": {
+            "id": 75,
+            "row": 75
+        },
+        "data": "Disco"
+    },
+    {
+        "attr": {
+            "id": 76,
+            "row": 76
+        },
+        "data": "Easy Listening"
+    },
+    {
+        "attr": {
+            "id": 77,
+            "row": 77
+        },
+        "data": "Oldies"
+    },
+    {
+        "attr": {
+            "id": 78,
+            "row": 78
+        },
+        "data": "pop"
+    },
+    {
+        "attr": {
+            "id": 79,
+            "row": 79
+        },
+        "data": "Ska"
+    },
+    {
+        "attr": {
+            "id": 80,
+            "row": 80
+        },
+        "data": "Timbaland"
+    },
+    {
+        "attr": {
+            "id": 81,
+            "row": 81
+        },
+        "data": "Folk"
+    },
+    {
+        "attr": {
+            "id": 82,
+            "row": 82
+        },
+        "data": "Tech House"
+    },
+    {
+        "attr": {
+            "id": 83,
+            "row": 83
+        },
+        "data": "Deep House"
+    },
+    {
+        "attr": {
+            "id": 84,
+            "row": 84
+        },
+        "data": "Bass"
+    },
+    {
+        "attr": {
+            "id": 85,
+            "row": 85
+        },
+        "data": "Minimal / Dancefloor"
+    },
+    {
+        "attr": {
+            "id": 86,
+            "row": 86
+        },
+        "data": "Minimal"
+    },
+    {
+        "attr": {
+            "id": 87,
+            "row": 87
+        },
+        "data": "Eelctronic"
+    },
+    {
+        "attr": {
+            "id": 88,
+            "row": 88
+        },
+        "data": "www.minimalistica.org"
+    },
+    {
+        "attr": {
+            "id": 89,
+            "row": 89
+        },
+        "data": "House / Deep House"
+    },
+    {
+        "attr": {
+            "id": 90,
+            "row": 90
+        },
+        "data": "DJ Tools"
+    },
+    {
+        "attr": {
+            "id": 91,
+            "row": 91
+        },
+        "data": "Techno, Neo Trance"
+    },
+    {
+        "attr": {
+            "id": 92,
+            "row": 92
+        },
+        "data": "Deep House / House / Tech House"
+    },
+    {
+        "attr": {
+            "id": 93,
+            "row": 93
+        },
+        "data": "house"
+    },
+    {
+        "attr": {
+            "id": 94,
+            "row": 94
+        },
+        "data": "Books & Spoken"
+    },
+    {
+        "attr": {
+            "id": 95,
+            "row": 95
+        },
+        "data": "ODC"
+    },
+    {
+        "attr": {
+            "id": 96,
+            "row": 96
+        },
+        "data": "Progressive House"
+    },
+    {
+        "attr": {
+            "id": 97,
+            "row": 97
+        },
+        "data": "electronic"
+    },
+    {
+        "attr": {
+            "id": 98,
+            "row": 98
+        },
+        "data": "Dubstep"
+    },
+    {
+        "attr": {
+            "id": 99,
+            "row": 99
+        },
+        "data": "Electro House"
+    },
+    {
+        "attr": {
+            "id": 100,
+            "row": 100
+        },
+        "data": "Prime Music"
+    },
+    {
+        "attr": {
+            "id": 101,
+            "row": 101
+        },
+        "data": "Minimal House \\ Techno; Minimal Techno; m"
+    },
+    {
+        "attr": {
+            "id": 102,
+            "row": 102
+        },
+        "data": "Downtempo - experimental/electronic"
+    },
+    {
+        "attr": {
+            "id": 103,
+            "row": 103
+        },
+        "data": "Neotrance"
+    },
+    {
+        "attr": {
+            "id": 104,
+            "row": 104
+        },
+        "data": "Minimal/tech house"
+    },
+    {
+        "attr": {
+            "id": 105,
+            "row": 105
+        },
+        "data": "Progressive house"
+    },
+    {
+        "attr": {
+            "id": 106,
+            "row": 106
+        },
+        "data": "Minimal Techno"
+    },
+    {
+        "attr": {
+            "id": 107,
+            "row": 107
+        },
+        "data": "Electro House, Techno"
+    },
+    {
+        "attr": {
+            "id": 108,
+            "row": 108
+        },
+        "data": "Tech-House"
+    },
+    {
+        "attr": {
+            "id": 109,
+            "row": 109
+        },
+        "data": "techno"
+    },
+    {
+        "attr": {
+            "id": 110,
+            "row": 110
+        },
+        "data": "www.mypromosound.com - http://mypromosound.blogspot.com"
+    },
+    {
+        "attr": {
+            "id": 111,
+            "row": 111
+        },
+        "data": "no genre"
+    },
+    {
+        "attr": {
+            "id": 112,
+            "row": 112
+        },
+        "data": "Minimal Tech"
+    },
+    {
+        "attr": {
+            "id": 113,
+            "row": 113
+        },
+        "data": "www.mypromosound.blogspot.com - www.mypromosound.com"
+    },
+    {
+        "attr": {
+            "id": 114,
+            "row": 114
+        },
+        "data": "Minimal, Techno"
+    },
+    {
+        "attr": {
+            "id": 115,
+            "row": 115
+        },
+        "data": "Psychedelic"
+    },
+    {
+        "attr": {
+            "id": 116,
+            "row": 116
+        },
+        "data": "www.electronicfresh.com"
+    },
+    {
+        "attr": {
+            "id": 117,
+            "row": 117
+        },
+        "data": "Techno, Minimal "
+    },
+    {
+        "attr": {
+            "id": 118,
+            "row": 118
+        },
+        "data": "Drum & Bass"
+    },
+    {
+        "attr": {
+            "id": 119,
+            "row": 119
+        },
+        "data": "Chillout"
+    },
+    {
+        "attr": {
+            "id": 120,
+            "row": 120
+        },
+        "data": "tech house"
+    },
+    {
+        "attr": {
+            "id": 121,
+            "row": 121
+        },
+        "data": "Dubstep/Grime"
+    },
+    {
+        "attr": {
+            "id": 122,
+            "row": 122
+        },
+        "data": "edm"
+    },
+    {
+        "attr": {
+            "id": 123,
+            "row": 123
+        },
+        "data": "Techno/Minimal"
+    },
+    {
+        "attr": {
+            "id": 124,
+            "row": 124
+        },
+        "data": "Drum and Bass"
+    },
+    {
+        "attr": {
+            "id": 125,
+            "row": 125
+        },
+        "data": "Drumstep"
+    }
+]

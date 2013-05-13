@@ -9,7 +9,7 @@ SidebarPluginTest::SidebarPluginTest(QString name, QWidget *parent)
     QPushButton* button = new QPushButton(parent);
     button->setCheckable(true);
     button->setText(name);
-    button->setProperty("style", QVariant("tabStyle"));
+   // button->setProperty("style", QVariant("tabStyle"));
     connect(button, SIGNAL(clicked(bool)), this, SIGNAL(show(bool)));
     menuBarWidget = button;
     sideBarWidget = new QWidget(parent);
