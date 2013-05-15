@@ -3,10 +3,11 @@
 
 #include <QWidget>
 #include <QIcon>
+#include "CorePlugin_global.h"
 
 namespace Core
 {
-    class ISettingsModuleWidget : public QWidget
+    class COREPLUGINSHARED_EXPORT ISettingsModuleWidget : public QWidget
     {
         Q_OBJECT
         public:

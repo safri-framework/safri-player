@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QList>
+#include "CorePlugin_global.h"
 
 class QListWidgetItem;
 
@@ -16,7 +17,7 @@ namespace Core
     class ISettingsModuleWidget;
     class SettingsManager;
 
-    class SettingsManagerDialog : public QDialog
+    class COREPLUGINSHARED_EXPORT SettingsManagerDialog : public QDialog
     {
         Q_OBJECT
         public:
