@@ -34,6 +34,7 @@ public slots:
     void dragEnterEvent(QDragEnterEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
+    void focusChanged(QWidget* oldFocus, QWidget* newFocus);
 
 };
 

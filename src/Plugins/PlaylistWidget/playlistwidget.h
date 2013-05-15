@@ -6,6 +6,7 @@
 #include "Interfaces/iplaylistwidget.h"
 #include <QPixmap>
 #include <QtWidgets/QLabel>
+#include <QModelIndex>
 
 namespace Ui { class PlaylistWidget; }
 
@@ -34,6 +35,7 @@ class PlaylistWidget : public Core::IPlaylistWidget
         void on_pushButton_clicked();
         void on_pushButton_2_clicked();
         void newPlaylist(QSharedPointer<Core::IPlaylist> pl);
+        void deleteSlot();
 
     private:
         void setPlaylist(QSharedPointer<Core::IPlaylist> pl);
@@ -43,6 +45,10 @@ class PlaylistWidget : public Core::IPlaylistWidget
         Ui::PlaylistWidget *ui;
         QSharedPointer<Core::IPlaylist> currentPL;
         bool isCurrentPl;
+        QAction* deleteAction;
+        QAction* deselectAction;
+        static bool indexLessThan(QModelIndex a, QModelIndex b);
+
 };
 
 #endif // PLAYLISTWIDGET_H

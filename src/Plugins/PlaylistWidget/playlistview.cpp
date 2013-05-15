@@ -3,6 +3,8 @@
 #include "playlistmodel.h"
 #include <QDrag>
 #include <QHeaderView>
+#include <QPushButton>
+
 PlaylistView::PlaylistView(QWidget *parent) :
     QTreeView(parent)
 {
@@ -11,6 +13,7 @@ PlaylistView::PlaylistView(QWidget *parent) :
     this->setDragDropOverwriteMode(true);
     this->setDragDropMode(QAbstractItemView::dragDropMode());
     this->setDropIndicatorShown(true);
+    connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
 
 }
 
@@ -152,3 +155,14 @@ void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 
     }
 }
+
+void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)
+{
+    QPushButton* btn = qobject_cast<QPushButton*>(newFocus);
+    if(oldFocus == this && !btn)
+    {
+        this->selectionModel()->clear();
+    }
+}
+
+

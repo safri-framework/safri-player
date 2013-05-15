@@ -5,6 +5,7 @@
 #include "../CorePlugin/iplaybackcontroller.h"
 #include "../CorePlugin/icore.h"
 #include "playlistitemdelegate.h"
+#include <QAction>
 #include <QHeaderView>
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) :
@@ -16,6 +17,12 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) :
     ui->playlistView->setItemDelegate(itemDelegate);
     ui->playlistView->setUniformRowHeights(false);
     connect(Core::ICore::playbackController(), SIGNAL(newPlaylistInstalled(QSharedPointer<Core::IPlaylist>)), this, SLOT(newPlaylist(QSharedPointer<Core::IPlaylist>)));
+    deleteAction = new QAction("Remove", this);
+    deleteAction->setEnabled(true);
+    deleteAction->setShortcut(QKeySequence::Delete);
+    this->ui->playlistView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    this->addAction(deleteAction);
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(deleteSlot()));
 }
 
 PlaylistWidget::~PlaylistWidget()
@@ -38,8 +45,6 @@ void PlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
     ui->playlistView->header()->setSectionResizeMode(6, QHeaderView::Fixed);
     ui->playlistView->header()->resizeSection(0,25);
     ui->playlistView->header()->resizeSection(1,25);
-
-
 }
 
 
@@ -62,7 +67,6 @@ void PlaylistWidget::isAnimated(bool animated)
         this->ui->playlistView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
     }
 }
-
 
 QSharedPointer<Core::IPlaylist> PlaylistWidget::newPlaylist()
 {
@@ -101,8 +105,15 @@ void PlaylistWidget::on_playlistView_doubleClicked(const QModelIndex &index)
 
 void PlaylistWidget::on_pushButton_clicked()
 {
-    QSharedPointer<Core::IPlaylist> pl = Core::ICore::createPlaylist();
-    setPlaylist(pl);
+    if(ui->playlistView->selectionModel()->selectedRows().size() > 0)
+    {
+        deleteAction->trigger();
+    }
+    else
+    {
+        QSharedPointer<Core::IPlaylist> pl = Core::ICore::createPlaylist();
+        setPlaylist(pl);
+    }
 }
 
 void PlaylistWidget::on_pushButton_2_clicked()
@@ -127,10 +138,22 @@ void PlaylistWidget::newPlaylist(QSharedPointer<Core::IPlaylist> pl)
     }
 }
 
+void PlaylistWidget::deleteSlot()
+{
+    QModelIndexList selectedIndizes = ui->playlistView->selectionModel()->selectedRows();
+    qSort( selectedIndizes.begin(), selectedIndizes.end(), PlaylistWidget::indexLessThan);
+    qDebug()<<selectedIndizes.size();
+
+    for(int i = selectedIndizes.size()-1; i >= 0; i--)
+    {
+        qDebug()<<selectedIndizes.at(i).row();
+        currentPL->deleteMedia(selectedIndizes.at(i).row());
+    }
+}
+
 void PlaylistWidget::setPlaylist(QSharedPointer<Core::IPlaylist> pl)
 {
     QAbstractItemModel* model = ui->playlistView->model();
-     //TODO: Check if old Playlist will be deleted.
     if (!pl.isNull())
     {
         if(model)
@@ -159,3 +182,13 @@ void PlaylistWidget::setPlaylist(QSharedPointer<Core::IPlaylist> pl)
         qDebug()<<"model is empty ):";
     }
 }
+
+bool PlaylistWidget::indexLessThan(QModelIndex a, QModelIndex b)
+{
+    if(a.row() < b.row())
+        return true;
+    else
+        return false;
+}
+
+
