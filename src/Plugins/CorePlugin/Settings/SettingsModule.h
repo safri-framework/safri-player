@@ -19,13 +19,14 @@ namespace Core
             virtual QString             getModulename();
             virtual QVariant            getSetting(QString setting);
             virtual void                setSetting(QString setting, QVariant value);
+            bool                        isModified();
 
 
         protected:
 
             QMap<QString, QVariant>     getSettingsMap();
             void                        setSettingsMap(QMap<QString, QVariant> settings);
-            bool                        isModified();
+
 
             QMap<QString, QVariant> settings;
             bool modified;

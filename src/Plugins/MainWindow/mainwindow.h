@@ -61,6 +61,8 @@ class MainWindow : public QMainWindow
 
         void on_actionSave_triggered();
 
+        void on_actionSettings_triggered();
+
 public slots:
 
         void pluginAdded(QObject* plugin);

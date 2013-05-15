@@ -357,8 +357,15 @@
     <addaction name="actionAdd_folder"/>
     <addaction name="actionSave"/>
    </widget>
+   <widget class="QMenu" name="menuEinstellungen">
+    <property name="title">
+     <string>Einstellungen</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
    <addaction name="menuPlugin"/>
    <addaction name="menuHinzuf_gen"/>
+   <addaction name="menuEinstellungen"/>
   </widget>
   <action name="actionPlugins_show">
    <property name="text">
@@ -373,6 +380,11 @@
   <action name="actionSave">
    <property name="text">
     <string>Speichern</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Einstellungen</string>
    </property>
   </action>
  </widget>

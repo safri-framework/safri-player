@@ -18,6 +18,10 @@ namespace Core
             virtual QVariant    getSetting(QString setting) = 0;
             virtual void        setSetting(QString setting, QVariant value) = 0;
 
+        public:
+
+            virtual bool                isModified() = 0;
+
         signals:
 
             void settingsChanged(QString setting);

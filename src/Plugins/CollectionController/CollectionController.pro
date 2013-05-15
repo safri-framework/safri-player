@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += widgets
 
 TARGET = CollectionController
 TEMPLATE = lib
@@ -20,12 +20,20 @@ LIBS += -L"../../../bin/plugins/safri" -lCore
 DEFINES += COLLECTIONCONTROLLER_LIBRARY
 
 SOURCES += CollectionController.cpp \
-    CollectionControllerPlugin.cpp
+    CollectionControllerPlugin.cpp \
+    CollectionControllerSettingsDialog.cpp
 
 HEADERS += CollectionController.h\
         CollectionController_global.h \
-    CollectionControllerPlugin.h
+    CollectionControllerPlugin.h \
+    CollectionControllerSettingsDialog.h
 
 OTHER_FILES += \
     collectioncontroller.json
+
+FORMS += \
+    CollectionControllerSettingsDialog.ui
+
+RESOURCES += \
+    ressources.qrc
 

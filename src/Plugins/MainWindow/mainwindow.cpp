@@ -330,3 +330,8 @@ void MainWindow::on_actionSave_triggered()
 {
     Core::ICore::collectionController()->saveCollections();
 }
+
+void MainWindow::on_actionSettings_triggered()
+{
+    Core::ICore::showSettingsDialog();
+}

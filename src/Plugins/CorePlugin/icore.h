@@ -49,6 +49,7 @@ namespace Core
             static IMediaBackend*               getBackendForMedia(Media* media);
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName);
+            static void                         showSettingsDialog();
 
 
         private slots:

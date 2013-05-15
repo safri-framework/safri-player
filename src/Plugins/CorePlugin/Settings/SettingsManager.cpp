@@ -15,7 +15,7 @@ SettingsManager::SettingsManager(QObject *parent) :
     QObject(parent)
 {
     this->registerModule( new SettingsModule("org.safri.core.view") );
-    this->registerModule( new SettingsModule("org.safri.collection.audio") );
+    this->registerModule( new SettingsModule("org.safri.collection") );
     this->registerModule( new SettingsModule("org.safri.core.albumCover") );
 
     this->loadSettings();

@@ -19,20 +19,23 @@ DEFINES += PLAYERWIDGETII_LIBRARY
 SOURCES += \
     widget.cpp \
     plwidgetfactory.cpp \
-    playerwidgetII_plugin.cpp
+    playerwidgetII_plugin.cpp \
+    PlayerSettingsDialog.cpp
 
 HEADERS +=\
         PlayerWidgetII_global.h \
     widget.h \
     plwidgetfactory.h \
-    playerwidgetII_plugin.h
+    playerwidgetII_plugin.h \
+    PlayerSettingsDialog.h
 
 OTHER_FILES += \
     styles.css \
     playerwidgetII.json
 
 FORMS += \
-    widget.ui
+    widget.ui \
+    PlayerSettingsDialog.ui
 
 RESOURCES += \
     ressources.qrc \

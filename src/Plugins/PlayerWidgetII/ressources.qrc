@@ -8,6 +8,7 @@
         <file>SAFRI_UI/repeat_icon.png</file>
         <file>SAFRI_UI/shuffle_icon.png</file>
         <file>SAFRI_UI/pause_icon2.png</file>
+        <file>SAFRI_UI/player_icon.png</file>
     </qresource>
     <qresource prefix="/backgrounds">
         <file>SAFRI_UI/background.png</file>

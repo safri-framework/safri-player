@@ -1,6 +1,8 @@
 #include "CollectionControllerPlugin.h"
 #include "CollectionController.h"
 #include "../CorePlugin/icore.h"
+#include "CollectionControllerSettingsDialog.h"
+#include "Settings/SettingsManager.h"
 #include <QDebug>
 
 CollectionControllerPlugin::CollectionControllerPlugin()
@@ -17,6 +19,8 @@ bool CollectionControllerPlugin::initialize(QStringList &arguments)
     Controller::CollectionController* collController = new Controller::CollectionController();
 
     addObject(collController);
+    addObject(new CollectionControllerSettingsDialog(Core::ICore::settingsManager()->getModule("org.safri.collection")));
+
     return collController->loadMediaCollection(databasePath);
 
 

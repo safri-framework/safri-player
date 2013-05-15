@@ -59,7 +59,7 @@ Core::IMediaCollection *AudioSQLStorage::loadMediaCollection()
         return 0;
     }
 
-    QString defaultCollectionName = Core::ICore::settingsManager()->getModule("org.safri.collection.audio")->getSetting("defaultCollectionName").toString();
+    QString defaultCollectionName = Core::ICore::settingsManager()->getModule("org.safri.collection")->getSetting("defaultCollectionName").toString();
     mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio", defaultCollectionName);
     audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
 

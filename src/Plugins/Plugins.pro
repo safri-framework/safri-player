@@ -22,6 +22,6 @@ SUBDIRS += \
         SafriMobileGuiQML \
     ShoutCastPlugin \
     AudioSQLStorage \
-    TouchEventFilterPlugin \
+#    TouchEventFilterPlugin \
     RESTWebAPI \
     LastFMInfoResolver

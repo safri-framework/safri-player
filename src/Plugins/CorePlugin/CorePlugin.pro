@@ -58,7 +58,9 @@ SOURCES += coreplugin.cpp \
 				CoreSupply/AbstractInfoResolver.cpp \
     Settings/SettingsModule.cpp \
     Interfaces/ISettingsModule.cpp \
-    Settings/SettingsManager.cpp
+    Settings/SettingsManager.cpp \
+    Settings/SettingsManagerDialog.cpp \
+    Interfaces/ISettingsModuleWidget.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -111,8 +113,13 @@ HEADERS += coreplugin.h\
 				CoreSupply/AbstractInfoResolver.h \
     Settings/SettingsModule.h \
     Interfaces/ISettingsModule.h \
-    Settings/SettingsManager.h
+    Settings/SettingsManager.h \
+    Settings/SettingsManagerDialog.h \
+    Interfaces/ISettingsModuleWidget.h
 
 OTHER_FILES += \
     Core.xml \
     coreplugin.json
+
+FORMS += \
+    Settings/SettingsManagerDialog.ui

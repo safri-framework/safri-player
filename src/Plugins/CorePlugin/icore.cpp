@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QStandardPaths>
+#include "Settings/SettingsManagerDialog.h"
 
 using namespace Core;
 
@@ -162,6 +163,16 @@ IMediaCollection *ICore::createMediaCollection(QString type, QString collectionN
     }
 
     return 0;
+}
+
+void ICore::showSettingsDialog()
+{
+    SettingsManagerDialog dialog(ICore::settingsManager());
+
+    if ( dialog.exec() == QDialog::Accepted )
+    {
+        dialog.saveSettings();
+    }
 }
 
 
