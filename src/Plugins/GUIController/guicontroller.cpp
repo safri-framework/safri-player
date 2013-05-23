@@ -45,7 +45,7 @@ Core::IPlaylistWidget *GUIController::getPlaylistWidget()
 
 QList<Core::ISideBarPlugin*> GUIController::getSideBarPlugins()
 {
-        //fettes TODO!
+    //fettes TODO! Hier muss noch eine lokale Liste der SideBar Plugins angelegt werden.
     return QList<Core::ISideBarPlugin*>();
 }
 
