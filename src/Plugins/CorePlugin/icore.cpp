@@ -8,6 +8,7 @@
 #include "Interfaces/imediacollectionfactory.h"
 #include "CoreData/media.h"
 #include "CoreSupply/infocontroller.h"
+#include "CoreSupply/AssetController.h"
 #include "Settings/SettingsManager.h"
 
 #include <QDebug>
@@ -25,6 +26,8 @@ ICore::ICore()
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
     m_infoController = new Controller::InfoController(this);
+    m_assetController = new Controller::AssetController(this);
+    PluginSystem::PluginManager::instance()->addObject(m_assetController);
     m_settingsManager = SettingsManager::getInstance();
 }
 

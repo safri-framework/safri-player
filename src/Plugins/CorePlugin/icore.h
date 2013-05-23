@@ -9,7 +9,11 @@
 
 
 namespace Plugins { class CorePlugin; }
-namespace Controller { class InfoController; }
+namespace Controller
+{
+    class InfoController;
+    class AssetController;
+}
 
 namespace Core
 {
@@ -24,6 +28,7 @@ namespace Core
     class IMediaCollection;
     class IMediaCollectionFactory;
     class SettingsManager;
+
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
     {
@@ -49,6 +54,7 @@ namespace Core
             static IMediaBackend*               getBackendForMedia(Media* media);
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName);
+            static Controller::AssetController* assetController();
             static void                         showSettingsDialog();
 
 
@@ -66,6 +72,7 @@ namespace Core
             Controller::InfoController*  m_infoController;
             ICollectionController* m_collectionController;
             SettingsManager* m_settingsManager;
+            Controller::AssetController* m_assetController;
             QMap<QString, IMediaBackend*> m_mediaBackends;
             QMap<QString, IMediaCollectionFactory*> m_collectionFactories;
     };

@@ -60,7 +60,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/ISettingsModule.cpp \
     Settings/SettingsManager.cpp \
     Settings/SettingsManagerDialog.cpp \
-    Interfaces/ISettingsModuleWidget.cpp
+    Interfaces/ISettingsModuleWidget.cpp \
+    Interfaces/IAssetService.cpp \
+    CoreSupply/AssetController.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -115,7 +117,9 @@ HEADERS += coreplugin.h\
     Interfaces/ISettingsModule.h \
     Settings/SettingsManager.h \
     Settings/SettingsManagerDialog.h \
-    Interfaces/ISettingsModuleWidget.h
+    Interfaces/ISettingsModuleWidget.h \
+    Interfaces/IAssetService.h \
+    CoreSupply/AssetController.h
 
 OTHER_FILES += \
     Core.xml \
