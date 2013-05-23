@@ -24,10 +24,7 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     // if the model gets deleted
     songTree->setParent(this);
 
-
-
     //this->setSupportedDragActions(Qt::drag);
-
     //connect(songTree, SIGNAL(itemInserted(SongTreeItem*,int)), this, SLOT(insertItem(SongTreeItem*,int)));
     //connect(songTree, SIGNAL(itemRemoved(SongTreeItem*,int)), this, SLOT(removeItem(SongTreeItem*,int)));
 
@@ -42,7 +39,6 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
 Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
-
     if (index.isValid())
     {
         SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
@@ -56,7 +52,6 @@ Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
         {
             return Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable | defaultFlags ;
         }
-
     }
     else
     {
@@ -74,7 +69,6 @@ Qt::DropActions SongTreeModel::supportedDragActions () const
 }
 
 
-
 QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData();
@@ -86,50 +80,32 @@ QMimeData *SongTreeModel::mimeData(const QModelIndexList &indexes) const
     foreach (QModelIndex index, indexes) {
         if (index.isValid()) {
             qint64 pointer = (qint64) index.internalPointer();
-
-
             QString text = data(index, Qt::DisplayRole).toString();
             stream <<  pointer ;
 
             SongTreeItem* item = (SongTreeItem*) index.internalPointer();
             QList<Song*> songlist = item->getSongs();
 
-
             for (int i = 0; i < songlist.size(); i++)
             {
                 urlList.append(QUrl::fromLocalFile(songlist.at(i)->getFileName()));
 
             }
-
-
         }
     }
 
     mimeData->setData("Item", encodedData);
     mimeData->setUrls(urlList);
     return mimeData;
-
 }
-
-
-
-
-
-
 
 
 bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     Q_UNUSED(column)
     SongTreeItem* item  = (SongTreeItem*) parent.internalPointer();
-
-
-
-
     if (parent.isValid())
     {
-
-
         if (action == Qt::IgnoreAction)
             return true;
 
@@ -158,11 +134,7 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             //newItems[id][row][column] = text;
             SongTreeItem* item = (SongTreeItem*) pointer;
             draggedItems.append(item);
-
         }
-
-
-
 
         SongTreeItem *droppTargetItem = item;
         //qDebug()<< BaseDTO::typeToString(droppTargetItem->getDTOPtr()->getType());
@@ -179,52 +151,6 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             }
         }
 
-
-        /*
-        QString artist;
-        QString genre;
-        QString album;
-
-
-        // Find out the new attributes for the dragged Items
-
-        while (item->getParentItem() != 0)
-        {
-
-            QString type = item->getTypeName();
-            if (type == "ArtistType")
-            {
-                artist = item->getDTOPtr()->getName();
-                //artist = item->getName();
-            }
-            if (type == "AlbumType")
-            {
-                album = item->getDTOPtr()->getName();
-            }
-            if (type == "GenreType")
-            {
-                genre = item->getDTOPtr()->getName();
-            }
-
-            item = item->getParentItem();
-        }
-
-
-        qDebug()<<artist<<"  "<<album<<"  "<<genre;
-        for (int i = 0; i < songList.size(); i++)
-        {
-
-           // change settings in underlying data structure
-           Q_EMIT songAttributesChanged(songList.at(i), artist, album, genre);
-
-        }
-        */
-
-
-
-
-        qDebug() << "Bis hierher?";
-
         QList<SongTreeItem*> previousParents;
 
         for (int i = 0; i < actuallyDraggedItems.size(); i++)
@@ -234,25 +160,6 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             songTree->move(source, droppTargetItem);
         }
 
-        //Q_EMIT dragAndDropOperation(actuallyDraggedItems, previousParents, droppTargetItem );
-
-        /*
-        for (int i = 0; i < songList.size(); i++)
-        {
-
-
-           songTree->addSong(songList.at(i));
-
-        }
-
-        for (int i = 0; i < actuallyDraggedItems.size(); i++)
-        {
-            SongTreeItem* item = actuallyDraggedItems.at(i);
-            item->remove();
-        }
-        */
-
-
         Q_EMIT dropOperationOccured();
         return true;
     }
@@ -261,9 +168,6 @@ bool SongTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return false;
     }
 }
-
-
-
 
 
 QStringList SongTreeModel::mimeTypes() const
@@ -320,20 +224,15 @@ QModelIndex SongTreeModel::parent(const QModelIndex &index) const
 }
 
 
-
 QVariant SongTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section)
-
     if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
     {
         return "";
     }
-
     return QVariant();
 }
-
-
 
 
 QVariant SongTreeModel::data(const QModelIndex &index, int role) const
@@ -370,17 +269,6 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
 
         case coverRole:
-        /*
-            if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
-            {
-                Album* album = (Album*) dataItemPtr;
-                return QString("file://") + album->getCoverFile();
-            }
-            else
-            {
-                return QVariant();
-            }
-            */
         if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
         {
 
@@ -416,7 +304,6 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
                 if (item->getTypeName() == "AlbumType")
                 {
-
                     tooltipText+="ARTISTS \n\n";
                     Album* album = (Album*) item->getDataItemPtr();
                     QList<Artist*> artists = album->getArtists();

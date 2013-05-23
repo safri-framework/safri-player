@@ -14,6 +14,7 @@
     \brief model for the song tree
 */
 using namespace Core;
+
 class COREPLUGINSHARED_EXPORT SongTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
