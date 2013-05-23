@@ -29,8 +29,6 @@ AudioCollection::AudioCollection(QString name):m_name(name),
     m_nameToArtistMap = new QMap<QString, Artist*>;
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
-
-    connect(this, SIGNAL(newAlbumInserted(Core::Album*)), this, SLOT(AlbumInsertedSlot(Album*)));
 }
 
 AudioCollection::~AudioCollection()
@@ -645,18 +643,3 @@ int AudioCollection::newSongID()
     return ++currentSongID;
 }
 
-void AudioCollection::AlbumInsertedSlot(Album *album)
-{
-    Controller::InfoController* controller = Core::ICore::infoController();
-    Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover", album);
-    connect(request, SIGNAL(infoDataAvailable()), this, SLOT(AlbumCoverReceived()));
-}
-
-void AudioCollection::AlbumCoverReceived()
-{
-    Core::InfoRequest* req = qobject_cast<InfoRequest*>(sender());
-    if(req)
-    {
-        // TODO
-    }
-}
