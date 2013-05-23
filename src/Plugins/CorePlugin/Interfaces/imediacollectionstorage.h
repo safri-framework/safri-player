@@ -13,6 +13,7 @@ namespace Core
      * @brief   The IMediaCollectionStorage provides an interface to
      *          load and save MediaCollections.
      */
+
     class COREPLUGINSHARED_EXPORT IMediaCollectionStorage : public QObject
     {
         Q_OBJECT
