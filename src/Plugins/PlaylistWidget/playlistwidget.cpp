@@ -141,14 +141,28 @@ void PlaylistWidget::newPlaylist(QSharedPointer<Core::IPlaylist> pl)
 void PlaylistWidget::deleteSlot()
 {
     QModelIndexList selectedIndizes = ui->playlistView->selectionModel()->selectedRows();
-    qSort( selectedIndizes.begin(), selectedIndizes.end(), PlaylistWidget::indexLessThan);
-    qDebug()<<selectedIndizes.size();
 
+
+    QList<int> intList;
+    for (int i = 0; i < selectedIndizes.size(); i++)
+    {
+        intList.append(selectedIndizes.at(i).row());
+    }
+
+    qSort(intList.begin(),intList.end());
+
+    for(int i = intList.size()-1;  i >= 0 ; i--)
+    {
+        currentPL->deleteMedia(intList.at(i));
+    }
+
+    /*
+    qSort( selectedIndizes.begin(), selectedIndizes.end(), PlaylistWidget::indexLessThan);
     for(int i = selectedIndizes.size()-1; i >= 0; i--)
     {
-        qDebug()<<selectedIndizes.at(i).row();
         currentPL->deleteMedia(selectedIndizes.at(i).row());
     }
+    */
 }
 
 void PlaylistWidget::setPlaylist(QSharedPointer<Core::IPlaylist> pl)
