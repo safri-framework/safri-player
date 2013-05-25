@@ -24,4 +24,5 @@ SUBDIRS += \
     AudioSQLStorage \
 #    TouchEventFilterPlugin \
     RESTWebAPI \
-    LastFMInfoResolver
+    LastFMInfoResolver \
+    AlbumCovers
