@@ -1,0 +1,10 @@
+#include "AlbumCoversPlugin.h"
+
+
+AlbumCoversPlugin::AlbumCoversPlugin()
+{
+}
+
+bool AlbumCoversPlugin::initialize(QStringList &arguments)
+{
+}
