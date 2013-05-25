@@ -1,5 +1,4 @@
 #include <QtWidgets/QApplication>
-//#include <QGuiApplication>
 #include <QDesktopServices>
 
 #include "pluginmanager.h"
@@ -9,12 +8,13 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QUrl>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    //a.setApplicationName("Safri-Player");
+    a.setApplicationName("Safri-Player");
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "\n\n";
 
@@ -22,9 +22,12 @@ int main(int argc, char *argv[])
     paths << "plugins/";
 
     QString selectedPluginsFile =  QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
-#ifdef Q_OS_LINUX
-    selectedPluginsFile.chop(2);
-#endif
+
+    QDir dir(selectedPluginsFile);
+    if(!dir.exists())
+    {
+        dir.mkpath(selectedPluginsFile);
+    }
 
     selectedPluginsFile = selectedPluginsFile+("/selectedplugins.lst");
     qDebug()<<selectedPluginsFile;
@@ -33,7 +36,9 @@ int main(int argc, char *argv[])
 
     if (!fileInfo.exists())
     {
-        QFile::copy(":/defaults/selectedplugins.lst", selectedPluginsFile);
+
+        qDebug()<<"Does not exist";
+        qDebug()<<QFile::copy(":/defaults/selectedplugins.lst", selectedPluginsFile);
     }
 
     PluginSystem::PluginManager manager("Safri.Core", paths, selectedPluginsFile);
