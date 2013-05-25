@@ -137,11 +137,6 @@ ICollectionController *ICore::collectionController()
 QString ICore::storageDirectory()
 {
     QString storageLocation = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
-
-#ifdef Q_OS_LINUX
-    storageLocation.chop(2);
-#endif
-
     return  storageLocation;
 }
 
