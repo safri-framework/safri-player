@@ -1,6 +1,7 @@
 #ifndef IMEDIACOLLECTIONFACTORY_H
 #define IMEDIACOLLECTIONFACTORY_H
 
+#include <QUrl>
 #include <QObject>
 #include <QString>
 #include "CorePlugin_global.h"
@@ -16,7 +17,7 @@ namespace Core
             explicit IMediaCollectionFactory(QObject *parent = 0);
 
             virtual QString             getCollectionType() = 0;
-            virtual IMediaCollection*   createMediaCollection(QString name) = 0;
+            virtual IMediaCollection*   createMediaCollection(QString name, QUrl url = QUrl()) = 0;
     };
 }
 

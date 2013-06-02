@@ -17,7 +17,7 @@ class AudioCollection : public Core::IAudioCollection
 
 
     public:
-        explicit AudioCollection(QString name);
+        explicit AudioCollection(QString name, QUrl url = QUrl());
         ~AudioCollection();
 
          // ------------------- Media Collection Interface
@@ -28,6 +28,7 @@ class AudioCollection : public Core::IAudioCollection
         QList<DataItem*> getDataItems(DataItem::DATA_ITEM_TYPE type);
         QList<Media*> getMedia();
         QString getName();
+        QUrl getAssetFolderPath(QString subfolder);
         bool isAvailable();
         void lockForRead();
         void lockForWrite();

@@ -16,6 +16,7 @@ namespace Core
         explicit IAssetService(QObject *parent = 0);
         virtual QVariant getAsset(Core::DataItem* item) = 0;
         virtual QString getName() = 0;
+        virtual DataItem::DATA_ITEM_TYPE getAssetType();
     };
 }
 

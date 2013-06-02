@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include "../Interfaces/IAssetService.h"
+#include "CoreData/dataitem.h"
 
 namespace Controller
 {
@@ -21,7 +22,8 @@ namespace Controller
     private slots:
         void objectAdded(QObject* object);
     private:
-        QMap<QString, Core::IAssetService*>  assetServices;
+        void addService(Core::IAssetService* service);
+        QMap<Core::DataItem::DATA_ITEM_TYPE, QMap<QString, Core::IAssetService*>*>  assetServices;
 
     };
 }

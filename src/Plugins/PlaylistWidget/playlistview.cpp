@@ -14,7 +14,6 @@ PlaylistView::PlaylistView(QWidget *parent) :
     this->setDragDropMode(QAbstractItemView::dragDropMode());
     this->setDropIndicatorShown(true);
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
-
 }
 
 

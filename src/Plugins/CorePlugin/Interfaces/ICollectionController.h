@@ -5,6 +5,7 @@
 #include <QList>
 #include <QUrl>
 #include "../CorePlugin_global.h"
+#include "../CoreData/dataitem.h"
 
 namespace Core
 {
@@ -23,10 +24,10 @@ namespace Core
             virtual bool                            saveCollections() = 0;
 
         signals:
-
             void mediaCollectionRemoved(QUrl filename);
             void mediaCollectionAdded(IMediaCollection* collection);
             void mediaCollectionChanged(QUrl filename);
+            void newItem(Core::DataItem* item);
 
     };
 }

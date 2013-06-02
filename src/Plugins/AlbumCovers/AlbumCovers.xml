@@ -1,0 +1,15 @@
+<SafriPlugin name="AlbumCovers" version="0.1">
+
+    <vendor>Safri</vendor>
+
+    <copyright>Sa &amp; Fri</copyright>
+    <license>GNU</license>
+    <description>Is responsible for loading and publishing AlbumCovers</description>
+    <url>www.safri-player.org</url>
+    <category>Safri Core</category>
+
+    <dependencyList>
+        <dependency name="" version="">
+    </dependencyList>
+
+</SafriPlugin>

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += gui widgets
 
 TARGET = AlbumCovers
 TEMPLATE = lib
@@ -18,11 +18,13 @@ LIBS += -L"../../../bin/plugins/safri" -lCore
 DEFINES += ALBUMCOVERS_LIBRARY
 
 SOURCES += AlbumCoversPlugin.cpp \
-    CoverAssetService.cpp
+    AlbumCoversAssetService.cpp \
+    CoverSettingsWidget.cpp
 
 HEADERS += AlbumCoversPlugin.h\
         albumcovers_global.h \
-    CoverAssetService.h
+    AlbumCoversAssetService.h \
+    CoverSettingsWidget.h
 
 unix:!symbian {
     maemo5 {
@@ -36,3 +38,6 @@ unix:!symbian {
 OTHER_FILES += \
     albumcovers.json \
     AlbumCovers.xml
+
+FORMS += \
+    CoverSettingsWidget.ui

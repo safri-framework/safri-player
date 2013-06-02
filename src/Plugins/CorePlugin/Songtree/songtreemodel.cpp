@@ -11,6 +11,7 @@
 #include "databasedao.h"
 **/
 
+#include "../CoreSupply/AssetController.h"
 #include "../CoreData/song.h"
 #include "../CoreData/dataitem.h"
 #include "../icore.h"
@@ -288,6 +289,7 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
             break;
 
         case Qt::ToolTipRole:
+        /*
             return item->getName();
 
             if (item->getDataItemPtr())
@@ -353,7 +355,7 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
             }
             break;
-
+        */
         case Qt::DecorationRole:
 
 
@@ -364,7 +366,7 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
             if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
             {
-
+                /*
                 QString coverPath;
                 coverPath = ICore::storageDirectory() + "/covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
                 QImage image(coverPath);
@@ -373,6 +375,9 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
                     image = QImage(":/icons/ressources/default.png");
                 }
                 return image;
+                */
+
+                return ICore::instance()->assetController()->getAsset("DisplayRole", dataItemPtr);
             }
 
             if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ARTIST)

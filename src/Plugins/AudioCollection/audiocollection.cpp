@@ -7,10 +7,10 @@
 #include "CoreSupply/infocontroller.h"
 #include "CoreSupply/InfoRequest.h"
 #include <QDebug>
-
+#include <QDir>
 #include <QCryptographicHash>
 
-AudioCollection::AudioCollection(QString name):m_name(name),
+AudioCollection::AudioCollection(QString name, QUrl url):m_name(name),
     currentAlbumID(0),
     currentArtistID(0),
     currentGenreID(0),
@@ -29,6 +29,7 @@ AudioCollection::AudioCollection(QString name):m_name(name),
     m_nameToArtistMap = new QMap<QString, Artist*>;
     m_nameToAlbumMap = new QMap<QString, Album*>;
     m_nameToGenreMap = new QMap<QString, Genre*>;
+    m_rootPath = url;
 }
 
 AudioCollection::~AudioCollection()
@@ -201,6 +202,15 @@ QList<Core::Media *> AudioCollection::getMedia()
 QString AudioCollection::getName()
 {
     return this->m_name;
+}
+
+QUrl AudioCollection::getAssetFolderPath(QString subfolder)
+{
+    QUrl url(this->getRootPath().toString()+"/Assets/"+subfolder);
+    QDir assetFolder(url.toString());
+    if(!assetFolder.exists())
+        assetFolder.mkpath(url.toString());
+    return url;
 }
 
 

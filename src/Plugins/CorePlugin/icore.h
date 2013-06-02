@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QMap>
 #include <QSharedPointer>
-
+#include <QUrl>
 
 namespace Plugins { class CorePlugin; }
 namespace Controller
@@ -14,6 +14,7 @@ namespace Controller
     class InfoController;
     class AssetController;
 }
+
 
 namespace Core
 {
@@ -53,8 +54,8 @@ namespace Core
             static QString                      storageDirectory();
             static IMediaBackend*               getBackendForMedia(Media* media);
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
-            static IMediaCollection*            createMediaCollection(QString type, QString collectionName);
-            static Controller::AssetController* assetController();
+            static IMediaCollection*            createMediaCollection(QString type, QString collectionName, QUrl url = QUrl());
+             Controller::AssetController*       assetController();
             static void                         showSettingsDialog();
 
 

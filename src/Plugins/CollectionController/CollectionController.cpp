@@ -59,6 +59,7 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
         {
             m_collectionMap.insert(filename.toString(), mediaCollection);
             m_collectionHashMap.insert(mediaCollection->getHash(), mediaCollection);
+            connect(mediaCollection, SIGNAL(itemAdded(Core::DataItem*)), this, SIGNAL(newItem(Core::DataItem*)));
             delete collectionStorage;
             return true;
         }

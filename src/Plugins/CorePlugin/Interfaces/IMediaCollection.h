@@ -25,6 +25,7 @@ namespace Core
             virtual QList<Core::DataItem*> getDataItems(DataItem::DATA_ITEM_TYPE type) = 0;
             virtual QList<Core::Media*> getMedia() = 0;
             virtual QString getName() = 0;
+            virtual QUrl getAssetFolderPath(QString subfolder) = 0;
             virtual bool isAvailable() = 0;
             virtual QUrl getRootPath() = 0;
             virtual QString getHash() = 0;
@@ -38,9 +39,8 @@ namespace Core
             virtual void addMedia(MediaInfoContainer container) = 0;
 
         signals:
-
             void itemAdded(Core::DataItem* item);
-            void itemRemoved(Core::DataItem* item);
+            void itemRemoved(Core::DataItem* item);    
 
     };
 }

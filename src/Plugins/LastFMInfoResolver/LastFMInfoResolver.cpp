@@ -77,6 +77,11 @@ void LastFMInfoResolver::coverRequestCallBack()
         {
             Q_EMIT coverFound(domNodeList.at(2).toElement().text());
         }
+        else
+        {
+            Q_EMIT error("No Cover found  )= ");
+            setInfo(QVariant());
+        }
     }
     else
     {

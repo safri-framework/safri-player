@@ -322,7 +322,10 @@ void MainWindow::on_actionAdd_folder_triggered()
 
         Core::FileSystemInserter* inserter = new Core::FileSystemInserter(collection);
 
-        inserter->insertMedia(QUrl(directory), taggers.at(0));
+        if(taggers.size() > 0)
+            inserter->insertMedia(QUrl(directory), taggers.at(0));
+        else
+            qDebug()<<"No Media-Taggers found!";
     }
 }
 

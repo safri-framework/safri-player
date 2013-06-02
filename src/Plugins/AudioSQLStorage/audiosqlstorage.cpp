@@ -8,7 +8,7 @@
 #include "CoreData/audio.h"
 #include "Interfaces/IAudioCollection.h"
 #include "Settings/SettingsManager.h"
-
+#include <QFileInfo>
 #include "SQLStatements.h"
 
 using namespace Core;
@@ -60,7 +60,7 @@ Core::IMediaCollection *AudioSQLStorage::loadMediaCollection()
     }
 
     QString defaultCollectionName = Core::ICore::settingsManager()->getModule("org.safri.collection")->getSetting("defaultCollectionName").toString();
-    mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio", defaultCollectionName);
+    mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio", defaultCollectionName, QFileInfo(url.toString()).absolutePath());
     audioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
 
     if ( !audioCollection )

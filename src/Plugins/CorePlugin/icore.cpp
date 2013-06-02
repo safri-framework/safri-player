@@ -15,6 +15,7 @@
 #include <QDesktopServices>
 #include <QStandardPaths>
 #include "Settings/SettingsManagerDialog.h"
+#include <QUrl>
 
 using namespace Core;
 
@@ -151,16 +152,20 @@ IMediaBackend *ICore::getBackendForMimeType(QString mimeType)
     return m_instance->m_mediaBackends.value(mimeType, 0);
 }
 
-IMediaCollection *ICore::createMediaCollection(QString type, QString collectionName)
+IMediaCollection *ICore::createMediaCollection(QString type, QString collectionName, QUrl url)
 {
     IMediaCollectionFactory* factory = m_instance->m_collectionFactories.value(type);
-
     if (factory != 0)
     {
-        return factory->createMediaCollection(collectionName);
+            return factory->createMediaCollection(collectionName, url);
     }
 
     return 0;
+}
+
+Controller::AssetController *ICore::assetController()
+{
+    return m_assetController;
 }
 
 void ICore::showSettingsDialog()
