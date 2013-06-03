@@ -457,11 +457,15 @@ void AudioCollection::removeGenre(Genre *genre)
 
 void AudioCollection::insertGenre(Genre* genre)
 {
+
     m_lock.lockForWrite();
+        int ID = genre->getID();
         genre->setMediaCollection(this);
         m_genreList->append(genre);
-        m_IDtoGenreMap->insert(genre->getID(), genre);
+        m_IDtoGenreMap->insert(ID, genre);
         m_nameToGenreMap->insert(genre->getName(), genre);
+        if(ID > currentGenreID)
+            currentGenreID = ID;
     m_lock.unlock();
     Q_EMIT itemAdded(genre);
 }
@@ -471,10 +475,13 @@ void AudioCollection::insertArtist(Artist* artist)
 {
 
     m_lock.lockForWrite();
+        int ID = artist->getID();
         artist->setMediaCollection(this);
         m_artistList->append(artist);
-        m_IDtoArtistMap->insert(artist->getID(), artist);
+        m_IDtoArtistMap->insert(ID , artist);
         m_nameToArtistMap->insert(artist->getName(), artist);
+        if (ID > currentArtistID)
+            currentArtistID = ID;
     m_lock.unlock();
     Q_EMIT itemAdded(artist);
 }
@@ -483,10 +490,13 @@ void AudioCollection::insertArtist(Artist* artist)
 void AudioCollection::insertAlbum(Album* album)
 {
     m_lock.lockForWrite();
+        int ID = album->getID();
         album->setMediaCollection(this);
         m_albumList->append(album);
-        m_IDtoAlbumMap->insert(album->getID(), album);
+        m_IDtoAlbumMap->insert(ID, album);
         m_nameToAlbumMap->insert(album->getName(), album);
+        if (ID > currentAlbumID)
+            currentAlbumID = ID;
     m_lock.unlock();
     Q_EMIT itemAdded(album);
 }
@@ -495,10 +505,13 @@ void AudioCollection::insertAlbum(Album* album)
 void AudioCollection::insertSong(Song* song)
 {
     m_lock.lockForWrite();
+        int ID = song->getID();
         m_songList->append(song);
         song->setMediaCollection(this);
-        m_IDtoSongMap->insert(song->getID(), song);
+        m_IDtoSongMap->insert(ID, song);
         m_nameToSongMap->insert(song->getName(), song);
+        if (ID > currentSongID)
+            currentSongID = ID;
     m_lock.unlock();
     //Q_EMIT itemAdded(song);
 }
