@@ -5,6 +5,7 @@
 #include "genre.h"
 #include "album.h"
 #include "artist.h"
+#include "albumartist.h"
 
 namespace Core
 {
@@ -26,20 +27,21 @@ namespace Core
 
         public slots:
 
-            Artist* getArtist();
-            Album* getAlbum();
+            Artist*         getArtist();
+            Album*          getAlbum();
+            AlbumArtist*    getAlbumArtist();
+            Genre*          getGenre();
+            int             getYear();
+            QString         getFileName();
+            int             getTrack();
+            int             getLength();
 
-            Genre* getGenre();
-            int getYear();
-            QString getFileName();
-            int getTrack();
-            int getLength();
-
-            void setArtist(Artist* sArtist);
-            void setAlbum(Album* sAlbum);
-            void setGenre(Genre* sGenre);
-            void setTrack(int track);
-            void setLength(int length);
+            void            setArtist(Artist* sArtist);
+            void            setAlbum(Album* sAlbum);
+            void            setGenre(Genre* sGenre);
+            void            setAlbumArtist(AlbumArtist* albumartist);
+            void            setTrack(int track);
+            void            setLength(int length);
 
             /**
                 \brief      Moves the song to a new artist and makes the
@@ -47,7 +49,7 @@ namespace Core
                 \param      the new artist
                 \returns    success of the operation
             */
-            bool moveToArtist(DataItem *newArtist);
+            bool            moveToArtist(DataItem *newArtist);
 
             /**
                 \brief      Moves to song to a new album and makes the
@@ -55,21 +57,20 @@ namespace Core
                 \param      the new album
                 \returns    success of the operation
             */
-            bool moveToAlbum(DataItem *newAlbum);
+            bool            moveToAlbum(DataItem *newAlbum);
 
-            bool moveToGenre(DataItem *newGenre);
+            bool            moveToGenre(DataItem *newGenre);
 
         public:
 
-            QList<Media*> getMedia();
-
-            QUrl getURL();
-
-            QString getMimeType();
+            QList<Media*>   getMedia();
+            QUrl            getURL();
+            QString         getMimeType();
 
         private:
 
             Artist* interpret;
+            AlbumArtist* albumArtist;
             Album* album;
             Genre* genre;
             QString filename;

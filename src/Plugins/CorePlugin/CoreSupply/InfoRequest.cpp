@@ -16,6 +16,15 @@ void InfoRequest::setInfoData(QVariant info)
     Q_EMIT infoDataAvailable();
 }
 
+void InfoRequest::setError(QString errorString)
+{
+    infoAvailable = false;
+    errorString = errorString;
+    this->info = QVariant();
+    Q_EMIT error();
+    Q_EMIT infoDataAvailable();
+}
+
 bool InfoRequest::isInfoAvailable()
 {
     return infoAvailable;
@@ -34,4 +43,9 @@ QVariant InfoRequest::getInfo()
 QString InfoRequest::getRequestType()
 {
     return requestType;
+}
+
+QString InfoRequest::getErrorString()
+{
+    return errorString;
 }

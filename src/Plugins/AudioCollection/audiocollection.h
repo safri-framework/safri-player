@@ -73,10 +73,18 @@ class AudioCollection : public Core::IAudioCollection
         Core::Genre* newGenre(QString genre);
         void removeGenre(Genre* genre);
 
+        QList<Core::AlbumArtist*> getAlbumArtists();
+        QList<Core::AlbumArtist*> getAlbumArtistsByName(QString name);
+        Core::AlbumArtist* getAlbumArtistByID(int id);
+        Core::AlbumArtist* newAlbumArtist(QString name);
+        void removeAlbumArtist(AlbumArtist* albumArtist);
+
+
         void insertGenre(Core::Genre* genre);
         void insertArtist(Core::Artist* artist);
         void insertAlbum(Core::Album* album);
         void insertSong(Core::Song* song);
+        void insertAlbumArtist(Core::AlbumArtist* albumArtist);
 
     private:
 
@@ -84,17 +92,21 @@ class AudioCollection : public Core::IAudioCollection
         QList<Artist*>* m_artistList;
         QList<Album*>* m_albumList;
         QList<Genre*>* m_genreList;
+        QList<AlbumArtist*>* m_albumArtistList;
+
         QMap<int, Song*>* m_IDtoSongMap;
         QMap<QString, Song*>* m_PathToSongMap;
         QMap<int, Artist*>* m_IDtoArtistMap;
         QMap<int, Album*>* m_IDtoAlbumMap;
         QMap<int, Genre*>* m_IDtoGenreMap;
+        QMap<int, AlbumArtist*>* m_IDtoAlbumArtistMap;
 
 
         QMap<QString, Song*>* m_nameToSongMap;
         QMap<QString, Artist*>* m_nameToArtistMap;
         QMap<QString, Album*>* m_nameToAlbumMap;
         QMap<QString, Genre*>* m_nameToGenreMap;
+        QMap<QString, AlbumArtist*>* m_nameToAlbumArtistMap;
 
         QString m_name;
         QUrl m_rootPath;
@@ -103,6 +115,7 @@ class AudioCollection : public Core::IAudioCollection
         QReadWriteLock m_lock;
 
         int newAlbumID();
+        int newAlbumArtistID();
         int newArtistID();
         int newGenreID();
         int newSongID();
@@ -112,6 +125,7 @@ class AudioCollection : public Core::IAudioCollection
         int currentArtistID;
         int currentGenreID;
         int currentSongID;
+        int currentAlbumArtistID;
 
 
 };

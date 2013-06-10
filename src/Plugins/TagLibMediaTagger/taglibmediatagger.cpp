@@ -3,6 +3,9 @@
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 #include <taglib/id3v2tag.h>
+#include <taglib/mpegfile.h>
+#include <taglib/id3v2frame.h>
+#include <taglib/id3v2header.h>
 #include <QVariant>
 #include <QDebug>
 #include <QFileInfo>
@@ -23,15 +26,13 @@ TaglibMediaTagger::~TaglibMediaTagger()
 
 void TaglibMediaTagger::tagMedia(QUrl media)
 {
-
-
         QByteArray filename = QFile::encodeName( media.toString() );
-
         QString album;
         QString artist ;
         QString title ;
         QString genre ;
         QString comment ;
+        QString albumartist;
         int track;
         int year;
         int length;
@@ -40,24 +41,20 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         Q_UNUSED(bitRate)
 
         const char * encodedName = filename.constData();
-
         TagLib::FileRef ref = TagLib::FileRef( encodedName );
-
         if (ref.file()->isValid())
         {
+            TagLib::Tag* tag = ref.tag();
 
-
-            album = ref.tag()->album().toCString();
-            artist = ref.tag()->artist().toCString();
-            title = ref.tag()->title().toCString();
-            genre = ref.tag()->genre().toCString();
-            year = ref.tag()->year();
-            track = ref.tag()->track();
-            length = ref.audioProperties()->length();
+            album   =QString::fromUtf8( tag->album().toCString(true));
+            artist  =QString::fromUtf8( tag->artist().toCString(true));
+            title   =QString::fromUtf8( tag->title().toCString(true));
+            genre   =QString::fromUtf8( tag->genre().toCString(true));
+            year    = tag->year();
+            track   = tag->track();
+            length  = ref.audioProperties()->length();
             bitRate = ref.audioProperties()->bitrate();
-            comment = ref.tag()->comment().toCString();
-
-
+            comment =QString::fromUtf8( tag->comment().toCString(true));
         }
         else
         {
@@ -67,11 +64,28 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         }
 
         QFileInfo pathInfo( filename );
+        if (genre.trimmed().isEmpty()) genre    =tr("Unbekannt");
+        if (album.trimmed().isEmpty()) album    =tr("Unbekannt");
+        if (artist.trimmed().isEmpty()) artist  =tr("Unbekannt");
+        if (title.trimmed().isEmpty()) title    = pathInfo.fileName();
 
-        if (genre.trimmed().isEmpty()) genre ="Unbekannt";
-        if (album.trimmed().isEmpty()) album ="Unbekannt";
-        if (artist.trimmed().isEmpty()) artist ="Unbekannt";
-        if (title.trimmed().isEmpty()) title = pathInfo.fileName();
+        if (media.toString().toLower().endsWith(QString(".mp3").toLower()))
+        {
+            //TagLib::MPEG::File mpegfile(encodedName);
+            TagLib::MPEG::File file(encodedName);
+            TagLib::ByteVector handle = "TPE2";
+            //TagLib::String value = "bar";
+            TagLib::ID3v2::Tag *tag = file.ID3v2Tag(true);
+            if(!tag->frameList(handle).isEmpty())
+            {
+                TagLib::ID3v2::Frame* frame = tag->frameListMap()["TPE2"].front();
+                albumartist = QString(frame->toString().toCString());
+            }
+            else
+            {
+               albumartist = artist;
+            }
+        }
 
         MediaInfoContainer container(media);
         container.setMediaInfo(InfoArtist, artist);
@@ -81,6 +95,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
         container.setMediaInfo(InfoYear, year);
+        container.setMediaInfo(InfoAlbumArtist, albumartist);
         //container.setMediaInfo(InfoFile);
         Q_EMIT mediaTagged(container);
 }

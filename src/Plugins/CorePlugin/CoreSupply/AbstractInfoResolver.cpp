@@ -7,55 +7,56 @@
 
 using namespace Core;
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
-    IInfoResolver(parent), running(false), workerThread(0)
+    IInfoResolver(parent), running(false), workerThread(0), timeOutThreshold(6000)
 {
+    QMutex fifoMutex(QMutex::Recursive);
+    timoutTimer = new QTimer(this);
+    timoutTimer->setSingleShot(true);
+    timoutTimer->setInterval(timeOutThreshold);
+    connect(timoutTimer, SIGNAL(timeout()), this, SLOT(timeout()));
 }
 
 InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, Core::DataItem* item)
 {
-    InfoRequest* request = new InfoRequest(type, item);
 
+    InfoRequest* request = new InfoRequest(type, item);
     // TODO: mutex for bool running !?!!
-    if(running)
+    if(workerThread && workerThread->isRunning())
     {
         insertInFifo(request);
+        qDebug()<<"getInfo" << requestList.size()<<"    "<<item->getName();
     }
     else
     {
         if (workerThread == 0)
         {
-            qDebug() << "creating new thread";
+            qDebug()<<Q_FUNC_INFO<<" ->creating new thread";
             workerThread = new QThread(this);
         }
 
-        running = true;
         currentRequest = request;
-
         connect(workerThread, SIGNAL(started()), this, SLOT(workerThreadStarted()));
         connect(workerThread, SIGNAL(finished()), this, SLOT(threadFinished()));
         this->moveToThread(workerThread);
-
         workerThread->start();
     }
 
     return request;
 }
 
+void AbstractInfoResolver::setError(QString error)
+{
+    qDebug()<<"ERROR!!!!!!!!!"<< Q_FUNC_INFO << ":" << error;
+    currentRequest->setError(error);
+    handleNextRequest();
+}
+
 void AbstractInfoResolver::setInfo(QVariant info)
 {
     currentRequest->setInfoData(info);
     currentRequest = 0;
-    if(hasRequest())
-    {
-        currentRequest = getNextRequest();
-        getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
-    }
-    else
-    {
-        running  = false;
-        this->moveToThread(QApplication::instance()->thread());
-        workerThread->quit();
-    }
+    timoutTimer->stop();
+    handleNextRequest();
 }
 
 AbstractInfoResolver::~AbstractInfoResolver()
@@ -87,6 +88,24 @@ bool AbstractInfoResolver::hasRequest()
     return hasRequest;
 }
 
+void AbstractInfoResolver::handleNextRequest()
+{
+    if(hasRequest())
+    {
+        currentRequest = getNextRequest();
+        getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
+        timoutTimer->start();
+        qDebug()<<"handle next:"<<"-> "<< currentRequest->getRelatedItem()->getName()<<requestList.size();
+    }
+    else
+    {
+        timoutTimer->stop();
+        qDebug()<<Q_FUNC_INFO<<"-> NO REQUESTS";
+        this->moveToThread(QApplication::instance()->thread());
+        workerThread->exit();
+    }
+}
+
 void AbstractInfoResolver::threadFinished()
 {
     qDebug() << "Thread finished!";
@@ -98,4 +117,10 @@ void AbstractInfoResolver::workerThreadStarted()
 {
     // start work with current request
     getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
+    timoutTimer->start();
+}
+
+void AbstractInfoResolver::timeout()
+{
+    setError("timeOut");
 }

@@ -49,6 +49,11 @@ Album* Song::getAlbum()
     return this->album;
 }
 
+AlbumArtist *Song::getAlbumArtist()
+{
+    return this->albumArtist;
+}
+
 Genre* Song::getGenre()
 {
     return this->genre;
@@ -67,6 +72,11 @@ void Song::setAlbum(Album* sAlbum)
 void Song::setGenre(Genre* sGenre)
 {
     this->genre = sGenre;
+}
+
+void Song::setAlbumArtist(AlbumArtist *albumartist)
+{
+    this->albumArtist = albumartist;
 }
 
 int Song::getYear()

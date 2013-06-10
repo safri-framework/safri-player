@@ -14,6 +14,7 @@ namespace Core
     {
         InfoMimeType = 1,
         InfoArtist,
+        InfoAlbumArtist,
         InfoAlbum,
         InfoGenre,
         InfoTitle,

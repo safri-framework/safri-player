@@ -7,5 +7,6 @@
 #include "artist.h"
 #include "album.h"
 #include "song.h"
+#include "albumartist.h"
 
 #endif // AUDIO_H

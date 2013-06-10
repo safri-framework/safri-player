@@ -27,7 +27,7 @@ QVariant AssetController::getAsset(QString serviceName, Core::DataItem *item)
         service = tmp->value(serviceName, 0);
         if(service)
         {
-            return service->getAsset(item);
+            return service->getAsset(item, serviceName);
         }
     }
 
@@ -37,7 +37,7 @@ QVariant AssetController::getAsset(QString serviceName, Core::DataItem *item)
        service = tmp->value(serviceName, 0);
        if(service)
        {
-           return service->getAsset(item);
+           return service->getAsset(item, serviceName);
        }
     }
     return QVariant();
@@ -54,16 +54,24 @@ void AssetController::objectAdded(QObject *object)
 
 void AssetController::addService(IAssetService *service)
 {
-    DataItem::DATA_ITEM_TYPE type = service->getAssetType();
+    DataItem::DATA_ITEM_TYPE type = service->getSupportedDataType();
     QMap<QString, IAssetService*>* map = assetServices.value(type, 0);
     if(map)
     {
-        map->insert(service->getName(), service);
+        QStringList serviceList = service->getSupportedServices();
+        for(int i = 0; i < serviceList.size(); i++)
+        {
+            map->insert(serviceList.at(i), service);
+        }
     }
     else
     {
         QMap<QString, IAssetService*>* map = new QMap<QString, IAssetService*>();
-        map->insert(service->getName(), service);
+        QStringList serviceList = service->getSupportedServices();
+        for(int i = 0; i < serviceList.size(); i++)
+        {
+            map->insert(serviceList.at(i), service);
+        }
         assetServices.insert(type, map);
     }
 }

@@ -15,38 +15,53 @@ LastFMInfoResolver::LastFMInfoResolver(QObject *parent) : AbstractInfoResolver(p
     manager = new QNetworkAccessManager(this);
 
     connect(this, SIGNAL(coverFound(QString)), this, SLOT(fetchCover(QString)));
-    connect(this, SIGNAL(newRequest(QString)), this, SLOT(startRequest(QString)),Qt::QueuedConnection);
+    connect(this, SIGNAL(newRequest(QString, QString)), this, SLOT(startRequest(QString, QString)),Qt::QueuedConnection);
 }
 
 QStringList LastFMInfoResolver::getSupportedInfoTypes()
 {
     QStringList list;
     list.append("org.safri.audio.album.cover");
-    list.append("org.");
+    list.append("org.safri.audio.album.cover.hires");
     return list;
 }
 
 void LastFMInfoResolver::getInfo(QString type, DataItem *item)
 {
-
-    if(type == "org.safri.audio.album.cover" && DataItem::typeToString(item->getType()) == "ALBUM")
+    qDebug()<<Q_FUNC_INFO<<" Type:"<<type;
+    if (DataItem::typeToString(item->getType()) == "ALBUM")
     {
-        Album* album = qobject_cast<Album*>(item);
-        if(album)
+        if(type == "org.safri.audio.album.cover")
         {
-            getAlbumCover(album);
+            Album* album = qobject_cast<Album*>(item);
+            if(album)
+            {
+                getAlbumInfo(album, "default");
+            }
+        }
+
+        if(type == "org.safri.audio.album.cover.hires")
+        {
+            Album* album = qobject_cast<Album*>(item);
+            if(album)
+            {
+                getAlbumInfo(album, "hires");
+            }
         }
     }
 }
 
-void LastFMInfoResolver::getAlbumCover(Core::Album *album)
+
+//1
+void LastFMInfoResolver::getAlbumInfo(Core::Album *album, QString type)
 {
     QString artist = album->getArtists().at(0)->getName();
     QString albumName = album->getName();
-    getAlbumCover(albumName, artist);
+    getAlbumInfo(albumName, artist, type);
 }
 
-void LastFMInfoResolver::getAlbumCover(QString album, QString artist)
+//2
+void LastFMInfoResolver::getAlbumInfo(QString album, QString artist, QString type)
 {
     QString requestString("http://ws.audioscrobbler.com/2.0/");
     QUrlQuery url(requestString+"?method=album.getinfo");
@@ -54,39 +69,53 @@ void LastFMInfoResolver::getAlbumCover(QString album, QString artist)
     url.addQueryItem("api_key", lastFMUsr);
     url.addQueryItem("artist",artist);
     url.addQueryItem("album", album);
-    Q_EMIT newRequest(url.toString());
+    Q_EMIT newRequest(url.toString(), type);
 }
 
+//3
+void LastFMInfoResolver::startRequest(QString url, QString type)
+{
+    QNetworkReply* reply = manager->get( QNetworkRequest( url ) );
+    reply->setProperty("type", type);
+    //qDebug()<<url;
+    connect( reply, SIGNAL( finished() ), SLOT( coverRequestCallBack()));
+}
+
+//4
 void LastFMInfoResolver::coverRequestCallBack()
 {
-    qDebug()<<"REPLY";
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
+    QString type = reply->property("type").toString();
+
     if ( !reply )
     {
-        qDebug()<<"network reply null";
+        setError("network reply null");
         return;
     }
     if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
     {
-        qDebug()<<"NO ERROR";
         QDomDocument doc;
-        //qDebug()<<reply->readAll();
         doc.setContent(reply->readAll());
         QDomNodeList domNodeList = doc.elementsByTagName( "image" );
-        if (!domNodeList.isEmpty() && !domNodeList.at(2).toElement().text().isEmpty())
+        if (!domNodeList.isEmpty())
         {
-            Q_EMIT coverFound(domNodeList.at(2).toElement().text());
-        }
-        else
-        {
-            Q_EMIT error("No Cover found  )= ");
-            setInfo(QVariant());
+            if(type =="default" && !domNodeList.at(2).toElement().text().isEmpty())
+            {
+                Q_EMIT coverFound(domNodeList.at(2).toElement().text());
+            }
+            else if (type =="hires" && !domNodeList.at(3).toElement().text().isEmpty())
+            {
+                Q_EMIT coverFound(domNodeList.at(3).toElement().text());
+            }
+            else
+            {
+                setError("No Cover found  )= ");
+            }
         }
     }
     else
     {
-        Q_EMIT error( reply->errorString());
-        qDebug()<<reply->errorString();
+        setError(reply->errorString());
     }
     reply->deleteLater();
 }
@@ -94,29 +123,32 @@ void LastFMInfoResolver::coverRequestCallBack()
 void LastFMInfoResolver::fetchCover(QString url)
 {
     QNetworkReply* reply = manager->get(QNetworkRequest( url ));
+    reply->
     connect(reply, SIGNAL(finished()),  this, SLOT(fetchCoverCallback()));
 }
 
-void LastFMInfoResolver::startRequest(QString url)
-{
-    QNetworkReply* reply = manager->get( QNetworkRequest( url ) );
-    reply->setProperty("albumID", -1);
-    qDebug()<<url;
-    connect( reply, SIGNAL( finished() ), SLOT( coverRequestCallBack()));
-}
+
 
 void LastFMInfoResolver::fetchCoverCallback()
 {
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     if ( !reply )
     {
-        qDebug()<<"network reply null";
+        setError(QString(Q_FUNC_INFO).append( " no reply."));
         return;
     }
 
-    QPixmap image; //= new QPixmap();
-    image.loadFromData(reply->readAll());
-    setInfo(QVariant(image));
+    if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
+    {
+        QPixmap image; //= new QPixmap();
+        image.loadFromData(reply->readAll());
+        setInfo(QVariant(image));
+    }
+    else
+    {
+        setError(reply->errorString());
+    }
+    reply->deleteLater();
 }
 
 

@@ -23,7 +23,7 @@ namespace Core
                 This enumeration describes the types of database entities which a
                 data item can represent.
             */
-            enum DATA_ITEM_TYPE { NONE, GENRE, ALBUM, ARTIST, SONG, CD, TAG, DECADE, YEAR, AUDIO_STREAM };
+            enum DATA_ITEM_TYPE { NONE, GENRE, ALBUM, ARTIST, SONG, CD, TAG, DECADE, YEAR, AUDIO_STREAM, ALBUMARTIST };
 
             /**
                 \brief	Constructs a data item which represents the given parameters.

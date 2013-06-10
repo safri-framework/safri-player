@@ -10,21 +10,22 @@
 #include <QImage>
 #include "icore.h"
 
+
 AlbumCoversAssetService::AlbumCoversAssetService(QObject *parent) :
-    IAssetService(parent)
+    IAssetService(parent),
+    saveHiresCovers(true)
 {
     ICollectionController* collController = ICore::collectionController();
     connect(collController, SIGNAL(newItem(Core::DataItem*)), this, SLOT(getCover(Core::DataItem*)));
 }
 
-DataItem::DATA_ITEM_TYPE AlbumCoversAssetService::getAssetType()
+DataItem::DATA_ITEM_TYPE AlbumCoversAssetService::getSupportedDataType()
 {
     return DataItem::ALBUM;
 }
 
-void AlbumCoversAssetService::updateCovers()
+void AlbumCoversAssetService::updateCovers(QString res)
 {
-
     ICollectionController* collController = ICore::collectionController();
 
     // get Collections
@@ -44,28 +45,36 @@ void AlbumCoversAssetService::updateCovers()
     }
 }
 
+
 void AlbumCoversAssetService::getCover(Core::DataItem* item)
 {
     Controller::InfoController* controller = ICore::infoController();
     Album* album = qobject_cast<Album*>(item);
-    if(album)
+    if(album && album->getName() != "Unbekannt")
     {
-        Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover", album);
+        Core::InfoRequest* request;
+        QString infoType;
+        if (saveHiresCovers)
+            infoType = "org.safri.audio.album.cover.hires";
+        else
+            infoType = "org.safri.audio.album.cover";
+
+        request = controller->getInfoForItem(infoType, album);
         connect(request, SIGNAL(infoDataAvailable()), this, SLOT(infoSlot()));
     }
-    else
-    {
-        qDebug()<<Q_FUNC_INFO<<" ERROR!";
-    }
 }
 
 
-QString AlbumCoversAssetService::getName()
+QStringList AlbumCoversAssetService::getSupportedServices()
 {
-    return "DisplayRole";
+    QStringList serviceList;
+    serviceList.append("DisplayRole");
+    serviceList.append("CoverRole");
+    return serviceList;
 }
 
-QVariant AlbumCoversAssetService::getAsset(DataItem *item)
+
+QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
 {
     if(item && item->getType() == DataItem::ALBUM)
     {
@@ -77,12 +86,13 @@ QVariant AlbumCoversAssetService::getAsset(DataItem *item)
         }
         return cover;
     }
+    return QVariant();
 }
 
 void AlbumCoversAssetService::infoSlot()
 {
     Core::InfoRequest* req = qobject_cast<InfoRequest*>(sender());
-    if(req)
+    if(req && req->isInfoAvailable())
     {
         QPixmap pixmap = req->getInfo().value<QPixmap>();
         QImage cover = pixmap.toImage();
@@ -91,9 +101,11 @@ void AlbumCoversAssetService::infoSlot()
         {
             DataItem* item = req->getRelatedItem();
             QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";
-
+            QString hiresPath = item->getMediaCollection()->getAssetFolderPath("AlbumCoversHires").toString()+"/"+QString::number(item->getID()) + ".jpg";
+            if(saveHiresCovers)
+                cover.save(hiresPath, "jpg", 60);
             cover = cover.scaled(43, 43, Qt::IgnoreAspectRatio, Qt::FastTransformation);
-            qDebug()<<"Cover saved:"<<cover.save(path, "jpg", 60);
+            cover.save(path, "jpg", 60);
         }
     }
     delete req;

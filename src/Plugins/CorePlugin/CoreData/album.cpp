@@ -38,6 +38,11 @@ void Album::addArtist(Artist* sArtist)
     this->artists.insert(sArtist);
 }
 
+void Album::setAlbumArtist(AlbumArtist *albumartist)
+{
+    this->albumArtist = albumartist;
+}
+
 QList<Artist*> Album::getArtists()
 {
     return this->artists.toList();
@@ -193,4 +198,10 @@ QString Album::getCoverFile()
 void Album::setCoverFile(QString sCoverFile)
 {
     albumCoverFile = sCoverFile;
+}
+
+
+AlbumArtist *Album::getAlbumArtist()
+{
+    return albumArtist;
 }

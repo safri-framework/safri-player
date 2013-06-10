@@ -197,7 +197,7 @@ void HackingWidget::on_pushButton_12_clicked()
     Artist* artist = new Artist(12, "Red Hot Chili Peppers");
     album->addArtist(artist);
 
-    Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover", album);
+    Core::InfoRequest* request = controller->getInfoForItem("org.safri.audio.album.cover.hires", album);
     connect(request, SIGNAL(infoDataAvailable()), this, SLOT(infoSlot()));
 
 }

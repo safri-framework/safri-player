@@ -9,18 +9,21 @@ class AlbumCoversAssetService : public IAssetService
 {
     Q_OBJECT
 public:
-    explicit AlbumCoversAssetService(QObject *parent = 0);
-    virtual QVariant getAsset(Core::DataItem* item);
-    virtual QString getName();
+    explicit                    AlbumCoversAssetService(QObject *parent = 0);
+    virtual QVariant            getAsset(DataItem *item, QString service);
+    virtual QStringList         getSupportedServices();
 
-    DataItem::DATA_ITEM_TYPE getAssetType();
+    DataItem::DATA_ITEM_TYPE    getSupportedDataType();
 
 public slots:
-    void updateCovers();
-    void getCover(Core::DataItem* item);
+    void                        updateCovers(QString res = "");
+    void                        getCover(Core::DataItem* item);
 
 private slots:
-    void infoSlot();
+    void                        infoSlot();
+
+private:
+   bool saveHiresCovers;
     
     
 signals:

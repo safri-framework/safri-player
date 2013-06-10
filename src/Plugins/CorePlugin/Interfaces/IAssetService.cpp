@@ -6,7 +6,7 @@ IAssetService::IAssetService(QObject *parent) :
 {
 }
 
-DataItem::DATA_ITEM_TYPE IAssetService::getAssetType()
+DataItem::DATA_ITEM_TYPE IAssetService::getSupportedDataType()
 {
     return DataItem::NONE;
 }

@@ -37,7 +37,6 @@ bool SongTree::isDirty()
 
 void SongTree::addSong(Song *song)
 {
-    qDebug() << "SongTree::addSong";
     rootNode->addSong(song);
 }
 

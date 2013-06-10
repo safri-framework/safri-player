@@ -366,17 +366,6 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
             if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
             {
-                /*
-                QString coverPath;
-                coverPath = ICore::storageDirectory() + "/covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
-                QImage image(coverPath);
-                if (image.isNull())
-                {
-                    image = QImage(":/icons/ressources/default.png");
-                }
-                return image;
-                */
-
                 return ICore::instance()->assetController()->getAsset("DisplayRole", dataItemPtr);
             }
 

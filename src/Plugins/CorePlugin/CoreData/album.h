@@ -2,6 +2,7 @@
 #define ALBUM_H
 
 #include "artist.h"
+#include "albumartist.h"
 #include <QList>
 #include <QSet>
 #include <QMap>
@@ -31,6 +32,8 @@ namespace Core
         public slots:
 
             void addArtist(Artist* sArtist);
+            void setAlbumArtist(AlbumArtist* albumartist);
+            AlbumArtist* getAlbumArtist();
             bool removeArtist(Artist* sArtist);
             QList<Artist*> getArtists();
             QList<Song*> getSongs();
@@ -56,7 +59,7 @@ namespace Core
             QList<Media*> getMedia();
 
         private:
-
+            AlbumArtist* albumArtist;
             QSet<Artist*> artists;
             QString albumCoverFile;
 

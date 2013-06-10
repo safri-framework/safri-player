@@ -296,10 +296,7 @@ void SongTreeItem::moveToParent(SongTreeItem *destination)
 
     if ( (source->level - 1) == destination->level )
     {
-        qDebug()<<"3";
-
         QString key;
-
         if (destination->useHash())
         {
             key = source->hash;
@@ -561,7 +558,7 @@ void SongTreeItem::adaptParentDataToSource(SongTreeItem *source, ChangedFlags &f
 
                 for (int i = 0; i < songCount; i++)
                 {
-                    qDebug() << songs.at(i)->getName() << " moveToGenre " << this->dataItemPtr->getName();
+                    //qDebug() << songs.at(i)->getName() << " moveToGenre " << this->dataItemPtr->getName();
                     songs.at(i)->moveToGenre(this->dataItemPtr);
                 }
                 flags.genreChanged = true;
@@ -573,7 +570,7 @@ void SongTreeItem::adaptParentDataToSource(SongTreeItem *source, ChangedFlags &f
                 for (int i = 0; i < songCount; i++)
                 {
                     songs.at(i)->moveToAlbum(this->dataItemPtr);
-                    qDebug() << songs.at(i)->getName() << " moveToAlbum " << this->dataItemPtr->getName();
+                    //qDebug() << songs.at(i)->getName() << " moveToAlbum " << this->dataItemPtr->getName();
                 }
                 flags.albumChanged = true;
                 flags.album = static_cast<Album*>(this->dataItemPtr);
@@ -584,7 +581,7 @@ void SongTreeItem::adaptParentDataToSource(SongTreeItem *source, ChangedFlags &f
                 for (int i = 0; i < songCount; i++)
                 {
                     songs.at(i)->moveToArtist(this->dataItemPtr);
-                    qDebug() << songs.at(i)->getName() << " moveToArtist " << this->dataItemPtr->getName();
+                    //qDebug() << songs.at(i)->getName() << " moveToArtist " << this->dataItemPtr->getName();
                 }
                 flags.artistChanged = true;
                 flags.artist = static_cast<Artist*>(this->dataItemPtr);

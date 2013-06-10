@@ -62,7 +62,8 @@ SOURCES += coreplugin.cpp \
     Settings/SettingsManagerDialog.cpp \
     Interfaces/ISettingsModuleWidget.cpp \
     Interfaces/IAssetService.cpp \
-    CoreSupply/AssetController.cpp
+    CoreSupply/AssetController.cpp \
+    CoreData/albumartist.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -119,7 +120,8 @@ HEADERS += coreplugin.h\
     Settings/SettingsManagerDialog.h \
     Interfaces/ISettingsModuleWidget.h \
     Interfaces/IAssetService.h \
-    CoreSupply/AssetController.h
+    CoreSupply/AssetController.h \
+    CoreData/albumartist.h
 
 OTHER_FILES += \
     Core.xml \

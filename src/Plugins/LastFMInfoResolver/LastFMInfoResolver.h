@@ -17,8 +17,8 @@ public:
 
 private:
     virtual void            getInfo(QString type, Core::DataItem* item);
-    void                    getAlbumCover(Core::Album* album);
-    void                    getAlbumCover(QString album, QString artist);
+    void                    getAlbumInfo(Core::Album* album, QString type = "");
+    void                    getAlbumInfo(QString album, QString artist, QString type);
     QString lastFMUsr;
     QString lastFMKey;
     QNetworkAccessManager* manager;
@@ -26,12 +26,12 @@ private:
 signals:
     void                    coverFound(QString url);
     void                    error(QString error);
-    void                    newRequest(QString url);
+    void                    newRequest(QString url, QString type);
 
 private slots:
     void                    coverRequestCallBack();
     void                    fetchCover(QString url);
-    void                    startRequest(QString url);
+    void                    startRequest(QString url, QString type);
     void                    fetchCoverCallback();
 };
 
