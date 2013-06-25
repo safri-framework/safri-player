@@ -19,6 +19,11 @@ PluginManager::PluginManager(QString corePluginName, QStringList pluginPaths, QS
     : QObject(0), pluginPaths(pluginPaths), corePluginName(corePluginName), selectedPluginsFile(selectedPluginsFile)
 {
     qDebug() << "PluginManager(QStringList pluginPaths)";
+#ifdef ANDROID_BUILD
+    qDebug() << "Android build...";
+#else
+    qDebug() << "Non-anrdoid build";
+#endif
     m_instance = this;
 }
 
@@ -50,10 +55,8 @@ bool PluginManager::loadPlugins()
     pluginSpecNameFilters.append("*.xml");
     QString filename;
     PluginSpec *pluginSpec;
-    QList<PluginSpec*> pluginsToLoad;
     bool disablePluginViewer = false;
 
-    bool useDefaultPluginSet = false;
 
     // Load plugin specs
     for (int i = 0; i < pluginPaths.size(); i++)
@@ -70,6 +73,7 @@ bool PluginManager::loadPlugins()
 
             pluginSpec = new PluginSpec(filename);
 
+            qDebug() << "Loaded pluginspec: " << pluginSpec->getVendor() + "." + pluginSpec->getName();
             pluginMap.insert(pluginSpec->getVendor() + "." + pluginSpec->getName(), pluginSpec);
         }
     }
@@ -88,28 +92,16 @@ bool PluginManager::loadPlugins()
     if (!selectedPlugins.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "could not open file";
-        useDefaultPluginSet = true;
     }
 
     QString pluginToLoad;
     QTextStream  in(&selectedPlugins);
-    QStringList defaultPluginSet;
-    int defaultPluginNr = 0;
 
-    defaultPluginSet << "Safri.PhononBackend" << "Safri.PlaybackController" << "Safri.SQLStorage" << "Safri.AudioCollection"
-                     << "Safri.CollectionController" << "Safri.Playlist" << "Safri.GUIController" << "Safri.PlayerWidgetII"
-                     << "Safri.PlaylistWidget" << "Safri.MainWindow" << "Safri.SongtreeWidget" << "Safri.TagLibMediaTagger";
+    pluginToLoad = in.readLine();
 
-    if (useDefaultPluginSet)
-    {
-        pluginToLoad = defaultPluginSet.at(defaultPluginNr++);
-    }
-    else
-    {
-        pluginToLoad = in.readLine();
-    }
     while (!pluginToLoad.isNull())
     {
+        qDebug() << "selectedPlugin: " << pluginToLoad;
         if (!pluginToLoad.startsWith('#'))
         {
             pluginSpec = pluginMap.value(pluginToLoad);
@@ -126,22 +118,7 @@ bool PluginManager::loadPlugins()
             }
         }
 
-        if (useDefaultPluginSet)
-        {
-            if (defaultPluginNr < defaultPluginSet.size())
-            {
-               pluginToLoad = defaultPluginSet.at(defaultPluginNr++);
-            }
-            else
-            {
-                pluginToLoad = QString();
-            }
-
-        }
-        else
-        {
-            pluginToLoad = in.readLine();
-        }
+        pluginToLoad = in.readLine();
     }
 
     if (!disablePluginViewer)
@@ -161,8 +138,6 @@ bool PluginManager::loadPlugin(PluginSpec *pluginSpec)
 {
     QStringList foo;
     qDebug() << "\n" << pluginSpec->getName();
-
-    std::cout << "\n" << pluginSpec->getName().toStdString();
 
     pluginSpec->loadLibrary();
 

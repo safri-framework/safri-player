@@ -1,3 +1,5 @@
+include(Defines.pri)
+
 INCLUDEPATH += ../../PluginSystem
 LIBS += -L../../../lib -lPluginSystem
 
@@ -12,25 +14,40 @@ DESTDIR = ../../../bin/plugins/$$PROVIDER
 CONFIG += thread
 
 # copy plugin spec to appropriate folder
-macx {
+android {
 
-    QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/$${TARGET}.xml\" \"$$DESTDIR/$${TARGET}.xml\"
+deployment.files=$$_PRO_FILE_PWD_/$${TARGET}.xml
+deployment.path=/assets/plugins
+
+INSTALLS += deployment
 
 } else {
 
-    win32 {
+    macx {
 
-        PRO_PWD = $$_PRO_FILE_PWD_
-        PRO_PWD_WIN = $$replace(PRO_PWD, /, \\)
-        QMAKE_POST_LINK += $${QMAKE_COPY} \"$${PRO_PWD_WIN}\\$${TARGET}.xml\" \"..\\..\\..\\bin\\plugins\\$$PROVIDER\\$${TARGET}.xml\"
+        QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/$${TARGET}.xml\" \"$$DESTDIR/$${TARGET}.xml\"
 
     } else {
 
-        unix {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/$${TARGET}.xml\" \"$$DESTDIR/$${TARGET}.xml\"
-        }
-    }
-}
+        win32 {
+
+            PRO_PWD = $$_PRO_FILE_PWD_
+            PRO_PWD_WIN = $$replace(PRO_PWD, /, \\)
+            QMAKE_POST_LINK += $${QMAKE_COPY} \"$${PRO_PWD_WIN}\\$${TARGET}.xml\" \"..\\..\\..\\bin\\plugins\\$$PROVIDER\\$${TARGET}.xml\"
+
+        } else {
+
+            unix {
+
+                QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/$${TARGET}.xml\" \"$$DESTDIR/$${TARGET}.xml\"
+
+            } # unix
+
+        } # win32
+
+    } # macx
+
+} # android
 
 HEADERS +=
 

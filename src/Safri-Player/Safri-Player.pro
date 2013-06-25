@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-SAFRI_VERSION = 0.3.1
+
 
 QT       += core gui widgets
 
@@ -15,13 +15,22 @@ CONFIG += thread
 
 TEMPLATE = app
 
-DESTDIR = ../../bin
+include(../Defines.pri)
+
+!android {
+    DESTDIR = ../../bin
+}
+
+android {
+
+deployment.files=selectedplugins.lst
+deployment.path=/assets
+
+INSTALLS += deployment
+}
 
 INCLUDEPATH += ../PluginSystem
 LIBS += -lPluginSystem -L../../lib
-
-VERSTR = '\\"$${SAFRI_VERSION}\\"'
-DEFINES += SAFRI_VERSION=\"$${VERSTR}\"
 
 SOURCES += main.cpp
 
@@ -36,15 +45,18 @@ macx {
 
         PRO_PWD = $$_PRO_FILE_PWD_
         PRO_PWD_WIN = $$replace(PRO_PWD, /, \\)
-        QMAKE_POST_LINK += $${QMAKE_COPY} \"$${PRO_PWD_WIN}\\audacity-test-file.mp3\" \"..\\..\\bin\\audacity-test-file.mp3\"
+        #QMAKE_POST_LINK += $${QMAKE_COPY} \"$${PRO_PWD_WIN}\\audacity-test-file.mp3\" \"..\\..\\bin\\audacity-test-file.mp3\"
 
     } else {
 
         unix {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/audacity-test-file.mp3\" \"$$DESTDIR/audacity-test-file.mp3\"
+            #QMAKE_POST_LINK += $${QMAKE_COPY} \"$$_PRO_FILE_PWD_/audacity-test-file.mp3\" \"$$DESTDIR/audacity-test-file.mp3\"
         }
     }
 }
 
 RESOURCES += \
     ressources.qrc
+
+OTHER_FILES += \
+    selectedplugins.lst

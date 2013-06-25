@@ -2,27 +2,28 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
+SUBDIRS += CorePlugin
+SUBDIRS += Playlist
+SUBDIRS += PlaybackController
+SUBDIRS += PhononBackend
+#SUBDIRS += HackingWidget
+SUBDIRS += PlayerWidget
+SUBDIRS += MainWindow
+SUBDIRS += GUIController
+SUBDIRS += SidebarPluginTest
+SUBDIRS += PlaylistWidget
+SUBDIRS += SongtreeWidget
+SUBDIRS += PlayerWidgetII
+SUBDIRS += SafriMobileGuiQML
+#SUBDIRS += TouchEventFilterPlugin
+SUBDIRS += LastFMInfoResolver
+SUBDIRS += AlbumCovers
 
-SUBDIRS += \
-        CorePlugin \
-    	Playlist\
-    	PlaybackController \
-    	PhononBackend \
-    	HackingWidget \
-    	AudioCollection \
-    	PlayerWidget \
-    	MainWindow \
-    	GUIController \
-    	SidebarPluginTest \
-    	PlaylistWidget \
-    	SongtreeWidget \
-    	CollectionController \
-    	PlayerWidgetII \
-        TagLibMediaTagger \
-        SafriMobileGuiQML \
-    ShoutCastPlugin \
-    AudioSQLStorage \
-#    TouchEventFilterPlugin \
-    RESTWebAPI \
-    LastFMInfoResolver \
-    AlbumCovers
+!android {
+SUBDIRS += TagLibMediaTagger
+SUBDIRS += ShoutCastPlugin
+SUBDIRS += AudioCollection
+SUBDIRS += CollectionController
+SUBDIRS += AudioSQLStorage
+SUBDIRS += RESTWebAPI
+}

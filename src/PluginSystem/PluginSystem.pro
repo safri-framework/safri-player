@@ -4,6 +4,8 @@ QT       += xml
 TARGET = PluginSystem
 TEMPLATE = lib
 
+include(../Defines.pri)
+
 CONFIG += thread console
 
 DEFINES += PLUGINSYSTEM_LIBRARY

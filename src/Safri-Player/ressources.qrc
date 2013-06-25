@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/defaults">
         <file>selectedplugins.lst</file>
-        <file>testSongs/song1.mp3</file>
-        <file>testSongs/song2.mp3</file>
     </qresource>
 </RCC>

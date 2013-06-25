@@ -73,6 +73,8 @@ void PluginSpec::loadLibrary()
         QString libName = QString("%1/%2.dll").arg(location).arg(name);
     #elif defined(Q_OS_MAC)
         QString libName = QString("%1/lib%2.dylib").arg(location).arg(name);
+    #elif defined(ANDROID)
+        QString libName = QString("%1/lib%2.so").arg(ANDROID_LIB_PATH).arg(name);
     #else
         QString libName = QString("%1/lib%2.so").arg(location).arg(name);
     #endif
