@@ -28,6 +28,15 @@ bool SQLiteStorage::open(ISQLStorage::OPERATION_MODE openMode)
     {
         qDebug() << "Databasefile:"  << url.toString();
 
+        // for android the path for the databasefile must exist before
+        // the file can be created
+        QString databasePath = QFileInfo(url.toString()).absolutePath();
+        QDir dir(databasePath);
+        if(!dir.exists())
+        {
+            dir.mkpath(databasePath);
+        }
+
         database.setDatabaseName(url.toString());
 
         if( !database.open() )

@@ -18,12 +18,13 @@ SUBDIRS += SafriMobileGuiQML
 #SUBDIRS += TouchEventFilterPlugin
 SUBDIRS += LastFMInfoResolver
 SUBDIRS += AlbumCovers
+SUBDIRS += AudioCollection
+SUBDIRS += CollectionController
+SUBDIRS += AudioSQLStorage
+SUBDIRS += SafriApp
 
 !android {
 SUBDIRS += TagLibMediaTagger
 SUBDIRS += ShoutCastPlugin
-SUBDIRS += AudioCollection
-SUBDIRS += CollectionController
-SUBDIRS += AudioSQLStorage
 SUBDIRS += RESTWebAPI
 }

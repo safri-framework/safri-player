@@ -19,7 +19,7 @@ PluginManager::PluginManager(QString corePluginName, QStringList pluginPaths, QS
     : QObject(0), pluginPaths(pluginPaths), corePluginName(corePluginName), selectedPluginsFile(selectedPluginsFile)
 {
     qDebug() << "PluginManager(QStringList pluginPaths)";
-#ifdef ANDROID_BUILD
+#ifdef ANDROID
     qDebug() << "Android build...";
 #else
     qDebug() << "Non-anrdoid build";
