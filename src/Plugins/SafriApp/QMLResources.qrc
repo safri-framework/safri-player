@@ -1,46 +1,32 @@
 <RCC>
-    <qresource prefix="/test">
+    <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/MusicSelection.qml</file>
         <file>qml/Player.qml</file>
         <file>qml/PlayerButton.qml</file>
-        <file>qml/images/bl.png</file>
-        <file>qml/images/element_musicSelection_left.png</file>
-        <file>qml/images/header.png</file>
-        <file>qml/images/header2.png</file>
-        <file>qml/images/ico_pause.png</file>
-        <file>qml/images/ico_play.png</file>
-        <file>qml/images/player.png</file>
-        <file>qml/Home.qml</file>
-        <file>qml/images/.png</file>
-        <file>qml/images/1363219010_-dvd.png</file>
-        <file>qml/images/1363219016_-usb.png</file>
-        <file>qml/images/background_home.png</file>
-        <file>qml/images/ico_home.png</file>
-        <file>qml/images/ico_next.png</file>
-        <file>qml/images/ico_prev.png</file>
-        <file>qml/images/ico_silent.png</file>
-        <file>qml/images/ico_vol2.png</file>
-        <file>qml/images/media-volume-up-inv.png</file>
-        <file>qml/images/playlistHeader.png</file>
-        <file>qml/functions.js</file>
-        <file>qml/Footer.qml</file>
+        <file>qml/View1.qml</file>
+        <file>qml/resources/ico_next.png</file>
+        <file>qml/resources/ico_pause.png</file>
+        <file>qml/resources/ico_play.png</file>
+        <file>qml/resources/ico_prev.png</file>
+        <file>qml/resources/media-next-inv.png</file>
+        <file>qml/resources/media-pause-inv.png</file>
+        <file>qml/resources/media-play-inv.png</file>
+        <file>qml/resources/media-previous-inv.png</file>
+        <file>qml/resources/player_backgroundII.png</file>
+        <file>qml/resources/player_backgroundIII.png</file>
+        <file>qml/resources/player_border.png</file>
+        <file>qml/resources/playerIcon_play.png</file>
+        <file>qml/resources/play_icon_black.png</file>
+        <file>qml/resources/tapnholdpanel.png</file>
         <file>qml/TreeView.qml</file>
-        <file>qml/images/arrow-left-inv.png</file>
-        <file>qml/images/arrow-right-inv.png</file>
-        <file>qml/images/element_musicSelection_left_big.png</file>
-        <file>qml/images/first-aid-inv.png</file>
-        <file>qml/images/header2_big.png</file>
-        <file>qml/images/media-next-inv.png</file>
-        <file>qml/images/media-pause-inv.png</file>
-        <file>qml/images/media-play-inv.png</file>
-        <file>qml/images/media-previous-inv.png</file>
-        <file>qml/images/media-repeat-inv.png</file>
-        <file>qml/images/media-shuffle-inv.png</file>
-        <file>qml/images/media-volume-0-inv.png</file>
-        <file>qml/images/open-in-new-window-inv.png</file>
-        <file>qml/images/player_big.png</file>
-        <file>qml/images/playlistHeader_big.png</file>
-        <file>qml/images/behind_player_menu_background.png</file>
+        <file>qml/resources/tapnholdpanel2.png</file>
+        <file>qml/Dialer.qml</file>
+        <file>qml/RotaryDialer.js</file>
+        <file>qml/View2.qml</file>
+        <file>qml/resources/knob.png</file>
+        <file>qml/resources/labelbackground.png</file>
+        <file>qml/MusicProgress.qml</file>
+        <file>qml/resources/no_cover.png</file>
+        <file>qml/MarqueeText.qml</file>
     </qresource>
 </RCC>

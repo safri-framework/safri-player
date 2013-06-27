@@ -1,11 +1,11 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 2.0
-import "functions.js" as MyJs
+
 
 Rectangle
 {
-    property string icon1: "images/media-play-inv.png"
-    property string icon2:  "images/media-pause-inv.png"
+    property string icon1: "resources/playerIcon_play.png"
+    property string icon2:  "resources/media-pause-inv.png"
     property bool enabled: true
     property bool playing: false
     property bool toggle: true
@@ -28,14 +28,18 @@ Rectangle
 
 
     Image {
+        scale:root.globalScaleFactor
         anchors.centerIn: parent
         id: buttonIcon
         smooth:true
         source: if(!button.playing)
+                {
                     button.icon1
+                }
                 else
+                {
                     button.icon2
-
+                }
         opacity: if(!button.enabled)
                      0.5
                  else

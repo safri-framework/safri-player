@@ -1,71 +1,92 @@
-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 2.0
-import "functions.js" as MyJs
 
-Item{
-    id:player
-    signal showPlaylist
-    Rectangle
+Rectangle {
+    property double scaleFactor:1
+    onHeightChanged: scaleFactor = height / 97
+    BorderImage
     {
-        x:MyJs.scale(10)
-        y:MyJs.scale(6)
-        color: "transparent"
-        id: playerContent
+        height:parent.height
+        source: "resources/player_border.png"
+        horizontalTileMode: BorderImage.Repeat
+        verticalTileMode: BorderImage.Stretch
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right:playerImage.left
+        border.left: 0
+        border.right: 0
+        border.bottom: 0
+        border.top: 0
+    }
 
-        //parent: footer
-        width:MyJs.scale(315)
-        height:MyJs.scale(45)
-        BorderImage
+    Image {
+        id: playerImage
+        source: "resources/player_backgroundIII.png"
+        anchors.centerIn: parent
+
+        height: parent.height
+        width : 433 * scaleFactor
+        onScaleChanged: {console.log(width); console.log(height)}
+        /*
+        MouseArea
         {
-           // anchors.top: parent.top
-            x:-6
-            y:-6
-            id: playerBorderImage
-            source: "images/player_big.png"
-            width:parent.width+MyJs.scale(10); height:MyJs.scale(53)
-            border.left: 32; border.top: 26
-            border.right: 26; border.bottom: 32
-                opacity:0.5
+            x:68
+            y:14
+            width:85
+            height:70
+            onClicked: {console.log("CLICK")}
+            id: previous;
         }
+        */
 
-     PlayerButton
-     {
-         id:silentButton
-         objectName: "silentButton"
-          toggle: false;
-          icon1: "images/media-volume-0-inv.png"
-     }
-     PlayerButton
-     {
-         id:prevButton
-         objectName: "prevButton"
-         x:  silentButton.width;
-          toggle: false;
-          icon1:"images/media-previous-inv.png"
-     }
-     PlayerButton
-     {
-         id:playStop
-         objectName: "playStop"
-         x:  2* silentButton.width;
-          toggle: true;
-     }
-     PlayerButton
-     {
-         id:nextButton
-         objectName: "nextButton"
-         x:  3* silentButton.width;
-          toggle: false;
-          icon1:"images/media-next-inv.png"
-     }
-     PlayerButton
-     {
-         id:test4
-         x:  4* silentButton.width;
-          toggle: false;
-          onButtonClicked: player.showPlaylist()
-          icon1:"images/open-in-new-window-inv.png"
-     }
+        PlayerButton
+        {
+            x:68 * scaleFactor
+            y:14 * scaleFactor
+            width:85 * scaleFactor
+            height:70 * scaleFactor
+            toggle:false
+            objectName: "prevButton"
+            icon1: "resources/ico_prev.png"
 
+        }
+        PlayerButton
+        {
+            id: playPause
+            x:174 * scaleFactor
+            y:7 * scaleFactor
+            width:85 * scaleFactor
+            height:85 * scaleFactor
+            toggle:true
+            objectName: "playStop";
+            icon1: "resources/ico_play.png"
+            icon2: "resources/ico_pause.png"
+
+        }
+        PlayerButton
+        {
+            id: next
+            x:279 * scaleFactor
+            y:14 * scaleFactor
+            width:85 * scaleFactor
+            height:70 * scaleFactor
+            objectName: "nextButton"
+            icon1: "resources/ico_next.png"
+            toggle:false
+        }
+    }
+
+    BorderImage
+    {
+        height:parent.height
+        anchors.top: parent.top
+        anchors.left: playerImage.right
+        anchors.right:parent.right
+        source: "resources/player_border.png"
+        horizontalTileMode: BorderImage.Repeat
+        verticalTileMode: BorderImage.Stretch
+        border.left: 0
+        border.right: 0
+        border.bottom: 0
+        border.top: 0
     }
 }
