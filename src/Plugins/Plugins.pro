@@ -6,7 +6,6 @@ SUBDIRS += CorePlugin
 SUBDIRS += Playlist
 SUBDIRS += PlaybackController
 SUBDIRS += PhononBackend
-#SUBDIRS += HackingWidget
 SUBDIRS += PlayerWidget
 SUBDIRS += MainWindow
 SUBDIRS += GUIController
@@ -15,16 +14,18 @@ SUBDIRS += PlaylistWidget
 SUBDIRS += SongtreeWidget
 SUBDIRS += PlayerWidgetII
 SUBDIRS += SafriMobileGuiQML
-#SUBDIRS += TouchEventFilterPlugin
 SUBDIRS += LastFMInfoResolver
 SUBDIRS += AlbumCovers
 SUBDIRS += AudioCollection
 SUBDIRS += CollectionController
 SUBDIRS += AudioSQLStorage
 SUBDIRS += SafriApp
+SUBDIRS += TagLibMediaTagger
+
+#SUBDIRS += HackingWidget
+#SUBDIRS += TouchEventFilterPlugin
 
 !android {
-SUBDIRS += TagLibMediaTagger
 SUBDIRS += ShoutCastPlugin
 SUBDIRS += RESTWebAPI
 }

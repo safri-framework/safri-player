@@ -39,6 +39,7 @@ OTHER_FILES += \
     qml/Footer.qml \
     qml/TreeView.qml \
     safriapp.json \
+    SafriApp.xml \
     qml/View1.qml \
     qml/TreeView.qml \
     qml/View2.qml \

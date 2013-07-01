@@ -7,19 +7,7 @@
     <array name="bundled_external_libs">
         <item>PluginSystem</item>
         <item>Core</item>
-        <item>MainWindow</item>
-        <item>PlaybackController</item>
-        <item>PlayerWidget</item>
-        <item>Playlist</item>
-        <item>PlaylistWidget</item>
-        <item>SongtreeWidget</item>
-        <item>PhononBackend</item>
-        <item>AudioCollection</item>
-        <item>GUIController</item>
-        <item>CollectionController</item>
-        <item>AudioSQLStorage</item>
-        <item>PlayerWidgetII</item>
-        <item>SidebarPluginTest</item>
+        <item>tag</item>
     </array>
     <array name="bundled_in_lib">
         <item>lib--Managed_by_Qt_Creator--imports_Qt_labs_gestures_libqmlgesturesplugin.so:imports/Qt/labs/gestures/libqmlgesturesplugin.so</item>
