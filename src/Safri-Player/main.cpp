@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "";
 
+    qDebug() << QString::number(argc);
+
     QStringList paths;
     QString selectedPluginsFile;
 
@@ -66,7 +68,21 @@ int main(int argc, char *argv[])
 
     paths << "plugins/";
 
-    selectedPluginsFile =  QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+    QString argument;
+
+    for (int i = 1; i < argc; i++)
+    {
+        argument = QString(argv[i]);
+
+        if (argument == "--plugins-file")
+        {
+            i++;
+            selectedPluginsFile = QString(argv[i]);
+        }
+    }
+
+    /*
+    selectedPluginsFile =  ;
     QDir dir(selectedPluginsFile);
     if(!dir.exists())
     {
@@ -75,6 +91,24 @@ int main(int argc, char *argv[])
 
     selectedPluginsFile = selectedPluginsFile + "/" + QString(SELECTED_PLUGINS_FILE);
     qDebug()<<selectedPluginsFile;
+    */
+
+    if (selectedPluginsFile.isEmpty())
+    {
+        selectedPluginsFile = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/" + QString(SELECTED_PLUGINS_FILE);
+    }
+    else if (!selectedPluginsFile.contains("/"))
+    {
+        // if the command line argument contains no path, use the default location
+        selectedPluginsFile = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/" + selectedPluginsFile;
+    }
+
+    QString absolutePath = QFileInfo(selectedPluginsFile).absolutePath();
+    QDir dir(absolutePath);
+    if(!dir.exists())
+    {
+        dir.mkpath(absolutePath);
+    }
 
     QFileInfo fileInfo(selectedPluginsFile);
 
