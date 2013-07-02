@@ -104,7 +104,7 @@ void AlbumCoversAssetService::infoSlot()
             QString hiresPath = item->getMediaCollection()->getAssetFolderPath("AlbumCoversHires").toString()+"/"+QString::number(item->getID()) + ".jpg";
             if(saveHiresCovers)
                 cover.save(hiresPath, "jpg", 60);
-            cover = cover.scaled(43, 43, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+            cover = cover.scaled(43, 43, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             cover.save(path, "jpg", 60);
         }
     }

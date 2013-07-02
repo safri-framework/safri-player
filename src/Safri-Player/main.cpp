@@ -81,18 +81,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    /*
-    selectedPluginsFile =  ;
-    QDir dir(selectedPluginsFile);
-    if(!dir.exists())
-    {
-        dir.mkpath(selectedPluginsFile);
-    }
-
-    selectedPluginsFile = selectedPluginsFile + "/" + QString(SELECTED_PLUGINS_FILE);
-    qDebug()<<selectedPluginsFile;
-    */
-
     if (selectedPluginsFile.isEmpty())
     {
         selectedPluginsFile = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/" + QString(SELECTED_PLUGINS_FILE);
@@ -129,37 +117,4 @@ int main(int argc, char *argv[])
 
     qDebug() << "Running main loop";
     return a.exec();
-
-
-/*
-
-selectedPluginsFile =  QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
-
-    QDir dir(selectedPluginsFile);
-    if(!dir.exists())
-    {
-        dir.mkpath(selectedPluginsFile);
-    }
-
-    selectedPluginsFile = selectedPluginsFile+("/selectedplugins.lst");
-    qDebug()<<selectedPluginsFile;
-
-    QFileInfo fileInfo(selectedPluginsFile);
-
-    if (!fileInfo.exists())
-    {
-
-        qDebug()<<"Does not exist";
-        qDebug()<<QFile::copy(":/defaults/selectedplugins.lst", selectedPluginsFile);
-    }
-
-    PluginSystem::PluginManager manager("Safri.Core", paths, selectedPluginsFile);
-
-    manager.loadPlugins();
-
-    qDebug() << "Running main loop";
-    qDebug() <<   QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
-
-    return a.exec();
-*/
 }
