@@ -28,5 +28,11 @@
         <file>qml/MusicProgress.qml</file>
         <file>qml/resources/no_cover.png</file>
         <file>qml/MarqueeText.qml</file>
+        <file>qml/Playlist.qml</file>
+        <file>qml/View3.qml</file>
+        <file>qml/resources/media-shuffle-inv.png</file>
+        <file>qml/resources/media-repeat-inv.png</file>
+        <file>qml/resources/pencil-inv.png</file>
+        <file>qml/resources/add.png</file>
     </qresource>
 </RCC>

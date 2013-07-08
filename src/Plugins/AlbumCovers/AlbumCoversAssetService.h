@@ -24,12 +24,12 @@ private slots:
 
 private:
    bool saveHiresCovers;
-    
-    
+
+
 signals:
-    
+
 public slots:
-    
+
 };
 
 #endif // ALBUMCOVERSASSETSERVICE_H

@@ -15,9 +15,10 @@
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
 #include <QModelIndex>
+#include <QSharedPointer>
 
 
-SafriAppInstance::SafriAppInstance():model(0)
+SafriAppInstance::SafriAppInstance():model(0), plModel(0)
 {
     QQuickView *view = new QQuickView;
     view->setSource(QUrl("qrc:/qml/main.qml"));
@@ -27,9 +28,9 @@ SafriAppInstance::SafriAppInstance():model(0)
     model = getSongtreeModel();
     proxy = new QSortFilterProxyModel(this);
     proxy->setSourceModel(model);
-    proxy->sort(0 );
+    proxy->sort(0);
     qDebug()<<model->rowCount();
-    QQmlContext* context = view->rootContext();
+    context = view->rootContext();
     context->setContextProperty("musicModel", proxy);
 
     playPauseButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("playStop"));
@@ -40,6 +41,7 @@ SafriAppInstance::SafriAppInstance():model(0)
     dialerView = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialerView"));
     musicProgress = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
     currentSongDisplay = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("currentSongDisplay"));
+    playlistView = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playList"));
 
     Core::IPlaybackController* controller  = Core::ICore::playbackController();
 
@@ -49,6 +51,7 @@ SafriAppInstance::SafriAppInstance():model(0)
     connect(prevButton, SIGNAL(buttonClicked()), controller->previousAction(), SLOT(trigger()));
     connect(silentButton, SIGNAL(buttonClicked()), this, SLOT(testPlay()));
     connect(dialerView, SIGNAL(volumeChanged(QVariant)), this, SLOT(volumeSlot(QVariant)));
+    connect(playlistView, SIGNAL(movePos(QVariant, QVariant)), this, SLOT(changePos(QVariant,QVariant)));
 
     connect(controller, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
     connect(controller, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
@@ -131,7 +134,7 @@ void SafriAppInstance::playModelIndex(QVariant var)
     QModelIndex proxyIndex = var.value<QModelIndex>();
     QModelIndex index = proxy->mapToSource(proxyIndex);
     SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
-    QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
+    playList = Core::ICore::createPlaylist();
     QList<Core::Item*> items;
     items.append(static_cast<Core::Item*>(item));
 
@@ -141,6 +144,12 @@ void SafriAppInstance::playModelIndex(QVariant var)
     playbackController->setPlaylist(playList);
 
     playbackController->playAction()->trigger();
+    PlaylistModel* oldModel = plModel;
+
+    plModel = new PlaylistModel(playList, this);
+    context->setContextProperty("playlistModel", plModel);
+    if(oldModel)
+        delete oldModel;
 }
 
 void SafriAppInstance::testPlay()
@@ -168,6 +177,11 @@ void SafriAppInstance::updateMedia(Media *media)
         QMetaObject::invokeMethod(currentSongDisplay, "newSong",
                                   Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, ""));
     }
+}
+
+void SafriAppInstance::changePos(QVariant from, QVariant to)
+{
+    playList->moveMedia(from.toInt(), to.toInt());
 }
 
 

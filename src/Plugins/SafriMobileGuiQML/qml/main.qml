@@ -1,142 +1,74 @@
-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 2.0
-import "functions.js" as MyJs
-
-
+import QtQml.Models 2.1
 
 Rectangle {
-    id: mainframe;
-    width: 1280;
-    height: 720;
-    signal play(variant mIndex)
+    id: root
+    color: "lightgray"
+    width: 480
+    height: 800
+    property bool printDestruction: true
+    property double globalScaleFactor: (height / 800) < 0.5 ? 0.5 : height/800
+    onHeightChanged:{ globalScaleFactor = (height / 800) < 0.5 ? 0.5 : height/800; console.log("SCALE: "+ globalScaleFactor)}
 
+    ObjectModel {
+        id: itemModel
 
-    Rectangle
-    {
-        color:"#1b2436"
-        id: content
-        width: parent.width
-        height: parent.height-MyJs.scale(59);
-        x:0
-        y:MyJs.scale(59)+6
-
-        Loader
-        {
-            anchors.fill: parent
-            property string loaderSource
-            id: loader
-            opacity: 0
-            source: loaderSource
-
-            Behavior on opacity {
-                        NumberAnimation{
-                            duration: 500
-                            easing.type: Easing.OutExpo
-                        }
-
-            }
-        }
-        Connections
-        {
-            target: loader.item
-            onPlayModelIndex: mainframe.play(mIndex)
-        }
-
-
-        Home
-        {
-            id:homeScreen
-        }
-
-
+        View1{id: view1; }
+        View2{}
+        View3{}
     }
 
+    ListView {
+        id: view
+        anchors { fill: parent; bottomMargin: 120*root.globalScaleFactor}
+        model: itemModel
+        currentIndex: 1;
+        preferredHighlightBegin: 0; preferredHighlightEnd: 0
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        orientation: ListView.Horizontal
+        snapMode: ListView.SnapOneItem; flickDeceleration: 2000
+        cacheBuffer: 200
+    }
 
+    Rectangle {
+        id: pageIndicator
+        width: root.width;
+        height: 16 * root.globalScaleFactor
+        anchors { top: view.bottom }
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#5A5A5A" }
 
-            BorderImage
-            {
-                id: headerBoarder
-                source: "images/header2_big.png"
-                width: mainframe.width+2; height: MyJs.scale(88);
-                border.left: 0; border.top: 0
-                border.right: 332; border.bottom: 45
+               GradientStop { position: 1.0; color: "#252525" }
+           }
 
-                Rectangle
-                {
-                    x:parent.width-MyJs.scale(200);
-                    y:0
-                    z:MyJs.scale(2)
-                    width:MyJs.scale(200)
-                    height:MyJs.scale(80)
-                    color:"transparent"
-                    id:clock
-                    Timer {
-                        interval: 500; running: true; repeat: true
-                        onTriggered: timeLabel.text = Qt.formatDateTime(new Date(), "hh:mm")
-                    }
-                    Text {
-                        color: "white"
-                        font.family: "Advent"
-                        font.pixelSize: 78
+        Row {
+            anchors.centerIn: parent
+            spacing: root.width / 6
+
+            Repeater {
+                model: itemModel.count
+
+                Rectangle {
+                    width: 6 * root.globalScaleFactor; height: 6 * root.globalScaleFactor
+                    radius: 4 * root.globalScaleFactor
+                    color: view.currentIndex == index ? "#868786" : "#131313"
+
+                    MouseArea {
+                        width: 20; height: 20
                         anchors.centerIn: parent
-                        id:timeLabel
+                        onClicked: view.currentIndex = index
                     }
-                }
-
-                Rectangle
-                {
-
-                    id: headerContent
-                    width:  parent.width-MyJs.scale(206)
-                    height: MyJs.scale(58)
-                    color: "transparent"
-
-
-
-
-                       PlayerButton
-                       {
-                           x:parent.width-MyJs.scale(60)
-                           y:MyJs.scale(4)
-                           width:MyJs.scale(50)
-                           height:MyJs.scale(50)
-                           id: homeButton
-                           toggle: false
-                           icon1: "images/home-inv.png"
-                           onButtonClicked:
-                           {
-                               console.log("Home")
-                               //loader.loaderSource = "Home.qml"
-                               loader.opacity = 0
-                               homeScreen.opacity = 1
-                               //selection.opacity = 0
-                               homeButton.enabled = false
-
-                           }
-
-                    }
-
-
-                    Player
-                    {
-                        onShowPlaylist:
-                        {
-                            loader.loaderSource = "MusicSelection.qml"
-                            homeScreen.opacity =  0
-                            loader.opacity = 1
-                            homeButton.enabled = true
-                        }
-
-
-                    }
-
                 }
             }
-
-
-
-
+        }
+    }
+    Rectangle
+    {
+        anchors{top: pageIndicator.bottom; bottom: root.bottom; right: root.right; left: root.left}
+        color:"green"
+        Player
+        {
+            anchors.fill: parent
+        }
+    }
 }
-
-
-

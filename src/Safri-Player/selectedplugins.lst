@@ -9,7 +9,7 @@ Safri.GUIController
 Safri.PlayerWidgetII
 Safri.PlaylistWidget
 #Safri.MainWindow
-Safri.SidebarPluginTest
+#Safri.SidebarPluginTest
 Safri.SongtreeWidget
 Safri.SafriApp
 #Safri.HackingWidget

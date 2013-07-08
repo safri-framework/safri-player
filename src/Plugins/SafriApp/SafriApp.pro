@@ -15,16 +15,19 @@ include(../../SafriPlugin.pri)
 INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
+
 DEFINES += SAFRIMOBILEGUIQML_LIBRARY
 
 SOURCES += \
     SafriAppPlugin.cpp \
-    SafriAppInstance.cpp
+    SafriAppInstance.cpp \
+    playlistmodel.cpp
 
 HEADERS +=\
     SafriAppInstance.h \
     SafriAppPlugin.h \
-    SafriApp_global.h
+    SafriApp_global.h \
+    playlistmodel.h
 
 RESOURCES += \
     QMLResources.qrc
@@ -47,5 +50,7 @@ OTHER_FILES += \
     qml/RotaryDialer.js \
     qml/MusicProgress.qml \
     MarqueeText.qml \
-    qml/MarqueeText.qml
+    qml/MarqueeText.qml \
+    qml/Playlist.qml \
+    qml/View3.qml
 

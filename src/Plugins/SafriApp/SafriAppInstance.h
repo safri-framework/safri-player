@@ -11,11 +11,11 @@
 #include "Interfaces/itreeitemtype.h"
 #include "Songtree/songtreemodel.h"
 #include <QSortFilterProxyModel>
-
+#include "playlistmodel.h"
 using namespace Core;
 
 class SongTreeModel;
-
+class QQmlContext;
 
 class SAFRIAPPSHARED_EXPORT SafriAppInstance: public QObject
 {
@@ -33,6 +33,7 @@ private slots:
     void volumeSlot(QVariant vol);
     void setMusicProgress(int val);
     void updateMedia(Core::Media* media);
+    void changePos(QVariant from, QVariant to);
 
 private:
     QQuickItem* playPauseButton;
@@ -42,7 +43,7 @@ private:
     QObject* dialerView;
     QObject* musicProgress;
     QObject* currentSongDisplay;
-
+    QObject* playlistView;
     SongTreeModel* getSongtreeModel();
     QMap<QUrl, IAudioCollection*> audioCollMap;
     void test();
@@ -53,6 +54,9 @@ private:
     QQuickItem* songTree;
     QSortFilterProxyModel* proxy;
     int currentSongLength;
+    PlaylistModel* plModel;
+    QQmlContext* context;
+    QSharedPointer<Core::IPlaylist> playList;
 };
 
 #endif // SAFRIMOBILEGUIINSTANCE_H

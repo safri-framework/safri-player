@@ -69,14 +69,14 @@ QStringList AlbumCoversAssetService::getSupportedServices()
 {
     QStringList serviceList;
     serviceList.append("DisplayRole");
-    serviceList.append("CoverRole");
+    serviceList.append("CoverURL");
     return serviceList;
 }
 
 
 QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
 {
-    if(item && item->getType() == DataItem::ALBUM)
+    if(item && item->getType() == DataItem::ALBUM && service == "DisplayRole")
     {
         QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";
         QImage cover(path);
@@ -85,6 +85,11 @@ QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
             cover = QImage(":/icons/ressources/default.png");
         }
         return cover;
+    }
+    if(item && item->getType() == DataItem::ALBUM && service == "CoverURL")
+    {
+        QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversHires").toString()+"/"+QString::number(item->getID()) + ".jpg";
+        return path;
     }
     return QVariant();
 }
