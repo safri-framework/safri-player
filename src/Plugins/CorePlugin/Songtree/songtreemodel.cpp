@@ -272,15 +272,11 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
         case coverRole:
         if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
         {
-
             QString coverPath;
-            coverPath = ICore::storageDirectory() + "/covers/" + QString::number(dataItemPtr->getID()) + ".jpg";
-            QImage image(coverPath);
-            if (image.isNull())
-            {
-                coverPath = "qrc:/images/ressources/default.png";
-            }
-            return QUrl::fromLocalFile(coverPath);
+            coverPath = ICore::instance()->assetController()->getAsset("CoverURL", dataItemPtr).toString();
+            if(coverPath != "")
+                coverPath = "file://" + coverPath;
+            return coverPath;
         }
         else
         {
