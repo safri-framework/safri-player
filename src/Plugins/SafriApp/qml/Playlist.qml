@@ -199,8 +199,6 @@ Rectangle{
                     clip: true
                 }
 
-                //comment
-
                 Rectangle
                 {
                     color: "#424242"
