@@ -5,7 +5,7 @@ Rectangle {
 
     property string totalTime: ""
     property string currentTime: ""
-
+    property double localScale: root.globalScaleFactor > 0.6 ? root.globalScaleFactor : 0.6
     function timeToString(val)
     {
         var tmp = val / 1000;
@@ -41,7 +41,7 @@ Rectangle {
     id: musicProgress
     visible:false;
     width: parent.width
-    height: 30
+    height: localScale * 30
     gradient:
         Gradient {
             GradientStop { position: 0.0; color: "#191919" }
@@ -59,25 +59,33 @@ Rectangle {
     Rectangle
     {
         id: text1Rec
-        anchors.right: outerProgress.left
         anchors.left: parent.left
+        anchors.leftMargin: 10 * root.globalScaleFactor
+        anchors.rightMargin: 10 * root.globalScaleFactor
         anchors.verticalCenter: parent.verticalCenter
-
+        width: text1.width
+        onWidthChanged: console.log("dudel"+width)
         Text
         {
             id: text1
             anchors.centerIn: parent;
             text: currentTime
+            font.pixelSize: 18 * localScale
+
             color:"grey"
         }
     }
         Rectangle
         {
             id: outerProgress
-            anchors.left: text1.right
+            anchors.left: text1Rec.right
+            anchors.right: text2Rect.left
             anchors.centerIn: parent
+
+
+            width: parent.width - text1Rec.width -text2Rect.width -(40*root.globalScaleFactor);
             height: 8
-            width: parent.width-100
+
             gradient:
                 Gradient {
                     GradientStop { position: 0.0; color: "#474747" }
@@ -104,12 +112,14 @@ Rectangle {
         {
             id: text2Rect
             anchors.right: parent.right
-            anchors.left: outerProgress.right
             anchors.verticalCenter: parent.verticalCenter
-
+            anchors.rightMargin: 10 * root.globalScaleFactor
+            anchors.leftMargin: 10 * root.globalScaleFactor
+            width: text2.width
 
             Text
             {
+                font.pixelSize: 18 * localScale
                 anchors.centerIn: parent
                 id: text2
                 text:totalTime
