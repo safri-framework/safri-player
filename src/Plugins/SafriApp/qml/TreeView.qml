@@ -54,7 +54,7 @@ Rectangle{
             {
                 gradient:
                     Gradient {
-                        GradientStop { position: 0.0; color: "#191919" }
+                    GradientStop { position: 0.0; color: "#191919" }
                         GradientStop { position: 1.0; color: "black" }
                        }
                 height: rowHeight
@@ -65,10 +65,12 @@ Rectangle{
                 Text
                 {
                     text: display
-                    color: "#838383"
+                    color: "#D4D4D4"
                     font.pixelSize: fontSize
-                    x:cover.width + 20
+                    x:cover.width + 20*root.globalScaleFactor
+                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 40 * root.globalScaleFactor : parent.width - x - 20 * root.globalScaleFactor;
                     anchors.verticalCenter: parent.verticalCenter
+                    clip:true
                     id: delegateText
 
                 }
@@ -83,33 +85,60 @@ Rectangle{
 
                 MouseArea
                 {
+                    Timer
+                    {
+                        id: timer
+                            interval: 500; running: false; repeat: false;
+                            onTriggered: { parent.dontClick = true}
+                    }
+                    acceptedButtons: Qt.AllButtons
                     property bool dontClick
+
+                    onReleased: {console.log("release -> timerStop");timer.stop();}
                     anchors.fill: parent
                     onPressAndHold:
                     {
                         tapAndHoldPanel.visible = true; currentTapAndHold = tapAndHoldPanel
+                        console.log("pressAndHold")
                     }
                     onClicked:
                     {
-                        if (dontClick)
+
+                        console.log("clicked " + mouse.button)
+                        if(mouse.button == Qt.LeftButton)
                         {
-                            dontClick = false;
-                        }
-                        else
-                        {
-                            if (model.hasModelChildren)
+                            if (dontClick)
                             {
-                                nextModelIndex = listView.model.modelIndex(index);
-                                listModel.append({"text": delegateText.text, "image": cover.source, "index":nextModelIndex} )
+                                dontClick = false;
+                            }
+                            else
+                            {
+                                if (model.hasModelChildren)
+                                {
+                                    nextModelIndex = listView.model.modelIndex(index);
+                                    listModel.append({"text": delegateText.text, "image": cover.source, "index":nextModelIndex} )
+                                }
                             }
                         }
                     }
                     onPressed:
                     {
-                        if(currentTapAndHold && currentTapAndHold.visible == true)
+
+
+                        if(mouse.button == Qt.LeftButton)
                         {
-                            currentTapAndHold.visible = false;
-                            dontClick = true;
+
+                            timer.start()
+                            if(currentTapAndHold && currentTapAndHold.visible == true)
+                            {
+                                currentTapAndHold.visible = false;
+                                dontClick = true;
+                            }
+                        }
+                        else
+                        {
+                            tapAndHoldPanel.visible = true; currentTapAndHold = tapAndHoldPanel
+                            console.log("pressAndHold")
                         }
                     }
                 }
@@ -168,7 +197,10 @@ Rectangle{
                             anchors.right: tapnHoldImage.horizontalCenter;
                             onButtonClicked: enqueueModelIndex(listView.model.modelIndex(index));
                             toggle:false;
-                            icon1: "resources/play_icon_black.png";
+                            icon1: "resources/add.png" ;
+                            opacity: 0.7
+                            iconScale: 0.7
+
                         }
                     }
                 }
@@ -184,7 +216,7 @@ anchors.fill: parent
 model:musicQMLModel
 id: listView
 
-onMovementStarted: treeView.moving = true;
+onMovementStarted: {treeView.moving = true; timer.stop();}
 onMovementEnded:   treeView.moving = false;
 
 section.property: musicQMLModel.count > 100 ? "display":"" ;

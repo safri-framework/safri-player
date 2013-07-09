@@ -9,7 +9,15 @@ Rectangle
     property bool enabled: true
     property bool playing: false
     property bool toggle: true
+    property bool checkable: false;
+    property double iconScale: 1
+
     signal buttonClicked
+
+    onCheckableChanged:
+    {
+        enabled = !checkable
+    }
 
     id: button
     width: parent.width / 5
@@ -28,7 +36,7 @@ Rectangle
 
 
     Image {
-        scale:root.globalScaleFactor
+        scale:root.globalScaleFactor * iconScale
         anchors.centerIn: parent
         id: buttonIcon
         smooth:true
@@ -41,7 +49,7 @@ Rectangle
                     button.icon2
                 }
         opacity: if(!button.enabled)
-                     0.5
+                     0.3
                  else
                      1
     }
@@ -52,35 +60,40 @@ Rectangle
         width:parent.width
         height: parent.height
         onClicked:
-
-            if(button.toggle)
+            if(button.checkable)
             {
-                if(button.enabled)
-                {
-                    if(button.playing)
-                    {
-
-                        button.playing = false;
-                        button.buttonClicked()
-                    }
-                    else
-                    {
-                        button.playing = true;
-                        button.buttonClicked()
-                    }
-
-                }
+                button.enabled = !button.enabled
             }
             else
             {
-                button.buttonClicked()
-                console.log("nix")
-            }
+                if(button.toggle)
+                {
+                    if(button.enabled)
+                    {
+                        if(button.playing)
+                        {
 
+                            button.playing = false;
+                            button.buttonClicked()
+                        }
+                        else
+                        {
+                            button.playing = true;
+                            button.buttonClicked()
+                        }
+
+                    }
+                }
+                else
+                {
+                    button.buttonClicked()
+                    console.log("nix")
+                }
+            }
         onPressedChanged: if(pressed && button.enabled)
-                          buttonIcon.scale = 1.2
+                            buttonIcon.scale = 1.2 * root.globalScaleFactor * button.iconScale;
                          else
-                            buttonIcon.scale = 1
+                            buttonIcon.scale = 1 * root.globalScaleFactor * button.iconScale;
 
         }
 }
