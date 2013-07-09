@@ -21,9 +21,10 @@ Rectangle {
         {
          id: currentSongDisplay
          objectName: "currentSongDisplay";
-         height: root.height / 6
+         height: 133 * root.globalScaleFactor
          width: parent.width
          color:"transparent"
+         clip: true
          property string songName;
          property string artistName;
          property string albumName;
@@ -45,6 +46,7 @@ Rectangle {
              anchors.fill: parent
              border.left: 5; border.top: 10
              border.right: 5; border.bottom: 5
+             width: parent.width
              Image
              {
                  x:0
@@ -61,11 +63,11 @@ Rectangle {
                  anchors.right: parent.right
                  anchors.left: currentSongCover.right
                  height: parent.height
-                // width: parent.width-currentSongCover.width
+                 width: parent.width-currentSongCover.width
                  anchors.top:  parent.top
                  anchors.bottom:  parent.bottom
                  color: "transparent"
-                 opacity:0.7
+                 //opacity:0.7
 
                  MarqueeText
                  {
@@ -74,10 +76,10 @@ Rectangle {
                     text: currentSongDisplay.songName
                     height: 42 *  root.globalScaleFactor;
                     fontSize: 29 *  root.globalScaleFactor
-                    color: "white"
-                    width: (parent.width - 20) * root.globalScaleFactor
+                    color: "#d4d4d4"
+                    width: parent.width - 20 * root.globalScaleFactor
                     id: songNameLabel
-                    opacity:0.7
+                    clip: true
                  }
 
                  Text
@@ -86,10 +88,10 @@ Rectangle {
                      x:10 *  root.globalScaleFactor
                      height:35 *  root.globalScaleFactor
                      font.pixelSize: 20 *  root.globalScaleFactor
-                     color: "white"
+                     color: "#838383"
                      text: currentSongDisplay.artistName
                      id: artistNameLabel
-                     opacity:0.7
+
                  }
 
                  Text
@@ -98,8 +100,8 @@ Rectangle {
                      y: songNameLabel.height + artistNameLabel.height + (8 *  root.globalScaleFactor);
                      text: currentSongDisplay.albumName
                      font.pixelSize: 20 *  root.globalScaleFactor
-                     color: "white"
-                    opacity:0.7
+                     color: "#838383"
+
                  }
             }
          }
@@ -109,7 +111,6 @@ Rectangle {
         MusicProgress
         {
             y: currentSongDisplay.height-1;
-
             id: progress
         }
 
