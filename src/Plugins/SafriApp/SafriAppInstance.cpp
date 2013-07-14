@@ -184,3 +184,8 @@ void SafriAppInstance::changePos(QVariant from, QVariant to)
 {
     playList->moveMedia(from.toInt(), to.toInt());
 }
+
+void SafriAppInstance::removeFromPlaylist(QVariant index)
+{
+    playList->deleteMedia(index.toInt());
+}

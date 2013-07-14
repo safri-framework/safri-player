@@ -11,6 +11,6 @@ RESTAppController::RESTAppController(QObject *parent) :
 
 QAbstractItemModel *RESTAppController::getSongtreeModel()
 {
-    RESTSongtree* songTree = new RESTSongtree("http://localhost:8085/");
+    RESTSongtree* songTree = new RESTSongtree("http://192.168.1.87:8085/");
     return new RESTSongtreeModel(songTree->getRoot(), this);
 }

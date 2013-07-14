@@ -21,8 +21,8 @@ bool SafriAppPlugin::initialize(QStringList &arguments)
 {
     Q_UNUSED(arguments)
 
-    RESTPlaybackController* playbackController = new RESTPlaybackController("http://localhost:8085/");
-    RESTSongtree* songTree = new RESTSongtree("http://localhost:8085/");
+    RESTPlaybackController* playbackController = new RESTPlaybackController("http://192.168.1.87:8085/");
+    //RESTSongtree* songTree = new RESTSongtree("http://192.168.1.87:8085/");
 
     /*
     Core::ITreeItem* root = songTree->getRoot();
@@ -35,10 +35,10 @@ bool SafriAppPlugin::initialize(QStringList &arguments)
     qDebug() << "3rd child count: " << root->getChildCount() << " name: " << root->property("name");;
     */
 
-    //addObject(playbackController);
+    addObject(playbackController);
 
-    SafriAppInstance* instance = new SafriAppInstance(new LocalAppController() );
-    //SafriAppInstance* instance = new SafriAppInstance(new RESTAppController() );
+    //SafriAppInstance* instance = new SafriAppInstance(new LocalAppController() );
+    SafriAppInstance* instance = new SafriAppInstance(new RESTAppController() );
     Q_UNUSED(instance)
 
     return true;

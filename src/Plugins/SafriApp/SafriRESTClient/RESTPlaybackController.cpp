@@ -259,7 +259,7 @@ void RESTPlaybackController::setupStateTransitions()
 QString RESTPlaybackController::RESTLocation()
 {
     // TODO: read from settings
-    return "http://localhost:8085/";
+    return "http://192.168.1.87:8085/";
 }
 
 void RESTPlaybackController::playRequestCallback()
