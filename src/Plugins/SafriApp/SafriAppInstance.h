@@ -12,6 +12,9 @@
 #include "Songtree/songtreemodel.h"
 #include <QSortFilterProxyModel>
 #include "playlistmodel.h"
+
+#include "IAppController.h"
+
 using namespace Core;
 
 class SongTreeModel;
@@ -21,7 +24,7 @@ class SAFRIAPPSHARED_EXPORT SafriAppInstance: public QObject
 {
     Q_OBJECT
 public:
-    SafriAppInstance();
+    SafriAppInstance(IAppController* appController);
 
 public slots:
     void playPauseSlot();
@@ -37,6 +40,7 @@ private slots:
     void removeFromPlaylist(QVariant index);
 
 private:
+    IAppController* appController;
     QQuickItem* playPauseButton;
     QQuickItem* prevButton;
     QQuickItem* nextButton;
@@ -45,13 +49,7 @@ private:
     QObject* musicProgress;
     QObject* currentSongDisplay;
     QObject* playlistView;
-    SongTreeModel* getSongtreeModel();
-    QMap<QUrl, IAudioCollection*> audioCollMap;
-    void test();
-    QList<ITreeItemType*>*  treeHierarchy;
-    QList<Song*> songList;
-    SongTree* tree;
-    SongTreeModel* model;
+    QAbstractItemModel* model;
     QQuickItem* songTree;
     QSortFilterProxyModel* proxy;
     int currentSongLength;

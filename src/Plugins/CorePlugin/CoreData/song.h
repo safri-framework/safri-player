@@ -67,7 +67,7 @@ namespace Core
             QUrl            getURL();
             QString         getMimeType();
 
-        private:
+        protected:
 
             Artist* interpret;
             AlbumArtist* albumArtist;

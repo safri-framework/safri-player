@@ -12,18 +12,16 @@ class PlayerController : public HttpRequestHandler
 {
     Q_OBJECT
     Q_DISABLE_COPY(PlayerController);
+    public:
 
-public:
-    explicit PlayerController();
-    void service(HttpRequest& request, HttpResponse& response);
+        explicit PlayerController();
+        void service(HttpRequest& request, HttpResponse& response);
 
-signals:
+    signals:
 
-private:
-    Core::IPlaybackController* pbController;
+    private:
 
-
-public slots:
+        Core::IPlaybackController* pbController;
     
 };
 

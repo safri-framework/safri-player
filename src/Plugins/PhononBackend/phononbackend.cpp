@@ -154,14 +154,15 @@ int PhononBackend::getVolume()
     #endif
 
 #ifdef Qt5
-    if(player->volume() > 0)
+    // TODO:
+    //if(player->volume() > 0)
     {
-        qDebug()<<"VOLUME!!?";
+        //qDebug()<<"VOLUME!!?";
         return player->volume();
     }
-    else
+    //else
     {
-        return 100;
+    //    return 100;
     }
 #endif
 }

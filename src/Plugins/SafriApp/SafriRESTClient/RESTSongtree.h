@@ -1,0 +1,33 @@
+#ifndef RESTSONGTREE_H
+#define RESTSONGTREE_H
+
+#include <QObject>
+
+namespace Core
+{
+    class ITreeItem;
+}
+
+namespace SafriRESTClient
+{
+    class RESTClient;
+    class RESTSongtreeItem;
+
+    class RESTSongtree : public QObject
+    {
+        Q_OBJECT
+        public:
+
+            explicit RESTSongtree(QString restLocation, QObject *parent = 0);
+
+            Core::ITreeItem* getRoot();
+
+        private:
+
+            RESTClient* client;
+            RESTSongtreeItem* rootItem;
+
+    };
+}
+
+#endif // RESTSONGTREE_H

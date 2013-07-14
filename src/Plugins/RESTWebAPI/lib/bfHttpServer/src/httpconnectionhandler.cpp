@@ -134,7 +134,7 @@ void HttpConnectionHandler::read() {
     // If the request is complete, let the request mapper dispatch it
     if (currentRequest->getStatus()==HttpRequest::complete) {
         readTimer.stop();
-        qDebug("HttpConnectionHandler (%p): received request",this);
+        //qDebug("HttpConnectionHandler (%p): received request",this);
         HttpResponse response(&socket);
         try {
             requestHandler->service(*currentRequest, response);

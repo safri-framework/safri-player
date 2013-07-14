@@ -28,6 +28,7 @@ class PlaybackController : public Core::IPlaybackController
         QList<QAction*> getAdditionalActions();
 
         int getMediaTotalTime();
+        int getCurrentTime();
         int getVolume();
 
 

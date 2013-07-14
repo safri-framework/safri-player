@@ -21,7 +21,6 @@ SUBDIRS += CollectionController
 SUBDIRS += AudioSQLStorage
 SUBDIRS += SafriApp
 SUBDIRS += TagLibMediaTagger
-#SUBDIRS += RESTPlaybackController
 
 #SUBDIRS += HackingWidget
 #SUBDIRS += TouchEventFilterPlugin

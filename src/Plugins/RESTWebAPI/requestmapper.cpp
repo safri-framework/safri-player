@@ -16,7 +16,7 @@ RequestMapper::RequestMapper(QObject* parent)
 
 void RequestMapper::service(HttpRequest& request, HttpResponse& response) {
     QByteArray path=request.getPath();
-    qDebug("RequestMapper: path=%s",path.data());
+    //qDebug("RequestMapper: path=%s",path.data());
 
 
     if (path.startsWith("/player")) {
@@ -32,5 +32,5 @@ void RequestMapper::service(HttpRequest& request, HttpResponse& response) {
     else {
         Static::staticFileController->service(request, response);
     }
-    qDebug("RequestMapper: finished request");
+    //qDebug("RequestMapper: finished request");
 }

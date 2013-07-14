@@ -34,6 +34,7 @@ Widget::Widget(QWidget *parent) :
 
     connect(m_pbController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
     connect(m_pbController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(mediaChanged(Core::Media*)));
+    connect(m_pbController, SIGNAL(volumeChanged(int)), this, SLOT(volumeChanged(int)));
     connect(m_pbController, SIGNAL(update(int)), this, SLOT(update(int)));
 
     qDebug()<<"Current Volume"<<m_pbController->getVolume();
@@ -113,10 +114,12 @@ void Widget::update(int currentTime)
 {
     if(newMedia)
     {
-        int totalTime = m_pbController->getMediaTotalTime();
-        ui->seek_slider->setMaximum(totalTime);
+
         newMedia = false;
     }
+
+    int totalTime = m_pbController->getMediaTotalTime();
+    ui->seek_slider->setMaximum(totalTime);
 
     ui->seek_slider->setValue(currentTime);
 
@@ -222,6 +225,7 @@ void Widget::on_seek_slider_sliderMoved(int position)
 
 void Widget::on_volume_slider_sliderMoved(int position)
 {
+    qDebug() << "PlayerWidgetII: setVolume: " << position;
     m_pbController->setVolume(position);
 }
 
@@ -235,4 +239,9 @@ void Widget::on_random_toggled(bool checked)
 void Widget::on_repeat_toggled(bool checked)
 {
 
+}
+
+void Widget::volumeChanged(int volume)
+{
+    ui->volume_slider->setValue(volume);
 }

@@ -69,6 +69,8 @@ namespace Core
 
             virtual int getMediaTotalTime() = 0;
 
+            virtual int getCurrentTime() = 0;
+
             virtual int getVolume() = 0;
 
         signals:
@@ -83,6 +85,8 @@ namespace Core
             */
             void update(int currentTime);
 
+            void volumeChanged(int volume);
+
             void stateChanged(Core::playState state);
 
             void hasSeekableMedia(bool value);
@@ -91,6 +95,7 @@ namespace Core
 
             void newPlaylistInstalled(QSharedPointer<Core::IPlaylist>);
 
+            // TODO: should'n be neccessary in the interface !?
         private slots:
 
                 virtual void playStateSlot() = 0;

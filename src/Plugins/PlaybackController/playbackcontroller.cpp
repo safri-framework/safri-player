@@ -351,6 +351,16 @@ int PlaybackController::getMediaTotalTime()
     return -1;
 }
 
+int PlaybackController::getCurrentTime()
+{
+    if (mediaBackend)
+    {
+        return mediaBackend->getCurrentTime();
+    }
+
+    return -1;
+}
+
 int PlaybackController::getVolume()
 {
     if (mediaBackend)
@@ -371,9 +381,19 @@ void PlaybackController::seek(int playTime)
 
 void PlaybackController::setVolume(int volume)
 {
+    bool volumeHasChanged = false;
     if (mediaBackend)
     {
+        if (mediaBackend->getVolume() != volume)
+        {
+            volumeHasChanged = true;
+        }
         mediaBackend->setVolume(volume);
+
+        if (volumeHasChanged)
+        {
+            Q_EMIT volumeChanged(volume);
+        }
     }
 }
 

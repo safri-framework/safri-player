@@ -11,8 +11,6 @@ PlayerController::PlayerController():pbController(Core::ICore::playbackControlle
 
 }
 
-
-
 void PlayerController::service(HttpRequest &request, HttpResponse &response)
 {
     response.setHeader("Content-Type", "application/json; charset=ISO-8859-1");
@@ -26,27 +24,40 @@ void PlayerController::service(HttpRequest &request, HttpResponse &response)
         if (actionVariant =="next")
         {
            action = pbController->nextAction();
-
         }
         else if (actionVariant == "previous")
         {
             action = pbController->previousAction();
-
         }
-
         else if (actionVariant == "pause")
         {
             action = pbController->pauseAction();
-
         }
-
         else if (actionVariant == "play")
         {
             action = pbController->playAction();
         }
-        else if(actionVariant == "getStatus")
+        else if (actionVariant == "getStatus")
         {
             response.write(QJsonDocument(JSONSerializer::getStatus()).toJson(), true);
+            return;
+        }
+        else if (actionVariant == "seek")
+        {
+            int playTime = request.getParameter("playTime").toInt();
+            if (playTime > 0)
+            {
+                pbController->seek(playTime);
+            }
+            return;
+        }
+        else if (actionVariant == "setVolume")
+        {
+            int volume = request.getParameter("volume").toInt();
+            if (volume >= 0 && volume <= 100)
+            {
+                pbController->setVolume(volume);
+            }
             return;
         }
 

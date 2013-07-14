@@ -37,6 +37,7 @@ private slots:
     void on_random_toggled(bool checked);
 
     void on_repeat_toggled(bool checked);
+    void volumeChanged(int volume);
 
 private:
 

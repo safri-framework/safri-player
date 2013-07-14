@@ -18,14 +18,15 @@
 #include <QSharedPointer>
 #include "CoreSupply/AssetController.h"
 
-SafriAppInstance::SafriAppInstance():model(0), plModel(0)
+
+SafriAppInstance::SafriAppInstance(IAppController *appController): appController(appController), model(0), plModel(0)
 {
     QQuickView *view = new QQuickView;
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
-    test();
-    model = getSongtreeModel();
+
+    model = appController->getSongtreeModel();
     proxy = new QSortFilterProxyModel(this);
     proxy->setSourceModel(model);
     proxy->sort(0);
@@ -52,7 +53,7 @@ SafriAppInstance::SafriAppInstance():model(0), plModel(0)
     connect(silentButton, SIGNAL(buttonClicked()), this, SLOT(testPlay()));
     connect(dialerView, SIGNAL(volumeChanged(QVariant)), this, SLOT(volumeSlot(QVariant)));
     connect(playlistView, SIGNAL(movePos(QVariant, QVariant)), this, SLOT(changePos(QVariant,QVariant)));
-    connect(playlistView, SIGNAL(removeIndexFromPlaylist(QVariant)), this, SLOT(removeFromPlaylist(QVariant)));
+
     connect(controller, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
     connect(controller, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
 
@@ -174,14 +175,8 @@ void SafriAppInstance::updateMedia(Media *media)
     Core::Song* song = qobject_cast<Core::Song*>(media);
     if(song)
     {
-        QString coverPath;
-
-        coverPath = ICore::instance()->assetController()->getAsset("CoverURL", song->getAlbum()).toString();
-        if(coverPath != "")
-            coverPath = "file://" + coverPath;
-        qDebug()<<"PATH "+coverPath;
         QMetaObject::invokeMethod(currentSongDisplay, "newSong",
-                                  Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, coverPath));
+                                  Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, ""));
     }
 }
 
@@ -189,52 +184,3 @@ void SafriAppInstance::changePos(QVariant from, QVariant to)
 {
     playList->moveMedia(from.toInt(), to.toInt());
 }
-
-void SafriAppInstance::removeFromPlaylist(QVariant index)
-{
-    playList->deleteMedia(index.toInt());
-}
-
-
-SongTreeModel *SafriAppInstance::getSongtreeModel()
-{
-
-
-    ICollectionController* collController = ICore::collectionController();
-    QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
-    for (int i = 0; i < mediaColl.size(); i++)
-    {
-        IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(mediaColl.at(i));
-        if(tempAudioColl)
-        {
-            audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
-        }
-    }
-    QList<IAudioCollection*> audioCollList = audioCollMap.values();
-    for(int i = 0 ; i < audioCollList.size(); i++)
-    {
-
-        songList.append(audioCollList.at(i)->getSongs());
-    }
-
-    tree = new SongTree(songList, treeHierarchy);
-
-    for(int i = 0 ; i < audioCollList.size(); i++)
-    {
-        qDebug() << "CONNECT itemAdded";
-        connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
-    }
-    return new SongTreeModel(tree, this);
-
-}
-
-void SafriAppInstance::test()
-{
-     treeHierarchy = new QList<ITreeItemType*>();
-    // treeHierarchy->append(new MediaCollectionItemType());
-     treeHierarchy->append(new GenreItemType());
-     treeHierarchy->append(new ArtistItemType());
-     treeHierarchy->append(new AlbumItemType());
-     treeHierarchy->append(new SongItemType());
-}
-

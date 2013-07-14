@@ -63,7 +63,9 @@ SOURCES += coreplugin.cpp \
     Interfaces/ISettingsModuleWidget.cpp \
     Interfaces/IAssetService.cpp \
     CoreSupply/AssetController.cpp \
-    CoreData/albumartist.cpp
+    CoreData/albumartist.cpp \
+    Interfaces/ITreeItem.cpp \
+    CoreSupply/BasicTreeItem.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -121,7 +123,9 @@ HEADERS += coreplugin.h\
     Interfaces/ISettingsModuleWidget.h \
     Interfaces/IAssetService.h \
     CoreSupply/AssetController.h \
-    CoreData/albumartist.h
+    CoreData/albumartist.h \
+    Interfaces/ITreeItem.h \
+    CoreSupply/BasicTreeItem.h
 
 OTHER_FILES += \
     Core.xml \

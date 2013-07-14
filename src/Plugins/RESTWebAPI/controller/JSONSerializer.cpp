@@ -12,20 +12,29 @@ QJsonObject JSONSerializer::getStatus()
 {
     QJsonObject obj;
     QVariantMap map;
-    QSharedPointer<Core::IPlaylist> playlist = Core::ICore::playbackController()->getPlaylist();
+    Core::IPlaybackController* playbackController = Core::ICore::playbackController();
+    QSharedPointer<Core::IPlaylist> playlist = playbackController->getPlaylist();
     if(playlist.isNull())
     {
         map.insert("playlistInstalled", false);
+        map.insert("success", true);
+
+        obj = QJsonObject::fromVariantMap(map);
     }
     else
     {
         map.insert("playlistInstalled", true);
+
         map.insert("playlistPosition",playlist->getCurrentMediaPosition());
+        map.insert("success", true);
+        map.insert("currentTime", playbackController->getCurrentTime());
+        map.insert("volume", playbackController->getVolume());
+        map.insert("mediaTotalTime", playbackController->getMediaTotalTime());
+
+        obj = QJsonObject::fromVariantMap(map);
+
         obj.insert("currentMedia", getMedia(Core::ICore::playbackController()->getPlaylist()->getCurrentMedia()));
     }
-
-    map.insert("success", true);
-    obj = QJsonObject::fromVariantMap(map);
 
     return obj;
 }
@@ -33,7 +42,13 @@ QJsonObject JSONSerializer::getStatus()
 QJsonObject JSONSerializer::getMedia(Core::DataItem* item)
 {
     if (!item)
-        return QJsonObject();
+    {
+        QVariantMap map;
+        map.insert("failed", true);
+
+        return QJsonObject::fromVariantMap(map);
+    }
+
     QVariantMap map;
     if(item->getType() == Core::DataItem::SONG)
     {
@@ -111,6 +126,7 @@ QJsonObject JSONSerializer::getSongTreeItemForJsTree(Core::SongTreeItem *item, i
 
         map.insert("treeItemId", id);
         map.insert("isLeaf", (item->getNumberOfChilds() == 0));
+        map.insert("numberOfChilds", item->getNumberOfChilds());
         map.insert("text", item->getName());
         map.insert("type", item->getTypeName());
         obj = QJsonObject::fromVariantMap(map);
