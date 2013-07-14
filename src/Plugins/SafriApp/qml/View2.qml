@@ -49,13 +49,35 @@ Rectangle {
              width: parent.width
              Image
              {
-                 x:0
-                 y:0
+                 x:1
+                 y:1
                  width: parent.height
                  height: width;
-                 source:currentSongDisplay.coverURL == "" ? "resources/no_cover.png" : currentSongDisplay.coverURL;
+                 source: "resources/no_cover.png" ;
                  id: currentSongCover
                  opacity: 0.2
+                 Rectangle
+                 {
+                    width:1;
+                    height:parent.height
+                    x:  parent.width
+                    y:0
+                    color:"black"
+                    opacity: 0.2
+                 }
+
+
+             }
+
+             Image {
+                 id: cover
+                 source: currentSongDisplay.coverURL;
+                 width: currentSongCover.width - 20 * root.globalScaleFactor;
+                 height: width;
+                 x: 10 * root.globalScaleFactor;
+                 y: 10 * root.globalScaleFactor
+                 visible: currentSongDisplay.coverURL !== ""
+                 z:2
              }
              Rectangle
              {

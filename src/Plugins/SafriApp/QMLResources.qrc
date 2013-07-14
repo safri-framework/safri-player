@@ -34,5 +34,23 @@
         <file>qml/resources/media-repeat-inv.png</file>
         <file>qml/resources/pencil-inv.png</file>
         <file>qml/resources/add.png</file>
+        <file>qml/resources/delete_icon.png</file>
+        <file>qml/resources/dragHandle.png</file>
+        <file>qml/resources/1-scale.png</file>
+        <file>qml/resources/2-scale-volume.png</file>
+        <file>qml/resources/3-inner-knob-fixed.png</file>
+        <file>qml/resources/4-icon-mute-off@2x.png</file>
+        <file>qml/resources/4-icon-mute-on@2x.png</file>
+        <file>qml/resources/5-outer-knob-rotating.png</file>
+        <file>qml/resources/6-highlight-fixed.png</file>
+        <file>qml/resources/5-outer-knob-rotatingII.png</file>
+        <file>qml/resources/icons/album.png</file>
+        <file>qml/resources/icons/album2.png</file>
+        <file>qml/resources/icons/artist.png</file>
+        <file>qml/resources/icons/artist2.png</file>
+        <file>qml/resources/icons/collection.png</file>
+        <file>qml/resources/icons/collection2.png</file>
+        <file>qml/resources/icons/song.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

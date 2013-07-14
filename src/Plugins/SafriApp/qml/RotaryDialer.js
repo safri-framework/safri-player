@@ -21,8 +21,9 @@ var correctPressPoint = false;
 
 function initialize()
 {
-    centerX = dialer.x + dialer.width / 2;
-    centerY = dialer.y + dialer.height / 2;
+    centerX =  dialerView.width / 2;
+    centerY =  dialerView.height / 2;
+    console.log("init")
 }
 
 
@@ -54,7 +55,7 @@ function dialerPressed(event)
     startAngle = getEventAngle(event);
     pressAngle = startAngle;
     var dist = getEventDist(event)
-    if( dist > 100*scaleFactor && dist < 193*scaleFactor)
+    if( dist > 100*dialerView.scaleFactor && dist < 198*dialerView.scaleFactor)
     {
 
         correctPressPoint = true;
@@ -76,9 +77,9 @@ function dialerReleased(event)
 function dialerMoved(event)
 {
     var dist = getEventDist(event)
-    console.log(dist)
+    console.log(dist/dialerView.scaleFactor)
 
-    if(correctPressPoint && dist > 100*scaleFactor && dist < 193*scaleFactor)
+    if(correctPressPoint && dist > 100*dialerView.scaleFactor && dist < 198*dialerView.scaleFactor)
     {
         var pos = getEventAngle(event);
        // position = (currentAngle + getAngleDiff(pos) +360)%360 ;

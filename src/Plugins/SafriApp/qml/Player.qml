@@ -3,6 +3,7 @@ import QtQuick 2.0
 Rectangle {
     property double scaleFactor:1
     onHeightChanged: scaleFactor = height / 97
+    color:"black"
     BorderImage
     {
         height:parent.height

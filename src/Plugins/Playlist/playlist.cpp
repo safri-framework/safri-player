@@ -202,6 +202,7 @@ void Playlist::deleteMedia(int value)
     playlistLock.lockForWrite();
         mediaList.removeAt(value);
     playlistLock.unlock();
+        Q_EMIT MediaDeleted(value);
 
     // if necessary recalculate the position of the current playing song
     if(value < currentMedia)
@@ -213,7 +214,7 @@ void Playlist::deleteMedia(int value)
     // to remove the playing icon from the playlist
     // so temporarily we set the current playing song to -1
 
-    if ( (value == currentMedia) )
+    else if ( (value == currentMedia) )
     {
         // but when the current playing song finished we want the
         // playlist to continues with the next song that was actualy after
@@ -227,7 +228,7 @@ void Playlist::deleteMedia(int value)
         // and restore the position of that next song
         currentMediaTransactionRequested = true;
     }
-    Q_EMIT MediaDeleted(value);
+
 }
 
 

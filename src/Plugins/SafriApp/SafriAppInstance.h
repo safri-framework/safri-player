@@ -34,6 +34,7 @@ private slots:
     void setMusicProgress(int val);
     void updateMedia(Core::Media* media);
     void changePos(QVariant from, QVariant to);
+    void removeFromPlaylist(QVariant index);
 
 private:
     QQuickItem* playPauseButton;

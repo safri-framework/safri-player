@@ -3,7 +3,7 @@ import QtQml.Models 2.1
 
 Rectangle {
     id: root
-    color: "lightgray"
+    color: "#272727"
     width: 480
     height: 800
     property bool printDestruction: true
@@ -36,9 +36,9 @@ Rectangle {
         height: 16 * root.globalScaleFactor
         anchors { top: view.bottom }
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#5A5A5A" }
+            GradientStop { position: 0.0; color: "#3c3c3c" }
 
-               GradientStop { position: 1.0; color: "#252525" }
+               GradientStop { position: 1.0; color: "#242424" }
            }
 
         Row {
@@ -51,7 +51,8 @@ Rectangle {
                 Rectangle {
                     width: 6 * root.globalScaleFactor; height: 6 * root.globalScaleFactor
                     radius: 4 * root.globalScaleFactor
-                    color: view.currentIndex == index ? "#868786" : "#131313"
+                    opacity: view.currentIndex == index ? 0.8 : 1
+                    color: view.currentIndex == index ? "white" : "black"
 
                     MouseArea {
                         width: 20; height: 20

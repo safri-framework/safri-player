@@ -4,25 +4,44 @@ import "RotaryDialer.js" as Dialer
 
 Rectangle {
 
-    property double scaleFactor :1
 
     signal volumeChanged(variant volume)
+    property double scaleFactor:height/420
     id: dialerView
     objectName: "dialerView";
-    width: 340
-    height: 340
+    width: parent.width-20*root.globalScaleFactor
+    height: width
     anchors.centerIn: parent
     color: "transparent"
-    onHeightChanged: {Dialer.initialize(); scaleFactor = height / 340}
+    onHeightChanged: {scaleFactor = height / 420;Dialer.initialize(); }
+    /*Rectangle
+    {
+      anchors.fill: parent
+      color:"white"
+      opacity: 0.5
+    }*/
 
-    Image {
-	id: dialer
-    anchors.centerIn: parent
-    width: parent.width;
-    height: parent.width
-    source: "resources/knob.png"
+    Image{
+        source:"resources/6-highlight-fixed.png"
+        anchors.centerIn: parent
+        width: parent.width
+        height:parent.height
+        Image {
+        id: dialer
+        anchors.verticalCenter: parent.verticalAlignment
+        width: parent.width;
+        height: parent.width
+        source: "resources/5-outer-knob-rotatingII.png"
+        opacity:0.6
+        }
     }
 
+    Image
+    {
+        y:2
+        source:"resources/3-inner-knob-fixed.png"
+        anchors.fill:parent
+    }
     // the dialer stop layer
 
 

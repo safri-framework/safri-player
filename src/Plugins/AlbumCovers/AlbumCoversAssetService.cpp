@@ -9,11 +9,12 @@
 #include <QDebug>
 #include <QImage>
 #include "icore.h"
-
+#include <QFile>
 
 AlbumCoversAssetService::AlbumCoversAssetService(QObject *parent) :
     IAssetService(parent),
-    saveHiresCovers(true)
+    saveHiresCovers(true),
+    overwriteCovers(false)
 {
     ICollectionController* collController = ICore::collectionController();
     connect(collController, SIGNAL(newItem(Core::DataItem*)), this, SLOT(getCover(Core::DataItem*)));
@@ -50,17 +51,25 @@ void AlbumCoversAssetService::getCover(Core::DataItem* item)
 {
     Controller::InfoController* controller = ICore::infoController();
     Album* album = qobject_cast<Album*>(item);
-    if(album && album->getName() != "Unbekannt")
+    QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";
+    if((!QFile::exists(path) ) | overwriteCovers)
     {
-        Core::InfoRequest* request;
-        QString infoType;
-        if (saveHiresCovers)
-            infoType = "org.safri.audio.album.cover.hires";
-        else
-            infoType = "org.safri.audio.album.cover";
+        if(album && album->getName() != "Unbekannt")
+        {
+            Core::InfoRequest* request;
+            QString infoType;
+            if (saveHiresCovers)
+                infoType = "org.safri.audio.album.cover.hires";
+            else
+                infoType = "org.safri.audio.album.cover";
 
-        request = controller->getInfoForItem(infoType, album);
-        connect(request, SIGNAL(infoDataAvailable()), this, SLOT(infoSlot()));
+            request = controller->getInfoForItem(infoType, album);
+            connect(request, SIGNAL(infoDataAvailable()), this, SLOT(infoSlot()));
+        }
+    }
+    else
+    {
+        qDebug()<<"Cover already exists....";
     }
 }
 
@@ -89,7 +98,10 @@ QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
     if(item && item->getType() == DataItem::ALBUM && service == "CoverURL")
     {
         QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversHires").toString()+"/"+QString::number(item->getID()) + ".jpg";
-        return path;
+        if(QFile::exists(path))
+            return path;
+        else
+            return "";
     }
     return QVariant();
 }

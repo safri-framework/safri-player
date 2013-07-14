@@ -41,7 +41,15 @@ int PhononBackend::getTotalTime()
 
 
 #ifdef Qt5
+#ifdef ANDROID
+    // EVIL HACK: wait 'n pray....
+    QTime dieTime = QTime::currentTime().addMSecs(500);
+    while( QTime::currentTime() < dieTime )
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    return  player->duration();
+#else
    return  player->duration();
+#endif
 #endif
 }
 

@@ -268,6 +268,8 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
         case Qt::UserRole:
             return item->getSongs().size();
 
+        case typeRole:
+            return item->getTypeName();
 
         case coverRole:
         if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
@@ -422,6 +424,7 @@ QHash<int, QByteArray> SongTreeModel::roleNames() const
     roles[iconRole] = "iconpath";
     roles[coverRole] = "albumCover";
     roles[Qt::DisplayRole] ="display";
+    roles[typeRole] ="type";
 
     return roles;
 }

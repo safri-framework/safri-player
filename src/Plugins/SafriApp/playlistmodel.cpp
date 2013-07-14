@@ -41,6 +41,8 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 
 void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
 {
+
+    qDebug()<<"from"<<from<<"  "<<"to"<<to;
     // remove the playing symbol from the old playing song
     Q_EMIT dataChanged( index(from, 0), index(from, 4) );
     // set the playing symbol to the new playing song
@@ -72,6 +74,7 @@ void PlaylistModel::songDeleted(int value)
 {
     beginRemoveRows(QModelIndex(), value, value);
     endRemoveRows();
+    //songMoved(value, playlist->getSize()-1 );
 }
 
 void PlaylistModel::songDataChanged(int position)
@@ -159,6 +162,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
     Core::Media* media;
     Core::Song* song;
+
 
     if ( (playlist == 0) || (!index.isValid()) )
     {

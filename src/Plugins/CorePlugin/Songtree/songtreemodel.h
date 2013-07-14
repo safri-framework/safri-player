@@ -131,7 +131,8 @@ private:
         enum Roles
         {
             iconRole = Qt::UserRole + 1,
-            coverRole = Qt::UserRole + 2
+            coverRole = Qt::UserRole + 2,
+            typeRole = Qt::UserRole + 3
         };
         SongTree* songTree;
         QMap<SongTreeItem*, QModelIndex> indexMap;
