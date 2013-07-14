@@ -35,10 +35,10 @@ bool SafriAppPlugin::initialize(QStringList &arguments)
     qDebug() << "3rd child count: " << root->getChildCount() << " name: " << root->property("name");;
     */
 
-    addObject(playbackController);
+    //addObject(playbackController);
 
-    //SafriAppInstance* instance = new SafriAppInstance(new LocalAppController() );
-    SafriAppInstance* instance = new SafriAppInstance(new RESTAppController() );
+    SafriAppInstance* instance = new SafriAppInstance(new LocalAppController() );
+    //SafriAppInstance* instance = new SafriAppInstance(new RESTAppController() );
     Q_UNUSED(instance)
 
     return true;

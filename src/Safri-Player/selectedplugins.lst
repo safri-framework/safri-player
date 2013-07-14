@@ -1,8 +1,8 @@
-#Safri.PhononBackend
-#Safri.PlaybackController
-#Safri.AudioCollection
-#Safri.AudioSQLStorage
-#Safri.CollectionController
+Safri.PhononBackend
+Safri.PlaybackController
+Safri.AudioCollection
+Safri.AudioSQLStorage
+Safri.CollectionController
 Safri.Playlist
 #Safri.GUIController
 #Safri.PlayerWidget
@@ -14,8 +14,8 @@ Safri.Playlist
 Safri.SafriApp
 #Safri.HackingWidget
 #Safri.SafriMobileGuiQML
-#Safri.LastFMInfoResolver
-#Safri.TagLibMediaTagger
+Safri.LastFMInfoResolver
+Safri.TagLibMediaTagger
 #Safri.TouchEventFilterPlugin
 #Safri.ShoutCastPlugin
 #Safri.RESTWebAPI
