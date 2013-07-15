@@ -30,7 +30,7 @@ Rectangle {
                 }
                 else
                 {
-                    currentItemRect.height = 40;
+                    currentItemRect.height = root.globalScaleFactor > 1 ? 40 * root.globalScaleFactor : 40;
                     currentItemRect.opacity =1
                 }
                 currentItemRectText.text = currentItemText;

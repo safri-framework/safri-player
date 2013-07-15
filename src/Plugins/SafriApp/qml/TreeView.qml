@@ -67,8 +67,8 @@ Rectangle{
                     text: display
                     color: "#D4D4D4"
                     font.pixelSize: fontSize
-                    x:cover.width + 20*root.globalScaleFactor
-                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 40 * root.globalScaleFactor : parent.width - x - 20 * root.globalScaleFactor;
+                    x:cover.width + 20*root.globalScaleFactor + cover.x
+                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 40 * root.globalScaleFactor -cover.x -cover.width: parent.width - x - 20 * root.globalScaleFactor-cover.x -cover.width;
                     anchors.verticalCenter: parent.verticalCenter
                     clip:true
                     id: delegateText
@@ -141,29 +141,76 @@ Rectangle{
                             console.log("pressAndHold")
                         }
                     }
+
+
+
                 }
-
-                Image
+                Rectangle
                 {
-                    x:1
-                    y:1
-                    opacity: 0.8
-                    source: albumCover
-                    id: cover
+                    function getImage(type, path)
+                    {
+                        switch(type)
+                        {
+                        case  "ArtistType":
+                            return "resources/artist.png";
+                        case "GenreType":
+                            return "resources/genre.png"
 
+                        case "AlbumType":
+                            if(path !=="")
+                                return path;
+                            else
+                                return "resources/no_cover.png";
+
+                        case "SongType":
+                            return "resources/song.png"
+                        }
+                    }
+
+                    id: cover
+                    color:"transparent"
+                    clip:true
                     Component.onCompleted:
                     {
-                        if(albumCover.toString() == "")
+                        if(type == "AlbumType")
                         {
-                            width = 0;
-                            height = 0;
+                            width  = delegateRect.height-2;
+                            height = delegateRect.height-2;
+                            x = 1
+                            y = 2
                         }
                         else
                         {
-                            width = delegateRect.height-2;
-                            height = delegateRect.height-2;
-                        }
+                            //scale = 1.4 * root.globalScaleFactor;
 
+                            width = 30 * root.globalScaleFactor
+                            height = width;
+                            x = 20 * root.globalScaleFactor
+                            anchors.verticalCenter = parent.verticalCenter
+
+                        }
+                    }
+                    Image
+                    {
+
+                        opacity: 0.8
+                        source: parent.getImage(type, albumCover)
+                        //anchors.centerIn: parent
+                        width: parent.width
+                        height: parent.height
+
+                        Component.onCompleted:
+                        {
+                            if(type == "AlbumType")
+                            {
+                              // anchors.fill = parent
+                             //anchors.verticalCenter= parent.verticalCenter
+                            }
+                            else
+                            {
+                                //anchors.fill = parent
+                            }
+                        }
                     }
                 }
 

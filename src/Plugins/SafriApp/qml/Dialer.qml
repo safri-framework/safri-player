@@ -26,6 +26,7 @@ Rectangle {
         anchors.centerIn: parent
         width: parent.width
         height:parent.height
+        smooth: true
         Image {
         id: dialer
         anchors.verticalCenter: parent.verticalAlignment
@@ -33,6 +34,7 @@ Rectangle {
         height: parent.width
         source: "resources/5-outer-knob-rotatingII.png"
         opacity:0.6
+        smooth:true
         }
     }
 
