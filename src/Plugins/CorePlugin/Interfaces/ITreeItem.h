@@ -43,8 +43,6 @@ namespace Core
             virtual void            addChild(ITreeItem* child) = 0;
             virtual void            removeChild(ITreeItem* child) = 0;
 
-            QString debugName;
-
         signals:
 
             /**

@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
 
     QStringList paths;
     QString selectedPluginsFile;
+    QString storageDirectory = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+    QString configFilename = storageDirectory + "/safri-config.xml";
 
 #ifdef ANDROID
 
@@ -31,6 +33,13 @@ int main(int argc, char *argv[])
 
     selectedPluginsFile = "assets:/" + QString(SELECTED_PLUGINS_FILE);
     paths << "assets:/plugins";
+
+    // copy config file
+    QDir dir(storageDirectory);
+    if (!dir.exists())
+    {
+        dir.mkpath(storageDirectory);
+    }
 
     /*
     QFile file;
@@ -108,8 +117,14 @@ int main(int argc, char *argv[])
 
 #endif
 
-    qDebug() << "\n\n";
+    QFileInfo configInfo(configFilename);
+    if (!configInfo.exists())
+    {
+        qDebug() << "Copying default safri-config.xml";
+        qDebug() << QFile::copy(":/defaults/safri-config.xml", configFilename);
+    }
 
+    qDebug() << "\n\n";
 
     PluginSystem::PluginManager manager("Safri.Core", paths, selectedPluginsFile);
 

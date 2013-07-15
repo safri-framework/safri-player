@@ -5,6 +5,9 @@
 
 namespace SafriRESTClient
 {
+    class RESTSongtreeModel;
+    class RESTSongtree;
+
     class RESTAppController : public IAppController
     {
         Q_OBJECT
@@ -13,6 +16,13 @@ namespace SafriRESTClient
             explicit RESTAppController(QObject *parent = 0);
 
             virtual QAbstractItemModel* getSongtreeModel();
+
+        private:
+
+            QString getRESTLocation();
+
+            RESTSongtree* songtree;
+            RESTSongtreeModel* songtreeModel;
     };
 }
 

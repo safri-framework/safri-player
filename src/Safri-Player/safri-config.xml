@@ -1,0 +1,25 @@
+<safri-configuration>
+    <settingsmodule name="org.safri.collection">
+        <setting name="defaultCollectionName">Musik</setting>
+    </settingsmodule>
+    <settingsmodule name="org.safri.core.albumCover">
+        <setting name="filenamePatterns">%ALBUM - %ARTIST.jpg;%ARTIST - %ALBUM - Front.jpg;%ALBUM - Front.jpg</setting>
+    </settingsmodule>
+    <settingsmodule name="org.safri.core.view">
+        <setting name="infoTray">0</setting>
+        <setting name="nowplayingDisplayTime">5</setting>
+        <setting name="showOSDisplay">1</setting>
+        <setting name="showTrayBalloon">0</setting>
+        <setting name="treeview1Hierarchy"></setting>
+        <setting name="treeview2Hierarchy">ARTIST;ALBUM;SONG</setting>
+        <setting name="treeview3Hierarchy">ALBUM;SONG</setting>
+        <setting name="treeviewCount">3</setting>
+    </settingsmodule>
+    <settingsmodule name="org.safri.restapi">
+        <setting name="host">localhost</setting>
+        <setting name="port">8085</setting>
+    </settingsmodule>
+  <settingsmodule name="org.safri.app">
+        <setting name="isRESTClient">false</setting>
+    </settingsmodule>
+</safri-configuration>

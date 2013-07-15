@@ -48,10 +48,12 @@ Core::ITreeItem *RESTSongtreeItem::getChildAt(int index)
 
 void RESTSongtreeItem::fetchChilds()
 {
+    /*
     if (parentItem != 0)
     {
         qDebug() << "Fetch Childs of item ID: " << itemID << " - " << property("name");
     }
+    */
 
     QString songtreeRequest = RESTAction::SONGTREE_GET_ITEM;
     songtreeRequest.replace(QRegExp("%%ITEMID%%"), QString::number(itemID));
@@ -94,10 +96,9 @@ void RESTSongtreeItem::RESTReply()
                 newTreeItem = new RESTSongtreeItem(this->client, itemMap.value("treeItemId").toInt(),
                                                    itemMap.value("numberOfChilds").toInt(), this, this);
 
-                qDebug() << "new item with ID " << itemMap.value("treeItemId").toInt() << " - " <<
-                            dataItemMap.value("name").toString();
+                //qDebug() << "new item with ID " << itemMap.value("treeItemId").toInt() << " - " <<
+                //            dataItemMap.value("name").toString();
 
-                newTreeItem->debugName = dataItemMap.value("name").toString();
                 newTreeItem->setProperty("name", dataItemMap.value("name").toString());
                 newTreeItem->setProperty("itemID", itemMap.value("treeItemId").toInt());
 

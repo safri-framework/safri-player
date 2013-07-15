@@ -4,8 +4,6 @@
 #include <QtWidgets/QApplication>
 #include <QDebug>
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QTimer>
 #include <QJsonDocument>
@@ -25,7 +23,6 @@ RESTPlaybackController::RESTPlaybackController(QString RESTLocation, QObject *pa
     setupActions();
     setupStateMachine();
 
-    networkManager = new QNetworkAccessManager(this);
     client = new RESTClient(RESTLocation, this);
 
     connect(statusTimer, SIGNAL(timeout()), this, SLOT(statusTimerShot()));
@@ -93,40 +90,40 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
     // called by state machine transitions
     void RESTPlaybackController::playStateSlot()
     {
-        qDebug() << "PLAY";
-        client->sendRequest(RESTAction::PLAYER_PLAY, this, SLOT(playRequestCallback()));
+        //qDebug() << "PLAY";
+        sendRESTRequest(RESTAction::PLAYER_PLAY, SLOT(playRequestCallback()));
     }
 
     // called by state machine transitions
     void RESTPlaybackController::pauseStateSlot()
     {
-        qDebug() << "PAUSE";
+        //qDebug() << "PAUSE";
         sendRESTRequest(RESTAction::PLAYER_PAUSE, SLOT(pauseRequestCallback()));
     }
 
     // called by state machine transitions
     void RESTPlaybackController::stopStateSlot()
     {
-        qDebug() << "STOP";
+        //qDebug() << "STOP";
     }
 
     // called by state machine transitions
     void RESTPlaybackController::noDataStateSlot()
     {
-        qDebug() << "NoDATA";
+        //qDebug() << "NoDATA";
     }
 
     // called directly by the actions triggered signal
     void RESTPlaybackController::nextActionSlot()
     {
-        qDebug() << "NEXT";
+        //qDebug() << "NEXT";
         sendRESTRequest(RESTAction::PLAYER_NEXT, SLOT(nextRequestCallback()));
     }
 
     // called directly by the actions triggered signal
     void RESTPlaybackController::previousActionSlot()
     {
-        qDebug() << "PREVIOUS";
+        //qDebug() << "PREVIOUS";
         sendRESTRequest(RESTAction::PLAYER_PREVIOUS, SLOT(previousRequestCallback()));
     }
 
@@ -256,15 +253,9 @@ void RESTPlaybackController::setupStateTransitions()
 
 // ****************** BEGIN NETWORK HANDLING ******************
 
-QString RESTPlaybackController::RESTLocation()
-{
-    // TODO: read from settings
-    return "http://192.168.1.87:8085/";
-}
-
 void RESTPlaybackController::playRequestCallback()
 {
-    qDebug() << "playRequestCallback";
+    //qDebug() << "playRequestCallback";
     statusTimer->start(SATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
@@ -300,7 +291,7 @@ void RESTPlaybackController::playRequestCallback()
 
 void RESTPlaybackController::pauseRequestCallback()
 {
-    qDebug() << "pauseRequestCallback";
+    //qDebug() << "pauseRequestCallback";
     statusTimer->stop();
 
     m_pauseAction->setDisabled(true);
@@ -312,7 +303,7 @@ void RESTPlaybackController::pauseRequestCallback()
 
 void RESTPlaybackController::stopRequestCallback()
 {
-    qDebug() << "stopRequestCallback";
+    //qDebug() << "stopRequestCallback";
     statusTimer->stop();
 
     m_playAction->setEnabled(true);
@@ -325,7 +316,7 @@ void RESTPlaybackController::stopRequestCallback()
 
 void RESTPlaybackController::nextRequestCallback()
 {
-    qDebug() << "nextRequestCallback";
+    //qDebug() << "nextRequestCallback";
     statusTimer->start(SATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
@@ -350,7 +341,7 @@ void RESTPlaybackController::nextRequestCallback()
 
 void RESTPlaybackController::previousRequestCallback()
 {
-    qDebug() << "previousRequestCallback";
+    //qDebug() << "previousRequestCallback";
     statusTimer->start(SATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
@@ -416,13 +407,9 @@ void RESTPlaybackController::statusRequestCallback()
     }
 }
 
-void RESTPlaybackController::sendRESTRequest(QString request, const char *slot)
+QNetworkReply* RESTPlaybackController::sendRESTRequest(QString request, const char *slot)
 {
-    QNetworkReply* reply = networkManager->get(QNetworkRequest( QUrl(RESTLocation() + request) ));
-    if (slot != 0)
-    {
-        connect(reply, SIGNAL(finished()), this, slot);
-    }
+    return client->sendRequest(request, this, slot);
 }
 
 void RESTPlaybackController::handleCurrentMediaResonse(QJsonObject jsonCurrentMedia)

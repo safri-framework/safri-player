@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/defaults">
         <file>selectedplugins.lst</file>
+        <file>safri-config.xml</file>
     </qresource>
 </RCC>

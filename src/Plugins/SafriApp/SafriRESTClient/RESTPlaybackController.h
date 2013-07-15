@@ -6,8 +6,8 @@
 #include <QStateMachine>
 #include <QJsonObject>
 
-class QNetworkAccessManager;
 class QTimer;
+class QNetworkReply;
 
 namespace Core { class Media; }
 
@@ -89,7 +89,6 @@ namespace SafriRESTClient
             QState *m_stop ;
             QState *m_noData;
 
-            QNetworkAccessManager* networkManager;
             RESTClient* client;
             QTimer* statusTimer;
             int mediaTotalTime;
@@ -105,8 +104,7 @@ namespace SafriRESTClient
             void setupStateMachine();
             void setupStateTransitions();
 
-            QString RESTLocation();
-            void sendRESTRequest(QString request, const char * slot = 0);
+            QNetworkReply* sendRESTRequest(QString request, const char *slot = 0);
             void handleCurrentMediaResonse(QJsonObject jsonCurrentMedia);
 
     };

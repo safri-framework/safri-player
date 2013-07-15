@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+using namespace SafriRESTClient;
+
 RESTSongtreeModel::RESTSongtreeModel(Core::ITreeItem *rootItem, QObject *parent) :
     QAbstractItemModel(parent), rootItem(rootItem)
 {
