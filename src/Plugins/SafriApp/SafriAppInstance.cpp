@@ -53,6 +53,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     connect(silentButton, SIGNAL(buttonClicked()), this, SLOT(testPlay()));
     connect(dialerView, SIGNAL(volumeChanged(QVariant)), this, SLOT(volumeSlot(QVariant)));
     connect(playlistView, SIGNAL(movePos(QVariant, QVariant)), this, SLOT(changePos(QVariant,QVariant)));
+    connect(playlistView, SIGNAL(removeIndexFromPlaylist(QVariant)), this, SLOT(removeFromPlaylist(QVariant)));
 
     connect(controller, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
     connect(controller, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
@@ -175,8 +176,14 @@ void SafriAppInstance::updateMedia(Media *media)
     Core::Song* song = qobject_cast<Core::Song*>(media);
     if(song)
     {
+        QString coverPath;
+
+        coverPath = ICore::instance()->assetController()->getAsset("CoverURL", song->getAlbum()).toString();
+        if(coverPath != "")
+            coverPath = "file://" + coverPath;
+        qDebug()<<"PATH "+coverPath;
         QMetaObject::invokeMethod(currentSongDisplay, "newSong",
-                                  Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, ""));
+                                  Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, coverPath));
     }
 }
 
