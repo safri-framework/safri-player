@@ -28,6 +28,7 @@ public:
 
 public slots:
     void playPauseSlot();
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     void stateChanged(Core::playState state);
@@ -38,6 +39,7 @@ private slots:
     void updateMedia(Core::Media* media);
     void changePos(QVariant from, QVariant to);
     void removeFromPlaylist(QVariant index);
+    void backClicked();
 
 private:
     IAppController* appController;

@@ -251,6 +251,7 @@ Rectangle{
                         {
                             plDelegateRect.x = 0;
                             removeIndexFromPlaylist(position)
+                            console.log("test")
                         }
                     }
                 }

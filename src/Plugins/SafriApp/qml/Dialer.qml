@@ -21,6 +21,13 @@ Rectangle {
       opacity: 0.5
     }*/
 
+    Item {
+        focus: true
+        Keys.onPressed: {if(event.key == Qt.Key_VolumeUp) console.log("TEST")}
+    }
+
+
+
     Image{
         source:"resources/6-highlight-fixed.png"
         anchors.centerIn: parent

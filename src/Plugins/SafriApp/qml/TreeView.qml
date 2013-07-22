@@ -27,8 +27,11 @@ Rectangle{
 
     function prevIndex()
     {
-        nextModelIndex = listView.model.parentModelIndex();
-        listModel.remove(listModel.count-1)
+        if(listModel.count > 0)
+        {
+            nextModelIndex = listView.model.parentModelIndex();
+            listModel.remove(listModel.count-1)
+        }
     }
 
     id: treeView

@@ -113,7 +113,6 @@ Rectangle {
                      color: "#838383"
                      text: currentSongDisplay.artistName
                      id: artistNameLabel
-
                  }
 
                  Text
@@ -123,7 +122,6 @@ Rectangle {
                      text: currentSongDisplay.albumName
                      font.pixelSize: 20 *  root.globalScaleFactor
                      color: "#838383"
-
                  }
             }
          }
@@ -132,9 +130,11 @@ Rectangle {
         }
         MusicProgress
         {
+
             y: currentSongDisplay.height-1;
             id: progress
         }
+
 
         Rectangle
         {

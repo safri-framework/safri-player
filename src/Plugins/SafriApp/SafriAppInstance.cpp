@@ -17,14 +17,16 @@
 #include <QModelIndex>
 #include <QSharedPointer>
 #include "CoreSupply/AssetController.h"
-
+#include "QMainWindow"
+#include "QApplication"
 
 SafriAppInstance::SafriAppInstance(IAppController *appController): appController(appController), model(0), plModel(0)
 {
-    QQuickView *view = new QQuickView;
+    QQuickView *view = new QQuickView();
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
+    QApplication::instance()->installEventFilter(this);
 
     model = appController->getSongtreeModel();
     proxy = new QSortFilterProxyModel(this);
@@ -78,6 +80,26 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
 void SafriAppInstance::playPauseSlot()
 {
     qDebug()<<"PLAY PAUSE";
+}
+
+bool SafriAppInstance::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        qDebug() << "Ate key press" << keyEvent->key();
+        return false;
+    }
+
+#ifdef ANDROID
+    if(event->type() == QEvent::Close)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        backClicked();
+        return true;
+    }
+    return false;
+#endif
 }
 
 void SafriAppInstance::stateChanged(Core::playState state)
@@ -195,4 +217,9 @@ void SafriAppInstance::changePos(QVariant from, QVariant to)
 void SafriAppInstance::removeFromPlaylist(QVariant index)
 {
     playList->deleteMedia(index.toInt());
+}
+
+void SafriAppInstance::backClicked()
+{
+    QMetaObject::invokeMethod(songTree, "prevIndex");
 }

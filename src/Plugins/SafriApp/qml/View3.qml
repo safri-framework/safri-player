@@ -32,6 +32,7 @@ Rectangle {
         width: parent.width - 20 * root.globalScaleFactor
         radius: 10 * root.globalScaleFactor
         color:"#1B1B1B"
+
         Rectangle
         {
             color: "transparent"

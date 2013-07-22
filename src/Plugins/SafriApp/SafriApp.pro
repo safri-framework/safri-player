@@ -73,5 +73,6 @@ OTHER_FILES += \
     MarqueeText.qml \
     qml/MarqueeText.qml \
     qml/Playlist.qml \
-    qml/View3.qml
+    qml/View3.qml \
+    qml/Settings.qml
 

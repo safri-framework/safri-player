@@ -1,5 +1,9 @@
 import QtQuick 2.0
 import QtQml.Models 2.1
+import QtQuick.Controls 1.0
+import QtQuick.Window 2.0
+
+
 
 Rectangle {
     id: root
@@ -10,13 +14,43 @@ Rectangle {
     property double globalScaleFactor: (height / 800) < 0.5 ? 0.5 : height/800
     onHeightChanged:{ globalScaleFactor = (height / 800) < 0.5 ? 0.5 : height/800; console.log("SCALE: "+ globalScaleFactor)}
 
+    MenuBar
+    {
+        Menu {
+            title: "Settings"
+
+            MenuItem {
+                text: "Connect to Safri"
+                shortcut: "Ctrl+X"
+            }
+
+
+            MenuItem {
+                text: "Settings"
+                shortcut: "Ctrl+M"
+                onTriggered: settingsPage.visible = !settingsPage.visible
+            }
+        }
+    }
+
+
+
     ObjectModel {
         id: itemModel
 
         View1{id: view1; }
         View2{}
         View3{}
+
     }
+
+    Settings
+    {
+        visible: true
+        z:100
+        id: settingsPage
+    }
+
 
     ListView {
         id: view
@@ -26,7 +60,7 @@ Rectangle {
         preferredHighlightBegin: 0; preferredHighlightEnd: 0
         highlightRangeMode: ListView.StrictlyEnforceRange
         orientation: ListView.Horizontal
-        snapMode: ListView.SnapOneItem; flickDeceleration: 2000
+        snapMode: ListView.SnapOneItem; flickDeceleration: 4000 * root.globalScaleFactor
         cacheBuffer: 200
     }
 
