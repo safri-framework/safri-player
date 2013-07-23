@@ -38,19 +38,16 @@ namespace SafriRESTClient
 
             virtual int getMediaTotalTime();
             virtual int getCurrentTime();
+            virtual Core::playState getCurrentState();
             virtual int getVolume();
 
         private slots:
 
-            virtual void playStateSlot();
-            virtual void pauseStateSlot();
-            virtual void stopStateSlot();
-            virtual void noDataStateSlot();
-            virtual void currentSongFinished();
-
-            // TODO: unnecessarily needed by interface
-            // replaced here by noDataStateSlot
-            virtual void noDataSlot();
+            void playActionSlot();
+            void pauseActionSlot();
+            void playPauseActionSlot();
+            void stopActionSlot();
+            void currentSongFinished();
 
             void nextActionSlot();
             void previousActionSlot();
@@ -62,7 +59,7 @@ namespace SafriRESTClient
             void nextRequestCallback();
             void previousRequestCallback();
 
-            void statusTimerShot();
+            void requestStatus();
             void statusRequestCallback();
 
         public slots:
@@ -73,6 +70,12 @@ namespace SafriRESTClient
         private:
 
             static const int STATUS_TIMER_INTERVAL = 500;
+            static const int STATUS_TIMER_INITIAL_SHOT = 500;
+            static const int STATUS_TIMER_PLAY_INTERVAL = 500;
+            static const int STATUS_TIMER_STOP_INTERVAL = 2000;
+            static const int STATUS_TIMER_PAUSE_INTERVAL = 1000;
+
+            Core::playState currentState;
 
             QAction *m_playPauseAction;
             QAction *m_shuffleAction;
@@ -81,13 +84,6 @@ namespace SafriRESTClient
             QAction *m_previousAction;
             QAction *m_pauseAction;
             QAction *m_playAction;
-
-            QStateMachine *machine;
-            QState* currentState;
-            QState *m_play ;
-            QState *m_pause ;
-            QState *m_stop ;
-            QState *m_noData;
 
             RESTClient* client;
             QTimer* statusTimer;
@@ -100,9 +96,8 @@ namespace SafriRESTClient
             QString currentCollectionHash;
 
             void setupActions();
-
-            void setupStateMachine();
-            void setupStateTransitions();
+            void switchState(Core::playState newState);
+            void switchState(QString stateName);
 
             QNetworkReply*  sendRESTRequest(QString request, const char *slot = 0);
             void handleCurrentMediaResonse(QJsonObject jsonCurrentMedia);

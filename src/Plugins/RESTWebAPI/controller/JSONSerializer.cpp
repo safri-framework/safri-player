@@ -30,6 +30,7 @@ QJsonObject JSONSerializer::getStatus()
         map.insert("currentTime", playbackController->getCurrentTime());
         map.insert("volume", playbackController->getVolume());
         map.insert("mediaTotalTime", playbackController->getMediaTotalTime());
+        map.insert("playState", getCurrentState(playbackController));
 
         obj = QJsonObject::fromVariantMap(map);
 
@@ -112,6 +113,23 @@ QJsonObject JSONSerializer::generateErrorObject(QString errorMsg, QString functi
     QJsonObject obj;
     obj = QJsonObject::fromVariantMap(map);
     return obj;
+}
+
+QString JSONSerializer::getCurrentState(Core::IPlaybackController* playbackController)
+{
+    switch (playbackController->getCurrentState())
+    {
+        case Core::NODATA:
+            return "NODATA";
+        case Core::PLAY:
+            return "PLAY";
+        case Core::STOP:
+            return "STOP";
+        case Core::PAUSE:
+            return "PAUSE";
+        default:
+            return "";
+    }
 }
 
 QJsonObject JSONSerializer::getSongTreeItemForJsTree(Core::SongTreeItem *item, int id)

@@ -84,6 +84,8 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     {
         context->setContextProperty("playlistModel", plModel);
     }
+
+    stateChanged(controller->getCurrentState());
 }
 
 void SafriAppInstance::playPauseSlot()

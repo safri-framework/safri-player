@@ -6,7 +6,6 @@
 #include <QtWidgets/QAction>
 #include <CoreData/media.h>
 
-//using namespace Core;
 class PlaybackController : public Core::IPlaybackController
 {
     Q_OBJECT
@@ -29,6 +28,7 @@ class PlaybackController : public Core::IPlaybackController
 
         int getMediaTotalTime();
         int getCurrentTime();
+        Core::playState getCurrentState();
         int getVolume();
 
 

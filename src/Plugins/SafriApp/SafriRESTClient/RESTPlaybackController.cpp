@@ -21,9 +21,18 @@ RESTPlaybackController::RESTPlaybackController(RESTClient *restClient, QObject *
     this->setParent(parent);
 
     setupActions();
-    setupStateMachine();
 
-    connect(statusTimer, SIGNAL(timeout()), this, SLOT(statusTimerShot()));
+    connect(statusTimer, SIGNAL(timeout()), this, SLOT(requestStatus()));
+
+    /*
+     * If we request the initial state here, the mediaChanged signal will
+     * be emitted too early, so the view will miss this initial important
+     * event. Therefore we're delaying the initial state request a little bit.
+     */
+
+    // requestStatus();
+
+    statusTimer->singleShot(STATUS_TIMER_INITIAL_SHOT, this, SLOT(requestStatus()));
 }
 
 
@@ -85,66 +94,15 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
 
 // ***** BEGIN ACTUAL WORK IS DONE HERE *****
 
-    // called by state machine transitions
-    void RESTPlaybackController::playStateSlot()
-    {
-        qDebug() << "PLAY";
-        sendRESTRequest(RESTAction::PLAYER_PLAY, SLOT(playRequestCallback()));
-    }
-
-    // called by state machine transitions
-    void RESTPlaybackController::pauseStateSlot()
-    {
-        //qDebug() << "PAUSE";
-        sendRESTRequest(RESTAction::PLAYER_PAUSE, SLOT(pauseRequestCallback()));
-    }
-
-    // called by state machine transitions
-    void RESTPlaybackController::stopStateSlot()
-    {
-        qDebug() << "STOP";
-        sendRESTRequest(RESTAction::PLAYER_STOP, SLOT(stopRequestCallback()));
-    }
-
-    // called by state machine transitions
-    void RESTPlaybackController::noDataStateSlot()
-    {
-        //qDebug() << "NoDATA";
-    }
-
-    // called directly by the actions triggered signal
-    void RESTPlaybackController::nextActionSlot()
-    {
-        //qDebug() << "NEXT";
-        sendRESTRequest(RESTAction::PLAYER_NEXT, SLOT(nextRequestCallback()));
-    }
-
-    // called directly by the actions triggered signal
-    void RESTPlaybackController::previousActionSlot()
-    {
-        //qDebug() << "PREVIOUS";
-        sendRESTRequest(RESTAction::PLAYER_PREVIOUS, SLOT(previousRequestCallback()));
-    }
-
-    // called directly by the actions triggered signal
-    void RESTPlaybackController::shuffleActionSlot(bool value)
-    {
-    }
-
     void RESTPlaybackController::currentSongFinished()
     {
-    }
-
-    void RESTPlaybackController::noDataSlot()
-    {
-        // TODO: unnecessarily needed by interface
-        // replaced here by noDataStateSlot
     }
 
     void RESTPlaybackController::seek(int playTime)
     {
         QString seekRequest = RESTAction::PLAYER_SEEK;
         seekRequest.replace(QRegExp("%%SEEKTO%%"), QString::number(playTime));
+
         sendRESTRequest(seekRequest);
     }
 
@@ -157,6 +115,7 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
     {
         QString volumeRequest = RESTAction::PLAYER_VOLUME;
         volumeRequest.replace(QRegExp("%%VOLUME%%"), QString::number(volume));
+
         sendRESTRequest(volumeRequest);
     }
 
@@ -170,84 +129,176 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
         return currentTime;
     }
 
+    playState RESTPlaybackController::getCurrentState()
+    {
+        return currentState;
+    }
+
 // ***** END ACTUAL WORK IS DONE HERE *****
 
 // ****************** END INTERFACE IMPLEMENTATION ******************
 
 void RESTPlaybackController::setupActions()
 {
-    m_shuffleAction = new QAction(QIcon(":icons/ressources/shuffle_icon.png"), tr("Shuffle"), this);
-    m_shuffleAction->setCheckable(true);
-    m_shuffleAction->setChecked(false);
+
+    m_playAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
+    connect(m_playAction, SIGNAL(triggered()), this, SLOT(playActionSlot()));
+
+    m_pauseAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPause), tr("Pause"), this);
+    connect(m_pauseAction, SIGNAL(triggered()), this, SLOT(pauseActionSlot()));
+
     m_playPauseAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
     m_playPauseAction->setShortcut(tr("Ctrl+P"));
     m_playPauseAction->setDisabled(false);
+    connect(m_playPauseAction, SIGNAL(triggered()), this, SLOT(playPauseActionSlot()));
+
     m_stopAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaStop), tr("Stop"), this);
     m_stopAction->setShortcut(tr("Ctrl+S"));
     m_stopAction->setDisabled(false);
+    connect(m_stopAction, SIGNAL(triggered()), this, SLOT(stopActionSlot()));
+
     m_nextAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaSkipForward), tr("Next"), this);
     m_nextAction->setShortcut(tr("Ctrl+N"));
+    connect(m_nextAction,SIGNAL(triggered()) ,this, SLOT(nextActionSlot()));
+
     m_previousAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaSkipBackward), tr("Previous"), this);
     m_previousAction->setShortcut(tr("Ctrl+R"));
-
-    m_pauseAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPause), tr("Pause"), this);
-    m_playAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MediaPlay), tr("Play"), this);
-
-    // following signals are connected directly to it's corresponding slots
-    // all other action triggered signals are connected to the state machine transitions
-    // the actual event slots will then be called from the state changes
-    connect(m_nextAction,SIGNAL(triggered()) ,this, SLOT(nextActionSlot()));
     connect(m_previousAction,SIGNAL(triggered()) ,this, SLOT(previousActionSlot()));
+
+    m_shuffleAction = new QAction(QIcon(":icons/ressources/shuffle_icon.png"), tr("Shuffle"), this);
+    m_shuffleAction->setCheckable(true);
+    m_shuffleAction->setChecked(false);
     connect(m_shuffleAction, SIGNAL(triggered(bool)), this, SLOT(shuffleActionSlot(bool)));
 }
 
-void RESTPlaybackController::setupStateMachine()
+void RESTPlaybackController::switchState(playState newState)
 {
-    machine = new QStateMachine();
-    m_play  = new QState();
-    m_pause = new QState();
-    m_stop  = new QState();
-    m_noData = new QState();
+    if (newState == currentState)
+    {
+        return;
+    }
 
-    currentState = m_noData;
+    switch (newState)
+    {
+        case Core::STOP:
 
-    connect(m_play, SIGNAL(entered()), this, SLOT(playStateSlot()));
-    connect(m_pause, SIGNAL(entered()), this, SLOT(pauseStateSlot()));
-    connect(m_stop, SIGNAL(entered()), this, SLOT(stopStateSlot()));
-    connect (m_noData, SIGNAL(entered()), this, SLOT(noDataStateSlot()));
+            m_playAction->setEnabled(true);
+            m_playPauseAction->setEnabled(true);
+            m_pauseAction->setEnabled(false);
+            m_stopAction->setDisabled(true);
 
-    setupStateTransitions();
+            statusTimer->start(STATUS_TIMER_STOP_INTERVAL);
 
-    machine->addState(m_play);
-    machine->addState(m_pause);
-    machine->addState(m_stop);
-    machine->addState(m_noData);
+            break;
 
-    // TODO: initState noData
-    machine->setInitialState(m_stop);
-    machine->start();
+        case Core::PLAY:
+
+            m_shuffleAction->setDisabled(false);
+            m_nextAction->setDisabled(false);
+            m_previousAction->setDisabled(false);
+            m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPause));
+            m_stopAction->setDisabled(false);
+            m_playPauseAction->setDisabled(false);
+            m_playAction->setDisabled(true);
+            m_pauseAction->setDisabled(false);
+
+            statusTimer->start(STATUS_TIMER_PLAY_INTERVAL);
+
+            break;
+
+        case Core::PAUSE:
+
+            m_pauseAction->setDisabled(true);
+            m_playAction->setEnabled(true);
+            m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
+            m_playPauseAction->setEnabled(true);
+
+            statusTimer->start(STATUS_TIMER_PAUSE_INTERVAL);
+
+            break;
+
+        case Core::NODATA:
+
+            statusTimer->start(STATUS_TIMER_STOP_INTERVAL);
+            break;
+
+        default:
+
+            break;
+    }
+
+    currentState = newState;
+    Q_EMIT stateChanged(currentState);
 }
 
-void RESTPlaybackController::setupStateTransitions()
+void RESTPlaybackController::switchState(QString stateName)
 {
-    m_play  ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_pause);
-    m_play  ->addTransition(m_pauseAction, SIGNAL(triggered()), m_pause);
-    m_pause ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
+    Core::playState state = Core::NODATA;
 
-    m_pause ->addTransition(m_playAction, SIGNAL(triggered()), m_play);
+    if (stateName == "PLAY")
+    {
+        state = Core::PLAY;
+    }
+    if (stateName == "PAUSE")
+    {
+        state = Core::PAUSE;
+    }
+    if (stateName == "STOP")
+    {
+        state = Core::STOP;
+    }
+    if (stateName == "NODATA")
+    {
+        state = Core::NODATA;
+    }
 
-    m_pause ->addTransition(m_stopAction, SIGNAL(triggered()), m_stop);
-    m_play  ->addTransition(m_stopAction, SIGNAL(triggered()), m_stop);
-    m_stop  ->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
+    switchState(state);
+}
 
-    m_stop  ->addTransition(m_playAction, SIGNAL(triggered()), m_play);
+void RESTPlaybackController::playActionSlot()
+{
+    //qDebug() << "PLAY";
+    sendRESTRequest(RESTAction::PLAYER_PLAY, SLOT(playRequestCallback()));
+}
 
-    m_pause ->addTransition(m_nextAction, SIGNAL(triggered()),m_play);
-    m_pause ->addTransition(m_previousAction, SIGNAL(triggered()),m_play);
-    m_stop  ->addTransition(m_nextAction, SIGNAL(triggered()), m_play);
-    m_stop  ->addTransition(m_previousAction, SIGNAL(triggered()), m_play);
-    m_noData->addTransition(m_playPauseAction, SIGNAL(triggered()), m_play);
-    m_noData->addTransition(this, SIGNAL(hasData()),m_stop);
+void RESTPlaybackController::pauseActionSlot()
+{
+    //qDebug() << "PAUSE";
+    sendRESTRequest(RESTAction::PLAYER_PAUSE, SLOT(pauseRequestCallback()));
+}
+
+void RESTPlaybackController::playPauseActionSlot()
+{
+    if (currentState == Core::PLAY)
+    {
+        m_pauseAction->trigger();
+    }
+    else
+    {
+        m_playAction->trigger();
+    }
+}
+
+void RESTPlaybackController::stopActionSlot()
+{
+    //qDebug() << "STOP";
+    sendRESTRequest(RESTAction::PLAYER_STOP, SLOT(stopRequestCallback()));
+}
+
+void RESTPlaybackController::nextActionSlot()
+{
+    //qDebug() << "NEXT";
+    sendRESTRequest(RESTAction::PLAYER_NEXT, SLOT(nextRequestCallback()));
+}
+
+void RESTPlaybackController::previousActionSlot()
+{
+    //qDebug() << "PREVIOUS";
+    sendRESTRequest(RESTAction::PLAYER_PREVIOUS, SLOT(previousRequestCallback()));
+}
+
+void RESTPlaybackController::shuffleActionSlot(bool value)
+{
 }
 
 // ****************** BEGIN NETWORK HANDLING ******************
@@ -255,7 +306,6 @@ void RESTPlaybackController::setupStateTransitions()
 void RESTPlaybackController::playRequestCallback()
 {
     //qDebug() << "playRequestCallback";
-    statusTimer->start(STATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
@@ -274,48 +324,27 @@ void RESTPlaybackController::playRequestCallback()
 
         handleStatusResponse(jsonObject);
 
-        m_shuffleAction->setDisabled(false);
-        m_nextAction->setDisabled(false);
-        m_previousAction->setDisabled(false);
-        m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPause));
-        m_stopAction->setDisabled(false);
-        m_playPauseAction->setDisabled(false);
-        m_playAction->setDisabled(true);
-        m_pauseAction->setDisabled(false);
-
-        Q_EMIT stateChanged(Core::PLAY);
+        switchState(Core::PLAY);
     }
 }
 
 void RESTPlaybackController::pauseRequestCallback()
 {
     //qDebug() << "pauseRequestCallback";
-    statusTimer->stop();
 
-    m_pauseAction->setDisabled(true);
-    m_playAction->setEnabled(true);
-    m_playPauseAction->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
-
-    Q_EMIT stateChanged(Core::PAUSE);
+    switchState(Core::PAUSE);
 }
 
 void RESTPlaybackController::stopRequestCallback()
 {
     //qDebug() << "stopRequestCallback";
-    statusTimer->stop();
 
-    m_playAction->setEnabled(true);
-    m_playPauseAction->setEnabled(true);
-    m_pauseAction->setEnabled(false);
-    m_stopAction->setDisabled(true);
-
-    Q_EMIT stateChanged(Core::STOP);
+    switchState(Core::STOP);
 }
 
 void RESTPlaybackController::nextRequestCallback()
 {
     //qDebug() << "nextRequestCallback";
-    statusTimer->start(STATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
@@ -333,13 +362,15 @@ void RESTPlaybackController::nextRequestCallback()
         QJsonObject jsonObject = jsonDoc.object();
 
         handleStatusResponse(jsonObject);
+
+        switchState(Core::PLAY);
     }
 }
 
 void RESTPlaybackController::previousRequestCallback()
 {
     //qDebug() << "previousRequestCallback";
-    statusTimer->start(STATUS_TIMER_INTERVAL);
+    statusTimer->start(SATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
@@ -357,10 +388,12 @@ void RESTPlaybackController::previousRequestCallback()
         QJsonObject jsonObject = jsonDoc.object();
 
         handleStatusResponse(jsonObject);
+
+        switchState(Core::PLAY);
     }
 }
 
-void RESTPlaybackController::statusTimerShot()
+void RESTPlaybackController::requestStatus()
 {
     sendRESTRequest(RESTAction::PLAYER_STATUS, SLOT(statusRequestCallback()));
 }
@@ -406,7 +439,6 @@ void RESTPlaybackController::handleCurrentMediaResonse(QJsonObject jsonCurrentMe
         currentMediaID = jsonCurrentMedia.value("songID").toVariant().toInt();
         currentCollectionHash = jsonCurrentMedia.value("collection").toVariant().toString();
 
-        qDebug() << "mediaChanged - mediaTotalTime: " << mediaTotalTime;
         Q_EMIT mediaChanged(currentMedia);
 
         currentMedia->deleteLater();
@@ -421,6 +453,9 @@ void RESTPlaybackController::handleStatusResponse(QJsonObject jsonStatusObject)
     mediaTotalTime = statusMap.value("mediaTotalTime").toInt();
     currentTime = statusMap.value("currentTime").toInt();
     currentVolume = statusMap.value("volume").toInt();
+
+    // handle eventually changed state
+    switchState(statusMap.value("playState").toString());
 
     if (currentVolume != volume)
     {

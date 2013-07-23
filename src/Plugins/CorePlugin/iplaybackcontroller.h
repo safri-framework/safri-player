@@ -71,6 +71,8 @@ namespace Core
 
             virtual int getCurrentTime() = 0;
 
+            virtual playState getCurrentState() = 0;
+
             virtual int getVolume() = 0;
 
         signals:
@@ -94,15 +96,6 @@ namespace Core
             void hasVolumeAdjustableMedia(bool value);
 
             void newPlaylistInstalled(QSharedPointer<Core::IPlaylist>);
-
-            // TODO: should'n be neccessary in the interface !?
-        private slots:
-
-                virtual void playStateSlot() = 0;
-                virtual void pauseStateSlot()= 0;
-                virtual void stopStateSlot() = 0;
-                virtual void currentSongFinished() = 0;
-                virtual void noDataSlot() = 0;
 
         public slots:
 

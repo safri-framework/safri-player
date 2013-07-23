@@ -361,6 +361,26 @@ int PlaybackController::getCurrentTime()
     return -1;
 }
 
+Core::playState PlaybackController::getCurrentState()
+{
+    if (currentState == m_play)
+    {
+        return Core::PLAY;
+    }
+
+    if (currentState == m_pause)
+    {
+        return Core::PAUSE;
+    }
+
+    if (currentState == m_stop)
+    {
+        return Core::STOP;
+    }
+
+    return Core::NODATA;
+}
+
 int PlaybackController::getVolume()
 {
     if (mediaBackend)
