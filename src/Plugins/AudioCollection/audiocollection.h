@@ -44,7 +44,7 @@ class AudioCollection : public Core::IAudioCollection
 
         InfoContainer* getInfoContainerByName(QString name);
         QString getContentType();
-        void addMedia(MediaInfoContainer container);
+        void addMedia(MediaInfoContainer &container);
 
         // ------------------- Audio Collection Interface
 

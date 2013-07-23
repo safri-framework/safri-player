@@ -573,7 +573,7 @@ void AudioCollection::insertAlbumArtist(AlbumArtist *albumArtist)
     Q_EMIT itemAdded(albumArtist);
 }
 
-void AudioCollection::addMedia(MediaInfoContainer mediaInfo)
+void AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
 {
     bool newArtist = false;
     bool newAlbum  = false;

@@ -36,7 +36,7 @@ namespace Core
             virtual void lockForWrite() = 0;
             virtual void lockForRead() = 0;
             virtual void unlock() = 0;
-            virtual void addMedia(MediaInfoContainer container) = 0;
+            virtual void addMedia(MediaInfoContainer &container) = 0;
 
         signals:
             void itemAdded(Core::DataItem* item);

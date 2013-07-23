@@ -23,7 +23,7 @@ namespace Core
 
         signals:
 
-            void mediaTagged(MediaInfoContainer info);
+            void mediaTagged(MediaInfoContainer &info);
             void unknownMedia(QUrl media);
     };
 }

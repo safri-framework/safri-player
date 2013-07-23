@@ -27,8 +27,9 @@ namespace Core
         InfoTemporary
     };
 
-    class COREPLUGINSHARED_EXPORT MediaInfoContainer
+    class COREPLUGINSHARED_EXPORT MediaInfoContainer : public QObject
     {
+        Q_OBJECT
         public:
 
             explicit MediaInfoContainer(QUrl mediaUrl = QUrl());

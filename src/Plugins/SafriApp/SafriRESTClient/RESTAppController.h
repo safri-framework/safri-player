@@ -7,6 +7,9 @@ namespace SafriRESTClient
 {
     class RESTSongtreeModel;
     class RESTSongtree;
+    class RESTPlaylist;
+    class RESTPlaylistModel;
+    class RESTClient;
 
     class RESTAppController : public IAppController
     {
@@ -15,14 +18,21 @@ namespace SafriRESTClient
 
             explicit RESTAppController(QObject *parent = 0);
 
-            virtual QAbstractItemModel* getSongtreeModel();
+            virtual QAbstractItemModel*         getSongtreeModel();
+            virtual QAbstractItemModel*         getPlaylistModel();
+            virtual void                        moveMediaInPlaylist(int from, int to);
+            virtual void                        playTreeModelIndex(QModelIndex treeIndex);
 
         private:
 
-            QString getRESTLocation();
+            QString                             getRESTLocation();
+            void                                insertSongtreeNodeInPlaylist(int itemID, int position = -1);
 
-            RESTSongtree* songtree;
-            RESTSongtreeModel* songtreeModel;
+            RESTClient*             restClient;
+            RESTSongtree*           songtree;
+            RESTSongtreeModel*      songtreeModel;
+            RESTPlaylist*           playlist;
+            RESTPlaylistModel*      playlistModel;
     };
 }
 

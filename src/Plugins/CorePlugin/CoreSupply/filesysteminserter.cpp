@@ -67,7 +67,7 @@ void FileSystemInserter::start()
     emit finished();
 }
 
-void FileSystemInserter::mediaTagged(MediaInfoContainer info)
+void FileSystemInserter::mediaTagged(MediaInfoContainer &info)
 {
     //qDebug() << "media Tagged: " << info.getMediaInfo(InfoArtist);
     collection->addMedia(info);

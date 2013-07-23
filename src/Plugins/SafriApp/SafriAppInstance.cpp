@@ -75,6 +75,19 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     }
     else
         qDebug()<<"NIX GEFUNDEN )= ";
+
+    plModel = appController->getPlaylistModel();
+
+    if (plModel != 0)
+    {
+        context->setContextProperty("playlistModel", plModel);
+
+
+
+
+    }
+
+
 }
 
 void SafriAppInstance::playPauseSlot()
@@ -153,27 +166,16 @@ void SafriAppInstance::stateChanged(Core::playState state)
 
 void SafriAppInstance::playModelIndex(QVariant var)
 {
-    qDebug()<<var;
-    qDebug()<<var.value<QModelIndex>();
     QModelIndex proxyIndex = var.value<QModelIndex>();
-    QModelIndex index = proxy->mapToSource(proxyIndex);
-    SongTreeItem* item = static_cast<SongTreeItem*>(index.internalPointer());
-    playList = Core::ICore::createPlaylist();
-    QList<Core::Item*> items;
-    items.append(static_cast<Core::Item*>(item));
+    QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
 
-    playList->insertMediaAt(0,items);
-    IPlaybackController* playbackController = Core::ICore::playbackController();
-    playbackController->stopAction()->trigger();
-    playbackController->setPlaylist(playList);
+    appController->playTreeModelIndex(treeIndex);
 
-    playbackController->playAction()->trigger();
-    PlaylistModel* oldModel = plModel;
-
-    plModel = new PlaylistModel(playList, this);
-    context->setContextProperty("playlistModel", plModel);
-    if(oldModel)
-        delete oldModel;
+    QAbstractItemModel* playlistModel = appController->getPlaylistModel();
+    if (playlistModel)
+    {
+        context->setContextProperty("playlistModel", playlistModel);
+    }
 }
 
 void SafriAppInstance::testPlay()
@@ -211,7 +213,8 @@ void SafriAppInstance::updateMedia(Media *media)
 
 void SafriAppInstance::changePos(QVariant from, QVariant to)
 {
-    playList->moveMedia(from.toInt(), to.toInt());
+    //playList->moveMedia(from.toInt(), to.toInt());
+    appController->moveMediaInPlaylist(from.toInt(), to.toInt());
 }
 
 void SafriAppInstance::removeFromPlaylist(QVariant index)

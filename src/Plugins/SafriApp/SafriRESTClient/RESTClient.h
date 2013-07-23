@@ -19,7 +19,7 @@ namespace SafriRESTClient
 
         public:
 
-            QNetworkReply *sendRequest(QString request, QObject* receiver, const char * slot = 0);
+            QNetworkReply *sendRequest(QString request, QObject* receiver = 0, const char * slot = 0);
 
         private:
 

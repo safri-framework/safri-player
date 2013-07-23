@@ -23,7 +23,7 @@ public:
     bool insertItem(Core::Item* item, int pos);
     void moveSong(int fromPos, int toPos);
     void clearSong(int pos);
-    void setAsCurrent();
+    void setAsCurrent(bool play);
     QSharedPointer<Core::IPlaylist> getPlaylistInstance();
 
     QJsonArray getCurrentPlaylist();

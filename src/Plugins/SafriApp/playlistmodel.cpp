@@ -42,7 +42,7 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
 {
 
-    qDebug()<<"from"<<from<<"  "<<"to"<<to;
+    //qDebug()<<"from"<<from<<"  "<<"to"<<to;
     // remove the playing symbol from the old playing song
     Q_EMIT dataChanged( index(from, 0), index(from, 4) );
     // set the playing symbol to the new playing song
@@ -51,7 +51,7 @@ void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
 
 void PlaylistModel::songsInserted(int position, int count)
 {
-    qDebug()<<"INSERTED "<<count<< "songs";
+    //qDebug()<<"INSERTED "<<count<< "songs";
     beginInsertRows( QModelIndex(), position, position + count);
     endInsertRows();
 }
@@ -66,6 +66,7 @@ void PlaylistModel::songMoved(int from, int to)
     }
     for(int i=from; i <= to; i++)
     {
+        //qDebug() << "playlistModel media moved at row: " << i;
         Q_EMIT dataChanged( index(i, 0), index(i, 4) );
     }
 }
@@ -163,15 +164,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     Core::Media* media;
     Core::Song* song;
 
-
     if ( (playlist == 0) || (!index.isValid()) )
     {
          return QVariant();
     }
 
     media = playlist->getMediaAt(index.row());
-
-
 
     if (media->getType() != Core::DataItem::SONG)
     {
@@ -249,7 +247,6 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int role) const
         case albumRole:
 
             return song->getAlbum()->getName();
-
 
         case 5:
 

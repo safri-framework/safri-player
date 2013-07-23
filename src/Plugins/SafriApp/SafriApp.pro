@@ -31,7 +31,9 @@ SOURCES += \
     LocalAppController.cpp \
     SafriRESTClient/RESTAppController.cpp \
     SafriRESTClient/RESTSongtreeItem.cpp \
-    SafriRESTClient/RESTSongtree.cpp
+    SafriRESTClient/RESTSongtree.cpp \
+    SafriRESTClient/RESTPlaylistModel.cpp \
+    SafriRESTClient/RESTPlaylist.cpp
 
 HEADERS +=\
     SafriAppInstance.h \
@@ -48,7 +50,9 @@ HEADERS +=\
     LocalAppController.h \
     SafriRESTClient/RESTAppController.h \
     SafriRESTClient/RESTSongtreeItem.h \
-    SafriRESTClient/RESTSongtree.h
+    SafriRESTClient/RESTSongtree.h \
+    SafriRESTClient/RESTPlaylistModel.h \
+    SafriRESTClient/RESTPlaylist.h
 
 RESOURCES += \
     QMLResources.qrc

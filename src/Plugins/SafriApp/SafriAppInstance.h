@@ -55,7 +55,7 @@ private:
     QQuickItem* songTree;
     QSortFilterProxyModel* proxy;
     int currentSongLength;
-    PlaylistModel* plModel;
+    QAbstractItemModel* plModel;
     QQmlContext* context;
     QSharedPointer<Core::IPlaylist> playList;
 };

@@ -15,15 +15,13 @@
 using namespace Core;
 using namespace SafriRESTClient;
 
-RESTPlaybackController::RESTPlaybackController(QString RESTLocation, QObject *parent) :
-    statusTimer(new QTimer(this))
+RESTPlaybackController::RESTPlaybackController(RESTClient *restClient, QObject *parent) :
+    statusTimer(new QTimer(this)), client(restClient)
 {
     this->setParent(parent);
 
     setupActions();
     setupStateMachine();
-
-    client = new RESTClient(RESTLocation, this);
 
     connect(statusTimer, SIGNAL(timeout()), this, SLOT(statusTimerShot()));
 }

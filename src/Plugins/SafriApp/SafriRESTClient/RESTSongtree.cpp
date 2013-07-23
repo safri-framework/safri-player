@@ -5,10 +5,9 @@
 
 using namespace SafriRESTClient;
 
-RESTSongtree::RESTSongtree(QString restLocation, QObject *parent) :
-    QObject(parent), client(0), rootItem(0)
+RESTSongtree::RESTSongtree(RESTClient* restClient, QObject *parent) :
+    QObject(parent), client(restClient), rootItem(0)
 {
-    client = new RESTClient(restLocation, this);
     rootItem = new RESTSongtreeItem(client);
     rootItem->fetchChilds();
 }

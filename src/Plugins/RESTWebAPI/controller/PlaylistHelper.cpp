@@ -80,9 +80,15 @@ void PlaylistHelper::clearSong(int pos)
     currentPlaylist->deleteMedia(pos);
 }
 
-void PlaylistHelper::setAsCurrent()
+void PlaylistHelper::setAsCurrent(bool play)
 {
     Core::ICore::playbackController()->setPlaylist(currentPlaylist);
+
+    if (play)
+    {
+        Core::ICore::playbackController()->playAction()->trigger();
+    }
+
 }
 
 QSharedPointer<IPlaylist> PlaylistHelper::getPlaylistInstance()
@@ -92,13 +98,22 @@ QSharedPointer<IPlaylist> PlaylistHelper::getPlaylistInstance()
 
 bool PlaylistHelper::insertItem(Item *item, int pos)
 {
-    if(item && pos <= currentPlaylist->getSize())
+    if(item)
     {
-        QList<Item*> list;
-        list.append(item);
-        currentPlaylist->insertMediaAt(pos, list);
-        return true;
+        if (pos == -1)
+        {
+            newPlaylist();
+        }
+
+        if (pos <= currentPlaylist->getSize() && pos >= 0)
+        {
+            QList<Item*> list;
+            list.append(item);
+            currentPlaylist->insertMediaAt(pos, list);
+            return true;
+        }
     }
+
     return false;
 }
 

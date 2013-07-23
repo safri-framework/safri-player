@@ -19,7 +19,7 @@ RESTClient::RESTClient(QString location, QObject *parent) :
 QNetworkReply* RESTClient::sendRequest(QString request, QObject *receiver, const char *slot)
 {
     QNetworkReply* reply = networkManager->get(QNetworkRequest( QUrl(RESTLocation + request) ));
-    if (slot != 0)
+    if (slot != 0 && receiver != 0)
     {
         connect(reply, SIGNAL(finished()), receiver, slot);
     }
