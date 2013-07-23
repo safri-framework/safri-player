@@ -33,7 +33,7 @@ namespace Core
 
         private slots:
             void start();
-            void mediaTagged(MediaInfoContainer &info);
+            void mediaTagged(MediaInfoContainer info);
             void threadFinished();
 
         private:
