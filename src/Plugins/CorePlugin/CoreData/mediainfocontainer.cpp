@@ -8,6 +8,12 @@ MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl)
 
 }
 
+MediaInfoContainer::MediaInfoContainer(MediaInfoContainer &other)
+    : mediaUrl(other.mediaUrl), infoMap(other.infoMap)
+{
+
+}
+
 void MediaInfoContainer::setMediaInfo(MediaInfoType type, QVariant info)
 {
     infoMap.insert(type, info);
