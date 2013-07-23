@@ -83,7 +83,7 @@ void PlaylistHelper::clearSong(int pos)
 
 void PlaylistHelper::setAsCurrent()
 {
-
+     Core::ICore::playbackController()->setPlaylist(currentPlaylist);
 }
 
 int PlaylistHelper::getCurrentVersionID()

@@ -370,7 +370,6 @@ void RESTPlaybackController::nextRequestCallback()
 void RESTPlaybackController::previousRequestCallback()
 {
     //qDebug() << "previousRequestCallback";
-    statusTimer->start(SATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
