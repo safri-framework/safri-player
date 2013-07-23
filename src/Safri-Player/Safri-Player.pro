@@ -59,4 +59,5 @@ RESOURCES += \
     ressources.qrc
 
 OTHER_FILES += \
-    selectedplugins.lst
+    selectedplugins.lst \
+    safri-config.xml

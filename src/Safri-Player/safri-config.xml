@@ -16,10 +16,10 @@
         <setting name="treeviewCount">3</setting>
     </settingsmodule>
     <settingsmodule name="org.safri.restapi">
-        <setting name="host">localhost</setting>
+        <setting name="host">192.168.1.87</setting>
         <setting name="port">8085</setting>
     </settingsmodule>
   <settingsmodule name="org.safri.app">
-        <setting name="isRESTClient">false</setting>
+        <setting name="isRESTClient">true</setting>
     </settingsmodule>
 </safri-configuration>
