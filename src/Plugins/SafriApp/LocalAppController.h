@@ -25,6 +25,8 @@ class LocalAppController : public IAppController
         virtual QAbstractItemModel*         getPlaylistModel();
         virtual void                        moveMediaInPlaylist(int from, int to);
         virtual void                        playTreeModelIndex(QModelIndex treeIndex);
+        virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex);
+        virtual void                        playPlaylistIndex(int index);
 
     private:
 

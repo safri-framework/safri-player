@@ -19,6 +19,7 @@ Rectangle{
     signal itemHasMoved
     signal released
     signal removeIndexFromPlaylist(var indexPosition)
+    signal playIndex(var indexPosition)
 
     onNewDragPositionChanged:    
     {
@@ -70,7 +71,7 @@ Rectangle{
                 property bool firstMove: true;
                 property bool reset;
                 onXChanged:{ plDelegateRect.opacity = 1-( Math.abs(x)*2  / parent.width) }
-               // onYChanged:{if (!dragArea.pressed) oldy = y}
+
                 onDelReleased:
                 {
                     reset = true;
@@ -80,15 +81,6 @@ Rectangle{
                     reset = false;
                 }
 
-                /*
-                Image
-                {
-                    source:"resources/ico_play.png";
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    z: parent.z -1
-                    x: parent.width-30;
-                }*/
 
                 onItemMoved:
                 {
@@ -221,11 +213,19 @@ Rectangle{
                     y:1
                 }
 
+
+                MouseArea
+                {
+                  visible: !editModeButton.enabled
+                  anchors.fill: parent
+                  onPressAndHold: {playIndex(position), console.log("pos"+position)}
+                }
+
                 MouseArea
                 {
 
                     PropertyAnimation
-                    {
+                    {   //  Will move the item back to his default Position if delete-gesture was canceled
                         id: moveBackAnimation
                         target: plDelegateRect
                         property:"x"

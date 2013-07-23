@@ -57,6 +57,15 @@ void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
     insertSongtreeNodeInPlaylist(itemId);
 }
 
+void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
+{
+    // Q_UNUSED treeIndex;
+}
+
+void RESTAppController::playPlaylistIndex(int index)
+{
+}
+
 QString RESTAppController::getRESTLocation()
 {
     Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");

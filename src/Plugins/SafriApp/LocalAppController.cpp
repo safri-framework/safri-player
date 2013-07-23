@@ -1,5 +1,5 @@
 #include "LocalAppController.h"
-
+#include <QDebug>
 #include <QList>
 
 #include "icore.h"
@@ -90,6 +90,35 @@ void LocalAppController::playTreeModelIndex(QModelIndex treeIndex)
     playbackController->playAction()->trigger();
 
     playlistModel = new PlaylistModel(playlist, this);
+}
+
+void LocalAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
+{
+    if (!playlistModel)
+    {
+        playlistModel = new PlaylistModel(playlist, this);
+    }
+
+    Core::SongTreeItem* item = static_cast<Core::SongTreeItem*>(treeIndex.internalPointer());
+    QList<Core::Item*> items;
+    items.append(static_cast<Core::Item*>(item));
+
+    if(playlist.isNull())
+        playlist = Core::ICore::createPlaylist();
+
+    playlist->insertMediaAt(playlist->getSize(), items);
+}
+
+void LocalAppController::playPlaylistIndex(int index)
+{
+    if (index < playlist->getSize())
+    {
+        playlist->setCurrentMedia(index);
+        Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
+        playbackConntroller->stopAction()->trigger();
+        playbackConntroller->setPlaylist(playlist);
+        playbackConntroller->playAction()->trigger();
+    }
 }
 
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()

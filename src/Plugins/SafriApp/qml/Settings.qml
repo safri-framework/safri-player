@@ -68,27 +68,12 @@ Rectangle {
     }
 
 
- /*   TextFieldStyle {
-            id:tt
-           textColor: "white"
-           background: BorderImage {
-
-               source: "resources/lineEdit.png"
-               border.left: 5; border.top: 5
-               border.right: 5; border.bottom: 5
-
-           }
-           font.pixelSize: 20* root.globalScaleFactor;
-        }*/
-
 
     property int textFieldHeight: root.globalScaleFactor  < 0.6 ? 20 : root.globalScaleFactor * 30;
-
     height: view.height
     width: view.width
     id: settingsView
     color:"transparent"
-
 
 
 

@@ -51,8 +51,8 @@ void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
 
 void PlaylistModel::songsInserted(int position, int count)
 {
-    //qDebug()<<"INSERTED "<<count<< "songs";
-    beginInsertRows( QModelIndex(), position, position + count);
+    qDebug()<<"INSERTED "<<count<< "songs";
+    beginInsertRows( QModelIndex(), position, position + count-1);
     endInsertRows();
 }
 

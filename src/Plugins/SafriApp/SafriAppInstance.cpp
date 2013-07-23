@@ -56,7 +56,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     connect(dialerView, SIGNAL(volumeChanged(QVariant)), this, SLOT(volumeSlot(QVariant)));
     connect(playlistView, SIGNAL(movePos(QVariant, QVariant)), this, SLOT(changePos(QVariant,QVariant)));
     connect(playlistView, SIGNAL(removeIndexFromPlaylist(QVariant)), this, SLOT(removeFromPlaylist(QVariant)));
-
+    connect(playlistView, SIGNAL(playIndex(QVariant)), this, SLOT(playPlaylistIndex(QVariant)));
     connect(controller, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
     connect(controller, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
 
@@ -72,6 +72,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     if(songTree)
     {
         connect(songTree, SIGNAL(playModelIndex(QVariant)), this, SLOT(playModelIndex(QVariant)));
+        connect(songTree, SIGNAL(enqueueModelIndex(QVariant)), this, SLOT(enqueueModelIndex(QVariant)));
     }
     else
         qDebug()<<"NIX GEFUNDEN )= ";
@@ -81,13 +82,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     if (plModel != 0)
     {
         context->setContextProperty("playlistModel", plModel);
-
-
-
-
     }
-
-
 }
 
 void SafriAppInstance::playPauseSlot()
@@ -178,6 +173,14 @@ void SafriAppInstance::playModelIndex(QVariant var)
     }
 }
 
+void SafriAppInstance::enqueueModelIndex(QVariant var)
+{
+    QModelIndex proxyIndex = var.value<QModelIndex>();
+    QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
+    appController->enqueueTreeModelIndex(treeIndex);
+
+}
+
 void SafriAppInstance::testPlay()
 {
 
@@ -225,4 +228,11 @@ void SafriAppInstance::removeFromPlaylist(QVariant index)
 void SafriAppInstance::backClicked()
 {
     QMetaObject::invokeMethod(songTree, "prevIndex");
+}
+
+void SafriAppInstance::playPlaylistIndex(QVariant index)
+{
+    qDebug()<<"APP INSTANCE PLAY "<<index.toInt();
+    appController->playPlaylistIndex(index.toInt());
+
 }

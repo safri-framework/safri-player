@@ -33,6 +33,8 @@ public slots:
 private slots:
     void stateChanged(Core::playState state);
     void playModelIndex(QVariant var);
+    void enqueueModelIndex(QVariant var);
+
     void testPlay();
     void volumeSlot(QVariant vol);
     void setMusicProgress(int val);
@@ -40,6 +42,7 @@ private slots:
     void changePos(QVariant from, QVariant to);
     void removeFromPlaylist(QVariant index);
     void backClicked();
+    void playPlaylistIndex(QVariant index);
 
 private:
     IAppController* appController;
