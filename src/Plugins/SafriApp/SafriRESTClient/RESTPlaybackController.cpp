@@ -271,9 +271,8 @@ void RESTPlaybackController::playRequestCallback()
         bArray = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
         QJsonObject jsonObject = jsonDoc.object();
-        QJsonObject jsonCurrentMedia = jsonObject["currentMedia"].toObject();
 
-        handleCurrentMediaResonse(jsonCurrentMedia);
+        handleStatusResponse(jsonObject);
 
         m_shuffleAction->setDisabled(false);
         m_nextAction->setDisabled(false);
@@ -332,9 +331,8 @@ void RESTPlaybackController::nextRequestCallback()
         bArray = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
         QJsonObject jsonObject = jsonDoc.object();
-        QJsonObject jsonCurrentMedia = jsonObject["currentMedia"].toObject();
 
-        handleCurrentMediaResonse(jsonCurrentMedia);
+        handleStatusResponse(jsonObject);
     }
 }
 
@@ -357,9 +355,8 @@ void RESTPlaybackController::previousRequestCallback()
         bArray = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
         QJsonObject jsonObject = jsonDoc.object();
-        QJsonObject jsonCurrentMedia = jsonObject["currentMedia"].toObject();
 
-        handleCurrentMediaResonse(jsonCurrentMedia);
+        handleStatusResponse(jsonObject);
     }
 }
 
@@ -372,7 +369,6 @@ void RESTPlaybackController::statusRequestCallback()
 {
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
-    int currentVolume;
 
     if ( !reply )
     {
@@ -386,23 +382,7 @@ void RESTPlaybackController::statusRequestCallback()
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
         QJsonObject jsonObject = jsonDoc.object();
 
-        //qDebug() << bArray;
-        //qDebug() << jsonObject.toVariantMap().value("currentTime").toString();
-        mediaTotalTime = jsonObject.toVariantMap().value("mediaTotalTime").toInt();
-        currentTime = jsonObject.toVariantMap().value("currentTime").toInt();
-        currentVolume = jsonObject.toVariantMap().value("volume").toInt();
-
-        if (currentVolume != volume)
-        {
-            volume = currentVolume;
-            qDebug() << "received volume changed: " << volume;
-            Q_EMIT volumeChanged(volume);
-        }
-
-        QJsonObject jsonCurrentMedia = jsonObject["currentMedia"].toObject();
-        handleCurrentMediaResonse(jsonCurrentMedia);
-
-        Q_EMIT update(currentTime);
+        handleStatusResponse(jsonObject);
     }
 }
 
@@ -426,11 +406,33 @@ void RESTPlaybackController::handleCurrentMediaResonse(QJsonObject jsonCurrentMe
         currentMediaID = jsonCurrentMedia.value("songID").toVariant().toInt();
         currentCollectionHash = jsonCurrentMedia.value("collection").toVariant().toString();
 
-        qDebug() << "mediaChanged";
+        qDebug() << "mediaChanged - mediaTotalTime: " << mediaTotalTime;
         Q_EMIT mediaChanged(currentMedia);
 
         currentMedia->deleteLater();
     }
+}
+
+void RESTPlaybackController::handleStatusResponse(QJsonObject jsonStatusObject)
+{
+    int currentVolume;
+    QVariantMap statusMap = jsonStatusObject.toVariantMap();
+
+    mediaTotalTime = statusMap.value("mediaTotalTime").toInt();
+    currentTime = statusMap.value("currentTime").toInt();
+    currentVolume = statusMap.value("volume").toInt();
+
+    if (currentVolume != volume)
+    {
+        volume = currentVolume;
+        qDebug() << "received volume changed: " << volume;
+        Q_EMIT volumeChanged(volume);
+    }
+
+    QJsonObject jsonCurrentMedia = jsonStatusObject["currentMedia"].toObject();
+    handleCurrentMediaResonse(jsonCurrentMedia);
+
+    Q_EMIT update(currentTime);
 }
 
 // ****************** END NETWORK HANDLING ******************

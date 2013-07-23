@@ -46,7 +46,7 @@ Rectangle {
 
     Settings
     {
-        visible: true
+        visible: false
         z:100
         id: settingsPage
     }

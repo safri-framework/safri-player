@@ -195,7 +195,7 @@ void SafriAppInstance::volumeSlot(QVariant vol)
 void SafriAppInstance::setMusicProgress(int val)
 {
     QMetaObject::invokeMethod(musicProgress, "setProgress",
-                              Q_ARG(QVariant, currentSongLength), Q_ARG(QVariant, val));
+                              Q_ARG(QVariant, Core::ICore::playbackController()->getMediaTotalTime()), Q_ARG(QVariant, val));
 }
 
 void SafriAppInstance::updateMedia(Media *media)
@@ -209,8 +209,12 @@ void SafriAppInstance::updateMedia(Media *media)
         if(coverPath != "")
             coverPath = "file://" + coverPath;
         qDebug()<<"PATH "+coverPath;
+
+        setMusicProgress(0);
+
         QMetaObject::invokeMethod(currentSongDisplay, "newSong",
                                   Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, coverPath));
+
     }
 }
 

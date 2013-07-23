@@ -104,8 +104,9 @@ namespace SafriRESTClient
             void setupStateMachine();
             void setupStateTransitions();
 
-            QNetworkReply* sendRESTRequest(QString request, const char *slot = 0);
+            QNetworkReply*  sendRESTRequest(QString request, const char *slot = 0);
             void handleCurrentMediaResonse(QJsonObject jsonCurrentMedia);
+            void handleStatusResponse(QJsonObject jsonStatusObject);
 
     };
 }
