@@ -88,7 +88,7 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
     // called by state machine transitions
     void RESTPlaybackController::playStateSlot()
     {
-        //qDebug() << "PLAY";
+        qDebug() << "PLAY";
         sendRESTRequest(RESTAction::PLAYER_PLAY, SLOT(playRequestCallback()));
     }
 
@@ -102,7 +102,8 @@ QList<QAction *> RESTPlaybackController::getAdditionalActions()
     // called by state machine transitions
     void RESTPlaybackController::stopStateSlot()
     {
-        //qDebug() << "STOP";
+        qDebug() << "STOP";
+        sendRESTRequest(RESTAction::PLAYER_STOP, SLOT(stopRequestCallback()));
     }
 
     // called by state machine transitions

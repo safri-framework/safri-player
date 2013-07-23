@@ -9,6 +9,7 @@ namespace SafriRESTClient
     class RESTSongtree;
     class RESTPlaylist;
     class RESTPlaylistModel;
+    class RESTPlaybackController;
     class RESTClient;
 
     class RESTAppController : public IAppController
@@ -35,6 +36,7 @@ namespace SafriRESTClient
             RESTSongtreeModel*      songtreeModel;
             RESTPlaylist*           playlist;
             RESTPlaylistModel*      playlistModel;
+            RESTPlaybackController* playbackController;
     };
 }
 

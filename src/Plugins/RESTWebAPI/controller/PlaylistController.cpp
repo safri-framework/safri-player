@@ -69,8 +69,7 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
 
     else if(request.getParameter("action") == "setPlaylist")
     {
-        bool play = request.getParameter("play").toInt();
-        PlaylistHelper::getInstance()->setAsCurrent(play);
+        PlaylistHelper::getInstance()->setAsCurrent();
     }
 
     else if(request.getParameter("action") == "getPlaylist")

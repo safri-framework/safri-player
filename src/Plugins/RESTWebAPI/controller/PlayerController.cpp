@@ -37,6 +37,10 @@ void PlayerController::service(HttpRequest &request, HttpResponse &response)
         {
             action = pbController->playAction();
         }
+        else if (actionVariant == "stop")
+        {
+            action = pbController->stopAction();
+        }
         else if (actionVariant == "getStatus")
         {
             response.write(QJsonDocument(JSONSerializer::getStatus()).toJson(), true);

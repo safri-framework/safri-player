@@ -24,7 +24,7 @@ RESTAppController::RESTAppController(QObject *parent) :
 {
     restClient = new RESTClient( getRESTLocation() );
 
-    RESTPlaybackController* playbackController = new RESTPlaybackController(restClient);
+    playbackController = new RESTPlaybackController(restClient);
     PluginSystem::PluginManager::instance()->addObject( playbackController  );
 }
 
@@ -51,10 +51,20 @@ void RESTAppController::moveMediaInPlaylist(int from, int to)
 
 void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
 {
+    playbackController->stopAction()->trigger();
+
     Core::ITreeItem* treeItem = static_cast<Core::ITreeItem*>(treeIndex.internalPointer());
     int itemId = treeItem->property("itemID").toInt();
 
-    insertSongtreeNodeInPlaylist(itemId);
+    insertSongtreeNodeInPlaylist(itemId, -1);
+
+    if (playbackController->playAction()->isEnabled())
+    {
+        qDebug() << "playAction enabled";
+        playbackController->playAction()->trigger();
+    }
+
+
 }
 
 void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
@@ -78,15 +88,21 @@ QString RESTAppController::getRESTLocation()
 
 void RESTAppController::insertSongtreeNodeInPlaylist(int itemID, int position)
 {
-    QString insertRequest = RESTAction::SONGTREE_INSERT_ITEM;
+    QString request = RESTAction::SONGTREE_INSERT_ITEM;
 
-    insertRequest.replace(QRegExp("%%ITEMID%%"), QString::number(itemID));
-    insertRequest.replace(QRegExp("%%PLAYLISTPOS%%"), QString::number(position));
+    request.replace(QRegExp("%%ITEMID%%"), QString::number(itemID));
+    request.replace(QRegExp("%%PLAYLISTPOS%%"), QString::number(position));
 
-    QNetworkReply *reply = restClient->sendRequest(insertRequest);
+    QNetworkReply *reply = restClient->sendRequest(request);
 
     // start an event loop to wait synchronously for the REST request to finish
     QEventLoop loop;
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    reply = restClient->sendRequest(RESTAction::PLAYLIST_SET_AS_CURRENT);
+
+    // start an event loop to wait synchronously for the REST request to finish
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 }
