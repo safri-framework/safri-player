@@ -61,7 +61,7 @@ namespace SafriRESTClient
             bool m_valid;
             double displayedPlaylistVersion;
             void requestCurrentPlaylist();
-            static const int VERSION_TIMER_INTERVAL = 500;
+            static const int VERSION_TIMER_INTERVAL = 1000;
             QTimer* versionCheckTimer;
 
         private slots:

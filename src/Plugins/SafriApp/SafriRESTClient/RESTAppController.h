@@ -44,8 +44,8 @@ namespace SafriRESTClient
 
         private slots:
             void                    resetPlaylistModel();
-            void                    versionTimeoutSlot();
-            void                    comparePlaylistVersion();
+          //  void                    versionTimeoutSlot();
+          //  void                    comparePlaylistVersion();
     };
 }
 
