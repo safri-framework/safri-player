@@ -168,7 +168,7 @@ void Widget::actionChanged()
 
 void Widget::stateChanged(playState state)
 {
-    qDebug()<<"STATE"<<state;
+    //qDebug()<<"STATE"<<state;
     if(state != NODATA)
     {
         this->ui->play->setEnabled(true);
@@ -189,7 +189,7 @@ void Widget::stateChanged(playState state)
 
         case PLAY:
         {
-        qDebug()<<"PAUSE_ICON";
+        //qDebug()<<"PAUSE_ICON";
             this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/pause_icon2.png"));
             this->hideLoadingIndicator();
             return;
@@ -197,14 +197,14 @@ void Widget::stateChanged(playState state)
 
         case STOP:
         {
-        qDebug()<<"PLAY_ICON";
+        //qDebug()<<"PLAY_ICON";
             this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/play_icon.png"));
             return;
         }
 
         case PAUSE:
         {
-        qDebug()<<"PLAY_ICON";
+        //qDebug()<<"PLAY_ICON";
             this->ui->play->setIcon(QIcon(":/icons/SAFRI_UI/play_icon.png"));
             return;
         }
@@ -225,7 +225,7 @@ void Widget::on_seek_slider_sliderMoved(int position)
 
 void Widget::on_volume_slider_sliderMoved(int position)
 {
-    qDebug() << "PlayerWidgetII: setVolume: " << position;
+    //qDebug() << "PlayerWidgetII: setVolume: " << position;
     m_pbController->setVolume(position);
 }
 

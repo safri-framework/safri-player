@@ -9,7 +9,6 @@ PlaylistController::PlaylistController(){}
 
 void PlaylistController::service(HttpRequest &request, HttpResponse &response)
 {
-    qDebug()<<Q_FUNC_INFO;
     response.setHeader("Content-Type", "application/json; charset=ISO-8859-1");
 
     if(request.getParameter("action") == "newPlaylist")

@@ -36,7 +36,7 @@ public slots:
 
 private slots:
     void playlistDataChanged();
-    void playerHasNewPlaylist(QSharedPointer<Core::IPlaylist> newPL);
+    void playerHasNewPlaylist();
     
 private:
     static PlaylistHelper* instance;

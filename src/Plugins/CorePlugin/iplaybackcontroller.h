@@ -96,6 +96,7 @@ namespace Core
             void hasVolumeAdjustableMedia(bool value);
 
             void newPlaylistInstalled(QSharedPointer<Core::IPlaylist>);
+            void playlistChanged();
 
         public slots:
 

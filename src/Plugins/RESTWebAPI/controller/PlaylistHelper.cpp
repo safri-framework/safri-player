@@ -22,12 +22,12 @@ PlaylistHelper::PlaylistHelper(QWidget *parent) :
     versionID(-1)
 {
     newPlaylist();
-    connect(Core::ICore::playbackController(), SIGNAL(newPlaylistInstalled(QSharedPointer<Core::IPlaylist>)), this, SLOT(playerHasNewPlaylist(QSharedPointer<Core::IPlaylist>)));
+    connect(Core::ICore::playbackController(), SIGNAL(playlistChanged()), this, SLOT(playerHasNewPlaylist()));
 }
 
 PlaylistHelper *PlaylistHelper::getInstance()
 {
-    qDebug()<<Q_FUNC_INFO;
+    //qDebug()<<Q_FUNC_INFO;
     QMutexLocker locker(&mutex);
 
     if(!instance)
@@ -154,8 +154,9 @@ void PlaylistHelper::playlistDataChanged()
     //qDebug()<<Q_FUNC_INFO<<" "<<versionID;
 }
 
-void PlaylistHelper::playerHasNewPlaylist(QSharedPointer<IPlaylist> newPL)
+void PlaylistHelper::playerHasNewPlaylist()
 {
-    connect(newPL.data(), SIGNAL(PlaylistEdited()), this, SLOT(playlistDataChanged()));
+    connect(Core::ICore::playbackController()->getPlaylist().data(), SIGNAL(PlaylistEdited()), this, SLOT(playlistDataChanged()));
     playlistDataChanged();
+    qDebug()<<"NEW PLAYLIST";
 }

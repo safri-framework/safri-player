@@ -292,6 +292,7 @@ void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
         qDebug()<<"leere Playliste";
     }
     Q_EMIT newPlaylistInstalled(playlist);
+    Q_EMIT playlistChanged();
 }
 
 QSharedPointer<Core::IPlaylist> PlaybackController::getPlaylist()
