@@ -27,6 +27,7 @@ class LocalAppController : public IAppController
         virtual void                        playTreeModelIndex(QModelIndex treeIndex);
         virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex);
         virtual void                        playPlaylistIndex(int index);
+        virtual void                        removeIndexFromPlaylist(int index);
 
     private:
 

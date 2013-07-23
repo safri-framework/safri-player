@@ -121,6 +121,12 @@ void LocalAppController::playPlaylistIndex(int index)
     }
 }
 
+void LocalAppController::removeIndexFromPlaylist(int index)
+{
+    if(index < playlist->getSize())
+        playlist->deleteMedia(index);
+}
+
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
 {
     QList<Core::ITreeItemType *> *treeHierarchy;

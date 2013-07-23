@@ -216,9 +216,17 @@ Rectangle{
 
                 MouseArea
                 {
-                  visible: !editModeButton.enabled
-                  anchors.fill: parent
-                  onPressAndHold: {playIndex(position), console.log("pos"+position)}
+                    acceptedButtons: Qt.AllButtons
+                    visible: !editModeButton.enabled
+                    anchors.fill: parent
+                    onPressed:
+                    {
+                        if(mouse.button == Qt.RightButton)
+                        {
+                            {playIndex(position); console.log("pos"+position)}
+                        }
+                    }
+                    onClicked:  {playIndex(position); console.log("pos"+position)}
                 }
 
                 MouseArea
@@ -251,7 +259,7 @@ Rectangle{
                         {
                             plDelegateRect.x = 0;
                             removeIndexFromPlaylist(position)
-                            console.log("test")
+
                         }
                     }
                 }

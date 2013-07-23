@@ -76,6 +76,10 @@ void RESTAppController::playPlaylistIndex(int index)
 {
 }
 
+void RESTAppController::removeIndexFromPlaylist(int index)
+{
+}
+
 QString RESTAppController::getRESTLocation()
 {
     Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");

@@ -222,7 +222,7 @@ void SafriAppInstance::changePos(QVariant from, QVariant to)
 
 void SafriAppInstance::removeFromPlaylist(QVariant index)
 {
-    playList->deleteMedia(index.toInt());
+    appController->removeIndexFromPlaylist(index.toInt());
 }
 
 void SafriAppInstance::backClicked()

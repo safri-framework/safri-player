@@ -18,7 +18,8 @@ class IAppController : public QObject
         virtual void                        moveMediaInPlaylist(int from, int to) = 0;
         virtual void                        playTreeModelIndex(QModelIndex treeIndex) = 0;
         virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex) = 0;
-        virtual void                         playPlaylistIndex(int index) = 0;
+        virtual void                        playPlaylistIndex(int index) = 0;
+        virtual void                        removeIndexFromPlaylist(int index) = 0;
 };
 
 #endif // IAPPCONTROLLER_H
