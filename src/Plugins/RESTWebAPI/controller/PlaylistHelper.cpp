@@ -18,11 +18,12 @@ PlaylistHelper* PlaylistHelper::instance = 0;
 QMutex PlaylistHelper::mutex;
 
 PlaylistHelper::PlaylistHelper(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),
+    versionID(-1)
 {
     newPlaylist();
+    connect(Core::ICore::playbackController(), SIGNAL(newPlaylistInstalled(QSharedPointer<Core::IPlaylist>)), this, SLOT(playerHasNewPlaylist(QSharedPointer<Core::IPlaylist>)));
 }
-
 
 PlaylistHelper *PlaylistHelper::getInstance()
 {
@@ -82,7 +83,12 @@ void PlaylistHelper::clearSong(int pos)
 
 void PlaylistHelper::setAsCurrent()
 {
-    Core::ICore::playbackController()->setPlaylist(currentPlaylist);
+
+}
+
+int PlaylistHelper::getCurrentVersionID()
+{
+    return versionID;
 }
 
 QSharedPointer<IPlaylist> PlaylistHelper::getPlaylistInstance()
@@ -108,7 +114,6 @@ bool PlaylistHelper::insertItem(Item *item, int pos)
             return true;
         }
     }
-
     return false;
 }
 
@@ -140,4 +145,17 @@ QJsonArray PlaylistHelper::getPlayingPlaylist()
     {
         return QJsonArray();
     }
+}
+
+void PlaylistHelper::playlistDataChanged()
+{
+    QMutexLocker locker(&mutex);
+    ++versionID;
+    //qDebug()<<Q_FUNC_INFO<<" "<<versionID;
+}
+
+void PlaylistHelper::playerHasNewPlaylist(QSharedPointer<IPlaylist> newPL)
+{
+    connect(newPL.data(), SIGNAL(PlaylistEdited()), this, SLOT(playlistDataChanged()));
+    playlistDataChanged();
 }

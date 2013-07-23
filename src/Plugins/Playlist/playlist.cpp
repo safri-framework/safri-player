@@ -113,17 +113,21 @@ Media* Playlist::getPreviousMedia()
 
 void Playlist::setShuffle(bool value)
 {    
-    shuffle = value;
-    if (value && mediaList.size() > 0)
+    if(shuffle != value)
     {
-        shuffleHistory.clear();
-        shuffleHistory.append(mediaList);
-        if(currentMedia >= 0) shuffleHistory.removeAt(currentMedia);
-        shuffleHistory = shufflePlaylist(shuffleHistory);
-    }
-    else
-    {
-        shuffleHistory.clear();
+        Q_EMIT PlaylistEdited();
+        shuffle = value;
+        if (value && mediaList.size() > 0)
+        {
+            shuffleHistory.clear();
+            shuffleHistory.append(mediaList);
+            if(currentMedia >= 0) shuffleHistory.removeAt(currentMedia);
+            shuffleHistory = shufflePlaylist(shuffleHistory);
+        }
+        else
+        {
+            shuffleHistory.clear();
+        }
     }
 }
 
@@ -153,6 +157,8 @@ void Playlist::moveMedia(int from, int to)
     playlistLock.unlock();
 
     Q_EMIT MediaMoved(from, to);
+    Q_EMIT PlaylistEdited();
+
 
     // if necessary recalculate the position of the current playing song
     if (!(from == currentMedia))
@@ -203,6 +209,7 @@ void Playlist::deleteMedia(int value)
         mediaList.removeAt(value);
     playlistLock.unlock();
         Q_EMIT MediaDeleted(value);
+        Q_EMIT PlaylistEdited();
 
     // if necessary recalculate the position of the current playing song
     if(value < currentMedia)
@@ -275,6 +282,7 @@ void Playlist::insertMediaAt(int position, QList<Item*> items)
         shuffleHistory.append(shufflePlaylist(media));
     }
     Q_EMIT MediaInserted(position, media.size());
+    Q_EMIT PlaylistEdited();
 }
 
 void Playlist::appendMedia(Media* media)
@@ -295,6 +303,7 @@ void Playlist::appendMedia(Media* media)
         shuffleHistory.append(media);
     }
     Q_EMIT MediaInserted(position, 1);
+    Q_EMIT PlaylistEdited();
 }
 
 int Playlist::getCurrentMediaPosition()

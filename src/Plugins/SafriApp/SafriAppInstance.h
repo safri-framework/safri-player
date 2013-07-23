@@ -43,6 +43,7 @@ private slots:
     void removeFromPlaylist(QVariant index);
     void backClicked();
     void playPlaylistIndex(QVariant index);
+    void newPlaylistModel();
 
 private:
     IAppController* appController;

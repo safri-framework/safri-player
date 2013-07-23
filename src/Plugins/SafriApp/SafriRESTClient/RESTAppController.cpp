@@ -20,12 +20,13 @@
 using namespace SafriRESTClient;
 
 RESTAppController::RESTAppController(QObject *parent) :
-    IAppController(parent)
+    IAppController(parent), playlist(0), playlistModel(0)
 {
     restClient = new RESTClient( getRESTLocation() );
 
     playbackController = new RESTPlaybackController(restClient);
     PluginSystem::PluginManager::instance()->addObject( playbackController  );
+
 }
 
 QAbstractItemModel *RESTAppController::getSongtreeModel()
@@ -38,8 +39,15 @@ QAbstractItemModel *RESTAppController::getSongtreeModel()
 
 QAbstractItemModel *RESTAppController::getPlaylistModel()
 {
+    if(playlistModel)
+        delete playlistModel;
+
+    if(playlist)
+        delete playlist;
+
     playlist = new RESTPlaylist(restClient, this);
     playlistModel = new RESTPlaylistModel(playlist, this);
+    connect(playlist, SIGNAL(resetModel()), this, SLOT(resetPlaylistModel()));
 
     return playlistModel;
 }
@@ -109,4 +117,9 @@ void RESTAppController::insertSongtreeNodeInPlaylist(int itemID, int position)
     // start an event loop to wait synchronously for the REST request to finish
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
+}
+
+void RESTAppController::resetPlaylistModel()
+{
+    Q_EMIT newPlaylistModel();
 }

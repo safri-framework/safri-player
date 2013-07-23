@@ -175,7 +175,12 @@ namespace Core
                 \brief  this signal will force the PlaylistModel (ViewAdapter) to redraw the data of the given Media.
 
             */
-            void MediaDataChanged(int value);
+            void MediaDataChanged(int value);            
+
+            /**
+                \brief  this signal will emit if something in Playlist changes.
+            */
+            void PlaylistEdited();
 
         protected:
 

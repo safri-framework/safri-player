@@ -24,6 +24,7 @@ public:
     void moveSong(int fromPos, int toPos);
     void clearSong(int pos);
     void setAsCurrent();
+    int getCurrentVersionID();
     QSharedPointer<Core::IPlaylist> getPlaylistInstance();
 
     QJsonArray getCurrentPlaylist();
@@ -32,12 +33,17 @@ public:
 signals:
     
 public slots:
+
+private slots:
+    void playlistDataChanged();
+    void playerHasNewPlaylist(QSharedPointer<Core::IPlaylist> newPL);
     
 private:
     static PlaylistHelper* instance;
     explicit PlaylistHelper(QWidget *parent = 0);
     QSharedPointer<Core::IPlaylist> currentPlaylist;
     static QMutex mutex;
+    int versionID;
 
 
 };

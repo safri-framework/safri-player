@@ -2,6 +2,7 @@
 #define RESTAPPCONTROLLER_H
 
 #include "IAppController.h"
+#include <QTimer>
 
 namespace SafriRESTClient
 {
@@ -38,6 +39,13 @@ namespace SafriRESTClient
             RESTPlaylist*           playlist;
             RESTPlaylistModel*      playlistModel;
             RESTPlaybackController* playbackController;
+            QTimer* versionCheckTimer;
+
+
+        private slots:
+            void                    resetPlaylistModel();
+            void                    versionTimeoutSlot();
+            void                    comparePlaylistVersion();
     };
 }
 

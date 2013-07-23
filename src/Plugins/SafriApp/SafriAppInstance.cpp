@@ -35,6 +35,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     qDebug()<<model->rowCount();
     context = view->rootContext();
     context->setContextProperty("musicModel", proxy);
+    connect(appController, SIGNAL(newPlaylistModel()), this, SLOT(newPlaylistModel()));
 
     playPauseButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("playStop"));
     nextButton = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
@@ -239,4 +240,10 @@ void SafriAppInstance::playPlaylistIndex(QVariant index)
     qDebug()<<"APP INSTANCE PLAY "<<index.toInt();
     appController->playPlaylistIndex(index.toInt());
 
+}
+
+void SafriAppInstance::newPlaylistModel()
+{
+    qDebug()<<"NEW PLAYLIST!!!!";
+        proxy->setSourceModel(appController->getPlaylistModel());
 }

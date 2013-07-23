@@ -23,7 +23,8 @@ namespace SafriRESTClient
             // **** END QAbstractTableModel Interface ****
 
         private slots:
-
+            void beginModelReset();
+            void endModelReset();
             void mediaMoved(int fromPosition, int toPosition);
 
         private:

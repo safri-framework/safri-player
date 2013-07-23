@@ -255,7 +255,7 @@ void RESTPlaybackController::setupStateTransitions()
 void RESTPlaybackController::playRequestCallback()
 {
     //qDebug() << "playRequestCallback";
-    statusTimer->start(SATUS_TIMER_INTERVAL);
+    statusTimer->start(STATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
@@ -315,7 +315,7 @@ void RESTPlaybackController::stopRequestCallback()
 void RESTPlaybackController::nextRequestCallback()
 {
     //qDebug() << "nextRequestCallback";
-    statusTimer->start(SATUS_TIMER_INTERVAL);
+    statusTimer->start(STATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
@@ -339,7 +339,7 @@ void RESTPlaybackController::nextRequestCallback()
 void RESTPlaybackController::previousRequestCallback()
 {
     //qDebug() << "previousRequestCallback";
-    statusTimer->start(SATUS_TIMER_INTERVAL);
+    statusTimer->start(STATUS_TIMER_INTERVAL);
 
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;

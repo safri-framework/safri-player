@@ -20,6 +20,10 @@ class IAppController : public QObject
         virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex) = 0;
         virtual void                        playPlaylistIndex(int index) = 0;
         virtual void                        removeIndexFromPlaylist(int index) = 0;
+
+
+    signals:
+        void newPlaylistModel();
 };
 
 #endif // IAPPCONTROLLER_H

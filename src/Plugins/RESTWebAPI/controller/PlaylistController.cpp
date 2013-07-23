@@ -78,6 +78,14 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
        doc.setArray(PlaylistHelper::getInstance()->getCurrentPlaylist());
        response.write(doc.toJson(), true);
     }
+    else if(request.getParameter("action") == "getVersionID")
+    {
+       QJsonDocument doc;
+       QJsonObject obj;
+       obj.insert("currentVersionID", PlaylistHelper::getInstance()->getCurrentVersionID());
+       doc.setObject(obj);
+       response.write(doc.toJson(), true);
+    }
     else if(request.getParameter("action") == "getPlayingPlaylist")
     {
        QJsonDocument doc;

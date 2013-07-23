@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QTimer>
 
 // forward declaration
 namespace Core
@@ -29,7 +30,8 @@ namespace SafriRESTClient
             bool isValid();
             Core::MediaInfoContainer* getMediaInfoAt(int position);
 
-        public slots:
+
+    public slots:
 
             /**
              * @brief slot that handles the network REST reply for the current playlist
@@ -47,6 +49,9 @@ namespace SafriRESTClient
              * @brief this signal is emitted, when a media was moved on the playlist
              */
             void mediaMoved(int fromPosition, int toPosition);
+            void resetModel();
+            void beginResetModel();
+            void endResetModel();
 
         private:
 
@@ -54,8 +59,16 @@ namespace SafriRESTClient
             QList<Core::MediaInfoContainer*> songList;
             int currentMediaPosition;
             bool m_valid;
-
+            double displayedPlaylistVersion;
             void requestCurrentPlaylist();
+            static const int VERSION_TIMER_INTERVAL = 500;
+            QTimer* versionCheckTimer;
+
+        private slots:
+            void versionTimeoutSlot();
+            void comparePlaylistVersion();
+
+
     };
 }
 #endif // RESTPLAYLIST_H

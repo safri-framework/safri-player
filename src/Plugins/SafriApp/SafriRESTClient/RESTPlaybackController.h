@@ -72,7 +72,7 @@ namespace SafriRESTClient
 
         private:
 
-            static const int SATUS_TIMER_INTERVAL = 500;
+            static const int STATUS_TIMER_INTERVAL = 500;
 
             QAction *m_playPauseAction;
             QAction *m_shuffleAction;

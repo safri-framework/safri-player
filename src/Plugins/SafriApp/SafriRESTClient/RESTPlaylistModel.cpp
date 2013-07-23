@@ -11,6 +11,8 @@ RESTPlaylistModel::RESTPlaylistModel(RESTPlaylist *playlist, QObject *parent) :
     QAbstractTableModel(parent), playlist(playlist)
 {
     connect(playlist, SIGNAL(mediaMoved(int,int)), this, SLOT(mediaMoved(int,int)));
+    connect(playlist, SIGNAL(beginResetModel()), this, SLOT(beginModelReset()));
+    connect(playlist, SIGNAL(endResetModel()),this, SLOT(endModelReset()));
 }
 
 // **** BEGIN QAbstractTableModel Interface Implementation ****
@@ -64,6 +66,16 @@ Qt::ItemFlags RESTPlaylistModel::flags(const QModelIndex &index) const
             return Qt::ItemIsDropEnabled;
         }
     }
+}
+
+void RESTPlaylistModel::beginModelReset()
+{
+    beginResetModel();
+}
+
+void RESTPlaylistModel::endModelReset()
+{
+    endResetModel();
 }
 
 QVariant RESTPlaylistModel::data(const QModelIndex &index, int role) const

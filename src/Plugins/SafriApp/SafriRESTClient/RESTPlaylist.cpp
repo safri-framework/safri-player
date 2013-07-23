@@ -17,9 +17,12 @@
 using namespace SafriRESTClient;
 
 RESTPlaylist::RESTPlaylist(RESTClient *restClient, QObject *parent) :
-    QObject(parent), client(restClient), songList(), currentMediaPosition(-1), m_valid(false)
+    QObject(parent), client(restClient), songList(), currentMediaPosition(-1), m_valid(false), versionCheckTimer(new QTimer(this)), displayedPlaylistVersion(-1)
 {
-    requestCurrentPlaylist();
+   // requestCurrentPlaylist();
+    connect(versionCheckTimer, SIGNAL(timeout()), this, SLOT(versionTimeoutSlot()));
+    versionCheckTimer->setInterval(VERSION_TIMER_INTERVAL);
+    versionCheckTimer->start();
 }
 
 bool RESTPlaylist::isCurrentMedia(int index)
@@ -32,7 +35,9 @@ void RESTPlaylist::moveMedia(int fromPosition, int toPosition)
     moveRequest.replace(QRegExp("%%FROMPOS%%"), QString::number(fromPosition));
     moveRequest.replace(QRegExp("%%TOPOS%%"), QString::number(toPosition));
 
+    displayedPlaylistVersion++;
     client->sendRequest(moveRequest);
+
 
     songList.move(fromPosition, toPosition);
 
@@ -64,6 +69,13 @@ Core::MediaInfoContainer *RESTPlaylist::getMediaInfoAt(int position)
 
 void RESTPlaylist::getCurrentPlaylistReply()
 {
+    Q_EMIT beginResetModel();
+    for(int i = 0; i < songList.size();i++)
+    {
+        delete songList.at(i);
+    }
+    songList.clear();
+
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     if ( !reply )
     {
@@ -104,6 +116,7 @@ void RESTPlaylist::getCurrentPlaylistReply()
 
         m_valid = true;
         Q_EMIT valid(true);
+        Q_EMIT endResetModel();
     }
 }
 
@@ -115,4 +128,38 @@ void RESTPlaylist::requestCurrentPlaylist()
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
+}
+
+void RESTPlaylist::versionTimeoutSlot()
+{
+    //timer triggered request to check if our Playlist is up to date...
+    QNetworkReply *reply =client->sendRequest(RESTAction::PLAYLIST_GET_VERSION, this, SLOT(comparePlaylistVersion()));
+}
+
+void RESTPlaylist::comparePlaylistVersion()
+{
+    QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
+    if ( !reply )
+    {
+        qDebug() << "network reply null";
+    }
+    else
+    {
+        if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
+        {
+            QJsonDocument jsonDoc = QJsonDocument::fromJson( reply->readAll() );
+            double  version = jsonDoc.object().value("currentVersionID").toDouble(-2);
+            if(version > displayedPlaylistVersion)
+            {
+
+                qDebug()<<"TRIGGER UPDATE   current"<<displayedPlaylistVersion<<"   server:"<<version;
+                displayedPlaylistVersion = version;
+                requestCurrentPlaylist();
+            }
+            else
+            {
+
+            }
+        }
+    }
 }
