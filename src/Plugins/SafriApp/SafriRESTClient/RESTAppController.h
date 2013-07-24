@@ -4,6 +4,11 @@
 #include "IAppController.h"
 #include <QTimer>
 
+namespace Core
+{
+    class IPlaybackController;
+}
+
 namespace SafriRESTClient
 {
     class RESTSongtreeModel;
@@ -19,6 +24,7 @@ namespace SafriRESTClient
         public:
 
             explicit RESTAppController(QObject *parent = 0);
+            virtual ~RESTAppController();
 
             virtual QAbstractItemModel*         getSongtreeModel();
             virtual QAbstractItemModel*         getPlaylistModel();
@@ -35,14 +41,19 @@ namespace SafriRESTClient
             QString                             getRESTLocation();
             void                                insertSongtreeNodeInPlaylist(int itemID, int position = -1);
 
-            RESTClient*             restClient;
-            RESTSongtree*           songtree;
-            RESTSongtreeModel*      songtreeModel;
-            RESTPlaylist*           playlist;
-            RESTPlaylistModel*      playlistModel;
-            RESTPlaybackController* playbackController;
-            QTimer* versionCheckTimer;
+            RESTClient*                 restClient;
+            RESTSongtree*               songtree;
+            RESTSongtreeModel*          songtreeModel;
+            RESTPlaylist*               playlist;
+            RESTPlaylistModel*          playlistModel;
+            RESTPlaybackController*     restPlaybackController;
+            QTimer*                     versionCheckTimer;
 
+            /**
+             * @brief holds the pointer to the original (local) playback controller, so that we
+             *        are able to switch back to this, if we disconnect from the REST server
+             */
+            Core::IPlaybackController*  localPlaybackController;
 
         private slots:
             void                    resetPlaylistModel();

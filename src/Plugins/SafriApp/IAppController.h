@@ -13,6 +13,8 @@ class IAppController : public QObject
 
         explicit IAppController(QObject *parent = 0);
     
+        virtual ~IAppController();
+
         virtual QAbstractItemModel*         getSongtreeModel() = 0;
         virtual QAbstractItemModel*         getPlaylistModel() = 0;
         virtual void                        moveMediaInPlaylist(int from, int to) = 0;

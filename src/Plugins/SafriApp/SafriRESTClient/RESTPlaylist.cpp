@@ -25,6 +25,12 @@ RESTPlaylist::RESTPlaylist(RESTClient *restClient, QObject *parent) :
     versionCheckTimer->start();
 }
 
+RESTPlaylist::~RESTPlaylist()
+{
+    qDebug() << "~RESTPlaylist: stopping versionCheckTimer";
+    versionCheckTimer->stop();
+}
+
 bool RESTPlaylist::isCurrentMedia(int index)
 {
 }

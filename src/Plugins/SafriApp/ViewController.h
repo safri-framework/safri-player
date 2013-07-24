@@ -29,6 +29,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
     public slots:
         void playPauseSlot();
         bool eventFilter(QObject *obj, QEvent *event);
+        void changeAppController(IAppController* newController);
 
     signals:
 
@@ -52,6 +53,8 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void shuffleClicked();
         void connectTo(QVariant host, QVariant port);
         void disconnect();
+
+        void setupSongtreeModel();
 
     private:
         IAppController* appController;

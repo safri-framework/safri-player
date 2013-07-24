@@ -15,7 +15,7 @@ namespace Core
         Q_OBJECT
         public:
 
-            ~IPlaylist();
+            virtual ~IPlaylist();
 
             /**
                 \brief enables or disables shuffle mode

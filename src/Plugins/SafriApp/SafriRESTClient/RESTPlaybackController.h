@@ -23,6 +23,8 @@ namespace SafriRESTClient
 
             explicit RESTPlaybackController(RESTClient* restClient, QObject *parent = 0);
 
+            virtual ~RESTPlaybackController();
+
             virtual void setPlaylist(QSharedPointer<Core::IPlaylist>);
             virtual QSharedPointer<Core::IPlaylist> getPlaylist();
 

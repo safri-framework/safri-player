@@ -25,6 +25,8 @@ namespace Core
         Q_OBJECT
         public:
 
+            virtual ~IPlaybackController();
+
             /**
                 \brief  sets the given playlist as current
                 \param  the playlist

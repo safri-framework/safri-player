@@ -65,7 +65,8 @@ SOURCES += coreplugin.cpp \
     CoreSupply/AssetController.cpp \
     CoreData/albumartist.cpp \
     Interfaces/ITreeItem.cpp \
-    CoreSupply/BasicTreeItem.cpp
+    CoreSupply/BasicTreeItem.cpp \
+    IPlaybackController.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \

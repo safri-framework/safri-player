@@ -5,6 +5,8 @@
 
 // forward declarations
 class IAppController;
+class ViewController;
+
 
 /**
  * @brief   This class is the actual instance of the SafriApp.
@@ -34,7 +36,11 @@ class SafriAppInstance : public QObject
 
     private:
 
-        IAppController* appController;
+        IAppController*             appController;
+        ViewController*             viewController;
+        bool                        isRESTClient;
+
+
 };
 
 #endif // SAFRIAPPINSTANCE_H

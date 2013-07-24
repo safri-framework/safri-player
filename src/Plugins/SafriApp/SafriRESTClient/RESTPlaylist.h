@@ -22,6 +22,8 @@ namespace SafriRESTClient
 
             explicit RESTPlaylist(RESTClient *restClient, QObject *parent = 0);
 
+            ~RESTPlaylist();
+
             bool isCurrentMedia(int index);
             void moveMedia(int fromPosition, int toPosition);
             void playPlaylistIndex(int index);

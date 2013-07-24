@@ -35,6 +35,11 @@ RESTPlaybackController::RESTPlaybackController(RESTClient *restClient, QObject *
     statusTimer->singleShot(STATUS_TIMER_INITIAL_SHOT, this, SLOT(requestStatus()));
 }
 
+RESTPlaybackController::~RESTPlaybackController()
+{
+    qDebug() << "~RESTPlaybackController: stopping statusTimer";
+    statusTimer->stop();
+}
 
 // ****************** BEGIN INTERFACE IMPLEMENTATION ******************
 

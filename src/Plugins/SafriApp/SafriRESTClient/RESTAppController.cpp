@@ -22,11 +22,27 @@ using namespace SafriRESTClient;
 RESTAppController::RESTAppController(QObject *parent) :
     IAppController(parent), playlist(0), playlistModel(0)
 {
+    // first we store a pointer to the original playback controller
+    localPlaybackController = Core::ICore::playbackController();
+
     restClient = new RESTClient( getRESTLocation() );
 
-    playbackController = new RESTPlaybackController(restClient);
-    PluginSystem::PluginManager::instance()->addObject( playbackController );
+    restPlaybackController = new RESTPlaybackController(restClient);
+    PluginSystem::PluginManager::instance()->addObject( restPlaybackController  );
 
+}
+
+RESTAppController::~RESTAppController()
+{
+    qDebug() << "DESTRUCT RESTAppController";
+
+    // we remove the REST playback controller from the object pool and replace it
+    // by the original (local) playback controller
+    PluginSystem::PluginManager::instance()->removeObject( restPlaybackController );
+
+    delete restPlaybackController;
+
+    PluginSystem::PluginManager::instance()->addObject( localPlaybackController  );
 }
 
 QAbstractItemModel *RESTAppController::getSongtreeModel()
@@ -59,17 +75,17 @@ void RESTAppController::moveMediaInPlaylist(int from, int to)
 
 void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
 {
-    playbackController->stopAction()->trigger();
+    restPlaybackController->stopAction()->trigger();
 
     Core::ITreeItem* treeItem = static_cast<Core::ITreeItem*>(treeIndex.internalPointer());
     int itemId = treeItem->property("itemID").toInt();
 
     insertSongtreeNodeInPlaylist(itemId, -1);
 
-    if (playbackController->playAction()->isEnabled())
+    if (restPlaybackController->playAction()->isEnabled())
     {
         qDebug() << "playAction enabled";
-        playbackController->playAction()->trigger();
+        restPlaybackController->playAction()->trigger();
     }
     qDebug()<<Q_FUNC_INFO<<"    HALLO???";
 
@@ -77,9 +93,7 @@ void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
 
 void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
 {
-    Core::ITreeItem* treeItem = static_cast<Core::ITreeItem*>(treeIndex.internalPointer());
-    int itemId = treeItem->property("itemID").toInt();
-    insertSongtreeNodeInPlaylist(itemId, playlist->getSize());
+    // Q_UNUSED treeIndex;
 }
 
 void RESTAppController::playPlaylistIndex(int index)

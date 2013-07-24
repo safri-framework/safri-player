@@ -5,3 +5,6 @@ IAppController::IAppController(QObject *parent) :
 {
 }
 
+IAppController::~IAppController()
+{
+}
