@@ -23,6 +23,7 @@
 LocalAppController::LocalAppController(QObject *parent) :
     IAppController(parent), songTree(0), playlist(0), playlistModel(0)
 {
+    connect(Core::ICore::playbackController(), SIGNAL(playlistChanged()),this, SLOT(pbControllerHasNewPlaylist()));
 }
 
 QAbstractItemModel *LocalAppController::getSongtreeModel()
@@ -89,7 +90,7 @@ void LocalAppController::playTreeModelIndex(QModelIndex treeIndex)
     playbackController->setPlaylist(playlist);
     playbackController->playAction()->trigger();
 
-    playlistModel = new PlaylistModel(playlist, this);
+
 }
 
 void LocalAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
@@ -138,4 +139,16 @@ QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
     treeHierarchy->append(new SongItemType());
 
     return treeHierarchy;
+}
+
+void LocalAppController::pbControllerHasNewPlaylist()
+{
+    if (playlistModel)
+    {
+        delete playlistModel;
+
+    }
+
+    playlistModel = new PlaylistModel(Core::ICore::playbackController()->getPlaylist(), this);
+    Q_EMIT newPlaylistModel();
 }

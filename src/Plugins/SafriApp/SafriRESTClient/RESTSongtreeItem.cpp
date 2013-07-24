@@ -101,6 +101,7 @@ void RESTSongtreeItem::RESTReply()
 
                 newTreeItem->setProperty("name", dataItemMap.value("name").toString());
                 newTreeItem->setProperty("itemID", itemMap.value("treeItemId").toInt());
+                newTreeItem->setProperty("nodeType", itemMap.value("type").toString());
 
                 addChild(newTreeItem);
             }

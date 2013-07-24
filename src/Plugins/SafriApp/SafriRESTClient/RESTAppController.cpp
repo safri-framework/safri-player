@@ -25,7 +25,7 @@ RESTAppController::RESTAppController(QObject *parent) :
     restClient = new RESTClient( getRESTLocation() );
 
     playbackController = new RESTPlaybackController(restClient);
-    PluginSystem::PluginManager::instance()->addObject( playbackController  );
+    PluginSystem::PluginManager::instance()->addObject( playbackController );
 
 }
 
@@ -87,6 +87,8 @@ void RESTAppController::playPlaylistIndex(int index)
 
 void RESTAppController::removeIndexFromPlaylist(int index)
 {
+    qDebug()<<"DELETE";
+    playlist->removeIndexFromPlaylist(index);
 }
 
 QString RESTAppController::getRESTLocation()
@@ -122,5 +124,5 @@ void RESTAppController::insertSongtreeNodeInPlaylist(int itemID, int position)
 
 void RESTAppController::resetPlaylistModel()
 {
-    Q_EMIT newPlaylistModel();
+    //TMP Q_EMIT newPlaylistModel();
 }

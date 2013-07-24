@@ -24,10 +24,19 @@ namespace SafriRESTClient
             int rowCount(const QModelIndex &parent) const;
             int columnCount(const QModelIndex &parent) const;
             QVariant data(const QModelIndex &index, int role) const;
+            QHash<int, QByteArray> roleNames() const;
 
             // **** END QAbstractItemModel Interface ****
 
-        private:
+
+    private:
+
+            enum Roles
+            {
+                iconRole = Qt::UserRole + 1,
+                coverRole = Qt::UserRole + 2,
+                typeRole = Qt::UserRole + 3
+            };
 
             Core::ITreeItem* rootItem;
     };

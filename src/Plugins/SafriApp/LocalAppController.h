@@ -36,6 +36,9 @@ class LocalAppController : public IAppController
         Core::SongTree*                             songTree;
         QSharedPointer<Core::IPlaylist>             playlist;
         PlaylistModel*                              playlistModel;
+
+    private slots:
+        void pbControllerHasNewPlaylist();
 };
 
 #endif // LOCALAPPCONTROLLER_H

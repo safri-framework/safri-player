@@ -29,6 +29,7 @@ namespace SafriRESTClient
             int getCurrentMediaPosition();
             void insertNodeAtPosition(int node, int position);
             bool isValid();
+            void removeIndexFromPlaylist(int index);
             Core::MediaInfoContainer* getMediaInfoAt(int position);
 
 
@@ -53,6 +54,8 @@ namespace SafriRESTClient
             void resetModel();
             void beginResetModel();
             void endResetModel();
+            void mediaDeleted(int index);
+
 
         private:
 

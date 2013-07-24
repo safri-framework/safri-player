@@ -76,7 +76,7 @@ void PlaylistHelper::moveSong(int fromPos, int toPos)
     currentPlaylist->moveMedia(fromPos, toPos);
 }
 
-void PlaylistHelper::clearSong(int pos)
+void PlaylistHelper::deleteItem(int pos)
 {
     currentPlaylist->deleteMedia(pos);
 }
@@ -86,7 +86,7 @@ void PlaylistHelper::setAsCurrent()
     Core::ICore::playbackController()->setPlaylist(currentPlaylist);
 }
 
-void PlaylistHelper::playMediaAtIndex(int index)
+void PlaylistHelper::playItem(int index)
 {
     QSharedPointer<Core::IPlaylist> playlist = Core::ICore::playbackController()->getPlaylist();
     Core::ICore::playbackController()->stopAction()->trigger();
@@ -104,6 +104,14 @@ int PlaylistHelper::getCurrentPlayingSongIndex()
     if(!Core::ICore::playbackController()->getPlaylist().isNull())
         return Core::ICore::playbackController()->getPlaylist()->getCurrentMediaPosition();
     return -2;
+}
+
+int PlaylistHelper::getCurrentPlaylistSize()
+{
+    if(!currentPlaylist.isNull())
+        return currentPlaylist->getSize();
+    else
+        return -1;
 }
 
 QSharedPointer<IPlaylist> PlaylistHelper::getPlaylistInstance()
@@ -173,5 +181,5 @@ void PlaylistHelper::playerHasNewPlaylist()
 {
     connect(Core::ICore::playbackController()->getPlaylist().data(), SIGNAL(PlaylistEdited()), this, SLOT(playlistDataChanged()));
     playlistDataChanged();
-    qDebug()<<"NEW PLAYLIST";
+   // qDebug()<<"NEW PLAYLIST";
 }

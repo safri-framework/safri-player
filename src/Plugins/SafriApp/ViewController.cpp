@@ -178,12 +178,13 @@ void ViewController::playModelIndex(QVariant var)
     QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
 
     appController->playTreeModelIndex(treeIndex);
-
+/*TMP
     QAbstractItemModel* playlistModel = appController->getPlaylistModel();
     if (playlistModel)
     {
         context->setContextProperty("playlistModel", playlistModel);
     }
+*/
 }
 
 void ViewController::enqueueModelIndex(QVariant var)
@@ -191,7 +192,6 @@ void ViewController::enqueueModelIndex(QVariant var)
     QModelIndex proxyIndex = var.value<QModelIndex>();
     QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
     appController->enqueueTreeModelIndex(treeIndex);
-
 }
 
 void ViewController::testPlay()
@@ -256,8 +256,12 @@ void ViewController::playPlaylistIndex(QVariant index)
 
 void ViewController::newPlaylistModel()
 {
-    qDebug()<<"NEW PLAYLIST!!!!";
-    proxy->setSourceModel(appController->getPlaylistModel());
+    qDebug()<<"NEW PLAYLIST";
+    QAbstractItemModel* playlistModel = appController->getPlaylistModel();
+    if (playlistModel)
+    {
+        context->setContextProperty("playlistModel", playlistModel);
+    }
 }
 
 void ViewController::connectTo(QVariant host, QVariant port)

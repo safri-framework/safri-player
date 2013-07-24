@@ -49,6 +49,7 @@ void RESTPlaylist::playPlaylistIndex(int index)
     QString playRequest = RESTAction::PLAYLIST_PLAY_INDEX;
     playRequest.replace(QRegExp("%%PLAYPOS%%"), QString::number(index));
     client->sendRequest(playRequest);
+    qDebug()<<"PLAY";
 }
 
 int RESTPlaylist::getSize()
@@ -68,6 +69,17 @@ void RESTPlaylist::insertNodeAtPosition(int node, int position)
 bool RESTPlaylist::isValid()
 {
     return m_valid;
+}
+
+void RESTPlaylist::removeIndexFromPlaylist(int index)
+{
+    QString request = RESTAction::PLAYLIST_DELETE_INDEX;
+    request.replace(QRegExp("%%DELETEPOS%%"), QString::number(index));
+    delete songList.at(index);
+    songList.removeAt(index);
+    Q_EMIT mediaDeleted(index);
+    displayedPlaylistVersion++;
+    client->sendRequest(request) ;
 }
 
 Core::MediaInfoContainer *RESTPlaylist::getMediaInfoAt(int position)

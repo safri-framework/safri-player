@@ -71,7 +71,8 @@ Rectangle{
                     color: "#D4D4D4"
                     font.pixelSize: fontSize
                     x:cover.width + 20*root.globalScaleFactor + cover.x
-                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 40 * root.globalScaleFactor -cover.x -cover.width: parent.width - x - 20 * root.globalScaleFactor-cover.x -cover.width;
+                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 20 * root.globalScaleFactor - x :
+                                                      parent.width - x - 20 * root.globalScaleFactor
                     anchors.verticalCenter: parent.verticalCenter
                     clip:true
                     id: delegateText

@@ -88,20 +88,34 @@ int RESTSongtreeModel::columnCount(const QModelIndex &parent) const
 QVariant RESTSongtreeModel::data(const QModelIndex &index, int role) const
 {
     Core::ITreeItem *item = 0;
+    item = static_cast<Core::ITreeItem*>(index.internalPointer());
 
     switch (role)
     {
         case Qt::DisplayRole:
-
-            item = static_cast<Core::ITreeItem*>(index.internalPointer());
             return item->property("name");
-
             break;
 
+        case typeRole:
+                qDebug()<<item->property("nodeType");
+            return item->property("nodeType");
+            break;
         default:
 
             return QVariant();
     }
+}
+
+QHash<int, QByteArray> RESTSongtreeModel::roleNames() const
+{
+
+    QHash<int, QByteArray> roles;
+    roles[iconRole] = "iconpath";
+    roles[coverRole] = "albumCover";
+    roles[Qt::DisplayRole] ="display";
+    roles[typeRole] ="type";
+
+    return roles;
 }
 
 // **** END QAbstractItemModel Interface Implementation ****

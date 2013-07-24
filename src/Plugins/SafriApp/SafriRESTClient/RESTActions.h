@@ -20,6 +20,7 @@ namespace RESTAction
     const QString PLAYLIST_SET_AS_CURRENT   = "playlist?action=setPlaylist";
     const QString PLAYLIST_GET_VERSION      = "playlist?action=getVersionID";
     const QString PLAYLIST_PLAY_INDEX       = "playlist?action=playIndex&index=%%PLAYPOS%%";
+    const QString PLAYLIST_DELETE_INDEX     = "playlist?action=deleteItem&index=%%DELETEPOS%%";
 }
 
 #endif // RESTACTIONS_H

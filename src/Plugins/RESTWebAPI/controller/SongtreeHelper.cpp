@@ -30,7 +30,7 @@ SongtreeHelper::~SongtreeHelper()
     }
 
     delete treeHierarchy;
-    qDebug()<<"DESTRUKTOR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    //qDebug()<<"DESTRUKTOR!!!";
 }
 
 void SongtreeHelper::buildNewTree()

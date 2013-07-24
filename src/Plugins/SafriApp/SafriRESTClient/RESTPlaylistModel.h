@@ -27,7 +27,7 @@ namespace SafriRESTClient
             void endModelReset();
             void mediaMoved(int fromPosition, int toPosition);
             void positionOfCurrentPlayingSongChanged(int oldIndex, int newIndex);
-
+            void mediaDeleted(int index);
         private:
 
             RESTPlaylist* playlist;

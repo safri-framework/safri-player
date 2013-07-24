@@ -32,9 +32,33 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
 
 
     }
+
+    else if(request.getParameter("action") == "deleteItem")
+    {
+        QJsonDocument doc;
+        bool ok;
+        int index = request.getParameter("index").toInt(&ok);
+        if(ok && index < PlaylistHelper::getInstance()->getCurrentPlaylistSize())
+        {
+            PlaylistHelper::getInstance()->deleteItem(index);
+            doc.setObject(JSONSerializer::generateErrorObject("", "deleteItem", true));
+        }
+        else
+        {
+            //wrong parameter
+            doc.setObject(JSONSerializer::generateErrorObject("wrong parameters", "deleteItem", false));
+        }
+        response.write(doc.toJson(), true);
+        qDebug()<<"DELETE";
+
+    }
     else if(request.getParameter("action") == "playIndex")
     {
-        PlaylistHelper::getInstance()->playMediaAtIndex(request.getParameter("index").toInt());
+        qDebug()<<"PLAY";
+        QJsonDocument doc;
+        PlaylistHelper::getInstance()->playItem(request.getParameter("index").toInt());
+        doc.setObject(JSONSerializer::generateErrorObject("", "move", true));
+        response.write(doc.toJson(), true);
     }
     else if(request.getParameter("action") == "move")
     {
@@ -66,12 +90,15 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
             //missing parameter
             doc.setObject(JSONSerializer::generateErrorObject("missing parameters", "move", false));
         }
-        response.write(doc.toJson());
+        response.write(doc.toJson(), true);
     }
 
     else if(request.getParameter("action") == "setPlaylist")
     {
+        QJsonDocument doc;
         PlaylistHelper::getInstance()->setAsCurrent();
+        doc.setObject(JSONSerializer::generateErrorObject("", "setPlaylist", true));
+        response.write(doc.toJson(),true);
     }
 
     else if(request.getParameter("action") == "getPlaylist")

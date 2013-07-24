@@ -14,6 +14,7 @@ RESTPlaylistModel::RESTPlaylistModel(RESTPlaylist *playlist, QObject *parent) :
     connect(playlist, SIGNAL(beginResetModel()), this, SLOT(beginModelReset()));
     connect(playlist, SIGNAL(endResetModel()),this, SLOT(endModelReset()));
     connect(playlist, SIGNAL(currentMediaPositionChanged(int,int)), this, SLOT(positionOfCurrentPlayingSongChanged(int,int)));
+    connect(playlist, SIGNAL(mediaDeleted(int)), this, SLOT(mediaDeleted(int)));
 }
 
 // **** BEGIN QAbstractTableModel Interface Implementation ****
@@ -132,6 +133,22 @@ QHash<int, QByteArray> RESTPlaylistModel::roleNames() const
     return roles;
 }
 
+
+
+// **** END QAbstractTableModel Interface Implementation ****
+
+void RESTPlaylistModel::positionOfCurrentPlayingSongChanged(int oldIndex, int newIndex)
+{
+    Q_EMIT dataChanged(index(oldIndex,0),index(oldIndex,0));
+    Q_EMIT dataChanged(index(newIndex,0),index(newIndex,0));
+}
+
+void RESTPlaylistModel::mediaDeleted(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    endRemoveRows();
+}
+
 void RESTPlaylistModel::mediaMoved(int fromPosition, int toPosition)
 {
     /*
@@ -165,10 +182,3 @@ void RESTPlaylistModel::mediaMoved(int fromPosition, int toPosition)
     endMoveRows();
 
 }
-
-void RESTPlaylistModel::positionOfCurrentPlayingSongChanged(int oldIndex, int newIndex)
-{
-    Q_EMIT dataChanged(index(oldIndex,0),index(oldIndex,0));
-    Q_EMIT dataChanged(index(newIndex,0),index(newIndex,0));
-}
-// **** END QAbstractTableModel Interface Implementation ****
