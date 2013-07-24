@@ -102,6 +102,7 @@ Rectangle {
 
 
     id: settings
+
     border.width: 1
     border.color: "black"
     radius: 10 * root.globalScaleFactor
@@ -137,7 +138,7 @@ Rectangle {
                     {
                         width: (settingsContent.width-parent.spacing) * 4 / 5;
                         horizontalAlignment: Text.AlignRight
-                        id:portLabel
+                        id: hostTextField
                         style: textfieldStyle
                         height: textFieldHeight
 
@@ -161,6 +162,7 @@ Rectangle {
                     {
                         width: (settingsContent.width-parent.spacing) * 4 / 5  ;
                         horizontalAlignment: Text.AlignRight
+                        id: portTextField
                         style: textfieldStyle
                         height: textFieldHeight
                     }
@@ -171,6 +173,8 @@ Rectangle {
 
                     PlayerButton
                     {
+                        objectName: "settingsDialog"
+                        signal settingsChanged(var ip, var port)
                         height: textFieldHeight
                         width: height
                         iconScale: 0.5
@@ -178,6 +182,7 @@ Rectangle {
                         opacity: 0.7
                         icon1: "resources/check-inv.png"
                         toggle: false
+                        onButtonClicked: settingsChanged(hostTextField.text, portTextField.text)
                         x: parent.width - width - (10 * root.globalScaleFactor)
                     }
 

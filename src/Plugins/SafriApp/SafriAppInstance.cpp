@@ -14,6 +14,7 @@
 #include "Interfaces/IPlaylistFactory.h"
 #include "pluginmanager.h"
 #include "iplaybackcontroller.h"
+#include "Settings/SettingsManager.h"
 #include <QModelIndex>
 #include <QSharedPointer>
 #include "CoreSupply/AssetController.h"
@@ -46,6 +47,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     musicProgress = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
     currentSongDisplay = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("currentSongDisplay"));
     playlistView = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playList"));
+    settingsDialog = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("settingsDialog"));
 
     Core::IPlaybackController* controller  = Core::ICore::playbackController();
 
@@ -60,6 +62,7 @@ SafriAppInstance::SafriAppInstance(IAppController *appController): appController
     connect(playlistView, SIGNAL(playIndex(QVariant)), this, SLOT(playPlaylistIndex(QVariant)));
     connect(controller, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
     connect(controller, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
+    connect(settingsDialog, SIGNAL(settingsChanged(QVariant, QVariant)), this, SLOT(settingsChanged(QVariant,QVariant)));
 
     playPauseButton->setProperty("enabled", false);
     nextButton->setProperty("enabled", false);
@@ -247,5 +250,17 @@ void SafriAppInstance::playPlaylistIndex(QVariant index)
 void SafriAppInstance::newPlaylistModel()
 {
     qDebug()<<"NEW PLAYLIST!!!!";
-        proxy->setSourceModel(appController->getPlaylistModel());
+    proxy->setSourceModel(appController->getPlaylistModel());
+}
+
+void SafriAppInstance::settingsChanged(QVariant host, QVariant port)
+{
+    qDebug() << "SETTINGS CHANGED: " << host.toString() << " / " << port.toString() ;
+
+    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+
+    restSettings->setSetting("host", host);
+    restSettings->setSetting("port", port);
+
+    Core::ICore::settingsManager()->saveSettings();
 }

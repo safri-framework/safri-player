@@ -24,6 +24,7 @@ public:
     void moveSong(int fromPos, int toPos);
     void clearSong(int pos);
     void setAsCurrent();
+    void playMediaAtIndex(int index);
     int getCurrentVersionID();
     int getCurrentPlayingSongIndex();
     QSharedPointer<Core::IPlaylist> getPlaylistInstance();

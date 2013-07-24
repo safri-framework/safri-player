@@ -45,6 +45,8 @@ private slots:
     void playPlaylistIndex(QVariant index);
     void newPlaylistModel();
 
+    void settingsChanged(QVariant host, QVariant port);
+
 private:
     IAppController* appController;
     QQuickItem* playPauseButton;
@@ -55,6 +57,7 @@ private:
     QObject* musicProgress;
     QObject* currentSongDisplay;
     QObject* playlistView;
+    QObject* settingsDialog;
     QAbstractItemModel* model;
     QQuickItem* songTree;
     QSortFilterProxyModel* proxy;

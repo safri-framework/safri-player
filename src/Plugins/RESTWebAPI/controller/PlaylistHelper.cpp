@@ -83,7 +83,15 @@ void PlaylistHelper::clearSong(int pos)
 
 void PlaylistHelper::setAsCurrent()
 {
-     Core::ICore::playbackController()->setPlaylist(currentPlaylist);
+    Core::ICore::playbackController()->setPlaylist(currentPlaylist);
+}
+
+void PlaylistHelper::playMediaAtIndex(int index)
+{
+    QSharedPointer<Core::IPlaylist> playlist = Core::ICore::playbackController()->getPlaylist();
+    Core::ICore::playbackController()->stopAction()->trigger();
+    playlist->setCurrentMedia(index);
+    Core::ICore::playbackController()->playAction()->trigger();
 }
 
 int PlaylistHelper::getCurrentVersionID()

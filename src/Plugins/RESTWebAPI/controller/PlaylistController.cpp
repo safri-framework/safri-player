@@ -32,7 +32,10 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
 
 
     }
-
+    else if(request.getParameter("action") == "playIndex")
+    {
+        PlaylistHelper::getInstance()->playMediaAtIndex(request.getParameter("index").toInt());
+    }
     else if(request.getParameter("action") == "move")
     {
         bool ok1;
