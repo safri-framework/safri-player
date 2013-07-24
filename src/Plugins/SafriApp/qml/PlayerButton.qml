@@ -63,6 +63,7 @@ Rectangle
             if(button.checkable)
             {
                 button.enabled = !button.enabled
+                button.buttonClicked()
             }
             else
             {

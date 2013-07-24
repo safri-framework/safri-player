@@ -62,7 +62,9 @@ Rectangle {
                 height: parent.height
                 checkable: true
                 iconScale: 0.5
+                //enabled: true
                 icon1: "resources/media-shuffle-inv.png"
+                objectName: "shuffleButton";
             }
         }
         Rectangle

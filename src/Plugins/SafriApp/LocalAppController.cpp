@@ -72,9 +72,11 @@ void LocalAppController::moveMediaInPlaylist(int from, int to)
 
 void LocalAppController::playTreeModelIndex(QModelIndex treeIndex)
 {
+
     if (playlistModel)
     {
         delete playlistModel;
+        playlistModel = 0;
     }
 
     Core::SongTreeItem* item = static_cast<Core::SongTreeItem*>(treeIndex.internalPointer());
@@ -128,6 +130,11 @@ void LocalAppController::removeIndexFromPlaylist(int index)
         playlist->deleteMedia(index);
 }
 
+void LocalAppController::setShuffle(bool enabled)
+{
+    playlist->setShuffle(enabled);
+}
+
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
 {
     QList<Core::ITreeItemType *> *treeHierarchy;
@@ -146,9 +153,9 @@ void LocalAppController::pbControllerHasNewPlaylist()
     if (playlistModel)
     {
         delete playlistModel;
-
     }
 
-    playlistModel = new PlaylistModel(Core::ICore::playbackController()->getPlaylist(), this);
+    playlist = Core::ICore::playbackController()->getPlaylist();
+    playlistModel = new PlaylistModel(playlist, this);
     Q_EMIT newPlaylistModel();
 }

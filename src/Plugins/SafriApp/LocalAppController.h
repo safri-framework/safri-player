@@ -28,6 +28,7 @@ class LocalAppController : public IAppController
         virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex);
         virtual void                        playPlaylistIndex(int index);
         virtual void                        removeIndexFromPlaylist(int index);
+        virtual void                        setShuffle(bool enabled);
 
     private:
 

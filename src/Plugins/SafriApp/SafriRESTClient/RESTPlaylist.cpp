@@ -82,6 +82,17 @@ void RESTPlaylist::removeIndexFromPlaylist(int index)
     client->sendRequest(request) ;
 }
 
+void RESTPlaylist::setShuffle(bool enabled)
+{
+    QString request = RESTAction::PLAYLIST_SET_SHUFFLE;
+    if(enabled)
+        request.replace(QRegExp("%%VALUE%%"), "true");
+    else
+        request.replace(QRegExp("%%VALUE%%"), "false");
+    client->sendRequest(request);
+
+}
+
 Core::MediaInfoContainer *RESTPlaylist::getMediaInfoAt(int position)
 {
     return songList.at(position);

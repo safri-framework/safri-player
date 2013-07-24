@@ -4,3 +4,4 @@ IAppController::IAppController(QObject *parent) :
     QObject(parent)
 {
 }
+

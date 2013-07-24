@@ -52,6 +52,22 @@ void PlaylistController::service(HttpRequest &request, HttpResponse &response)
         qDebug()<<"DELETE";
 
     }
+    else if(request.getParameter("action") == "setShuffle")
+    {
+        QJsonDocument doc;
+        QVariant enabled = request.getParameter("enabled");
+        qDebug()<<"SHUFFLE "<<enabled.toBool();
+        if(enabled.isValid())
+        {
+            doc.setObject(JSONSerializer::generateErrorObject("", "setShuffle", true));
+            PlaylistHelper::getInstance()->setShuffle(enabled.toBool());
+        }
+        else
+        {
+            doc.setObject(JSONSerializer::generateErrorObject("missing parameters", "setShuffle", false));
+        }
+        response.write(doc.toJson(), true);
+    }
     else if(request.getParameter("action") == "playIndex")
     {
         qDebug()<<"PLAY";

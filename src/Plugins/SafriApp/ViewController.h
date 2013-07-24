@@ -49,7 +49,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void backClicked();
         void playPlaylistIndex(QVariant index);
         void newPlaylistModel();
-
+        void shuffleClicked();
         void connectTo(QVariant host, QVariant port);
         void disconnect();
 
@@ -65,6 +65,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* playlistView;
         QObject* settingsDialog;
         QObject* menuItemDisconnect;
+        QObject* shuffleButton;
         QAbstractItemModel* model;
         QQuickItem* songTree;
         QSortFilterProxyModel* proxy;

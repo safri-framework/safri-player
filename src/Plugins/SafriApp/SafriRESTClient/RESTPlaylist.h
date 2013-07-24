@@ -30,6 +30,7 @@ namespace SafriRESTClient
             void insertNodeAtPosition(int node, int position);
             bool isValid();
             void removeIndexFromPlaylist(int index);
+            void setShuffle(bool enabled);
             Core::MediaInfoContainer* getMediaInfoAt(int position);
 
 

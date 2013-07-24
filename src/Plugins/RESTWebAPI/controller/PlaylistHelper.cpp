@@ -94,6 +94,11 @@ void PlaylistHelper::playItem(int index)
     Core::ICore::playbackController()->playAction()->trigger();
 }
 
+void PlaylistHelper::setShuffle(bool value)
+{
+    currentPlaylist->setShuffle(value);
+}
+
 int PlaylistHelper::getCurrentVersionID()
 {
     return versionID;

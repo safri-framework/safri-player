@@ -49,7 +49,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     playlistView = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playList"));
     settingsDialog = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("settingsDialog"));
     menuItemDisconnect = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("menuItemDisconnect"));
-
+    shuffleButton = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("shuffleButton"));
     if (menuItemDisconnect == 0)
     {
         qDebug() << "menuItemDisconnect == 0";
@@ -61,6 +61,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     connect(playPauseButton, SIGNAL(buttonClicked()), controller->playPauseAction(), SLOT(trigger()));
     connect(nextButton, SIGNAL(buttonClicked()), controller->nextAction(), SLOT(trigger()));
     connect(prevButton, SIGNAL(buttonClicked()), controller->previousAction(), SLOT(trigger()));
+    connect(shuffleButton, SIGNAL(buttonClicked()), this, SLOT(shuffleClicked()));
     connect(silentButton, SIGNAL(buttonClicked()), this, SLOT(testPlay()));
     connect(dialerView, SIGNAL(volumeChanged(QVariant)), this, SLOT(volumeSlot(QVariant)));
     connect(playlistView, SIGNAL(movePos(QVariant, QVariant)), this, SLOT(changePos(QVariant,QVariant)));
@@ -262,6 +263,13 @@ void ViewController::newPlaylistModel()
     {
         context->setContextProperty("playlistModel", playlistModel);
     }
+}
+
+void ViewController::shuffleClicked()
+{
+    qDebug()<<"TEST SHUFFLE CLICKED!!";
+    qDebug()<<shuffleButton->property("enabled").toBool();
+    appController->setShuffle(shuffleButton->property("enabled").toBool());
 }
 
 void ViewController::connectTo(QVariant host, QVariant port)

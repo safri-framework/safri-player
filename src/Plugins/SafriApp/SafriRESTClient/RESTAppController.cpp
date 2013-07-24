@@ -77,7 +77,9 @@ void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
 
 void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
 {
-    // Q_UNUSED treeIndex;
+    Core::ITreeItem* treeItem = static_cast<Core::ITreeItem*>(treeIndex.internalPointer());
+    int itemId = treeItem->property("itemID").toInt();
+    insertSongtreeNodeInPlaylist(itemId, playlist->getSize());
 }
 
 void RESTAppController::playPlaylistIndex(int index)
@@ -89,6 +91,11 @@ void RESTAppController::removeIndexFromPlaylist(int index)
 {
     qDebug()<<"DELETE";
     playlist->removeIndexFromPlaylist(index);
+}
+
+void RESTAppController::setShuffle(bool enabled)
+{
+    playlist->setShuffle(enabled);
 }
 
 QString RESTAppController::getRESTLocation()

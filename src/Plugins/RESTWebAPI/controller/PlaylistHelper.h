@@ -23,7 +23,7 @@ public:
     bool insertItem(Core::Item* item, int pos);
     void deleteItem(int pos);
     void playItem(int index);
-
+    void setShuffle(bool value);
     void moveSong(int fromPos, int toPos);
 
     void setAsCurrent();
