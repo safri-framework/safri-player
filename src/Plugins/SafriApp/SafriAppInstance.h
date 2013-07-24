@@ -1,70 +1,40 @@
-#ifndef SAFRIMOBILEGUIINSTANCE_H
-#define SAFRIMOBILEGUIINSTANCE_H
+#ifndef SAFRIAPPINSTANCE_H
+#define SAFRIAPPINSTANCE_H
 
-#include "SafriApp_global.h"
 #include <QObject>
-#include <QtQuick/QQuickItem>
-#include "icore.h"
-#include "iplaybackcontroller.h"
-#include "Interfaces/IAudioCollection.h"
-#include "Songtree/songtree.h"
-#include "Interfaces/itreeitemtype.h"
-#include "Songtree/songtreemodel.h"
-#include <QSortFilterProxyModel>
-#include "playlistmodel.h"
 
-#include "IAppController.h"
+// forward declarations
+class IAppController;
 
-using namespace Core;
-
-class SongTreeModel;
-class QQmlContext;
-
-class SAFRIAPPSHARED_EXPORT SafriAppInstance: public QObject
+/**
+ * @brief   This class is the actual instance of the SafriApp.
+ *
+ *          It is responsible to create the view and the right AppController,
+ *          and manages the switching between the local/REST AppController.
+ */
+class SafriAppInstance : public QObject
 {
     Q_OBJECT
-public:
-    SafriAppInstance(IAppController* appController);
+    public:
 
-public slots:
-    void playPauseSlot();
-    bool eventFilter(QObject *obj, QEvent *event);
+        explicit SafriAppInstance(QObject *parent = 0);
 
-private slots:
-    void stateChanged(Core::playState state);
-    void playModelIndex(QVariant var);
-    void enqueueModelIndex(QVariant var);
+    signals:
 
-    void testPlay();
-    void volumeSlot(QVariant vol);
-    void setMusicProgress(int val);
-    void updateMedia(Core::Media* media);
-    void changePos(QVariant from, QVariant to);
-    void removeFromPlaylist(QVariant index);
-    void backClicked();
-    void playPlaylistIndex(QVariant index);
-    void newPlaylistModel();
+        /**
+         * @brief this signal is emitted, when we switched between local and REST AppController
+         * @param the new appController
+         */
+        void appControllerChanged(IAppController* appController);
 
-    void settingsChanged(QVariant host, QVariant port);
+    private slots:
+    
+        void connectTo(QString host, int port);
+        void disconnect();
 
-private:
-    IAppController* appController;
-    QQuickItem* playPauseButton;
-    QQuickItem* prevButton;
-    QQuickItem* nextButton;
-    QQuickItem* silentButton;
-    QObject* dialerView;
-    QObject* musicProgress;
-    QObject* currentSongDisplay;
-    QObject* playlistView;
-    QObject* settingsDialog;
-    QAbstractItemModel* model;
-    QQuickItem* songTree;
-    QSortFilterProxyModel* proxy;
-    int currentSongLength;
-    QAbstractItemModel* plModel;
-    QQmlContext* context;
-    QSharedPointer<Core::IPlaylist> playList;
+    private:
+
+        IAppController* appController;
 };
 
-#endif // SAFRIMOBILEGUIINSTANCE_H
+#endif // SAFRIAPPINSTANCE_H

@@ -109,6 +109,7 @@ Rectangle {
     color:"#1B1B1B"
 
     opacity: y / (settingsView.height/3)
+    property bool connected: false;
     Rectangle
     {
         color:"transparent"
@@ -174,7 +175,7 @@ Rectangle {
                     PlayerButton
                     {
                         objectName: "settingsDialog"
-                        signal settingsChanged(var ip, var port)
+                        signal connectTo(var ip, var port)
                         height: textFieldHeight
                         width: height
                         iconScale: 0.5
@@ -182,7 +183,7 @@ Rectangle {
                         opacity: 0.7
                         icon1: "resources/check-inv.png"
                         toggle: false
-                        onButtonClicked: settingsChanged(hostTextField.text, portTextField.text)
+                        onButtonClicked: connectTo(hostTextField.text, portTextField.text)
                         x: parent.width - width - (10 * root.globalScaleFactor)
                     }
 

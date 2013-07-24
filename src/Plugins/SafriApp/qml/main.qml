@@ -20,15 +20,18 @@ Rectangle {
             title: "Settings"
 
             MenuItem {
-                text: "Connect to Safri"
-                shortcut: "Ctrl+X"
+                objectName: "menuItemDisconnect"
+                signal disconnect()
+                text: "Safri local"
+                shortcut: "Ctrl+L"
+                onTriggered: disconnect()
             }
 
 
             MenuItem {
-                text: "Settings"
-                shortcut: "Ctrl+M"
-                onTriggered: settingsPage.visible = !settingsPage.visible
+                text: "Safri remote"
+                shortcut: "Ctrl+R"
+                onTriggered:  settingsPage.visible = !settingsPage.visible
             }
         }
     }

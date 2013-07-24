@@ -20,7 +20,7 @@ DEFINES += SAFRIMOBILEGUIQML_LIBRARY
 
 SOURCES += \
     SafriAppPlugin.cpp \
-    SafriAppInstance.cpp \
+    ViewController.cpp \
     playlistmodel.cpp \
     SafriRESTClient/RESTSong.cpp \
     SafriRESTClient/RESTPlaybackController.cpp \
@@ -33,10 +33,11 @@ SOURCES += \
     SafriRESTClient/RESTSongtreeItem.cpp \
     SafriRESTClient/RESTSongtree.cpp \
     SafriRESTClient/RESTPlaylistModel.cpp \
-    SafriRESTClient/RESTPlaylist.cpp
+    SafriRESTClient/RESTPlaylist.cpp \
+    SafriAppInstance.cpp
 
 HEADERS +=\
-    SafriAppInstance.h \
+    ViewController.h \
     SafriAppPlugin.h \
     SafriApp_global.h \
     playlistmodel.h \
@@ -52,7 +53,8 @@ HEADERS +=\
     SafriRESTClient/RESTSongtreeItem.h \
     SafriRESTClient/RESTSongtree.h \
     SafriRESTClient/RESTPlaylistModel.h \
-    SafriRESTClient/RESTPlaylist.h
+    SafriRESTClient/RESTPlaylist.h \
+    SafriAppInstance.h
 
 RESOURCES += \
     QMLResources.qrc
