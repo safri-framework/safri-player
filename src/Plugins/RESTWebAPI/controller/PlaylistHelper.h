@@ -25,6 +25,7 @@ public:
     void clearSong(int pos);
     void setAsCurrent();
     int getCurrentVersionID();
+    int getCurrentPlayingSongIndex();
     QSharedPointer<Core::IPlaylist> getPlaylistInstance();
 
     QJsonArray getCurrentPlaylist();

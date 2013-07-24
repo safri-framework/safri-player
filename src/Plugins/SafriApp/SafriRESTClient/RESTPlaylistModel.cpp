@@ -13,6 +13,7 @@ RESTPlaylistModel::RESTPlaylistModel(RESTPlaylist *playlist, QObject *parent) :
     connect(playlist, SIGNAL(mediaMoved(int,int)), this, SLOT(mediaMoved(int,int)));
     connect(playlist, SIGNAL(beginResetModel()), this, SLOT(beginModelReset()));
     connect(playlist, SIGNAL(endResetModel()),this, SLOT(endModelReset()));
+    connect(playlist, SIGNAL(currentMediaPositionChanged(int,int)), this, SLOT(positionOfCurrentPlayingSongChanged(int,int)));
 }
 
 // **** BEGIN QAbstractTableModel Interface Implementation ****
@@ -108,6 +109,8 @@ QVariant RESTPlaylistModel::data(const QModelIndex &index, int role) const
         case posRole:
 
             return index.row();
+        case isPlayingRole:
+            return index.row() == playlist->getCurrentMediaPosition();
 
         default:
 
@@ -161,5 +164,11 @@ void RESTPlaylistModel::mediaMoved(int fromPosition, int toPosition)
     beginMoveRows(QModelIndex(), fromPosition, fromPosition, QModelIndex(), toPosition + offset);
     endMoveRows();
 
+}
+
+void RESTPlaylistModel::positionOfCurrentPlayingSongChanged(int oldIndex, int newIndex)
+{
+    Q_EMIT dataChanged(index(oldIndex,0),index(oldIndex,0));
+    Q_EMIT dataChanged(index(newIndex,0),index(newIndex,0));
 }
 // **** END QAbstractTableModel Interface Implementation ****

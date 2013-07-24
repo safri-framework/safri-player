@@ -91,6 +91,13 @@ int PlaylistHelper::getCurrentVersionID()
     return versionID;
 }
 
+int PlaylistHelper::getCurrentPlayingSongIndex()
+{
+    if(!Core::ICore::playbackController()->getPlaylist().isNull())
+        return Core::ICore::playbackController()->getPlaylist()->getCurrentMediaPosition();
+    return -2;
+}
+
 QSharedPointer<IPlaylist> PlaylistHelper::getPlaylistInstance()
 {
     return currentPlaylist;

@@ -82,6 +82,7 @@ void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
 
 void RESTAppController::playPlaylistIndex(int index)
 {
+    playlist->playPlaylistIndex(index);
 }
 
 void RESTAppController::removeIndexFromPlaylist(int index)

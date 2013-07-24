@@ -24,6 +24,7 @@ namespace SafriRESTClient
 
             bool isCurrentMedia(int index);
             void moveMedia(int fromPosition, int toPosition);
+            void playPlaylistIndex(int index);
             int getSize();
             int getCurrentMediaPosition();
             void insertNodeAtPosition(int node, int position);
@@ -44,7 +45,7 @@ namespace SafriRESTClient
              * @brief this signal is emitted, when the playlist is fully loaded
              */
             void valid(bool);
-
+            void currentMediaPositionChanged(int oldIndex, int newIndex);
             /**
              * @brief this signal is emitted, when a media was moved on the playlist
              */
@@ -63,6 +64,7 @@ namespace SafriRESTClient
             void requestCurrentPlaylist();
             static const int VERSION_TIMER_INTERVAL = 1000;
             QTimer* versionCheckTimer;
+            void setCurrentMediaPosition(int pos);
 
         private slots:
             void versionTimeoutSlot();

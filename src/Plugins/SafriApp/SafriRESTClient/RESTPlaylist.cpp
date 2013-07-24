@@ -44,6 +44,13 @@ void RESTPlaylist::moveMedia(int fromPosition, int toPosition)
     Q_EMIT mediaMoved(fromPosition, toPosition);
 }
 
+void RESTPlaylist::playPlaylistIndex(int index)
+{
+    QString playRequest = RESTAction::PLAYLIST_PLAY_INDEX;
+    playRequest.replace(QRegExp("%%PLAYPOS%%"), QString::number(index));
+    client->sendRequest(playRequest);
+}
+
 int RESTPlaylist::getSize()
 {
     return songList.size();
@@ -51,6 +58,7 @@ int RESTPlaylist::getSize()
 
 int RESTPlaylist::getCurrentMediaPosition()
 {
+    return currentMediaPosition;
 }
 
 void RESTPlaylist::insertNodeAtPosition(int node, int position)
@@ -130,6 +138,16 @@ void RESTPlaylist::requestCurrentPlaylist()
     loop.exec();
 }
 
+void RESTPlaylist::setCurrentMediaPosition(int pos)
+{
+    if(pos!=currentMediaPosition)
+    {
+        int oldIndex = currentMediaPosition;
+        currentMediaPosition = pos;
+        Q_EMIT currentMediaPositionChanged(oldIndex, currentMediaPosition);
+    }
+}
+
 void RESTPlaylist::versionTimeoutSlot()
 {
     //timer triggered request to check if our Playlist is up to date...
@@ -149,9 +167,9 @@ void RESTPlaylist::comparePlaylistVersion()
         {
             QJsonDocument jsonDoc = QJsonDocument::fromJson( reply->readAll() );
             double  version = jsonDoc.object().value("currentVersionID").toDouble(-2);
+            setCurrentMediaPosition(jsonDoc.object().value("currentPlayingSongIndex").toDouble(-2));
             if(version > displayedPlaylistVersion)
             {
-
                 qDebug()<<"TRIGGER UPDATE   current"<<displayedPlaylistVersion<<"   server:"<<version;
                 displayedPlaylistVersion = version;
                 requestCurrentPlaylist();
