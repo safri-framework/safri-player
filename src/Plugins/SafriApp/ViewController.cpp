@@ -314,3 +314,5 @@ void ViewController::setupSongtreeModel()
     proxy->sort(0);
     context->setContextProperty("musicModel", proxy);
 }
+
+
