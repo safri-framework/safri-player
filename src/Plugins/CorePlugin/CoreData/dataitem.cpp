@@ -5,14 +5,14 @@
 using namespace Core;
 
 DataItem::DataItem(int sID, QString sName, DATA_ITEM_TYPE sType, QObject *parent) :
-    Item(parent), type(sType), id(sID), name(sName), temporary(false)
+    Item(parent), type(sType), id(sID), name(sName), temporary(false), mediaCollection(0)
 {
 
 }
 
 
 DataItem::DataItem(int sID, QString sName, DATA_ITEM_TYPE sType, bool temporary, QObject *parent) :
-    Item(parent), type(sType), id(sID), name(sName), temporary(temporary)
+    Item(parent), type(sType), id(sID), name(sName), temporary(temporary), mediaCollection(0)
 {
 
 }
