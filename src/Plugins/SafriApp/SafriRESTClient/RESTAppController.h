@@ -41,6 +41,7 @@ namespace SafriRESTClient
             QString                             getRESTLocation();
             void                                insertSongtreeNodeInPlaylist(int itemID, int position = -1);
 
+
             RESTClient*                 restClient;
             RESTSongtree*               songtree;
             RESTSongtreeModel*          songtreeModel;
@@ -48,6 +49,7 @@ namespace SafriRESTClient
             RESTPlaylistModel*          playlistModel;
             RESTPlaybackController*     restPlaybackController;
             QTimer*                     versionCheckTimer;
+
 
             /**
              * @brief holds the pointer to the original (local) playback controller, so that we

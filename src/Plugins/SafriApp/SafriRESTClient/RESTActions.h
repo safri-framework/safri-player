@@ -21,7 +21,7 @@ namespace RESTAction
     const QString PLAYLIST_GET_VERSION      = "playlist?action=getVersionID";
     const QString PLAYLIST_PLAY_INDEX       = "playlist?action=playIndex&index=%%PLAYPOS%%";
     const QString PLAYLIST_DELETE_INDEX     = "playlist?action=deleteItem&index=%%DELETEPOS%%";
-    const QString PLAYLIST_SET_SHUFFLE      = "playlist?action=setShuffle&enabled=%%VALUE%%";
+    const QString PLAYLIST_SET_SHUFFLE      = "player?action=setShuffle&enabled=%%VALUE%%";
 }
 
 #endif // RESTACTIONS_H

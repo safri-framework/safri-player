@@ -51,6 +51,10 @@ void AlbumCoversAssetService::getCover(Core::DataItem* item)
 {
     Controller::InfoController* controller = ICore::infoController();
     Album* album = qobject_cast<Album*>(item);
+
+    if(!item->getMediaCollection())
+        return;
+
     QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";
     if((!QFile::exists(path) ) | overwriteCovers)
     {
@@ -69,8 +73,9 @@ void AlbumCoversAssetService::getCover(Core::DataItem* item)
     }
     else
     {
-        qDebug()<<"Cover already exists....";
+        qDebug()<<"Cover already exists... (: ";
     }
+
 }
 
 
@@ -85,6 +90,9 @@ QStringList AlbumCoversAssetService::getSupportedServices()
 
 QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
 {
+    if (!item->getMediaCollection())
+        return QVariant();
+
     if(item && item->getType() == DataItem::ALBUM && service == "DisplayRole")
     {
         QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";

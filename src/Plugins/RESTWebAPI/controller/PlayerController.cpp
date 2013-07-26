@@ -64,6 +64,24 @@ void PlayerController::service(HttpRequest &request, HttpResponse &response)
             }
             return;
         }
+        else if(actionVariant == "setShuffle")
+        {
+            QJsonDocument doc;
+            QVariant enabled = request.getParameter("enabled");
+            qDebug()<<"SHUFFLE "<<enabled.toBool();
+            if(enabled.isValid())
+            {
+                doc.setObject(JSONSerializer::generateErrorObject("", "setShuffle", true));
+                pbController->shuffleAction()->setChecked(enabled.toBool());
+            }
+            else
+            {
+                doc.setObject(JSONSerializer::generateErrorObject("missing parameters", "setShuffle", false));
+            }
+            response.write(doc.toJson(), true);
+            return;
+        }
+
 
         if(!action)
         {

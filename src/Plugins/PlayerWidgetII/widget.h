@@ -35,7 +35,7 @@ private slots:
     void on_seek_slider_sliderMoved(int position);
     void on_volume_slider_sliderMoved(int position);
     void on_random_toggled(bool checked);
-
+    void shuffleActionChecked(bool checked);
     void on_repeat_toggled(bool checked);
     void volumeChanged(int volume);
 

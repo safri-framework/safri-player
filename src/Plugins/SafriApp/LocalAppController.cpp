@@ -132,7 +132,7 @@ void LocalAppController::removeIndexFromPlaylist(int index)
 
 void LocalAppController::setShuffle(bool enabled)
 {
-    playlist->setShuffle(enabled);
+
 }
 
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()

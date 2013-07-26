@@ -39,7 +39,7 @@ void PlaybackController::setupSignalAndSlots()
     connect(m_previousAction,SIGNAL(triggered()) ,this, SLOT(previousActionSlot()));
 
     connect (m_noData, SIGNAL(entered()), this, SLOT(noDataSlot()));
-    connect(m_shuffleAction, SIGNAL(triggered(bool)), this, SLOT(shuffleActionSlot(bool)));
+    connect(m_shuffleAction, SIGNAL(toggled(bool)), this, SLOT(shuffleActionSlot(bool)));
 
 }
 

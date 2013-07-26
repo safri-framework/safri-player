@@ -24,13 +24,13 @@ QJsonObject JSONSerializer::getStatus()
     else
     {
         map.insert("playlistInstalled", true);
-
         map.insert("playlistPosition",playlist->getCurrentMediaPosition());
         map.insert("success", true);
         map.insert("currentTime", playbackController->getCurrentTime());
         map.insert("volume", playbackController->getVolume());
         map.insert("mediaTotalTime", playbackController->getMediaTotalTime());
         map.insert("playState", getCurrentState(playbackController));
+        map.insert("shuffle", playlist->getShuffle());
 
         obj = QJsonObject::fromVariantMap(map);
 

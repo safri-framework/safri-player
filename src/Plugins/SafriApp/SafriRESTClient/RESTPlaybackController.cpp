@@ -456,6 +456,8 @@ void RESTPlaybackController::handleStatusResponse(QJsonObject jsonStatusObject)
     mediaTotalTime = statusMap.value("mediaTotalTime").toInt();
     currentTime = statusMap.value("currentTime").toInt();
     currentVolume = statusMap.value("volume").toInt();
+    bool shuffle = statusMap.value("shuffle").toBool();
+    shuffleAction()->setChecked(shuffle);
 
     // handle eventually changed state
     switchState(statusMap.value("playState").toString());

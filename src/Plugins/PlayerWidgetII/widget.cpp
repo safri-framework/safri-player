@@ -36,7 +36,7 @@ Widget::Widget(QWidget *parent) :
     connect(m_pbController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(mediaChanged(Core::Media*)));
     connect(m_pbController, SIGNAL(volumeChanged(int)), this, SLOT(volumeChanged(int)));
     connect(m_pbController, SIGNAL(update(int)), this, SLOT(update(int)));
-
+    connect(m_pbController->shuffleAction(), SIGNAL(toggled(bool)), this, SLOT(shuffleActionChecked(bool)));
     qDebug()<<"Current Volume"<<m_pbController->getVolume();
     ui->volume_slider->setValue(m_pbController->getVolume());
     //this->showLoadingIndicator("HALLO (=");
@@ -232,8 +232,16 @@ void Widget::on_volume_slider_sliderMoved(int position)
 void Widget::on_random_toggled(bool checked)
 {
     qDebug()<<"SHUFFLE "<<checked;
-    m_pbController->shuffleAction()->trigger();
+    m_pbController->shuffleAction()->setChecked(checked);
     //m_pbController->shuffleAction()->setChecked(checked);
+}
+
+void Widget::shuffleActionChecked(bool checked)
+{
+    if(this->ui->random->isChecked() != checked)
+    {
+        this->ui->random->setChecked(checked);
+    }
 }
 
 void Widget::on_repeat_toggled(bool checked)
