@@ -23,6 +23,10 @@
 LocalAppController::LocalAppController(QObject *parent) :
     IAppController(parent), songTree(0), playlist(0), playlistModel(0)
 {
+
+    playlistModel = new PlaylistModel(Core::ICore::createPlaylist(), this);
+    Q_EMIT newPlaylistModel();
+
     connect(Core::ICore::playbackController(), SIGNAL(playlistChanged()),this, SLOT(pbControllerHasNewPlaylist()));
 }
 

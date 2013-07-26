@@ -142,11 +142,7 @@ void ViewController::playModelIndex(QVariant var)
 
     appController->playTreeModelIndex(treeIndex);
 
-    QAbstractItemModel* playlistModel = appController->getPlaylistModel();
-    if (playlistModel)
-    {
-        context->setContextProperty("playlistModel", playlistModel);
-    }
+    // pbcontroller will emit a signal which will reset the playlistmodel
 }
 
 void ViewController::enqueueModelIndex(QVariant var)
@@ -170,8 +166,15 @@ void ViewController::volumeSlot(QVariant vol)
 
 void ViewController::setMusicProgress(int val)
 {
+    int mediaTotalTime = Core::ICore::playbackController()->getMediaTotalTime();
+
+    if (mediaTotalTime < 0)
+    {
+        mediaTotalTime = 0;
+    }
+
     QMetaObject::invokeMethod(musicProgress, "setProgress",
-                              Q_ARG(QVariant, Core::ICore::playbackController()->getMediaTotalTime()), Q_ARG(QVariant, val));
+                              Q_ARG(QVariant, mediaTotalTime), Q_ARG(QVariant, val));
 }
 
 void ViewController::updateMedia(Media *media)
@@ -190,6 +193,13 @@ void ViewController::updateMedia(Media *media)
 
         QMetaObject::invokeMethod(currentSongDisplay, "newSong",
                                   Q_ARG(QVariant, song->getName()), Q_ARG(QVariant, song->getArtist()->getName()),  Q_ARG(QVariant, song->getAlbum()->getName()),  Q_ARG(QVariant, coverPath));
+
+    }
+    else
+    {
+        setMusicProgress(0);
+        QMetaObject::invokeMethod(currentSongDisplay, "newSong",
+                                  Q_ARG(QVariant, ""), Q_ARG(QVariant, ""),  Q_ARG(QVariant, ""),  Q_ARG(QVariant, ""));
 
     }
 }
@@ -219,8 +229,19 @@ void ViewController::playPlaylistIndex(QVariant index)
 
 void ViewController::newPlaylistModel()
 {
-    qDebug()<<"NEW PLAYLIST!!!!";
-    proxy->setSourceModel(appController->getPlaylistModel());
+    qDebug()<<"NEW PLAYLIST";
+    QAbstractItemModel* playlistModel = appController->getPlaylistModel();
+    if (playlistModel)
+    {
+        context->setContextProperty("playlistModel", playlistModel);
+    }
+}
+
+void ViewController::shuffleClicked()
+{
+    qDebug()<<"TEST SHUFFLE CLICKED!!";
+    qDebug()<<shuffleButton->property("enabled").toBool();
+    appController->setShuffle(shuffleButton->property("enabled").toBool());
 }
 
 void ViewController::connectTo(QVariant host, QVariant port)
@@ -251,11 +272,15 @@ void ViewController::changeAppController(IAppController *newController)
 
     connect(appController, SIGNAL(newPlaylistModel()), this, SLOT(newPlaylistModel()));
 
+    // reset the view song display, the correct new values will
+    // be set, by the playback controller's mediaChanged signal
+    updateMedia(0);
+
     Core::IPlaybackController* playbackController  = Core::ICore::playbackController();
 
     connect( playbackController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
-    connect( playbackController, SIGNAL(update(int)), this, SLOT(setMusicProgress(int)));
-    connect( playbackController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(updateMedia(Core::Media*)));
+    connect( playbackController, SIGNAL(update(int)),                   this, SLOT(setMusicProgress(int)));
+    connect( playbackController, SIGNAL(mediaChanged(Core::Media*)),    this, SLOT(updateMedia(Core::Media*)));
 
     connect( playPauseButton,    SIGNAL(buttonClicked()), playbackController->playPauseAction(), SLOT(trigger()));
     connect( nextButton,         SIGNAL(buttonClicked()), playbackController->nextAction(),      SLOT(trigger()));
@@ -265,7 +290,7 @@ void ViewController::changeAppController(IAppController *newController)
 
     if(songTree)
     {
-        connect( songTree, SIGNAL(playModelIndex(QVariant)), this, SLOT(playModelIndex(QVariant)));
+        connect( songTree, SIGNAL(playModelIndex(QVariant)),    this, SLOT(playModelIndex(QVariant)));
         connect( songTree, SIGNAL(enqueueModelIndex(QVariant)), this, SLOT(enqueueModelIndex(QVariant)));
     }
     else
@@ -288,11 +313,4 @@ void ViewController::setupSongtreeModel()
     proxy->setSourceModel(model);
     proxy->sort(0);
     context->setContextProperty("musicModel", proxy);
-}
-
-void ViewController::shuffleClicked()
-{
-	qDebug()<<"TEST SHUFFLE CLICKED!!";
-	qDebug()<<shuffleButton->property("enabled").toBool();
-	appController->setShuffle(shuffleButton->property("enabled").toBool());
 }

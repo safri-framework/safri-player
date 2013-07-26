@@ -42,6 +42,11 @@ RESTAppController::~RESTAppController()
 
     delete restPlaybackController;
 
+    // we reset the playback controller with a new playlist
+    // in the future we could maybe, leave the controller
+    // and use it's state as bevore the REST connect
+    localPlaybackController->setPlaylist( Core::ICore::createPlaylist() );
+
     PluginSystem::PluginManager::instance()->addObject( localPlaybackController  );
 }
 
