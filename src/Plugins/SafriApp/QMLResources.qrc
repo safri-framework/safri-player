@@ -50,5 +50,6 @@
         <file>qml/Settings.qml</file>
         <file>qml/resources/lineEdit.png</file>
         <file>qml/resources/check-inv.png</file>
+        <file>qml/resources/Pfeil-Rechts.svg</file>
     </qresource>
 </RCC>

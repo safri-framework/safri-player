@@ -18,7 +18,7 @@ Rectangle {
             opacityAnimation.to = 0.8
             opacityAnimation.start();
             heightAnimation.to = settingsView.height / 3
-           heightAnimation.start()
+            heightAnimation.start()
         }
         else
         {
@@ -57,14 +57,11 @@ Rectangle {
            y: root.globalScaleFactor < 1 ? -2 : 0
            id: name
            source: "resources/lineEdit.png"
-           /*border.left:0; border.top:0
-           border.right: 5*root.globalScaleFactor; border.bottom: 5*root.globalScaleFactor*/
+
            z:-1
 
        }
        font.pixelSize:  root.globalScaleFactor  < 0.6 ? 12 : root.globalScaleFactor * 18;
-
-
     }
 
 
@@ -168,9 +165,6 @@ Rectangle {
                         height: textFieldHeight
                     }
                 }
-
-
-
 
                     PlayerButton
                     {

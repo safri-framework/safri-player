@@ -64,6 +64,24 @@ Rectangle{
                 id: delegateRect
                 width:parent.width
 
+                function calcTextWidth(ownX)
+                {
+                    if(tapAndHoldPanel.visible)
+                    {
+                        return tapAndHoldPanel.x - 20 * root.globalScaleFactor - ownX
+                    }
+                    else
+                    {
+                        if(!arrow.visible)
+                        {
+                            return parent.width - ownX - 20 * root.globalScaleFactor
+                        }
+                        else
+                        {
+                            return parent.width - ownX - 30 * root.globalScaleFactor - arrow.width
+                        }
+                    }
+                }
 
                 Text
                 {
@@ -71,8 +89,7 @@ Rectangle{
                     color: "#D4D4D4"
                     font.pixelSize: fontSize
                     x:cover.width + 20*root.globalScaleFactor + cover.x
-                    width: tapAndHoldPanel.visible ? tapAndHoldPanel.x - 20 * root.globalScaleFactor - x :
-                                                      parent.width - x - 20 * root.globalScaleFactor
+                    width: parent.calcTextWidth(x)
                     anchors.verticalCenter: parent.verticalCenter
                     clip:true
                     id: delegateText
@@ -85,6 +102,18 @@ Rectangle{
                     width: parent.width-2
                     x:1
                     y:1
+                }
+
+                Image
+                {
+                    id:arrow
+                    source:"resources/Pfeil-Rechts.svg"
+                    width: rowHeight/4
+                    height: rowHeight * 2/3
+                    x: delegateRect.width - width - 10* root.globalScaleFactor
+                    anchors.verticalCenter: parent.verticalCenter
+                    opacity: 0.2
+                    visible: !tapAndHoldPanel.visible && !(type == "SongType")
                 }
 
                 MouseArea
@@ -161,7 +190,7 @@ Rectangle{
                             return "resources/genre.png"
 
                         case "AlbumType":
-                            if(path !=="")
+                            if(path !=="" || !path == null)
                                 return path;
                             else
                                 return "resources/no_cover.png";
@@ -237,7 +266,11 @@ Rectangle{
                             width: tapnHoldImage.width / 2;
                             anchors.verticalCenter: parent.verticalCenter;
                             anchors.left: tapnHoldImage.horizontalCenter;
-                            onButtonClicked: playModelIndex(listView.model.modelIndex(index));
+                            onButtonClicked:
+                            {
+                                playModelIndex(listView.model.modelIndex(index));
+                                tapAndHoldPanel.visible = false
+                            }
                             toggle:false;
                             icon1: "resources/play_icon_black.png";
                         }
@@ -246,7 +279,11 @@ Rectangle{
                             width: tapnHoldImage.width / 2;
                             anchors.verticalCenter: parent.verticalCenter;
                             anchors.right: tapnHoldImage.horizontalCenter;
-                            onButtonClicked: enqueueModelIndex(listView.model.modelIndex(index));
+                            onButtonClicked:
+                            {
+                                enqueueModelIndex(listView.model.modelIndex(index))
+                                tapAndHoldPanel.visible = false
+                            }
                             toggle:false;
                             icon1: "resources/add.png" ;
                             opacity: 0.7
