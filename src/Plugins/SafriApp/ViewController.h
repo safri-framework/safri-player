@@ -76,6 +76,13 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QAbstractItemModel* plModel;
         QQmlContext* context;
         QSharedPointer<Core::IPlaylist> playList;
+
+        QMetaObject::Connection playbackController_StateChanged;
+        QMetaObject::Connection playbackController_Update;
+        QMetaObject::Connection playbackController_MediaChanged;
+        QMetaObject::Connection playbackController_playPauseAction;
+        QMetaObject::Connection playbackController_nextAction;
+        QMetaObject::Connection playbackController_previousAction;
 };
 
 #endif // SAFRIMOBILEGUIINSTANCE_H

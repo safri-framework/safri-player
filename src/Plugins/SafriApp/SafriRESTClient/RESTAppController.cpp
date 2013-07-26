@@ -25,6 +25,13 @@ RESTAppController::RESTAppController(QObject *parent) :
     // first we store a pointer to the original playback controller
     localPlaybackController = Core::ICore::playbackController();
 
+    localPlaybackController->stopAction()->trigger();
+
+    // we reset the playback controller with a new playlist
+    // in the future we could maybe, leave the controller
+    // and use it's state as bevore the REST connect
+    localPlaybackController->setPlaylist( Core::ICore::createPlaylist() );
+
     restClient = new RESTClient( getRESTLocation() );
 
     restPlaybackController = new RESTPlaybackController(restClient);
@@ -41,11 +48,6 @@ RESTAppController::~RESTAppController()
     PluginSystem::PluginManager::instance()->removeObject( restPlaybackController );
 
     delete restPlaybackController;
-
-    // we reset the playback controller with a new playlist
-    // in the future we could maybe, leave the controller
-    // and use it's state as bevore the REST connect
-    localPlaybackController->setPlaylist( Core::ICore::createPlaylist() );
 
     PluginSystem::PluginManager::instance()->addObject( localPlaybackController  );
 }

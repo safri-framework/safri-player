@@ -79,6 +79,11 @@ Media* Playlist::getNextMedia()
         nextMedia = mediaList.indexOf(shuffleHistory.at(shuffleCounter));
     }
 
+    if (nextMedia < 0)
+    {
+        return 0;
+    }
+
     setCurrentMedia(nextMedia);
     media = mediaList.at(nextMedia);
     playlistLock.unlock();
@@ -103,6 +108,11 @@ Media* Playlist::getPreviousMedia()
     {
         if (shuffleCounter > 0)shuffleCounter --;
         previousMedia = mediaList.indexOf(shuffleHistory.at(shuffleCounter));
+    }
+
+    if (previousMedia < 0)
+    {
+        return 0;
     }
 
     setCurrentMedia(previousMedia);

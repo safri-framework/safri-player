@@ -170,7 +170,11 @@ void ViewController::setMusicProgress(int val)
 
     if (mediaTotalTime < 0)
     {
-        mediaTotalTime = 0;
+        // mediaTotalTime 0 will cause a zero division, by computing the
+        // progress percentage, hence we will set it to 1 ms
+        // because the display shows seconds, this will be no problem
+        // and the intented total time of 0 seconds will be shown
+        mediaTotalTime = 1;
     }
 
     QMetaObject::invokeMethod(musicProgress, "setProgress",
@@ -268,6 +272,15 @@ void ViewController::disconnect()
 
 void ViewController::changeAppController(IAppController *newController)
 {
+
+    QObject::disconnect(playbackController_StateChanged);
+    QObject::disconnect(playbackController_Update);
+    QObject::disconnect(playbackController_MediaChanged);
+
+    QObject::disconnect(playbackController_playPauseAction);
+    QObject::disconnect(playbackController_nextAction);
+    QObject::disconnect(playbackController_previousAction);
+
     appController = newController;
 
     connect(appController, SIGNAL(newPlaylistModel()), this, SLOT(newPlaylistModel()));
@@ -278,13 +291,13 @@ void ViewController::changeAppController(IAppController *newController)
 
     Core::IPlaybackController* playbackController  = Core::ICore::playbackController();
 
-    connect( playbackController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
-    connect( playbackController, SIGNAL(update(int)),                   this, SLOT(setMusicProgress(int)));
-    connect( playbackController, SIGNAL(mediaChanged(Core::Media*)),    this, SLOT(updateMedia(Core::Media*)));
+    playbackController_StateChanged = connect( playbackController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
+    playbackController_Update = connect( playbackController, SIGNAL(update(int)),                   this, SLOT(setMusicProgress(int)));
+    playbackController_MediaChanged = connect( playbackController, SIGNAL(mediaChanged(Core::Media*)),    this, SLOT(updateMedia(Core::Media*)));
 
-    connect( playPauseButton,    SIGNAL(buttonClicked()), playbackController->playPauseAction(), SLOT(trigger()));
-    connect( nextButton,         SIGNAL(buttonClicked()), playbackController->nextAction(),      SLOT(trigger()));
-    connect( prevButton,         SIGNAL(buttonClicked()), playbackController->previousAction(),  SLOT(trigger()));
+    playbackController_playPauseAction = connect( playPauseButton,    SIGNAL(buttonClicked()), playbackController->playPauseAction(), SLOT(trigger()));
+    playbackController_nextAction = connect( nextButton,         SIGNAL(buttonClicked()), playbackController->nextAction(),      SLOT(trigger()));
+    playbackController_previousAction = connect( prevButton,         SIGNAL(buttonClicked()), playbackController->previousAction(),  SLOT(trigger()));
 
     setupSongtreeModel();
 
