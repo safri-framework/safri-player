@@ -35,7 +35,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     nextButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
     prevButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("prevButton"));
     silentButton        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("silentButton"));
-    songTree            = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
+    songTreeView            = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
 
     dialerView          = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialerView"));
     musicProgress       = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
@@ -53,6 +53,8 @@ ViewController::ViewController(IAppController *appController): appController(app
     connect( settingsDialog,     SIGNAL(connectTo(QVariant, QVariant)),      this, SLOT(connectTo(QVariant,QVariant)) );
     connect( menuItemDisconnect, SIGNAL(disconnect()),                       this, SLOT(disconnect()) );
 	connect( shuffleButton, 	 SIGNAL(buttonClicked()), 					 this, SLOT(shuffleClicked()));
+    connect( songTreeView,           SIGNAL(playModelIndex(QVariant)),           this, SLOT(playModelIndex(QVariant)));
+    connect( songTreeView,           SIGNAL(enqueueModelIndex(QVariant)),        this, SLOT(enqueueModelIndex(QVariant)));
 
     playPauseButton->setProperty("enabled", false);
     nextButton->setProperty("enabled", false);
@@ -221,7 +223,7 @@ void ViewController::removeFromPlaylist(QVariant index)
 
 void ViewController::backClicked()
 {
-    QMetaObject::invokeMethod(songTree, "prevIndex");
+    QMetaObject::invokeMethod(songTreeView, "prevIndex");
 }
 
 void ViewController::playPlaylistIndex(QVariant index)
@@ -300,14 +302,6 @@ void ViewController::changeAppController(IAppController *newController)
     playbackController_previousAction = connect( prevButton,         SIGNAL(buttonClicked()), playbackController->previousAction(),  SLOT(trigger()));
 
     setupSongtreeModel();
-
-    if(songTree)
-    {
-        connect( songTree, SIGNAL(playModelIndex(QVariant)),    this, SLOT(playModelIndex(QVariant)));
-        connect( songTree, SIGNAL(enqueueModelIndex(QVariant)), this, SLOT(enqueueModelIndex(QVariant)));
-    }
-    else
-        qDebug()<<"NIX GEFUNDEN )= ";
 
     plModel = appController->getPlaylistModel();
 
