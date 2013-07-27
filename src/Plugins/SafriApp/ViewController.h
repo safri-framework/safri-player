@@ -70,7 +70,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* menuItemDisconnect;
         QObject* shuffleButton;
         QAbstractItemModel* model;
-        QQuickItem* songTree;
+        QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;
         int currentSongLength;
         QAbstractItemModel* plModel;

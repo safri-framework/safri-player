@@ -9,8 +9,8 @@ Rectangle{
     property string currentItemText
     property string currentItemImage
     property bool moving
-    signal playModelIndex(variant mIndex)
-    signal enqueueModelIndex(variant mIndex)
+    signal playModelIndexView(variant mIndex)
+    signal enqueueModelIndexView(variant mIndex)
 
     ListModel
     {
@@ -190,7 +190,7 @@ Rectangle{
                             return "resources/genre.png"
 
                         case "AlbumType":
-                            if(path !=="" || !path == null)
+                            if(path !=="")
                                 return path;
                             else
                                 return "resources/no_cover.png";
@@ -268,7 +268,8 @@ Rectangle{
                             anchors.left: tapnHoldImage.horizontalCenter;
                             onButtonClicked:
                             {
-                                playModelIndex(listView.model.modelIndex(index));
+                                playModelIndexView(listView.model.modelIndex(index));
+
                                 tapAndHoldPanel.visible = false
                             }
                             toggle:false;
@@ -281,7 +282,8 @@ Rectangle{
                             anchors.right: tapnHoldImage.horizontalCenter;
                             onButtonClicked:
                             {
-                                enqueueModelIndex(listView.model.modelIndex(index))
+                                enqueueModelIndexView(listView.model.modelIndex(index))
+                                console.log("ENQUEUE  CLICK")
                                 tapAndHoldPanel.visible = false
                             }
                             toggle:false;

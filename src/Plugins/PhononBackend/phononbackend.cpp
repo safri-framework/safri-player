@@ -19,7 +19,7 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 #endif
 
 #ifdef Qt5
-    qDebug()<<Q_FUNC_INFO;
+    //qDebug()<<Q_FUNC_INFO;
     player = new QMediaPlayer(this);
     player->setVolume(100);
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));
@@ -36,16 +36,22 @@ int PhononBackend::getTotalTime()
     QTime dieTime = QTime::currentTime().addMSecs(500);
     while( QTime::currentTime() < dieTime )
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    */
     return mediaObject->totalTime();
     #endif
 
 
 #ifdef Qt5
 #ifdef ANDROID
+
     // EVIL HACK: wait 'n pray....
+    /*
     QTime dieTime = QTime::currentTime().addMSecs(500);
     while( QTime::currentTime() < dieTime )
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    {
+    }
+    */
+        //QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     return  player->duration();
 #else
    return  player->duration();
@@ -68,7 +74,7 @@ int PhononBackend::getCurrentTime()
 void PhononBackend::seek(int ms)
 {
     #ifndef Qt5
-    qDebug() << "seek: " << QString::number(ms);
+    //qDebug() << "seek: " << QString::number(ms);
     mediaObject->seek(ms);
 
     #endif
@@ -83,23 +89,20 @@ void PhononBackend::seek(int ms)
 
 void PhononBackend::play(QUrl url)
 {
-    qDebug()<<Q_FUNC_INFO<<""<<url;
+    //qDebug()<<Q_FUNC_INFO<<""<<url;
     #ifndef Qt5
     Q_EMIT hasSeekableMedia(true);
     Q_EMIT hasVolumeAdjustableMedia(true);
     mediaObject->setCurrentSource(Phonon::MediaSource(url));
     mediaObject->play();
-    qDebug() << "PhononBackend::play: " << url.toString();
+    //qDebug() << "PhononBackend::play: " << url.toString();
     #endif
 
 #ifdef Qt5
-    Q_EMIT hasSeekableMedia(player->isSeekable());
-    Q_EMIT hasVolumeAdjustableMedia(true);
     player->setMedia(QMediaContent());
     player->setMedia(url);
-    player->play();
-
 #endif
+
 }
 
 void PhononBackend::play()
@@ -109,7 +112,7 @@ void PhononBackend::play()
     #endif
 
 #ifdef Qt5
-    qDebug()<<"PLAY";
+    //qDebug()<<"PLAY";
     player->play();
 #endif
 }
@@ -195,7 +198,13 @@ void PhononBackend::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     switch (status)
     {
-        case QMediaPlayer::EndOfMedia:
+    case QMediaPlayer::LoadedMedia:
+
+            Q_EMIT hasSeekableMedia(player->isSeekable());
+            Q_EMIT hasVolumeAdjustableMedia(true);
+            player->play();
+            break;
+    case QMediaPlayer::EndOfMedia:
             Q_EMIT mediaFinished();
             break;
     case QMediaPlayer::BufferingMedia:

@@ -35,7 +35,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     nextButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
     prevButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("prevButton"));
     silentButton        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("silentButton"));
-    songTreeView            = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
+    songTreeView        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
 
     dialerView          = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialerView"));
     musicProgress       = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
@@ -53,8 +53,8 @@ ViewController::ViewController(IAppController *appController): appController(app
     connect( settingsDialog,     SIGNAL(connectTo(QVariant, QVariant)),      this, SLOT(connectTo(QVariant,QVariant)) );
     connect( menuItemDisconnect, SIGNAL(disconnect()),                       this, SLOT(disconnect()) );
 	connect( shuffleButton, 	 SIGNAL(buttonClicked()), 					 this, SLOT(shuffleClicked()));
-    connect( songTreeView,           SIGNAL(playModelIndex(QVariant)),           this, SLOT(playModelIndex(QVariant)));
-    connect( songTreeView,           SIGNAL(enqueueModelIndex(QVariant)),        this, SLOT(enqueueModelIndex(QVariant)));
+    connect( songTreeView,       SIGNAL(playModelIndexView(QVariant)),       this, SLOT(playModelIndex(QVariant)));
+    connect( songTreeView,       SIGNAL(enqueueModelIndexView(QVariant)),    this, SLOT(enqueueModelIndex(QVariant)));
 
     playPauseButton->setProperty("enabled", false);
     nextButton->setProperty("enabled", false);
@@ -149,10 +149,12 @@ void ViewController::playModelIndex(QVariant var)
 
 void ViewController::enqueueModelIndex(QVariant var)
 {
+
     QModelIndex proxyIndex = var.value<QModelIndex>();
     QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
     appController->enqueueTreeModelIndex(treeIndex);
 
+    qDebug()<<"Append Model Index";
 }
 
 void ViewController::testPlay()
@@ -293,13 +295,13 @@ void ViewController::changeAppController(IAppController *newController)
 
     Core::IPlaybackController* playbackController  = Core::ICore::playbackController();
 
-    playbackController_StateChanged = connect( playbackController, SIGNAL(stateChanged(Core::playState)), this, SLOT(stateChanged(Core::playState)));
-    playbackController_Update = connect( playbackController, SIGNAL(update(int)),                   this, SLOT(setMusicProgress(int)));
-    playbackController_MediaChanged = connect( playbackController, SIGNAL(mediaChanged(Core::Media*)),    this, SLOT(updateMedia(Core::Media*)));
+    playbackController_StateChanged = connect( playbackController,  SIGNAL(stateChanged(Core::playState)), this,                                    SLOT(stateChanged(Core::playState)));
+    playbackController_Update = connect( playbackController,        SIGNAL(update(int)),                   this,                                    SLOT(setMusicProgress(int)));
+    playbackController_MediaChanged = connect( playbackController,  SIGNAL(mediaChanged(Core::Media*)),    this,                                    SLOT(updateMedia(Core::Media*)));
 
-    playbackController_playPauseAction = connect( playPauseButton,    SIGNAL(buttonClicked()), playbackController->playPauseAction(), SLOT(trigger()));
-    playbackController_nextAction = connect( nextButton,         SIGNAL(buttonClicked()), playbackController->nextAction(),      SLOT(trigger()));
-    playbackController_previousAction = connect( prevButton,         SIGNAL(buttonClicked()), playbackController->previousAction(),  SLOT(trigger()));
+    playbackController_playPauseAction = connect( playPauseButton,  SIGNAL(buttonClicked()),                playbackController->playPauseAction(), SLOT(trigger()));
+    playbackController_nextAction = connect( nextButton,            SIGNAL(buttonClicked()),                playbackController->nextAction(),      SLOT(trigger()));
+    playbackController_previousAction = connect( prevButton,        SIGNAL(buttonClicked()),                playbackController->previousAction(),  SLOT(trigger()));
 
     setupSongtreeModel();
 
