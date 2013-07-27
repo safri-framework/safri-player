@@ -72,5 +72,7 @@ void SafriAppInstance::disconnect()
         appSettings->setSetting("isRESTClient", false);
 
         Core::ICore::settingsManager()->saveSettings();
+
+        isRESTClient = false;
     }
 }
