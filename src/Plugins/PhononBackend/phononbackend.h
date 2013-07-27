@@ -36,12 +36,14 @@ class PhononBackend : public Core::IMediaBackend
 
 #ifdef Qt5
         QMediaPlayer* player;
+        qint64 duration;
 #endif
 
 
     private slots:
 
         void tick(qint64 ms);
+        void durationChanged(qint64 ms);
         void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 };
 

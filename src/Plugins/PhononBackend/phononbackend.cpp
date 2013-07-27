@@ -20,8 +20,10 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
 
 #ifdef Qt5
     //qDebug()<<Q_FUNC_INFO;
+    duration = 0;
     player = new QMediaPlayer(this);
     player->setVolume(100);
+    connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));
     connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(mediaStatusChanged(QMediaPlayer::MediaStatus)));
 #endif
@@ -42,20 +44,9 @@ int PhononBackend::getTotalTime()
 
 
 #ifdef Qt5
-#ifdef ANDROID
 
-    // EVIL HACK: wait 'n pray....
-    /*
-    QTime dieTime = QTime::currentTime().addMSecs(500);
-    while( QTime::currentTime() < dieTime )
-    {
-    }
-    */
-        //QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-    return  player->duration();
-#else
-   return  player->duration();
-#endif
+   return duration;
+
 #endif
 }
 
@@ -101,6 +92,9 @@ void PhononBackend::play(QUrl url)
 #ifdef Qt5
     player->setMedia(QMediaContent());
     player->setMedia(url);
+    Q_EMIT hasSeekableMedia(player->isSeekable());
+    Q_EMIT hasVolumeAdjustableMedia(true);
+    player->play();
 #endif
 
 }
@@ -157,16 +151,7 @@ int PhononBackend::getVolume()
     #endif
 
 #ifdef Qt5
-    // TODO:
-    //if(player->volume() > 0)
-    {
-        //qDebug()<<"VOLUME!!?";
         return player->volume();
-    }
-    //else
-    {
-    //    return 100;
-    }
 #endif
 }
 
@@ -187,42 +172,38 @@ QStringList PhononBackend::getSupportedMimeTypes()
 
 void PhononBackend::tick(qint64 ms)
 {
-    //qDebug() << QString::number(getCurrentTime() / 1000.0f);
-
     Q_EMIT update(ms);
+}
 
-
+void PhononBackend::durationChanged(qint64 ms)
+{
+    duration = ms;
 }
 
 void PhononBackend::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     switch (status)
     {
-    case QMediaPlayer::LoadedMedia:
+        case QMediaPlayer::LoadedMedia:
 
-            Q_EMIT hasSeekableMedia(player->isSeekable());
-            Q_EMIT hasVolumeAdjustableMedia(true);
-            player->play();
-            break;
-    case QMediaPlayer::EndOfMedia:
-            Q_EMIT mediaFinished();
-            break;
-    case QMediaPlayer::BufferingMedia:
-            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::BUFFERING);
-            break;
-    case QMediaPlayer::BufferedMedia:
-            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PLAYING);
-            break;
-    case QMediaPlayer::StoppedState:
-            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::STOPPED);
-            break;
-    case QMediaPlayer::PausedState:
-            Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PAUSED);
-            break;
-        default:
-        qDebug()<<status;
+                break;
 
-
-
+        case QMediaPlayer::EndOfMedia:
+                Q_EMIT mediaFinished();
+                break;
+        case QMediaPlayer::BufferingMedia:
+                Q_EMIT internalBackendStateChanged(Core::IMediaBackend::BUFFERING);
+                break;
+        case QMediaPlayer::BufferedMedia:
+                Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PLAYING);
+                break;
+        case QMediaPlayer::StoppedState:
+                Q_EMIT internalBackendStateChanged(Core::IMediaBackend::STOPPED);
+                break;
+        case QMediaPlayer::PausedState:
+                Q_EMIT internalBackendStateChanged(Core::IMediaBackend::PAUSED);
+                break;
+            default:
+            qDebug()<<status;
     }
 }
