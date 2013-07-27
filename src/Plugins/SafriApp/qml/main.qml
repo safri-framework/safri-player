@@ -31,7 +31,7 @@ Rectangle {
             MenuItem {
                 text: "Safri remote"
                 shortcut: "Ctrl+R"
-                onTriggered:  settingsPage.visible = !settingsPage.visible
+                onTriggered:  settingsPage.setVisible = !settingsPage.setVisible
             }
         }
     }

@@ -10,11 +10,12 @@ import QtQuick.Controls 1.0
 
 Rectangle {
 
-
-    onVisibleChanged:
+    property bool setVisible: false;
+    onSetVisibleChanged:
     {
-        if(visible)
+        if(setVisible)
         {
+            visible = true;
             opacityAnimation.to = 0.8
             opacityAnimation.start();
             heightAnimation.to = settingsView.height / 3
@@ -30,6 +31,7 @@ Rectangle {
     }
 
 
+
     PropertyAnimation
     {
         id:opacityAnimation
@@ -37,6 +39,7 @@ Rectangle {
         target: overlay
         property: "opacity"
         to: 0.8
+        onStopped: if(!setVisible)settingsView.visible = false;
     }
 
     PropertyAnimation
@@ -83,7 +86,7 @@ Rectangle {
         MouseArea
         {
           anchors.fill: parent;
-          onClicked: settingsView.visible = false
+          onClicked: {settingsView.visible = false; setVisible = false}
         }
     }
 
@@ -177,7 +180,7 @@ Rectangle {
                         opacity: 0.7
                         icon1: "resources/check-inv.png"
                         toggle: false
-                        onButtonClicked: connectTo(hostTextField.text, portTextField.text)
+                        onButtonClicked: {connectTo(hostTextField.text, portTextField.text); setVisible = false}
                         x: parent.width - width - (10 * root.globalScaleFactor)
                     }
 

@@ -15,7 +15,7 @@ Rectangle{
     ListModel
     {
         id: listModel
-        onRowsInserted:  {currentItemText = listModel.get(listModel.count-1).text;console.log("test")}
+        onRowsInserted:  {currentItemText = listModel.get(listModel.count-1).text}
         onRowsRemoved:
         {
             if(listModel.count == 0)
@@ -34,6 +34,11 @@ Rectangle{
         }
     }
 
+    function reset()
+    {
+        listModel.clear();
+    }
+
     id: treeView
 
 
@@ -48,7 +53,6 @@ Rectangle{
 
     VisualDataModel {
         id: musicQMLModel
-
         model:musicModel
         delegate:
         Component
@@ -93,8 +97,8 @@ Rectangle{
                     anchors.verticalCenter: parent.verticalCenter
                     clip:true
                     id: delegateText
-
                 }
+
 
                 Rectangle{
                     color: "#424242"
@@ -149,15 +153,13 @@ Rectangle{
                                 if (model.hasModelChildren)
                                 {
                                     nextModelIndex = listView.model.modelIndex(index);
-                                    listModel.append({"text": delegateText.text, "image": cover.source, "index":nextModelIndex} )
+                                    listModel.append({"text": delegateText.text, "image": cover.source, "index":nextModelIndex} )                                                                        
                                 }
                             }
                         }
                     }
                     onPressed:
                     {
-
-
                         if(mouse.button == Qt.LeftButton)
                         {
 
@@ -174,9 +176,6 @@ Rectangle{
                             console.log("pressAndHold")
                         }
                     }
-
-
-
                 }
                 Rectangle
                 {
@@ -214,13 +213,10 @@ Rectangle{
                         }
                         else
                         {
-                            //scale = 1.4 * root.globalScaleFactor;
-
                             width = 30 * root.globalScaleFactor
                             height = width;
                             x = 20 * root.globalScaleFactor
                             anchors.verticalCenter = parent.verticalCenter
-
                         }
                     }
                     Image
