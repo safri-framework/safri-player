@@ -139,6 +139,11 @@ void LocalAppController::setShuffle(bool enabled)
     playlist->setShuffle(enabled);
 }
 
+IAppController::APP_MODE LocalAppController::getMode()
+{
+    return IAppController::LOCAL;
+}
+
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
 {
     QList<Core::ITreeItemType *> *treeHierarchy;

@@ -34,6 +34,7 @@ namespace SafriRESTClient
             virtual void                        playPlaylistIndex(int index);
             virtual void                        removeIndexFromPlaylist(int index);
             virtual void                        setShuffle(bool enabled);
+            virtual APP_MODE                    getMode();
 
         signals:
 

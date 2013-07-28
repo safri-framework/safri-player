@@ -80,27 +80,35 @@ void ViewController::playPauseSlot()
 
 bool ViewController::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::KeyPress)
+    Q_UNUSED(obj)
+    switch ( event->type() )
     {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-        qDebug() << "Ate key press" << keyEvent->key();
-        return false;
+        case QEvent::KeyPress:
+
+            //QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            //qDebug() << "Ate key press" << keyEvent->key();
+
+            break;
+
+        case QEvent::Close:
+
+            #ifdef ANDROID
+                backClicked();
+                return true;
+            #endif
+
+            break;
+
+        default:
+
+            break;
     }
 
-#ifdef ANDROID
-    if(event->type() == QEvent::Close)
-    {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-        backClicked();
-        return true;
-    }
     return false;
-#endif
 }
 
 void ViewController::stateChanged(Core::playState state)
 {
-    qDebug()<<"STATE"<<state;
     Core::IPlaybackController* controller  = Core::ICore::playbackController();
 
     if(state != NODATA)
@@ -270,7 +278,6 @@ void ViewController::connectTo(QVariant host, QVariant port)
 
 void ViewController::disconnect()
 {
-    qDebug() << "ViewController::disconnect()";
     Q_EMIT requestDisconnect();
 }
 

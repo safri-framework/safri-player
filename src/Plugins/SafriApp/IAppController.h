@@ -12,8 +12,9 @@ class IAppController : public QObject
     public:
 
         explicit IAppController(QObject *parent = 0);
-    
         virtual ~IAppController();
+
+        enum APP_MODE { LOCAL, REST };
 
         virtual QAbstractItemModel*         getSongtreeModel() = 0;
         virtual QAbstractItemModel*         getPlaylistModel() = 0;
@@ -23,7 +24,7 @@ class IAppController : public QObject
         virtual void                        playPlaylistIndex(int index) = 0;
         virtual void                        removeIndexFromPlaylist(int index) = 0;
         virtual void                        setShuffle(bool enabled) = 0;
-
+        virtual APP_MODE                    getMode() = 0;
 
     signals:
 

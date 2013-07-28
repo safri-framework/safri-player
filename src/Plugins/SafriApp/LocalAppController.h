@@ -29,6 +29,7 @@ class LocalAppController : public IAppController
         virtual void                        playPlaylistIndex(int index);
         virtual void                        removeIndexFromPlaylist(int index);
         virtual void                        setShuffle(bool enabled);
+        virtual APP_MODE                    getMode();
 
     private:
 

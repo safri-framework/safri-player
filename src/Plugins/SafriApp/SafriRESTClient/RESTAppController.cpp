@@ -125,6 +125,11 @@ void RESTAppController::setShuffle(bool enabled)
     playlist->setShuffle(enabled);
 }
 
+IAppController::APP_MODE RESTAppController::getMode()
+{
+    return IAppController::REST;
+}
+
 QString RESTAppController::getRESTLocation()
 {
     Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
