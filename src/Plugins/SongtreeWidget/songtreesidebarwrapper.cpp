@@ -15,9 +15,6 @@ SongTreeSidebarWrapper::SongTreeSidebarWrapper()
     sideBarWidget = new SongtreeWidget();
     sideBarWidget->setMinimumHeight(300);
     //sideBarWidget->show();
-
-    qDebug()<<"HIER BIN ICH";
-
 }
 
 QWidget *SongTreeSidebarWrapper::getSideBarWidget()
@@ -27,7 +24,6 @@ QWidget *SongTreeSidebarWrapper::getSideBarWidget()
 
 QString SongTreeSidebarWrapper::getName()
 {
-
     return name;
 }
 

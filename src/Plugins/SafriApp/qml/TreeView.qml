@@ -124,7 +124,7 @@ Rectangle{
                 {
                     Timer
                     {
-                        id: timer
+                            id: timer
                             interval: 500; running: false; repeat: false;
                             onTriggered: { parent.dontClick = true}
                     }

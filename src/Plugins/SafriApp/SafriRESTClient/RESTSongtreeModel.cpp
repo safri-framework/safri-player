@@ -98,7 +98,6 @@ QVariant RESTSongtreeModel::data(const QModelIndex &index, int role) const
         case coverRole:
             return "";
         case typeRole:
-                qDebug()<<item->property("nodeType");
             return item->property("nodeType");
             break;
         default:
