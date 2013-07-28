@@ -5,7 +5,7 @@ Safri.AudioSQLStorage
 Safri.CollectionController
 Safri.Playlist
 #Safri.GUIController
-#Safri.AlbumCovers
+Safri.AlbumCovers
 #Safri.PlayerWidget
 #Safri.PlayerWidgetII
 #Safri.PlaylistWidget

@@ -322,6 +322,8 @@ void ViewController::setupSongtreeModel()
     proxy->setSourceModel(model);
     proxy->sort(0);
     context->setContextProperty("musicModel", proxy);
+    QMetaObject::invokeMethod(songTreeView, "reset");
+
 }
 
 void ViewController::restSettingsChanged(QString setting)

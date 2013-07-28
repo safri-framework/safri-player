@@ -180,7 +180,7 @@ Rectangle {
                         iconScale: 0.5
                         smooth:true
                         opacity: 0.7
-                        icon1: "resources/check-inv.png"
+                        icon1: "resources/O"
                         toggle: false
                         onButtonClicked: {connectTo(hostTextField.text, portTextField.text); setVisible = false}
                         x: parent.width - width - (10 * root.globalScaleFactor)

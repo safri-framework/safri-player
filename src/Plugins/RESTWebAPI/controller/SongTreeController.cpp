@@ -7,7 +7,7 @@
 #include <QJsonArray>
 #include <QDebug>
 #include "JSONSerializer.h"
-
+#include <QFile>
 SongTreeController::SongTreeController(){}
 
 void SongTreeController::service(HttpRequest &request, HttpResponse &response)
@@ -61,6 +61,41 @@ void SongTreeController::service(HttpRequest &request, HttpResponse &response)
             doc.setObject(JSONSerializer::generateErrorObject("Missing parameters", "Insert Node in Playlist", false));
             response.write(doc.toJson(), true);
         }
+    }
+    else if (request.getParameter("action") == "requestFile")
+    {
+        QString collection = request.getParameter("collection");
+        QString type = request.getParameter("type");
+        int ID = request.getParameter("mediaID").toInt();
+        QFile file(helper->getMediaFilePath(collection, ID, type));
+        if (file.exists())
+        {
+
+            if (file.open(QIODevice::ReadOnly))
+            {
+                response.setHeader("Content-Type","audio/mpeg");
+        //        response.setHeader("Cache-Control","max-age="+QByteArray::number(maxAge/1000));
+
+                // Return the file content
+                while (!file.atEnd() && !file.error())
+                {
+                    response.write(file.read(65536));
+                }
+                file.close();
+            }
+            else
+            {
+                qWarning("StaticFileController: Cannot open existing file %s for reading",qPrintable(file.fileName()));
+                response.setStatus(403,"forbidden");
+                response.write("403 forbidden",true);
+            }
+        }
+        else
+        {
+            response.setStatus(404,"not found");
+            response.write("404 not found",true);
+        }
+
     }
     else
     {

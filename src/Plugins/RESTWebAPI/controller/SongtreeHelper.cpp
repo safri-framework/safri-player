@@ -124,6 +124,20 @@ QJsonArray SongtreeHelper::addToPlaylist(int nodeId, int pos)
     return array;
 }
 
+QString SongtreeHelper::getMediaFilePath(QString collection, int id, QString type)
+{
+    IMediaCollection* coll = ICore::collectionController()->getMediaCollectionByHash(collection);
+    Media* media;
+
+    if(type == "org.safri.audio.song")
+    {
+        media = qobject_cast<Media*>(coll->getByID(DataItem::SONG, id));
+    }
+    qDebug()<<Q_FUNC_INFO<<"  PATH: "<<media->getURL().toString();
+    return media->getURL().toLocalFile();
+
+}
+
 void SongtreeHelper::sessionExpired(QByteArray id)
 {
     if(id == parentSession)

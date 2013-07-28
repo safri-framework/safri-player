@@ -17,6 +17,7 @@ public:
     QJsonArray getRootNodes();
     QJsonArray getChilds(int id);
     QJsonArray addToPlaylist(int nodeId, int pos);
+    static QString getMediaFilePath(QString collection, int id, QString type);
 
 signals:
     
