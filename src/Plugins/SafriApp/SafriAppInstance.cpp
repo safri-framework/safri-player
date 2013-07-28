@@ -23,7 +23,7 @@ SafriAppInstance::SafriAppInstance(QObject *parent) :
     if (isRESTClient)
     {
         RESTAppController* restAppController  = new RESTAppController();
-        connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT( disconnect() ) );
+        connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT(    connectionFailed()  ));
         appController = restAppController;
 
     }
@@ -33,8 +33,8 @@ SafriAppInstance::SafriAppInstance(QObject *parent) :
     }
 
     viewController = new ViewController(appController);
-    connect(viewController, SIGNAL(requestConnect(QString,int)), this, SLOT(connectTo(QString,int)));
-    connect(viewController, SIGNAL(requestDisconnect()), this, SLOT(disconnect()));
+    connect(viewController, SIGNAL(requestConnect(QString,int)),    this, SLOT(connectTo(QString,int)));
+    connect(viewController, SIGNAL(requestDisconnect()),            this, SLOT(disconnect()));
 }
 
 
@@ -56,7 +56,8 @@ void SafriAppInstance::connectTo(QString host, int port)
     delete appController;
 
     RESTAppController* restAppController  = new RESTAppController();
-    connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT( disconnect() ) );
+
+    connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT(    connectionFailed()  ));
     appController = restAppController;
 
     viewController->changeAppController(appController);
@@ -79,4 +80,11 @@ void SafriAppInstance::disconnect()
 
         isRESTClient = false;
     }
+}
+
+void SafriAppInstance::connectionFailed()
+{
+    qDebug()<<"FAILED";
+    viewController->showErrorMessage("Sorry, can't connect to Safri.");
+    disconnect();
 }

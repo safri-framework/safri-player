@@ -47,9 +47,14 @@
         <file>qml/resources/artist.png</file>
         <file>qml/resources/genre.png</file>
         <file>qml/resources/settings.png</file>
-        <file>qml/Settings.qml</file>
         <file>qml/resources/lineEdit.png</file>
         <file>qml/resources/check-inv.png</file>
         <file>qml/resources/Pfeil-Rechts.svg</file>
+        <file>qml/SettingsDialog.qml</file>
+        <file>qml/DialogController.qml</file>
+        <file>qml/resources/Error_red2.svg</file>
+        <file>qml/ErrorDialog.qml</file>
+        <file>qml/resources/Error_red.svg</file>
+        <file>qml/resources/Error.svg</file>
     </qresource>
 </RCC>

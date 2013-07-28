@@ -5,7 +5,8 @@ import QtQuick.Window 2.0
 
 
 
-Rectangle {
+Rectangle
+{
     id: root
     color: "#272727"
     width: 480
@@ -31,29 +32,24 @@ Rectangle {
             MenuItem {
                 text: "Safri remote"
                 shortcut: "Ctrl+R"
-                onTriggered:  settingsPage.setVisible = !settingsPage.setVisible
+                onTriggered: dialogController.showSettings(!dialogController.settingsVisible)
             }
         }
     }
 
-
-
     ObjectModel {
         id: itemModel
-
         View1{id: view1; }
         View2{}
         View3{}
-
     }
 
-    Settings
+    DialogController
     {
         visible: false
         z:100
-        id: settingsPage
+        id: dialogController
     }
-
 
     ListView {
         id: view
@@ -100,6 +96,7 @@ Rectangle {
             }
         }
     }
+
     Rectangle
     {
         anchors{top: pageIndicator.bottom; bottom: root.bottom; right: root.right; left: root.left}

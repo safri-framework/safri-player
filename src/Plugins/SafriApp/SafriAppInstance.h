@@ -33,6 +33,7 @@ class SafriAppInstance : public QObject
     
         void connectTo(QString host, int port);
         void disconnect();
+        void connectionFailed();
 
     private:
 

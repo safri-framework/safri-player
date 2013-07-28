@@ -46,6 +46,7 @@ ViewController::ViewController(IAppController *appController): appController(app
 	shuffleButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("shuffleButton"));
     hostTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("hostTextField"));
     portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
+    dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
 
 
 
@@ -322,6 +323,11 @@ void ViewController::changeAppController(IAppController *newController)
     stateChanged(playbackController->getCurrentState());
 }
 
+void ViewController::showErrorMessage(QString message)
+{
+     QMetaObject::invokeMethod(dialogController, "showError", Q_ARG(QVariant, message));
+}
+
 void ViewController::setupSongtreeModel()
 {
     model = appController->getSongtreeModel();
@@ -330,7 +336,6 @@ void ViewController::setupSongtreeModel()
     proxy->sort(0);
     context->setContextProperty("musicModel", proxy);
     QMetaObject::invokeMethod(songTreeView, "reset");
-
 }
 
 void ViewController::restSettingsChanged(QString setting)

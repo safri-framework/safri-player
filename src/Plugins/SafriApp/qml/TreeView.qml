@@ -221,25 +221,10 @@ Rectangle{
                     }
                     Image
                     {
-
                         opacity: 0.8
                         source: parent.getImage(type, albumCover)
-                        //anchors.centerIn: parent
                         width: parent.width
                         height: parent.height
-
-                        Component.onCompleted:
-                        {
-                            if(type == "AlbumType")
-                            {
-                              // anchors.fill = parent
-                             //anchors.verticalCenter= parent.verticalCenter
-                            }
-                            else
-                            {
-                                //anchors.fill = parent
-                            }
-                        }
                     }
                 }
 

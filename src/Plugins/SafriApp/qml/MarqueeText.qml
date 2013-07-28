@@ -38,8 +38,8 @@ Item {
         onTriggered:{
             tempX = tempX + 5
             scrollingText.x = -tempX;
-
-            if( tempX + marqueeText.width > scrollingText.width ) {
+            if( tempX + marqueeText.width > scrollingText.width )
+            {
                 timer.running = false
                 pauseTimer.running = true
             }

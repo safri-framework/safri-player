@@ -80,5 +80,7 @@ OTHER_FILES += \
     qml/MarqueeText.qml \
     qml/Playlist.qml \
     qml/View3.qml \
-    qml/Settings.qml
+    qml/SettingsDialog.qml \
+    qml/DialogController.qml \
+    qml/ErrorDialog.qml
 

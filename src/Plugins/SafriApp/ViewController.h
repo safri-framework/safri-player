@@ -30,7 +30,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void playPauseSlot();
         bool eventFilter(QObject *obj, QEvent *event);
         void changeAppController(IAppController* newController);
-
+        void showErrorMessage(QString message);
     signals:
 
         void requestConnect(QString host, int port);
@@ -72,6 +72,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* shuffleButton;
         QObject* hostTextField;
         QObject* portTextField;
+        QObject* dialogController;
         QAbstractItemModel* model;
         QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;
