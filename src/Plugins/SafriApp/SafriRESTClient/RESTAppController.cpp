@@ -96,8 +96,6 @@ void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
         qDebug() << "playAction enabled";
         restPlaybackController->playAction()->trigger();
     }
-    qDebug()<<Q_FUNC_INFO<<"    HALLO???";
-
 }
 
 void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
@@ -147,14 +145,15 @@ void RESTAppController::insertSongtreeNodeInPlaylist(int itemID, int position)
     request.replace(QRegExp("%%ITEMID%%"), QString::number(itemID));
     request.replace(QRegExp("%%PLAYLISTPOS%%"), QString::number(position));
     qDebug()<<Q_FUNC_INFO<<"  "<<request;
-    QNetworkReply *reply = restClient->sendRequest(request);
+
+    restClient->sendRequest(request, true);
 
     // start an event loop to wait synchronously for the REST request to finish
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    reply = restClient->sendRequest(RESTAction::PLAYLIST_SET_AS_CURRENT);
+    restClient->sendRequest(RESTAction::PLAYLIST_SET_AS_CURRENT, true);
 
     // start an event loop to wait synchronously for the REST request to finish
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));

@@ -42,8 +42,7 @@ void RESTPlaylist::moveMedia(int fromPosition, int toPosition)
     moveRequest.replace(QRegExp("%%TOPOS%%"), QString::number(toPosition));
 
     displayedPlaylistVersion++;
-    client->sendRequest(moveRequest);
-
+    client->sendRequest(moveRequest, true);
 
     songList.move(fromPosition, toPosition);
 
@@ -54,8 +53,8 @@ void RESTPlaylist::playPlaylistIndex(int index)
 {
     QString playRequest = RESTAction::PLAYLIST_PLAY_INDEX;
     playRequest.replace(QRegExp("%%PLAYPOS%%"), QString::number(index));
-    client->sendRequest(playRequest);
-    qDebug()<<"PLAY";
+
+    client->sendRequest(playRequest, true);
 }
 
 int RESTPlaylist::getSize()
@@ -81,22 +80,26 @@ void RESTPlaylist::removeIndexFromPlaylist(int index)
 {
     QString request = RESTAction::PLAYLIST_DELETE_INDEX;
     request.replace(QRegExp("%%DELETEPOS%%"), QString::number(index));
+
     delete songList.at(index);
     songList.removeAt(index);
+
     Q_EMIT mediaDeleted(index);
     displayedPlaylistVersion++;
-    client->sendRequest(request) ;
+
+    client->sendRequest(request, true);
 }
 
 void RESTPlaylist::setShuffle(bool enabled)
 {
     QString request = RESTAction::PLAYLIST_SET_SHUFFLE;
+
     if(enabled)
         request.replace(QRegExp("%%VALUE%%"), "true");
     else
         request.replace(QRegExp("%%VALUE%%"), "false");
-    client->sendRequest(request);
 
+    client->sendRequest(request, true);
 }
 
 Core::MediaInfoContainer *RESTPlaylist::getMediaInfoAt(int position)
@@ -107,6 +110,7 @@ Core::MediaInfoContainer *RESTPlaylist::getMediaInfoAt(int position)
 void RESTPlaylist::getCurrentPlaylistReply()
 {
     Q_EMIT beginResetModel();
+
     for(int i = 0; i < songList.size();i++)
     {
         delete songList.at(i);
@@ -152,8 +156,11 @@ void RESTPlaylist::getCurrentPlaylistReply()
         }
 
         m_valid = true;
+
         Q_EMIT valid(true);
         Q_EMIT endResetModel();
+
+        reply->deleteLater();
     }
 }
 
@@ -180,7 +187,7 @@ void RESTPlaylist::setCurrentMediaPosition(int pos)
 void RESTPlaylist::versionTimeoutSlot()
 {
     //timer triggered request to check if our Playlist is up to date...
-    QNetworkReply *reply =client->sendRequest(RESTAction::PLAYLIST_GET_VERSION, this, SLOT(comparePlaylistVersion()));
+    client->sendRequest(RESTAction::PLAYLIST_GET_VERSION, this, SLOT(comparePlaylistVersion()));
 }
 
 void RESTPlaylist::comparePlaylistVersion()
@@ -208,5 +215,7 @@ void RESTPlaylist::comparePlaylistVersion()
 
             }
         }
+
+        reply->deleteLater();
     }
 }

@@ -331,20 +331,50 @@ void RESTPlaybackController::playRequestCallback()
 
         switchState(Core::PLAY);
     }
+
+    reply->deleteLater();
 }
 
 void RESTPlaybackController::pauseRequestCallback()
 {
     //qDebug() << "pauseRequestCallback";
 
-    switchState(Core::PAUSE);
+    QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
+
+    if ( !reply )
+    {
+        qDebug() << "network reply null";
+
+        return;
+    }
+
+    if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
+    {
+        switchState(Core::PAUSE);
+    }
+
+    reply->deleteLater();
 }
 
 void RESTPlaybackController::stopRequestCallback()
 {
     //qDebug() << "stopRequestCallback";
 
-    switchState(Core::STOP);
+    QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
+
+    if ( !reply )
+    {
+        qDebug() << "network reply null";
+
+        return;
+    }
+
+    if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
+    {
+        switchState(Core::STOP);
+    }
+
+    reply->deleteLater();
 }
 
 void RESTPlaybackController::nextRequestCallback()
@@ -370,6 +400,8 @@ void RESTPlaybackController::nextRequestCallback()
 
         switchState(Core::PLAY);
     }
+
+    reply->deleteLater();
 }
 
 void RESTPlaybackController::previousRequestCallback()
@@ -394,6 +426,8 @@ void RESTPlaybackController::previousRequestCallback()
 
         switchState(Core::PLAY);
     }
+
+    reply->deleteLater();
 }
 
 void RESTPlaybackController::requestStatus()
@@ -406,8 +440,14 @@ void RESTPlaybackController::statusRequestCallback()
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
 
+    if ( !reply )
+    {
+        qDebug() << "network reply null";
 
-    if (reply != 0 && ( reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError) )
+        return;
+    }
+
+    if ( reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError )
     {
         bArray = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
@@ -428,11 +468,19 @@ void RESTPlaybackController::statusRequestCallback()
 
         Q_EMIT connectionFailed();
     }
+
+    reply->deleteLater();
 }
 
 QNetworkReply* RESTPlaybackController::sendRESTRequest(QString request, const char *slot)
 {
     return client->sendRequest(request, this, slot);
+}
+
+void RESTPlaybackController::sendRESTRequest(QString request)
+{
+    // reply will be automatically deleted
+    client->sendRequest(request, true);
 }
 
 void RESTPlaybackController::handleCurrentMediaResonse(QJsonObject jsonCurrentMedia)

@@ -105,7 +105,14 @@ namespace SafriRESTClient
             void switchState(Core::playState newState);
             void switchState(QString stateName);
 
-            QNetworkReply*  sendRESTRequest(QString request, const char *slot = 0);
+            QNetworkReply*  sendRESTRequest(QString request, const char *slot);
+
+            /**
+             * @brief convinient function to send a request which will be scheduled for automatic deletion
+             * @param request
+             */
+            void            sendRESTRequest(QString request);
+
             void handleCurrentMediaResonse(QJsonObject jsonCurrentMedia);
             void handleStatusResponse(QJsonObject jsonStatusObject);
 

@@ -108,5 +108,7 @@ void RESTSongtreeItem::RESTReply()
 
             childsFetched = true;
         }
+
+        reply->deleteLater();
     }
 }

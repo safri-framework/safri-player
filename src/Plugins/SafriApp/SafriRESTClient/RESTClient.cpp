@@ -26,3 +26,13 @@ QNetworkReply* RESTClient::sendRequest(QString request, QObject *receiver, const
 
     return reply;
 }
+
+void RESTClient::sendRequest(QString request, bool deleteLater)
+{
+    QNetworkReply* reply = sendRequest(request);
+
+    if (deleteLater)
+    {
+        connect( reply, SIGNAL( finished() ), reply, SLOT( deleteLater() ) );
+    }
+}
