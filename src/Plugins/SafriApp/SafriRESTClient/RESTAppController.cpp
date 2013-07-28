@@ -146,18 +146,22 @@ void RESTAppController::insertSongtreeNodeInPlaylist(int itemID, int position)
     request.replace(QRegExp("%%PLAYLISTPOS%%"), QString::number(position));
     qDebug()<<Q_FUNC_INFO<<"  "<<request;
 
-    restClient->sendRequest(request, true);
+    QNetworkReply* reply = restClient->sendRequest(request);
 
     // start an event loop to wait synchronously for the REST request to finish
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    restClient->sendRequest(RESTAction::PLAYLIST_SET_AS_CURRENT, true);
+    reply->deleteLater();
+
+    reply = restClient->sendRequest(RESTAction::PLAYLIST_SET_AS_CURRENT);
 
     // start an event loop to wait synchronously for the REST request to finish
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
+
+    reply->deleteLater();
 }
 
 void RESTAppController::resetPlaylistModel()
