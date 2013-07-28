@@ -7,7 +7,7 @@
 
 using namespace Core;
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
-    IInfoResolver(parent), running(false), workerThread(0), timeOutThreshold(6000)
+    IInfoResolver(parent), running(false), workerThread(0), timeOutThreshold(15000)
 {
     QMutex fifoMutex(QMutex::Recursive);
     timoutTimer = new QTimer(this);
@@ -47,12 +47,14 @@ InfoRequest *AbstractInfoResolver::getInfoForItem(QString type, Core::DataItem* 
 void AbstractInfoResolver::setError(QString error)
 {
     qDebug()<<"ERROR!!!!!!!!!"<< Q_FUNC_INFO << ":" << error;
+    timoutTimer->stop();
     currentRequest->setError(error);
     handleNextRequest();
 }
 
 void AbstractInfoResolver::setInfo(QVariant info)
 {
+    qDebug()<< Q_FUNC_INFO ;
     currentRequest->setInfoData(info);
     currentRequest = 0;
     timoutTimer->stop();
@@ -65,6 +67,7 @@ AbstractInfoResolver::~AbstractInfoResolver()
 
 void AbstractInfoResolver::insertInFifo(InfoRequest *request)
 {
+    qDebug()<< Q_FUNC_INFO ;
     fifoMutex.lock();
     requestList.append(request);
     fifoMutex.unlock();
@@ -72,28 +75,31 @@ void AbstractInfoResolver::insertInFifo(InfoRequest *request)
 
 InfoRequest *AbstractInfoResolver::getNextRequest()
 {
+    qDebug()<< Q_FUNC_INFO ;
     InfoRequest* nextRequest;
-    fifoMutex.lock();
+    //fifoMutex.lock();
     nextRequest = requestList.takeFirst();
-    fifoMutex.unlock();
+    //fifoMutex.unlock();
     return nextRequest;
 }
 
 bool AbstractInfoResolver::hasRequest()
 {
+    qDebug()<< Q_FUNC_INFO ;
     bool hasRequest;
-    fifoMutex.lock();
     hasRequest = requestList.size() > 0;
-    fifoMutex.unlock();
     return hasRequest;
 }
 
 void AbstractInfoResolver::handleNextRequest()
 {
+    fifoMutex.lock();
+
     if(hasRequest())
     {
         currentRequest = getNextRequest();
         getInfo(currentRequest->getRequestType(), currentRequest->getRelatedItem());
+        fifoMutex.unlock();
         timoutTimer->start();
         qDebug()<<"handle next:"<<"-> "<< currentRequest->getRelatedItem()->getName()<<requestList.size();
     }
@@ -104,6 +110,7 @@ void AbstractInfoResolver::handleNextRequest()
         this->moveToThread(QApplication::instance()->thread());
         workerThread->exit();
     }
+    fifoMutex.unlock();
 }
 
 void AbstractInfoResolver::threadFinished()

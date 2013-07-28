@@ -80,6 +80,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QAbstractItemModel* plModel;
         QQmlContext* context;
         QSharedPointer<Core::IPlaylist> playList;
+        bool signalConnectionsInitialized;
 
         QMetaObject::Connection playbackController_StateChanged;
         QMetaObject::Connection playbackController_Update;

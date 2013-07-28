@@ -21,7 +21,7 @@
 #include "QMainWindow"
 #include "QApplication"
 
-ViewController::ViewController(IAppController *appController): appController(appController), model(0), plModel(0)
+ViewController::ViewController(IAppController *appController): appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
 {
     QQuickView *view = new QQuickView();
     view->setSource(QUrl("qrc:/qml/main.qml"));
@@ -285,13 +285,16 @@ void ViewController::disconnect()
 void ViewController::changeAppController(IAppController *newController)
 {
 
-    QObject::disconnect(playbackController_StateChanged);
-    QObject::disconnect(playbackController_Update);
-    QObject::disconnect(playbackController_MediaChanged);
+    if (signalConnectionsInitialized)
+    {
+        QObject::disconnect(playbackController_StateChanged);
+        QObject::disconnect(playbackController_Update);
+        QObject::disconnect(playbackController_MediaChanged);
 
-    QObject::disconnect(playbackController_playPauseAction);
-    QObject::disconnect(playbackController_nextAction);
-    QObject::disconnect(playbackController_previousAction);
+        QObject::disconnect(playbackController_playPauseAction);
+        QObject::disconnect(playbackController_nextAction);
+        QObject::disconnect(playbackController_previousAction);
+    }
 
     appController = newController;
 
@@ -310,6 +313,8 @@ void ViewController::changeAppController(IAppController *newController)
     playbackController_playPauseAction =    connect( playPauseButton,    SIGNAL(buttonClicked()),   playbackController->playPauseAction(), SLOT(trigger()));
     playbackController_nextAction =         connect( nextButton,         SIGNAL(buttonClicked()),   playbackController->nextAction(),      SLOT(trigger()));
     playbackController_previousAction =     connect( prevButton,         SIGNAL(buttonClicked()),   playbackController->previousAction(),  SLOT(trigger()));
+
+    signalConnectionsInitialized = true;
 
     setupSongtreeModel();
 
