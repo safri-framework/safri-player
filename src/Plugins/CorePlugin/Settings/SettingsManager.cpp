@@ -104,7 +104,7 @@ bool SettingsManager::loadSettings()
          {
              QDomElement setting = settings.at(s).toElement();
 
-             qDebug() << setting.attribute("name") << ":" << setting.text();
+             //qDebug() << setting.attribute("name") << ":" << setting.text();
              settingsMap.insert(setting.attribute("name"), setting.text());
          }
 
@@ -151,8 +151,12 @@ bool SettingsManager::saveSettings()
     }
 
     QFile file(ICore::storageDirectory() + "/safri-config.xml");
-    if( !file.open( QIODevice::WriteOnly ) )
+
+    if( !file.open( QIODevice::ReadWrite ) )
+    {
+        qDebug() << "FILE NOT OPEN " << file.errorString();
         return false;
+    }
 
     QTextStream ts( &file );
     ts << domDoc.toString(4);

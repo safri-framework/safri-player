@@ -122,6 +122,8 @@ int main(int argc, char *argv[])
     {
         qDebug() << "Copying default safri-config.xml";
         qDebug() << QFile::copy(":/defaults/safri-config.xml", configFilename);
+
+        QFile::setPermissions(configFilename, QFileDevice::WriteUser | QFileDevice::ReadUser);
     }
 
     qDebug() << "\n\n";

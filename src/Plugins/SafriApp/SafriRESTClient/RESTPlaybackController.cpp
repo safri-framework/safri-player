@@ -398,7 +398,6 @@ void RESTPlaybackController::previousRequestCallback()
 
 void RESTPlaybackController::requestStatus()
 {
-    qDebug() << "requestStatus";
     sendRESTRequest(RESTAction::PLAYER_STATUS, SLOT(statusRequestCallback()));
 }
 
