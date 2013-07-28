@@ -44,6 +44,10 @@ ViewController::ViewController(IAppController *appController): appController(app
     settingsDialog      = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("settingsDialog"));
     menuItemDisconnect  = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("menuItemDisconnect"));
 	shuffleButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("shuffleButton"));
+    hostTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("hostTextField"));
+    portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
+
+
 
     connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
     connect( dialerView,         SIGNAL(volumeChanged(QVariant)),            this, SLOT(volumeSlot(QVariant)) );
@@ -59,6 +63,12 @@ ViewController::ViewController(IAppController *appController): appController(app
     playPauseButton->setProperty("enabled", false);
     nextButton->setProperty("enabled", false);
     prevButton->setProperty("enabled", false);
+
+    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+    hostTextField->setProperty("text", restSettings->getSetting("host").toString() );
+    portTextField->setProperty("text", restSettings->getSetting("port").toString() );
+
+    connect(restSettings, SIGNAL( settingsChanged(QString) ), this, SLOT( restSettingsChanged(QString) ) );
 
     changeAppController(appController);
 }
@@ -98,41 +108,42 @@ void ViewController::stateChanged(Core::playState state)
         playPauseButton->setProperty("enabled", true);
         nextButton->setProperty("enabled", true);
         prevButton->setProperty("enabled", true);
-       // silentButton->setProperty("enabled", true);
     }
 
     switch(state)
     {
         case NODATA:
-        {
+
             playPauseButton->setProperty("enabled", false);
             nextButton->setProperty("enabled", false);
             prevButton->setProperty("enabled", false);
-          //  silentButton->setProperty("enabled", false);
-        }
+
+            break;
 
         case PLAY:
-        {
+
             playPauseButton->setProperty("playing", true);
             currentSongLength = controller->getMediaTotalTime();
-            qDebug()<<"PLAYING";
+            //qDebug()<<"PLAYING";
             break;
-        }
+
 
         case STOP:
-        {
+
            playPauseButton->setProperty("playing", false);
-           qDebug()<<"STOP";
+           //qDebug()<<"STOP";
            break;
-        }
+
 
         case PAUSE:
-        {
-            playPauseButton->setProperty("playing", false);
-            qDebug()<<"PAUSE";
-            break;
-        }
 
+            playPauseButton->setProperty("playing", false);
+            //qDebug()<<"PAUSE";
+            break;
+
+        default:
+
+            break;
     }
 
 }
@@ -254,17 +265,6 @@ void ViewController::shuffleClicked()
 
 void ViewController::connectTo(QVariant host, QVariant port)
 {
-    /*
-    qDebug() << "SETTINGS CHANGED: " << host.toString() << " / " << port.toString() ;
-
-    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
-
-    restSettings->setSetting("host", host);
-    restSettings->setSetting("port", port);
-
-    Core::ICore::settingsManager()->saveSettings();
-    */
-
     Q_EMIT requestConnect(host.toString(), port.toInt());
 }
 
@@ -295,13 +295,13 @@ void ViewController::changeAppController(IAppController *newController)
 
     Core::IPlaybackController* playbackController  = Core::ICore::playbackController();
 
-    playbackController_StateChanged = connect( playbackController,  SIGNAL(stateChanged(Core::playState)), this,                                    SLOT(stateChanged(Core::playState)));
-    playbackController_Update = connect( playbackController,        SIGNAL(update(int)),                   this,                                    SLOT(setMusicProgress(int)));
-    playbackController_MediaChanged = connect( playbackController,  SIGNAL(mediaChanged(Core::Media*)),    this,                                    SLOT(updateMedia(Core::Media*)));
+    playbackController_StateChanged =       connect( playbackController, SIGNAL(stateChanged(Core::playState)), this,   SLOT(stateChanged(Core::playState)));
+    playbackController_Update =             connect( playbackController, SIGNAL(update(int)),                   this,   SLOT(setMusicProgress(int)));
+    playbackController_MediaChanged =       connect( playbackController, SIGNAL(mediaChanged(Core::Media*)),    this,   SLOT(updateMedia(Core::Media*)));
 
-    playbackController_playPauseAction = connect( playPauseButton,  SIGNAL(buttonClicked()),                playbackController->playPauseAction(), SLOT(trigger()));
-    playbackController_nextAction = connect( nextButton,            SIGNAL(buttonClicked()),                playbackController->nextAction(),      SLOT(trigger()));
-    playbackController_previousAction = connect( prevButton,        SIGNAL(buttonClicked()),                playbackController->previousAction(),  SLOT(trigger()));
+    playbackController_playPauseAction =    connect( playPauseButton,    SIGNAL(buttonClicked()),   playbackController->playPauseAction(), SLOT(trigger()));
+    playbackController_nextAction =         connect( nextButton,         SIGNAL(buttonClicked()),   playbackController->nextAction(),      SLOT(trigger()));
+    playbackController_previousAction =     connect( prevButton,         SIGNAL(buttonClicked()),   playbackController->previousAction(),  SLOT(trigger()));
 
     setupSongtreeModel();
 
@@ -322,6 +322,23 @@ void ViewController::setupSongtreeModel()
     proxy->setSourceModel(model);
     proxy->sort(0);
     context->setContextProperty("musicModel", proxy);
+}
+
+void ViewController::restSettingsChanged(QString setting)
+{
+    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+    QObject* textField;
+
+    if (setting == "host")
+    {
+        textField = hostTextField;
+    }
+    else if (setting == "port")
+    {
+        textField = portTextField;
+    }
+
+    textField->setProperty("text", restSettings->getSetting(setting).toString() );
 }
 
 

@@ -289,7 +289,7 @@ void PlaybackController::setPlaylist(QSharedPointer<Core::IPlaylist> playlist)
     }
     else
     {
-        qDebug()<<"leere Playliste";
+        currentState = m_noData;
     }
     Q_EMIT newPlaylistInstalled(playlist);
     Q_EMIT playlistChanged();
@@ -344,7 +344,7 @@ QList<QAction *> PlaybackController::getAdditionalActions()
 
 int PlaybackController::getMediaTotalTime()
 {
-    if (mediaBackend)
+    if (mediaBackend && currentState != m_noData)
     {
         return mediaBackend->getTotalTime();
     }
@@ -354,7 +354,7 @@ int PlaybackController::getMediaTotalTime()
 
 int PlaybackController::getCurrentTime()
 {
-    if (mediaBackend)
+    if (mediaBackend && currentState != m_noData)
     {
         return mediaBackend->getCurrentTime();
     }

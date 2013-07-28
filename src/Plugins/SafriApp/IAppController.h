@@ -26,6 +26,7 @@ class IAppController : public QObject
 
 
     signals:
+
         void newPlaylistModel();
 };
 

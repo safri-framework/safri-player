@@ -143,8 +143,15 @@ QString ICore::storageDirectory()
 
 IMediaBackend *ICore::getBackendForMedia(Media *media)
 {
-    qDebug()<<Q_FUNC_INFO<<media->getMimeType();
-    return m_instance->m_mediaBackends.value(media->getMimeType(), 0);
+    if (media)
+    {
+        qDebug()<<Q_FUNC_INFO<<media->getMimeType();
+        return m_instance->m_mediaBackends.value(media->getMimeType(), 0);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 IMediaBackend *ICore::getBackendForMimeType(QString mimeType)

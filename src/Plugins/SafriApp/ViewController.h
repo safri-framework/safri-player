@@ -55,6 +55,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void disconnect();
 
         void setupSongtreeModel();
+        void restSettingsChanged(QString setting);
 
     private:
         IAppController* appController;
@@ -69,6 +70,8 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* settingsDialog;
         QObject* menuItemDisconnect;
         QObject* shuffleButton;
+        QObject* hostTextField;
+        QObject* portTextField;
         QAbstractItemModel* model;
         QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;

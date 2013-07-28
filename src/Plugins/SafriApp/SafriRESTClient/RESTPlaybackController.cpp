@@ -406,19 +406,27 @@ void RESTPlaybackController::statusRequestCallback()
     QNetworkReply* reply = qobject_cast< QNetworkReply* >( sender() );
     QByteArray bArray;
 
-    if ( !reply )
-    {
-        qDebug() << "network reply null";
 
-        return;
-    }
-    if(reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError)
+    if (reply != 0 && ( reply->error() == QNetworkReply::NoError || reply->error() == QNetworkReply::UnknownContentError) )
     {
         bArray = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson( bArray );
         QJsonObject jsonObject = jsonDoc.object();
 
         handleStatusResponse(jsonObject);
+    }
+    else
+    {
+        // if the first status request fails, there wouldn't be
+        // other status requests, because there is no timer started
+        // therefore we set the NODATA state (which would be anyhow the
+        // state to be, if the status request fails) - this would
+        // start the NODATA request timer and retry the status request
+        // so objects that miss the failed signal below on the first time
+        // can catch the signals in retries
+        switchState(Core::NODATA);
+
+        Q_EMIT connectionFailed();
     }
 }
 

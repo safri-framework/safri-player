@@ -35,6 +35,9 @@ namespace SafriRESTClient
             virtual void                        removeIndexFromPlaylist(int index);
             virtual void                        setShuffle(bool enabled);
 
+        signals:
+
+            void connectionFailed();
 
         private:
 

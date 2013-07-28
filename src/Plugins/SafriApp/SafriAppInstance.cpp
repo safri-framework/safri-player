@@ -22,7 +22,9 @@ SafriAppInstance::SafriAppInstance(QObject *parent) :
 
     if (isRESTClient)
     {
-        appController = new RESTAppController();
+        RESTAppController* restAppController  = new RESTAppController();
+        connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT( disconnect() ) );
+        appController = restAppController;
 
     }
     else
@@ -40,6 +42,7 @@ void SafriAppInstance::connectTo(QString host, int port)
 {
     qDebug() << "SafriAppInstance::connectTo - host: " << host << " / port: " << port;
 
+    isRESTClient = true;
 
     Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
     Core::SettingsModule *appSettings = Core::ICore::settingsManager()->getModule("org.safri.app");
@@ -52,10 +55,11 @@ void SafriAppInstance::connectTo(QString host, int port)
 
     delete appController;
 
-    appController = new RESTAppController();
-    viewController->changeAppController(appController);
+    RESTAppController* restAppController  = new RESTAppController();
+    connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT( disconnect() ) );
+    appController = restAppController;
 
-    isRESTClient = true;
+    viewController->changeAppController(appController);
 }
 
 void SafriAppInstance::disconnect()

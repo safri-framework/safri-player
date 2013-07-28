@@ -28,15 +28,17 @@ RESTAppController::RESTAppController(QObject *parent) :
     localPlaybackController->stopAction()->trigger();
 
     // we reset the playback controller with a new playlist
-    // in the future we could maybe, leave the controller
-    // and use it's state as bevore the REST connect
+    // in the future we could maybe, leave the controller as is
+    // and use it's state as before the REST connect
     localPlaybackController->setPlaylist( Core::ICore::createPlaylist() );
 
     restClient = new RESTClient( getRESTLocation() );
 
     restPlaybackController = new RESTPlaybackController(restClient);
-    PluginSystem::PluginManager::instance()->addObject( restPlaybackController  );
 
+    connect (restPlaybackController, SIGNAL( connectionFailed() ), this, SIGNAL( connectionFailed() ) );
+
+    PluginSystem::PluginManager::instance()->addObject( restPlaybackController  );
 }
 
 RESTAppController::~RESTAppController()
@@ -100,7 +102,11 @@ void RESTAppController::playTreeModelIndex(QModelIndex treeIndex)
 
 void RESTAppController::enqueueTreeModelIndex(QModelIndex treeIndex)
 {
-    // Q_UNUSED treeIndex;
+    Core::ITreeItem* treeItem = static_cast<Core::ITreeItem*>(treeIndex.internalPointer());
+
+    int itemId = treeItem->property("itemID").toInt();
+
+    insertSongtreeNodeInPlaylist(itemId, playlist->getSize());
 }
 
 void RESTAppController::playPlaylistIndex(int index)

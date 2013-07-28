@@ -140,6 +140,7 @@ Rectangle {
                         width: (settingsContent.width-parent.spacing) * 4 / 5;
                         horizontalAlignment: Text.AlignRight
                         id: hostTextField
+                        objectName: "hostTextField"
                         style: textfieldStyle
                         height: textFieldHeight
 
@@ -164,6 +165,7 @@ Rectangle {
                         width: (settingsContent.width-parent.spacing) * 4 / 5  ;
                         horizontalAlignment: Text.AlignRight
                         id: portTextField
+                        objectName: "portTextField"
                         style: textfieldStyle
                         height: textFieldHeight
                     }

@@ -64,6 +64,10 @@ namespace SafriRESTClient
             void requestStatus();
             void statusRequestCallback();
 
+        signals:
+
+            void connectionFailed();
+
         public slots:
 
             virtual void seek(int playTime);
