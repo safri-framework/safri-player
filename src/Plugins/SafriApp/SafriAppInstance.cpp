@@ -9,6 +9,7 @@
 #include "Settings/SettingsManager.h"
 
 #include <QDebug>
+#include <QTcpSocket>
 
 using namespace SafriRESTClient;
 
@@ -42,25 +43,39 @@ void SafriAppInstance::connectTo(QString host, int port)
 {
     qDebug() << "SafriAppInstance::connectTo - host: " << host << " / port: " << port;
 
-    isRESTClient = true;
+    QTcpSocket testSocket;
 
-    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
-    Core::SettingsModule *appSettings = Core::ICore::settingsManager()->getModule("org.safri.app");
+    testSocket.connectToHost(host, port);
 
-    restSettings->setSetting("host", host);
-    restSettings->setSetting("port", port);
-    appSettings->setSetting("isRESTClient", true);
+    // first we test, if the host is reachable
+    if ( testSocket.waitForConnected(5000) )
+    {
+        testSocket.close();
 
-    Core::ICore::settingsManager()->saveSettings();
+        isRESTClient = true;
 
-    delete appController;
+        Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+        Core::SettingsModule *appSettings = Core::ICore::settingsManager()->getModule("org.safri.app");
 
-    RESTAppController* restAppController  = new RESTAppController();
+        restSettings->setSetting("host", host);
+        restSettings->setSetting("port", port);
+        appSettings->setSetting("isRESTClient", true);
 
-    connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT(    connectionFailed()  ));
-    appController = restAppController;
+        Core::ICore::settingsManager()->saveSettings();
 
-    viewController->changeAppController(appController);
+        delete appController;
+
+        RESTAppController* restAppController  = new RESTAppController();
+
+        connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT(    connectionFailed()  ));
+        appController = restAppController;
+
+        viewController->changeAppController(appController);
+    }
+    else
+    {
+        viewController->showErrorMessage("Sorry, can't connect to Safri.");
+    }
 }
 
 void SafriAppInstance::disconnect()

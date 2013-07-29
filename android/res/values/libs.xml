@@ -253,6 +253,7 @@
         <item>Qt5XmlPatterns</item>
         <item>Qt5Declarative</item>
         <item>Qt5Quick</item>
+        <item>Qt5Svg</item>
     </array>
     <array name="bundled_libs"/>
 </resources>
