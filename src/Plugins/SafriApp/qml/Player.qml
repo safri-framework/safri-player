@@ -23,7 +23,7 @@ Rectangle {
         id: playerImage
         source: "resources/player_backgroundIII.png"
         anchors.centerIn: parent
-
+        objectName: "playerPanel"
         height: parent.height
         width : 433 * scaleFactor
         onScaleChanged: {console.log(width); console.log(height)}
@@ -38,6 +38,18 @@ Rectangle {
             id: previous;
         }
         */
+
+        function setOnlineIndicator(enabled)
+        {
+            if (enabled === true)
+            {
+                playerImage.source = "resources/player_background_remote.png"
+            }
+            else
+            {
+                playerImage.source = "resources/player_backgroundIII.png"
+            }
+        }
 
         PlayerButton
         {

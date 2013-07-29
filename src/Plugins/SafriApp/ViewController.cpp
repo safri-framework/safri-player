@@ -47,7 +47,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     hostTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("hostTextField"));
     portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
     dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
-
+    playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
 
 
     connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
@@ -323,6 +323,22 @@ void ViewController::changeAppController(IAppController *newController)
     if (plModel != 0)
     {
         context->setContextProperty("playlistModel", plModel);
+    }
+
+    switch ( appController->getMode() )
+    {
+        case IAppController::LOCAL:
+
+            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, false) );
+            break;
+
+        case IAppController::REST:
+
+            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, true) );
+            break;
+
+        default:
+            break;
     }
 
     stateChanged(playbackController->getCurrentState());

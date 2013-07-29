@@ -56,5 +56,7 @@
         <file>qml/ErrorDialog.qml</file>
         <file>qml/resources/Error_red.svg</file>
         <file>qml/resources/Error.svg</file>
+        <file>qml/resources/Online.svg</file>
+        <file>qml/resources/player_background_remote.png</file>
     </qresource>
 </RCC>

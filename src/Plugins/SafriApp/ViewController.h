@@ -65,6 +65,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QQuickItem* silentButton;
         QObject* dialerView;
         QObject* musicProgress;
+        QObject* playerPanel;
         QObject* currentSongDisplay;
         QObject* playlistView;
         QObject* settingsDialog;
