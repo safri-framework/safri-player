@@ -298,6 +298,22 @@ void ViewController::changeAppController(IAppController *newController)
 
     appController = newController;
 
+    switch ( appController->getMode() )
+    {
+        case IAppController::LOCAL:
+
+            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, false) );
+            break;
+
+        case IAppController::REST:
+
+            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, true) );
+            break;
+
+        default:
+            break;
+    }
+
     connect(appController, SIGNAL(newPlaylistModel()), this, SLOT(newPlaylistModel()));
 
     // reset the view song display, the correct new values will
@@ -323,22 +339,6 @@ void ViewController::changeAppController(IAppController *newController)
     if (plModel != 0)
     {
         context->setContextProperty("playlistModel", plModel);
-    }
-
-    switch ( appController->getMode() )
-    {
-        case IAppController::LOCAL:
-
-            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, false) );
-            break;
-
-        case IAppController::REST:
-
-            QMetaObject::invokeMethod(playerPanel, "setOnlineIndicator", Q_ARG(QVariant, true) );
-            break;
-
-        default:
-            break;
     }
 
     stateChanged(playbackController->getCurrentState());
