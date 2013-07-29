@@ -19,6 +19,7 @@ namespace SafriRESTClient
         public:
 
             explicit RESTSongtree(RESTClient *restClient, QObject *parent = 0);
+            ~RESTSongtree();
 
             Core::ITreeItem* getRoot();
 

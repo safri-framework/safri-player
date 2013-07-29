@@ -454,6 +454,10 @@ void RESTPlaybackController::statusRequestCallback()
         QJsonObject jsonObject = jsonDoc.object();
 
         handleStatusResponse(jsonObject);
+
+        qDebug() << "try delete later";
+        reply->deleteLater();
+        qDebug() << "after delete later";
     }
     else
     {
@@ -469,7 +473,7 @@ void RESTPlaybackController::statusRequestCallback()
         Q_EMIT connectionFailed();
     }
 
-    reply->deleteLater();
+
 }
 
 QNetworkReply* RESTPlaybackController::sendRESTRequest(QString request, const char *slot)

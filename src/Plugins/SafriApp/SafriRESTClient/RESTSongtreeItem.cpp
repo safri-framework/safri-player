@@ -21,6 +21,11 @@ RESTSongtreeItem::RESTSongtreeItem(RESTClient *client, int itemID, int prefetche
 {
 }
 
+RESTSongtreeItem::RESTSongtreeItem(RESTClient *client, QObject *parent)
+    : Core::BasicTreeItem(parentItem, parent), client(client), childsFetched(false), prefetchedChildCount(0), itemID(-1)
+{
+}
+
 int RESTSongtreeItem::getChildCount()
 {
     if (!childsFetched)

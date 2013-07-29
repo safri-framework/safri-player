@@ -67,10 +67,13 @@ void SafriAppInstance::disconnect()
 {
     qDebug() << "SafriAppInstance::disconnect()";
     Core::SettingsModule *appSettings = Core::ICore::settingsManager()->getModule("org.safri.app");
+    IAppController* oldAppController;
 
     if (isRESTClient)
     {
-        delete appController;
+        oldAppController = appController;
+
+        oldAppController->shutdown();
 
         appController = new LocalAppController();
         viewController->changeAppController(appController);
@@ -79,6 +82,13 @@ void SafriAppInstance::disconnect()
         Core::ICore::settingsManager()->saveSettings();
 
         isRESTClient = false;
+
+        // as everything needed for the disconnect was done
+        // in the app controllers shutdown method, we delay
+        // the destruction of the old app controller a little bit
+        // that should give all remaining signals&slots the chance to handle the
+        // change without ending up with an already deleted object
+        oldAppController->deleteLater();
     }
 }
 

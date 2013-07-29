@@ -99,7 +99,7 @@ Rectangle
                 opacity: 0.7
                 icon1: "resources/check-inv.png"
                 toggle: false
-                onButtonClicked: {connectTo(hostTextField.text, portTextField.text); dialogController.showSettings(false)}
+                onButtonClicked: {dialogController.showSettings(false); connectTo(hostTextField.text, portTextField.text); }
                 x: parent.width - width - (10 * root.globalScaleFactor)
             }
 

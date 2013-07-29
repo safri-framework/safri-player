@@ -20,7 +20,7 @@
 using namespace SafriRESTClient;
 
 RESTAppController::RESTAppController(QObject *parent) :
-    IAppController(parent), playlist(0), playlistModel(0)
+    IAppController(parent), playlist(0), playlistModel(0), songtree(0), songtreeModel(0)
 {
     // first we store a pointer to the original playback controller
     localPlaybackController = Core::ICore::playbackController();
@@ -32,9 +32,9 @@ RESTAppController::RESTAppController(QObject *parent) :
     // and use it's state as before the REST connect
     localPlaybackController->setPlaylist( Core::ICore::createPlaylist() );
 
-    restClient = new RESTClient( getRESTLocation() );
+    restClient = new RESTClient( getRESTLocation(), this );
 
-    restPlaybackController = new RESTPlaybackController(restClient);
+    restPlaybackController = new RESTPlaybackController(restClient, this);
 
     connect (restPlaybackController, SIGNAL( connectionFailed() ), this, SIGNAL( connectionFailed() ) );
 
@@ -45,19 +45,21 @@ RESTAppController::~RESTAppController()
 {
     qDebug() << "DESTRUCT RESTAppController";
 
-    // we remove the REST playback controller from the object pool and replace it
-    // by the original (local) playback controller
-    PluginSystem::PluginManager::instance()->removeObject( restPlaybackController );
+    if (songtree)
+    {
+        delete songtree;
+    }
 
-    delete restPlaybackController;
-
-    PluginSystem::PluginManager::instance()->addObject( localPlaybackController  );
+    if (songtreeModel)
+    {
+        delete songtreeModel;
+    }
 }
 
 QAbstractItemModel *RESTAppController::getSongtreeModel()
 {
     songtree = new RESTSongtree(restClient);
-    songtreeModel = new RESTSongtreeModel(songtree->getRoot(), this);
+    songtreeModel = new RESTSongtreeModel(songtree->getRoot());
 
     return songtreeModel;
 }
@@ -126,6 +128,15 @@ void RESTAppController::setShuffle(bool enabled)
 IAppController::APP_MODE RESTAppController::getMode()
 {
     return IAppController::REST;
+}
+
+void RESTAppController::shutdown()
+{
+    // we remove the REST playback controller from the object pool and replace it
+    // by the original (local) playback controller
+    PluginSystem::PluginManager::instance()->removeObject( restPlaybackController );
+
+    PluginSystem::PluginManager::instance()->addObject( localPlaybackController  );
 }
 
 QString RESTAppController::getRESTLocation()

@@ -144,6 +144,11 @@ IAppController::APP_MODE LocalAppController::getMode()
     return IAppController::LOCAL;
 }
 
+void LocalAppController::shutdown()
+{
+    // unused
+}
+
 QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
 {
     QList<Core::ITreeItemType *> *treeHierarchy;

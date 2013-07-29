@@ -23,6 +23,9 @@ namespace SafriRESTClient
 
             explicit RESTSongtreeItem(RESTClient* client, int itemID = -1, int prefetchedChildCount = 0,
                                       Core::BasicTreeItem *parentItem = 0, QObject *parent = 0);
+
+            explicit RESTSongtreeItem(RESTClient* client, QObject *parent);
+
             /**
              * @brief Overrides the basic implementation to handle the transparently
              *        fetched child data.
