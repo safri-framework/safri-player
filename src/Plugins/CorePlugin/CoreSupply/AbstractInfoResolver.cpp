@@ -9,7 +9,7 @@ using namespace Core;
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
     IInfoResolver(parent), running(false), workerThread(0), timeOutThreshold(15000)
 {
-    QMutex fifoMutex(QMutex::Recursive);
+    QMutex fifoMutex();
     timoutTimer = new QTimer(this);
     timoutTimer->setSingleShot(true);
     timoutTimer->setInterval(timeOutThreshold);
@@ -55,9 +55,11 @@ void AbstractInfoResolver::setError(QString error)
 void AbstractInfoResolver::setInfo(QVariant info)
 {
     qDebug()<< Q_FUNC_INFO ;
-    currentRequest->setInfoData(info);
-    currentRequest = 0;
     timoutTimer->stop();
+    if(currentRequest)
+        currentRequest->setInfoData(info);
+
+    currentRequest = 0;
     handleNextRequest();
 }
 
@@ -94,7 +96,7 @@ bool AbstractInfoResolver::hasRequest()
 void AbstractInfoResolver::handleNextRequest()
 {
     fifoMutex.lock();
-
+    timoutTimer->stop();
     if(hasRequest())
     {
         currentRequest = getNextRequest();
