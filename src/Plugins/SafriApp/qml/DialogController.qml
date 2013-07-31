@@ -29,7 +29,6 @@ Rectangle {
     function hideError()
     {
         setVisible = false;
-        errorVisible = false;
     }
 
     function showSettings(visible)
@@ -46,9 +45,7 @@ Rectangle {
         }
         else
         {
-
            setVisible = false;
-           settingsVisible = false;
         }
     }
     onSetVisibleChanged:
@@ -66,6 +63,8 @@ Rectangle {
         {
             opacityAnimation.to = 0
             heightAnimation.to = -dialog.height
+            settingsVisible = false;
+            errorVisible = false
             if(animations.running)
                 animations.complete()
            animations.start()
@@ -133,7 +132,7 @@ Rectangle {
         MouseArea
         {
           anchors.fill: parent;
-          onClicked: {dialogController.visible = false; setVisible = false}
+          onClicked: {dialogController.visible = false; setVisible = false;}
         }
     }
 
