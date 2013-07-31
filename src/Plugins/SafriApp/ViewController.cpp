@@ -23,6 +23,10 @@
 
 ViewController::ViewController(IAppController *appController): appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
 {
+
+
+
+    dialogController = 0;
     QQuickView *view = new QQuickView();
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
@@ -50,7 +54,7 @@ ViewController::ViewController(IAppController *appController): appController(app
     playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
 
 
-    connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
+    //connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
     connect( dialerView,         SIGNAL(volumeChanged(QVariant)),            this, SLOT(volumeSlot(QVariant)) );
     connect( playlistView,       SIGNAL(movePos(QVariant, QVariant)),        this, SLOT(changePos(QVariant,QVariant)) );
     connect( playlistView,       SIGNAL(removeIndexFromPlaylist(QVariant)),  this, SLOT(removeFromPlaylist(QVariant)) );
@@ -182,10 +186,22 @@ void ViewController::testPlay()
 
 }
 
+
 void ViewController::volumeSlot(QVariant vol)
 {
-        IPlaybackController* playbackController = Core::ICore::playbackController();
-        playbackController->setVolume(vol.toInt());
+        float diff = vol.toFloat();
+        if(abs(tmpVolDiff - diff) > 20)
+            return;
+
+        tmpVolDiff = diff;
+        currentVol += diff/2;
+
+        if (currentVol > 100)
+            currentVol =100;
+        if (currentVol < 0)
+            currentVol = 0;
+
+        Core::ICore::playbackController()->setVolume(currentVol);
 }
 
 void ViewController::setMusicProgress(int val)
@@ -294,6 +310,7 @@ void ViewController::changeAppController(IAppController *newController)
         QObject::disconnect(playbackController_playPauseAction);
         QObject::disconnect(playbackController_nextAction);
         QObject::disconnect(playbackController_previousAction);
+        QObject::disconnect(playbackController_volChanged);
     }
 
     appController = newController;
@@ -329,6 +346,7 @@ void ViewController::changeAppController(IAppController *newController)
     playbackController_playPauseAction =    connect( playPauseButton,    SIGNAL(buttonClicked()),   playbackController->playPauseAction(), SLOT(trigger()));
     playbackController_nextAction =         connect( nextButton,         SIGNAL(buttonClicked()),   playbackController->nextAction(),      SLOT(trigger()));
     playbackController_previousAction =     connect( prevButton,         SIGNAL(buttonClicked()),   playbackController->previousAction(),  SLOT(trigger()));
+    playbackController_volChanged =         connect( playbackController, SIGNAL(volumeChanged(int)), this, SLOT(volumeChangedByPBController(int)));
 
     signalConnectionsInitialized = true;
 
@@ -346,6 +364,7 @@ void ViewController::changeAppController(IAppController *newController)
 
 void ViewController::showErrorMessage(QString message)
 {
+    if(dialogController)
      QMetaObject::invokeMethod(dialogController, "showError", Q_ARG(QVariant, message));
 }
 
@@ -374,6 +393,11 @@ void ViewController::restSettingsChanged(QString setting)
     }
 
     textField->setProperty("text", restSettings->getSetting(setting).toString() );
+}
+
+void ViewController::volumeChangedByPBController(int vol)
+{
+    currentVol = vol;
 }
 
 
