@@ -56,6 +56,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
 
         void setupSongtreeModel();
         void restSettingsChanged(QString setting);
+        void volumeChangedByPBController(int vol);
 
     private:
         IAppController* appController;
@@ -89,6 +90,10 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QMetaObject::Connection playbackController_playPauseAction;
         QMetaObject::Connection playbackController_nextAction;
         QMetaObject::Connection playbackController_previousAction;
+        QMetaObject::Connection playbackController_volChanged;
+
+        float tmpVolDiff;
+        float currentVol;
 };
 
 #endif // SAFRIMOBILEGUIINSTANCE_H
