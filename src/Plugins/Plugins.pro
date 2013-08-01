@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += CorePlugin
+SUBDIRS += CorePlugin \
+    DarkBluePlayerWidget
 SUBDIRS += Playlist
 SUBDIRS += PlaybackController
 SUBDIRS += PhononBackend

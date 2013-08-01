@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/stylesheet">
+        <file>DarkBluePlayerStylesheet.css</file>
+    </qresource>
+    <qresource prefix="/border_images">
+        <file>Ressources/player_background.png</file>
+    </qresource>
+</RCC>
