@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-TARGET = Safri2Skin
+TARGET = Safri3Skin
 TEMPLATE = lib
 
 PROVIDER = safri
@@ -16,16 +16,16 @@ include(../../SafriPlugin.pri)
 INCLUDEPATH += ../MainWindow
 LIBS += -L"../../../bin/plugins/safri" -lMainWindow
 
-DEFINES += SAFRI2SKIN_LIBRARY
+DEFINES += SAFRI3SKIN_LIBRARY
 
-SOURCES += Safri2SkinPlugin.cpp
+SOURCES += Safri3SkinPlugin.cpp
 
-HEADERS += Safri2SkinPlugin.h\
-        safri2skin_global.h
+HEADERS += Safri3SkinPlugin.h\
+        safri3skin_global.h
 
 OTHER_FILES += \
-    Safri2Skin.xml \
-    safri2skin.json \
+    Safri3Skin.xml \
+    safri3skin.json \
     stylesheet.css
 
 RESOURCES += \

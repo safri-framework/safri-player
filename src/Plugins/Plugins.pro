@@ -21,7 +21,7 @@ SUBDIRS += CollectionController
 SUBDIRS += AudioSQLStorage
 SUBDIRS += SafriApp
 SUBDIRS += TagLibMediaTagger
-SUBDIRS += Safri2Skin
+SUBDIRS += Safri3Skin
 
 #SUBDIRS += HackingWidget
 #SUBDIRS += TouchEventFilterPlugin
