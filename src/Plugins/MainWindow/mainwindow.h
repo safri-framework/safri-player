@@ -30,7 +30,6 @@ class MainWindow : public QMainWindow
     private:
 
         Ui::MainWindow *ui;
-        void readAndSetStylesheet();
         int visiblePlugins;
         Core::IGUIController* guiController;
         QList<Core::ISideBarPlugin*> plugins;
@@ -43,6 +42,7 @@ class MainWindow : public QMainWindow
         void showTestPlaylist();
         QTimeLine* closeSidebarTimeline;
         QTimeLine* openSidebarTimeline;
+
     private slots:
 
         void sideBarButtonClicked(bool checked);
@@ -62,6 +62,8 @@ class MainWindow : public QMainWindow
         void on_actionSave_triggered();
 
         void on_actionSettings_triggered();
+
+        void objectAddedToObjectPool(QObject *object);
 
 public slots:
 

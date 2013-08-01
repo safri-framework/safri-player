@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/iplaylistwidget.h"
+#include "Interfaces/IMainWindowSkin.h"
 #include "icore.h"
 #include <QWidget>
 
@@ -28,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), visiblePlugins(0)
 {
     ui->setupUi(this);
-    readAndSetStylesheet();
 
     splitter = new QSplitter(Qt::Horizontal, this->ui->mainframe);
     splitter->addWidget(this->ui->widget_frame);
@@ -63,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     changePlayerWidget();
     changePlaylistWidget();
 
+    connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
 
     showTestPlaylist();
     this->setWindowTitle("Safri-Player");
@@ -72,19 +73,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-
-void MainWindow::readAndSetStylesheet()
-{
-
-    QFile file;
-       file.setFileName(":stylesheet/stylesheet.css");
-       file.open(QFile::ReadOnly);
-       QString styleSheet = QLatin1String(file.readAll());
-       this->setStyleSheet(styleSheet);
-
-
 }
 
 void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
@@ -337,4 +325,14 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionSettings_triggered()
 {
     Core::ICore::showSettingsDialog();
+}
+
+void MainWindow::objectAddedToObjectPool(QObject *object)
+{
+    IMainWindowSkin *skin = qobject_cast<IMainWindowSkin*>(object);
+    if (skin != 0)
+    {
+        qDebug() << "IMainWindowSkin class added: " << skin->getName();
+        this->setStyleSheet( skin->getStylesheet() );
+    }
 }

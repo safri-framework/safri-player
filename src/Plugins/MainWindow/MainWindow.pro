@@ -28,32 +28,10 @@ HEADERS +=\
     MainWindowSkin.h \
     Interfaces/IMainWindowSkin.h
 
-symbian {
-    MMP_RULES += EXPORTUNFROZEN
-    TARGET.UID3 = 0xEB1257ED
-    TARGET.CAPABILITY = 
-    TARGET.EPOCALLOWDLLDATA = 1
-    addFiles.sources = MainWindow.dll
-    addFiles.path = !:/sys/bin
-    DEPLOYMENT += addFiles
-}
-
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
-
 FORMS += \
     mainwindow.ui
 
 OTHER_FILES += \
-    stylesheet.css \
     MainWindow.xml \
     mainwindow.json
 
-RESOURCES += \
-    ressources.qrc
