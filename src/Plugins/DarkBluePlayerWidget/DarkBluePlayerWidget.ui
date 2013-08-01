@@ -48,7 +48,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,100">
       <property name="leftMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="topMargin">
        <number>8</number>
@@ -63,12 +63,15 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>60</width>
+          <width>63</width>
           <height>63</height>
          </size>
         </property>
         <property name="text">
-         <string>Cover</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="ressources.qrc">:/border_images/Ressources/no_cover.png</pixmap>
         </property>
        </widget>
       </item>
@@ -95,7 +98,7 @@
            <item>
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>SongInfos</string>
+              <string>&lt;b&gt;No Prayer For The Dying&lt;/b&gt;&lt;br&gt;Iron Maiden - Tailgunner</string>
              </property>
             </widget>
            </item>
@@ -159,7 +162,35 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Next Song Infos</string>
+              <string>&lt;b&gt;Next Song&lt;/b&gt;&lt;br&gt;Iron Maiden - No Prayers For The Dying</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="type" stdset="0">
+              <string>nextSong</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="minimumSize">
+              <size>
+               <width>31</width>
+               <height>31</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>31</width>
+               <height>31</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="ressources.qrc">:/border_images/Ressources/no_cover_small.png</pixmap>
              </property>
             </widget>
            </item>
@@ -195,6 +226,9 @@
             <widget class="QSlider" name="seekSlider">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="type" stdset="0">
+              <string>seeker</string>
              </property>
             </widget>
            </item>
@@ -234,6 +268,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -4,5 +4,13 @@
     </qresource>
     <qresource prefix="/border_images">
         <file>Ressources/player_background.png</file>
+        <file>Ressources/no_cover.png</file>
+        <file>Ressources/no_cover_small.png</file>
+        <file>Ressources/seeker_filled.png</file>
+        <file>Ressources/seeker_groove.png</file>
+        <file>Ressources/seeker_handle.png</file>
+        <file>Ressources/slider_background_empty.png</file>
+        <file>Ressources/slider_background_filled.png</file>
+        <file>Ressources/slider_handle.png</file>
     </qresource>
 </RCC>

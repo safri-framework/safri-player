@@ -7,3 +7,82 @@ QLabel
 {
     color: #FFFFFF;
 }
+
+QLabel[type="nextSong"]
+{
+    padding-right: 5px;
+}
+
+QSlider
+{
+
+     min-height:16px;
+     max-height:16px;
+}
+
+
+QSlider::handle:horizontal
+{
+    background:none;
+    margin-top:0px;
+    margin-bottom:0px;
+    width: 8px;
+    height: 9px;
+}
+
+
+QSlider::groove:horizontal
+{
+     border-image:  url(:border_images/Ressources/slider_background_empty.png) 0px 4px 0px 4px;
+     border-width: 0px 4px 0px 4px;
+     min-height:9px;
+     max-height:9px;
+     margin-top:4px;
+     margin-bottom:3px;
+     padding-left:-4px;
+     padding-right:-4px;
+
+}
+
+
+ QSlider::sub-page:horizontal
+ {
+    border-image:  url(:border_images/Ressources/slider_background_filled.png) 0px 4px 4px 0px;
+     border-width: 0px 4px 0px 4px;
+     min-height:9px;
+     max-height:9px;
+     margin-top:4px;
+     margin-bottom:3px;
+ }
+
+
+
+
+QSlider::handle:horizontal[type="seeker"]
+{
+     background:none;
+     margin-top:0px;
+     margin-bottom:0px;
+     width: 8px;
+     height: 9px;
+}
+
+
+QSlider::groove:horizontal[type="seeker"]
+{
+     border-image:  url(:border_images/Ressources/seeker_groove.png) 0px 4px 0px 4px;
+     border-width: 0px 4px 0px 4px;
+     min-height:10px;
+     max-height:10px;
+}
+
+
+QSlider::sub-page:horizontal[type="seeker"]
+{
+    border-image:  url(:border_images/Ressources/seeker_filled.png) 0px 1px 0px 4px;
+     border-width: 0px 1px 0px 4px;
+     min-height:10px;
+     max-height:10px;
+     padding-left:5px;
+     min-width:5px;
+}
