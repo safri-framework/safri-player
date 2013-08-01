@@ -17,12 +17,16 @@ LIBS += -L"../../../bin/plugins/safri" -lCore
 
 SOURCES += \
     mainwindowplugin.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    MainWindowSkin.cpp \
+    Interfaces/IMainWindowSkin.cpp
 
 HEADERS +=\
         MainWindow_global.h \
     mainwindowplugin.h \
-    mainwindow.h
+    mainwindow.h \
+    MainWindowSkin.h \
+    Interfaces/IMainWindowSkin.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
