@@ -15,6 +15,12 @@ QWidget[type="treeView"]
     border: none;
 }
 
+QTreeView
+{
+    background-color: rgba(255, 255, 255, 0%);
+    color: #FFFFFF;
+}
+
 QWidget[type="frame"]
 {
     background-image: url(:border_images/Ressources/background.png);
@@ -79,4 +85,46 @@ QPushButton[place="menu_left"][type="menu_button_last"]
     margin-left:    10px;
 
     border-image: url(:buttons/Ressources/sidebar_button.png);
+}
+
+QScrollBar:vertical
+{
+      border: none;
+      background: rgba(255, 255, 255, 0%)   ;
+      width: 11px;
+      margin: 20px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical
+{
+    border-image: url(:border_images/Ressources/scrollbar_handle.png) 5px 0px 5px 0px;
+    border-width: 5px 0px 5px 0px;
+    margin-right:1px;
+    margin-bottom:1px;
+}
+
+
+QScrollBar::add-line:vertical
+{
+    border-bottom: none;
+      background: red;
+      height: 0px;
+      subcontrol-position: bottom;
+
+      subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical
+{
+      border-bottom: 1px solid #818181;
+      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+      stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+      height: 19px;
+      subcontrol-position: top;
+      subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+      background: none;
 }

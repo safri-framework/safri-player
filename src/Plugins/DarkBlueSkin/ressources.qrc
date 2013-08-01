@@ -7,6 +7,7 @@
         <file>Ressources/background.png</file>
         <file>Ressources/menubar_background.png</file>
         <file>Ressources/listheader_background.png</file>
+        <file>Ressources/scrollbar_handle.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>
