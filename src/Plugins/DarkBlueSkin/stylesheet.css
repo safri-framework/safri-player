@@ -1,0 +1,82 @@
+QMenuBar
+{
+    background-image: url(:border_images/Ressources/menubar_background.png);
+}
+
+QMenuBar::item
+{
+    background-color: rgba(255, 255, 255, 0%);
+    color: #FFFFFF;
+}
+
+QWidget[type="treeView"]
+{
+    background-image: url(:border_images/Ressources/background.png);
+    border: none;
+}
+
+QWidget[type="frame"]
+{
+    background-image: url(:border_images/Ressources/background.png);
+}
+
+QWidget[place="menu_left"][type="frame"]
+{
+
+    background-image: url(:border_images/Ressources/sidebar_background.png);
+    min-width: 100px;
+    max-width: 100px;
+}
+
+QSplitter
+{
+    height: 10px;
+    background-image: url(:border_images/Ressources/background.png);
+}
+
+QPushButton[place="menu_left"][type="menu_button"]
+{
+    min-width:      80px;
+    max-width:      80px;
+    min-height:     50px;
+    max-height:     50px;
+    margin-left:    10px;
+    margin-bottom:  -1px;
+
+    border-image: url(:buttons/Ressources/sidebar_button.png);
+}
+
+PlayerWidget
+{
+    background-color:red;
+    background-image: none;
+}
+
+QHeaderView::section
+{
+    background-image: url(:border_images/Ressources/listheader_background.png);
+    color: #FFFFFF;
+
+    padding-left:10px;
+
+    border-style:   solid;
+    border-color:   #4e6d86;
+    border-width:   1px;
+    border-left:    none;
+    border-right:   none;
+    border-bottom:  none;
+
+    min-height: 27;
+    max-height: 27;
+}
+
+QPushButton[place="menu_left"][type="menu_button_last"]
+{
+    min-width:      80px;
+    max-width:      80px;
+    min-height:     50px;
+    max-height:     50px;
+    margin-left:    10px;
+
+    border-image: url(:buttons/Ressources/sidebar_button.png);
+}
