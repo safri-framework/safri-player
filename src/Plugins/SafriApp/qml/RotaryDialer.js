@@ -23,7 +23,7 @@ function initialize()
 {
     centerX =  dialerView.width / 2;
     centerY =  dialerView.height / 2;
-    console.log("init")
+   // console.log("init")
 }
 
 
@@ -77,22 +77,33 @@ function dialerReleased(event)
 function dialerMoved(event)
 {
     var dist = getEventDist(event)
-    console.log(dist/dialerView.scaleFactor)
+  //  console.log(dist/dialerView.scaleFactor)
 
     if(correctPressPoint && dist > 100*dialerView.scaleFactor && dist < 198*dialerView.scaleFactor)
     {
         var pos = getEventAngle(event);
+
        // position = (currentAngle + getAngleDiff(pos) +360)%360 ;
 
         var diff = getAngleDiff(pos);
+        //console.log("                                                   "+diff)
         var nextPos = (dialer.rotation + diff + 360 ) % 360;
+        //console.log(nextPos)
+                 dialer.rotation  = (dialer.rotation + diff + 360 ) % 360;
+
+        volumeChanged(diff);
+
+
+        /*
+
         if(Math.abs(dialer.rotation - nextPos) > 50)
             diff = 0;
+        // dialer.rotation  = (dialer.rotation + diff + 360 ) % 360;
         if (nextPos > 242)
                 diff = 0
 
-        dialer.rotation  = (dialer.rotation + diff + 360 ) % 360;
-        volumeChanged(100 / 242 * dialer.rotation);
+       // dialer.rotation  = (dialer.rotation + diff + 360 ) % 360;
+        */
      }
 
 }

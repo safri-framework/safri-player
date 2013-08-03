@@ -52,8 +52,10 @@ Rectangle{
     height:parent.height
 
     VisualDataModel {
+        onModelUpdated: listView.contentY = 0;
         id: musicQMLModel
         model:musicModel
+
         delegate:
         Component
         {
@@ -294,6 +296,7 @@ section.property: musicQMLModel.count > 100 ? "display":"" ;
 section.criteria: ViewSection.FirstCharacter
 section.delegate: musicQMLModel > 100 ? sectionHeading : dummy
 section.labelPositioning: section.labelPositioning |= ViewSection.CurrentLabelAtStart
+
 
 }
 

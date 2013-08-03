@@ -60,7 +60,7 @@ Rectangle
                     id: headLine
                     objectName: "hostTextField"
                     font.pixelSize: 20 * root.globalScaleFactor;
-                    text: "Fehler"
+                    text: "Error"
                     color:"white"
                 }
 
