@@ -5,6 +5,8 @@ DEFINES += SAFRI_VERSION=\"$${VERSTR}\"
 
 DEFINES += SELECTED_PLUGINS_FILE=\\\"selectedplugins.lst\\\"
 
+#DEFINES += SAFRI_PORTABLE
+
 android {
 
     DEFINES += ANDROID_LIB_PATH=\\\"/data/data/org.Safri/lib\\\"

@@ -23,7 +23,15 @@ int main(int argc, char *argv[])
 
     QStringList paths;
     QString selectedPluginsFile;
-    QString storageDirectory = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+    QString storageDirectory;
+
+
+#if defined SAFRI_PORTABLE && ! defined ANDROID
+    storageDirectory = QCoreApplication::applicationDirPath() + "/profile";
+#else
+    storageDirectory = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+#endif
+
     QString configFilename = storageDirectory + "/safri-config.xml";
 
 #ifdef ANDROID
@@ -92,12 +100,12 @@ int main(int argc, char *argv[])
 
     if (selectedPluginsFile.isEmpty())
     {
-        selectedPluginsFile = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/" + QString(SELECTED_PLUGINS_FILE);
+        selectedPluginsFile = storageDirectory + "/" + QString(SELECTED_PLUGINS_FILE);
     }
     else if (!selectedPluginsFile.contains("/"))
     {
         // if the command line argument contains no path, use the default location
-        selectedPluginsFile = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0) + "/" + selectedPluginsFile;
+        selectedPluginsFile = storageDirectory + "/" + selectedPluginsFile;
     }
 
     QString absolutePath = QFileInfo(selectedPluginsFile).absolutePath();

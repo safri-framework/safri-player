@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QStandardPaths>
+#include <QCoreApplication>
 #include "Settings/SettingsManagerDialog.h"
 #include <QUrl>
 
@@ -137,7 +138,14 @@ ICollectionController *ICore::collectionController()
 
 QString ICore::storageDirectory()
 {
-    QString storageLocation = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+    QString storageLocation;
+
+#if defined SAFRI_PORTABLE && ! defined ANDROID
+    storageLocation = QCoreApplication::applicationDirPath() + "/profile";
+#else
+    storageLocation = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0);
+#endif
+
     return  storageLocation;
 }
 
