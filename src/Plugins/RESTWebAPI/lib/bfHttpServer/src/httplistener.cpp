@@ -8,6 +8,9 @@
 #include "httpconnectionhandlerpool.h"
 #include <QCoreApplication>
 
+#include "icore.h"
+#include "Settings/SettingsManager.h"
+
 HttpListener::HttpListener(QSettings* settings, HttpRequestHandler* requestHandler, QObject *parent)
     : QTcpServer(parent)
 {
@@ -16,7 +19,11 @@ HttpListener::HttpListener(QSettings* settings, HttpRequestHandler* requestHandl
     this->settings=settings;
     pool=new HttpConnectionHandlerPool(settings,requestHandler);
     // Start listening
-    int port=settings->value("port").toInt();
+    //int port=settings->value("port").toInt();
+
+    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+    int port = restSettings->getSetting("port").toInt();
+
     listen(QHostAddress::Any, port);
     if (!isListening()) {
         qCritical("HttpListener: Cannot bind on port %i: %s",port,qPrintable(errorString()));
