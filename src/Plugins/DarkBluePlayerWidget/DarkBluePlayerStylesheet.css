@@ -58,7 +58,7 @@ QSlider::groove:horizontal
 
 
 
-QSlider::handle:horizontal[type="seeker"]
+QSlider::handle:horizontal
 {
      background:none;
      margin-top:0px;
@@ -68,18 +68,18 @@ QSlider::handle:horizontal[type="seeker"]
 }
 
 
-QSlider::groove:horizontal[type="seeker"]
+QSlider::groove:horizontal
 {
-     border-image:  url(:border_images/Ressources/seeker_groove.png) 0px 4px 0px 4px;
+     border-image:  url(:border_images/Ressources/progress_auszen.png) 0px 4px 0px 4px;
      border-width: 0px 4px 0px 4px;
      min-height:10px;
      max-height:10px;
 }
 
 
-QSlider::sub-page:horizontal[type="seeker"]
+QSlider::sub-page:horizontal
 {
-    border-image:  url(:border_images/Ressources/seeker_filled.png) 0px 1px 0px 4px;
+    border-image:  url(:border_images/Ressources/progress_innen.png) 0px 1px 0px 4px;
      border-width: 0px 1px 0px 4px;
      min-height:10px;
      max-height:10px;

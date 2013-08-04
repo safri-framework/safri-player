@@ -19,12 +19,14 @@ DEFINES += DARKBLUEPLAYERWIDGET_LIBRARY
 
 SOURCES += DarkBluePlayerWidgetPlugin.cpp \
     DarkBluePlayerWidget.cpp \
-    PlayerWidgetFactory.cpp
+    PlayerWidgetFactory.cpp \
+    PlayerControl.cpp
 
 HEADERS += DarkBluePlayerWidgetPlugin.h\
         darkblueplayerwidget_global.h \
     DarkBluePlayerWidget.h \
-    PlayerWidgetFactory.h
+    PlayerWidgetFactory.h \
+    PlayerControl.h
 
 OTHER_FILES += \
     darkblueplayerwidget.json \

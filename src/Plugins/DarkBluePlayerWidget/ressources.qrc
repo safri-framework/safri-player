@@ -12,5 +12,18 @@
         <file>Ressources/slider_background_empty.png</file>
         <file>Ressources/slider_background_filled.png</file>
         <file>Ressources/slider_handle.png</file>
+        <file>Ressources/progress_auszen.png</file>
+        <file>Ressources/progress_innen.png</file>
+    </qresource>
+    <qresource prefix="/control">
+        <file>Ressources/control/next_normal.png</file>
+        <file>Ressources/control/next_pressed.png</file>
+        <file>Ressources/control/paused_pressed.png</file>
+        <file>Ressources/control/paused.png</file>
+        <file>Ressources/control/playing_pressed.png</file>
+        <file>Ressources/control/playing.png</file>
+        <file>Ressources/control/previous_normal.png</file>
+        <file>Ressources/control/previous_pressed.png</file>
+        <file>Ressources/control/progress.png</file>
     </qresource>
 </RCC>
