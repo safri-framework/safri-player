@@ -237,12 +237,19 @@ void PlaybackController::backendStateChanged(Core::IMediaBackend::BackendState s
     switch (state)
     {
         case Core::IMediaBackend::BUFFERING:
+
             qDebug()<<"BUFFERING";
             Q_EMIT stateChanged(Core::BUFFERING);
             break;
-        case Core::IMediaBackend::PLAYING:
-            Q_EMIT stateChanged(Core::PLAY);
 
+        case Core::IMediaBackend::PLAYING:
+
+            Q_EMIT stateChanged(Core::PLAY);
+            break;
+
+        default:
+
+            break;
     }
 }
 

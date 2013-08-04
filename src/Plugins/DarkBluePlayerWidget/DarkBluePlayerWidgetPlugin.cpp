@@ -10,6 +10,7 @@ DarkBluePlayerWidgetPlugin::DarkBluePlayerWidgetPlugin()
 
 bool DarkBluePlayerWidgetPlugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED(arguments)
     qDebug() << "DarkBluePlayerWidgetPlugin";
     addObject( new PlayerWidgetFactory(this) );
 

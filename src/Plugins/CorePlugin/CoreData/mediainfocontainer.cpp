@@ -2,14 +2,14 @@
 
 using namespace Core;
 
-MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl)
-    : mediaUrl(mediaUrl)
+MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl, QObject *parent)
+    : QObject(parent), mediaUrl(mediaUrl)
 {
 
 }
 
 MediaInfoContainer::MediaInfoContainer(MediaInfoContainer &other)
-    : mediaUrl(other.mediaUrl), infoMap(other.infoMap)
+    : QObject( other.parent() ), mediaUrl(other.mediaUrl), infoMap(other.infoMap)
 {
 
 }

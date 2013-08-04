@@ -16,7 +16,7 @@ INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
 
-DEFINES += SAFRIMOBILEGUIQML_LIBRARY
+DEFINES += SAFRIAPP_LIBRARY
 
 SOURCES += \
     SafriAppPlugin.cpp \

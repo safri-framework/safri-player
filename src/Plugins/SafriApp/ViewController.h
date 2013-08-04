@@ -24,7 +24,8 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
 {
     Q_OBJECT
     public:
-        ViewController(IAppController* appController);
+
+        ViewController(IAppController* appController, QObject* parent = 0);
 
     public slots:
         void playPauseSlot();

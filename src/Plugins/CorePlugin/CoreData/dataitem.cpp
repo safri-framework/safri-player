@@ -92,6 +92,10 @@ QString DataItem::typeToString(DATA_ITEM_TYPE type)
         case YEAR:
             return "YEAR";
             break;
+
+        default:
+            return "";
+            break;
     }
 
     return "";

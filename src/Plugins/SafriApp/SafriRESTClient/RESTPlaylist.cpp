@@ -33,6 +33,8 @@ RESTPlaylist::~RESTPlaylist()
 
 bool RESTPlaylist::isCurrentMedia(int index)
 {
+    Q_UNUSED(index)
+    return false;
 }
 
 void RESTPlaylist::moveMedia(int fromPosition, int toPosition)
@@ -69,6 +71,8 @@ int RESTPlaylist::getCurrentMediaPosition()
 
 void RESTPlaylist::insertNodeAtPosition(int node, int position)
 {
+    Q_UNUSED(node)
+    Q_UNUSED(position)
 }
 
 bool RESTPlaylist::isValid()

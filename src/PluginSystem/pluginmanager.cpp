@@ -2,6 +2,7 @@
 #include "pluginspec.h"
 #include "pluginviewer.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
 #include <QDir>
@@ -56,6 +57,7 @@ bool PluginManager::loadPlugins()
     QString filename;
     PluginSpec *pluginSpec;
     bool disablePluginViewer = false;
+    QString currentPath = QDir::current().absolutePath();
 
 
     // Load plugin specs
@@ -108,6 +110,7 @@ bool PluginManager::loadPlugins()
             if ( !(pluginSpec && loadPlugin(pluginSpec) ) )
             {
                 qDebug() << "could not load plugin: " << pluginToLoad;
+                QDir::setCurrent(currentPath);
                 return false;
             }
 
@@ -123,6 +126,10 @@ bool PluginManager::loadPlugins()
 
     if (!disablePluginViewer)
         showPluginViewer();
+
+    // reset the current path, because plugin loaders would change
+    // it during the loading process
+    QDir::setCurrent(currentPath);
 
     return true;
 }

@@ -22,7 +22,8 @@
 #include "QApplication"
 #include <QStandardPaths>
 
-ViewController::ViewController(IAppController *appController): appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
+ViewController::ViewController(IAppController *appController, QObject *parent)
+    : QObject(parent), appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
 {
 
 

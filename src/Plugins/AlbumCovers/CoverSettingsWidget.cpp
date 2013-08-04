@@ -21,7 +21,7 @@ QString CoverSettingsWidget::getTitle()
 
 QIcon CoverSettingsWidget::getIcon()
 {
-
+    return QIcon();
 }
 
 void CoverSettingsWidget::transferSettings()

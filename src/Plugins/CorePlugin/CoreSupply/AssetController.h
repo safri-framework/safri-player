@@ -1,6 +1,7 @@
 #ifndef ASSETCONTROLLER_H
 #define ASSETCONTROLLER_H
 
+#include "CorePlugin_global.h"
 #include <QObject>
 #include <QMap>
 #include "../Interfaces/IAssetService.h"
@@ -8,7 +9,7 @@
 
 namespace Controller
 {
-    class AssetController : public QObject
+    class COREPLUGINSHARED_EXPORT AssetController : public QObject
     {
         Q_OBJECT
     public:

@@ -3,6 +3,7 @@
 #include "plugindependency.h"
 
 #include <QFile>
+#include <QDir>
 #include <QFileInfo>
 #include <QDomDocument>
 #include <QDomNodeList>
@@ -81,7 +82,15 @@ void PluginSpec::loadLibrary()
 
     qDebug() << "\nLoading library: " << libName;
 
-    QPluginLoader loader(libName);
+    // we set the current path to the plugins absolute path
+    // because windows would search for 3rd party dlls that this plugin
+    // depends in the current path
+    QString pluginPath = QFileInfo(libName).absolutePath();
+    QDir::setCurrent(pluginPath);
+
+    qDebug() << "set current path: " << pluginPath;
+
+    QPluginLoader loader(libName);    
 
     if (!loader.load())
     {

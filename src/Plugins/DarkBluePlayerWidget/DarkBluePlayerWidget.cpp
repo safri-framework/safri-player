@@ -36,8 +36,10 @@ void DarkBluePlayerWidget::loadStylesheet()
 
 void DarkBluePlayerWidget::setVolumeEnabled(bool value)
 {
+    Q_UNUSED(value)
 }
 
 void DarkBluePlayerWidget::setSeekerEnabled(bool value)
 {
+    Q_UNUSED(value)
 }

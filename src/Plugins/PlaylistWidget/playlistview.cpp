@@ -84,6 +84,10 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
  {
     bool accepted = true;
     const QMimeData *mimeData = event->mimeData();
+
+    Q_UNUSED(accepted)
+    Q_UNUSED(mimeData)
+
 //event->acceptProposedAction();
 event->accept();
 /*
