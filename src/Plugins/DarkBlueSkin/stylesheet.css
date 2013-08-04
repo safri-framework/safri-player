@@ -24,6 +24,7 @@ QTreeView
 QWidget[type="frame"]
 {
     background-image: url(:border_images/Ressources/background.png);
+
 }
 
 QWidget[place="menu_left"][type="frame"]
@@ -32,12 +33,24 @@ QWidget[place="menu_left"][type="frame"]
     background-image: url(:border_images/Ressources/sidebar_background.png);
     min-width: 100px;
     max-width: 100px;
+    border-right: 3px solid rgba(62, 75, 84, 100%);
+
 }
+
+
+
 
 QSplitter
 {
     height: 10px;
     background-image: url(:border_images/Ressources/background.png);
+
+}
+
+QSplitter::handle
+{
+    image:none;
+    border-right: 3px solid rgba(62, 75, 84, 100%);
 }
 
 QPushButton[place="menu_left"][type="menu_button"]
@@ -87,6 +100,11 @@ QPushButton[place="menu_left"][type="menu_button_last"]
     border-image: url(:buttons/Ressources/sidebar_button.png);
 }
 
+QPushButton:checked[place="menu_left"][type="menu_button_last"]
+{
+    border-image: url(:buttons/Ressources/button_sidebar_on.png);
+}
+
 QScrollBar:vertical
 {
       border: none;
@@ -128,3 +146,53 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
       background: none;
 }
+
+
+QWidget[ident="playlistFrame"]
+{
+border-left: 3px solid #2F3A42;
+margin-left: 3px;
+}
+
+QWidget[type="playlistWidget"]
+{
+
+margin-left: 3px;
+}
+
+QComboBox
+{
+    border-image:url(:border_images/Ressources/combobo_normal.png) 1 22 1 1;
+    min-height:26px;
+    max-height:26px;
+    border-width:1px;
+    color: #FFFFFF;
+    font:  #FFFFFF;
+
+}
+
+QComboBox:pressed
+{
+    border-image:url(:border_images/Ressources/combobo_pressed.png);
+    color: red;
+    font:12px   red;
+
+}
+
+QComboBox:!editable{
+background: blue;
+color:white;
+}
+
+QComboBox:editable{
+background: red;
+color:white;
+}
+QComboBox:checked
+{
+    border-image:url(:border_images/Ressources/combobo_checked.png);
+    color: green;
+    font:  green;
+}
+
+

@@ -8,8 +8,12 @@
         <file>Ressources/menubar_background.png</file>
         <file>Ressources/listheader_background.png</file>
         <file>Ressources/scrollbar_handle.png</file>
+        <file>Ressources/combobo_checked.png</file>
+        <file>Ressources/combobo_normal.png</file>
+        <file>Ressources/combobo_pressed.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>
+        <file>Ressources/button_sidebar_on.png</file>
     </qresource>
 </RCC>
