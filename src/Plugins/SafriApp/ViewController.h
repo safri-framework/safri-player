@@ -75,6 +75,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* hostTextField;
         QObject* portTextField;
         QObject* dialogController;
+        QObject* coverView;
         QAbstractItemModel* model;
         QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;

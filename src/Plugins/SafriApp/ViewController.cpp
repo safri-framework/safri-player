@@ -20,6 +20,7 @@
 #include "CoreSupply/AssetController.h"
 #include "QMainWindow"
 #include "QApplication"
+#include <QStandardPaths>
 
 ViewController::ViewController(IAppController *appController): appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
 {
@@ -52,6 +53,8 @@ ViewController::ViewController(IAppController *appController): appController(app
     portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
     dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
     playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
+    coverView           = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("coverView"));
+
 
 
     //connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
@@ -73,6 +76,15 @@ ViewController::ViewController(IAppController *appController): appController(app
     hostTextField->setProperty("text", restSettings->getSetting("host").toString() );
     portTextField->setProperty("text", restSettings->getSetting("port").toString() );
 
+
+
+    QString path = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0)+"/Assets/AlbumCoversHires/";
+
+    qDebug()<<path;
+    QString pathII = "file:"+path;
+    qDebug()<<pathII<<"  PATH";
+    QMetaObject::invokeMethod(coverView, "setFolder",
+                              Q_ARG(QVariant, pathII));
     connect(restSettings, SIGNAL( settingsChanged(QString) ), this, SLOT( restSettingsChanged(QString) ) );
 
     changeAppController(appController);

@@ -58,5 +58,6 @@
         <file>qml/resources/Error.svg</file>
         <file>qml/resources/Online.svg</file>
         <file>qml/resources/player_background_remote.png</file>
+        <file>qml/Covers.qml</file>
     </qresource>
 </RCC>

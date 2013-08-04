@@ -82,5 +82,6 @@ OTHER_FILES += \
     qml/View3.qml \
     qml/SettingsDialog.qml \
     qml/DialogController.qml \
-    qml/ErrorDialog.qml
+    qml/ErrorDialog.qml \
+    qml/Covers.qml
 
