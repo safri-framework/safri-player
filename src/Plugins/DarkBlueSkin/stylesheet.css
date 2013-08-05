@@ -15,10 +15,11 @@ QWidget[type="treeView"]
     border: none;
 }
 
-QTreeView
+
+
+QTableView
 {
-    background-color: rgba(255, 255, 255, 0%);
-    color: #FFFFFF;
+
 }
 
 QWidget[type="frame"]
@@ -134,10 +135,11 @@ QScrollBar::add-line:vertical
 
 QScrollBar::sub-line:vertical
 {
-      border-bottom: 1px solid #818181;
-      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-      stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
-      height: 19px;
+
+
+      background: none;
+      height: 27px;
+      border:none;
       subcontrol-position: top;
       subcontrol-origin: margin;
 }
@@ -162,7 +164,7 @@ margin-left: 3px;
 
 QComboBox
 {
-    border-image:url(:border_images/Ressources/combobo_normal.png) 1 22 1 1;
+    border-image:url(:border_images/Ressources/combobo_normal.png) 1 1 1 1;
     min-height:26px;
     max-height:26px;
     border-width:1px;
@@ -174,25 +176,66 @@ QComboBox
 QComboBox:pressed
 {
     border-image:url(:border_images/Ressources/combobo_pressed.png);
-    color: red;
-    font:12px   red;
-
 }
 
-QComboBox:!editable{
-background: blue;
-color:white;
-}
-
-QComboBox:editable{
-background: red;
-color:white;
-}
 QComboBox:checked
 {
     border-image:url(:border_images/Ressources/combobo_checked.png);
-    color: green;
-    font:  green;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    background-color:transparent;
+    border:none;
+    margin-right: 10px;
+}
+
+QComboBox::down-arrow {
+    image: url(:border_images/Ressources/dropdown_icon.png);
+    background:none;
 }
 
 
+QTreeView
+{
+    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
+    color: #FFFFFF;
+    qproperty-alternatingRowColors: "false";
+    height:50px;
+    font-size:12px;
+}
+/*
+QTreeView::item
+{
+    background-color: green;
+    color: #FFFFFF;
+    qproperty-alternatingRowColors: "false";
+    height:
+}
+*/
+QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
+{
+
+    min-width::21px;
+    max-width:21px;
+    padding-left: 2px;
+    border-image:url(:border_images/Ressources/combobo_normal.png) 1 1 1 1;
+    min-height:26px;
+    max-height:26px;
+    border-width:1px;
+
+
+}
+/*
+QPushButton:hover[type="tiny"]
+{
+    border-image: url(:border_images/SAFRI_UI/tiny_button_hover_2.png);
+
+
+}*/
+QPushButton:pressed[type="tiny"],QPushButton:checked[type="tiny"]
+{
+    border-image:url(:border_images/Ressources/combobo_pressed.png);
+}
