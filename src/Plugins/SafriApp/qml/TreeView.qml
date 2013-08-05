@@ -4,7 +4,7 @@ import QtQuick 2.0
 Rectangle{
     property Rectangle currentTapAndHold
     property var nextModelIndex
-    property int rowHeight: parent.height / 6
+    property int rowHeight:  root.globalScaleFactor < 0.7 ? parent.height / 5 : parent.height / 7
     property int fontSize: rowHeight / 4;
     property string currentItemText
     property string currentItemImage
