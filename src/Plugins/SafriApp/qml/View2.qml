@@ -55,7 +55,7 @@ Rectangle {
                  height: width;
                  source: "resources/no_cover.png" ;
                  id: currentSongCover
-                 opacity: 0.2
+                 opacity: 0.25
                  Rectangle
                  {
                     width:1;
