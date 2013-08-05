@@ -14,6 +14,7 @@
 #include "playlistmodel.h"
 
 #include "IAppController.h"
+#include <QtQuick/QQuickView>
 
 using namespace Core;
 
@@ -58,6 +59,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void setupSongtreeModel();
         void restSettingsChanged(QString setting);
         void volumeChangedByPBController(int vol);
+        void QMLStatusChanged(QQuickView::Status status);
 
     private:
         IAppController* appController;
@@ -96,6 +98,8 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
 
         float tmpVolDiff;
         float currentVol;
+        QQuickView *view;
+        bool isInitialized;
 };
 
 #endif // SAFRIMOBILEGUIINSTANCE_H

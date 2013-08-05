@@ -2,7 +2,7 @@
 #include <QDebug>
 //#include <QDeclarativeView>
 //#include <QDeclarativeItem>
-#include <QtQuick/QQuickView>
+
 #include <QQmlContext>
 #include <QtWidgets/QAction>
 #include "Songtree/CoreItemTypes/artistitemtype.h"
@@ -22,73 +22,22 @@
 #include "QApplication"
 #include <QStandardPaths>
 
-ViewController::ViewController(IAppController *appController, QObject *parent)
-    : QObject(parent), appController(appController), model(0), plModel(0), signalConnectionsInitialized(false)
+
+ViewController::ViewController(IAppController *appController, QObject* parent): QObject(parent),
+    appController(appController),
+    model(0),
+    plModel(0),
+    signalConnectionsInitialized(false),
+    view(0),
+    isInitialized(false),
+    dialogController(0)
 {
-
-
-
-    dialogController = 0;
-    QQuickView *view = new QQuickView();
+    view = new QQuickView();
+    connect(view, SIGNAL(statusChanged(QQuickView::Status)), this, SLOT(QMLStatusChanged(QQuickView::Status)));
     view->setSource(QUrl("qrc:/qml/main.qml"));
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->setResizeMode(QQuickView::SizeRootObjectToView);   
     view->show();
-    context = view->rootContext();
-
     QApplication::instance()->installEventFilter(this);
-
-    playPauseButton     = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("playStop"));
-    nextButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
-    prevButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("prevButton"));
-    silentButton        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("silentButton"));
-    songTreeView        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
-
-    dialerView          = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialerView"));
-    musicProgress       = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
-    currentSongDisplay  = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("currentSongDisplay"));
-    playlistView        = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playList"));
-    settingsDialog      = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("settingsDialog"));
-    menuItemDisconnect  = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("menuItemDisconnect"));
-	shuffleButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("shuffleButton"));
-    hostTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("hostTextField"));
-    portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
-    dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
-    playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
-    coverView           = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("coverView"));
-
-
-
-    //connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
-    connect( dialerView,         SIGNAL(volumeChanged(QVariant)),            this, SLOT(volumeSlot(QVariant)) );
-    connect( playlistView,       SIGNAL(movePos(QVariant, QVariant)),        this, SLOT(changePos(QVariant,QVariant)) );
-    connect( playlistView,       SIGNAL(removeIndexFromPlaylist(QVariant)),  this, SLOT(removeFromPlaylist(QVariant)) );
-    connect( playlistView,       SIGNAL(playIndex(QVariant)),                this, SLOT(playPlaylistIndex(QVariant)) );
-    connect( settingsDialog,     SIGNAL(connectTo(QVariant, QVariant)),      this, SLOT(connectTo(QVariant,QVariant)) );
-    connect( menuItemDisconnect, SIGNAL(disconnect()),                       this, SLOT(disconnect()) );
-	connect( shuffleButton, 	 SIGNAL(buttonClicked()), 					 this, SLOT(shuffleClicked()));
-    connect( songTreeView,       SIGNAL(playModelIndexView(QVariant)),       this, SLOT(playModelIndex(QVariant)));
-    connect( songTreeView,       SIGNAL(enqueueModelIndexView(QVariant)),    this, SLOT(enqueueModelIndex(QVariant)));
-
-    playPauseButton->setProperty("enabled", false);
-    nextButton->setProperty("enabled", false);
-    prevButton->setProperty("enabled", false);
-
-    Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
-    hostTextField->setProperty("text", restSettings->getSetting("host").toString() );
-    portTextField->setProperty("text", restSettings->getSetting("port").toString() );
-
-
-
-    QString path = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0)+"/Assets/AlbumCoversHires/";
-
-    qDebug()<<path;
-    QString pathII = "file:"+path;
-    qDebug()<<pathII<<"  PATH";
-    QMetaObject::invokeMethod(coverView, "setFolder",
-                              Q_ARG(QVariant, pathII));
-    connect(restSettings, SIGNAL( settingsChanged(QString) ), this, SLOT( restSettingsChanged(QString) ) );
-
-    changeAppController(appController);
 }
 
 void ViewController::playPauseSlot()
@@ -411,6 +360,69 @@ void ViewController::restSettingsChanged(QString setting)
 void ViewController::volumeChangedByPBController(int vol)
 {
     currentVol = vol;
+}
+
+void ViewController::QMLStatusChanged(QQuickView::Status status)
+{
+    qDebug()<< "STATUS CHANGED;"<<status;
+    if(status == QQuickView::Ready && !isInitialized)
+    {
+        qDebug()<<"READY";
+        context = view->rootContext();
+        playPauseButton     = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("playStop"));
+        nextButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("nextButton"));
+        prevButton          = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("prevButton"));
+        silentButton        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("silentButton"));
+        songTreeView        = qobject_cast<QQuickItem*>(view->rootObject()->findChild<QQuickItem*>("treeView"));
+
+        dialerView          = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialerView"));
+        musicProgress       = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("musicProgress"));
+        currentSongDisplay  = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("currentSongDisplay"));
+        playlistView        = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playList"));
+        settingsDialog      = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("settingsDialog"));
+        menuItemDisconnect  = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("menuItemDisconnect"));
+        shuffleButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("shuffleButton"));
+        hostTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("hostTextField"));
+        portTextField 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("portTextField"));
+        dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
+        playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
+        coverView           = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("coverView"));
+
+
+
+        //connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
+        connect( dialerView,         SIGNAL(volumeChanged(QVariant)),            this, SLOT(volumeSlot(QVariant)) );
+        connect( playlistView,       SIGNAL(movePos(QVariant, QVariant)),        this, SLOT(changePos(QVariant,QVariant)) );
+        connect( playlistView,       SIGNAL(removeIndexFromPlaylist(QVariant)),  this, SLOT(removeFromPlaylist(QVariant)) );
+        connect( playlistView,       SIGNAL(playIndex(QVariant)),                this, SLOT(playPlaylistIndex(QVariant)) );
+        connect( settingsDialog,     SIGNAL(connectTo(QVariant, QVariant)),      this, SLOT(connectTo(QVariant,QVariant)) );
+        connect( menuItemDisconnect, SIGNAL(disconnect()),                       this, SLOT(disconnect()) );
+        connect( shuffleButton, 	 SIGNAL(buttonClicked()), 					 this, SLOT(shuffleClicked()));
+        connect( songTreeView,       SIGNAL(playModelIndexView(QVariant)),       this, SLOT(playModelIndex(QVariant)));
+        connect( songTreeView,       SIGNAL(enqueueModelIndexView(QVariant)),    this, SLOT(enqueueModelIndex(QVariant)));
+
+        playPauseButton->setProperty("enabled", false);
+        nextButton->setProperty("enabled", false);
+        prevButton->setProperty("enabled", false);
+
+        Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
+        hostTextField->setProperty("text", restSettings->getSetting("host").toString() );
+        portTextField->setProperty("text", restSettings->getSetting("port").toString() );
+
+
+
+        QString path = QStandardPaths::standardLocations(QStandardPaths::DataLocation).at(0)+"/Assets/AlbumCoversHires/";
+
+        qDebug()<<path;
+        QString pathII = "file:"+path;
+        qDebug()<<pathII<<"  PATH";
+        QMetaObject::invokeMethod(coverView, "setFolder",
+                                  Q_ARG(QVariant, pathII));
+        connect(restSettings, SIGNAL( settingsChanged(QString) ), this, SLOT( restSettingsChanged(QString) ) );
+
+        changeAppController(appController);
+        isInitialized = true;
+    }
 }
 
 
