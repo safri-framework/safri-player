@@ -53,7 +53,7 @@ Rectangle {
                  y:1
                  width: parent.height
                  height: width;
-                 source: "resources/no_cover.png" ;
+                 source: "resources/no_cover.svg" ;
                  id: currentSongCover
                  opacity: 0.25
                  Rectangle

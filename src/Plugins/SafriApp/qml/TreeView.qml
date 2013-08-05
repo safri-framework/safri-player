@@ -183,22 +183,35 @@ Rectangle{
                 {
                     function getImage(type, path)
                     {
+                        var returnPath;
                         switch(type)
                         {
                         case  "ArtistType":
-                            return "resources/artist.png";
+                              returnPath = "resources/artist.png";
+                              break;
                         case "GenreType":
-                            return "resources/genre.png"
-
+                             returnPath ="resources/genre.png"
+                             break;
                         case "AlbumType":
                             if(path !=="")
-                                return path;
+                            {
+                                returnPath = path;
+                            }
                             else
-                                return "resources/no_cover.png";
+                            {
+                                decorationImage.visible = false;
+                                noCover.visible = true
+                                return "";
+                            }
+                            break;
 
                         case "SongType":
-                            return "resources/song.png"
+                             returnPath = "resources/song.png"
+                             break;
                         }
+                        noCover.visible = false;
+                        decorationImage.visible = true;
+                        return returnPath
                     }
 
                     id: cover
@@ -227,6 +240,19 @@ Rectangle{
                         source: parent.getImage(type, albumCover)
                         width: parent.width
                         height: parent.height
+                        id:decorationImage
+                    }
+                    Image
+                    {
+                        opacity: 0.8
+                        source: "resources/no_cover2.svg";
+                        width: parent.width
+                        height: parent.height
+                        id:noCover
+                        sourceSize.width: 73
+                        sourceSize.height: 73
+                        antialiasing: false
+                        smooth: true
                     }
                 }
 
