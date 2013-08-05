@@ -11,9 +11,11 @@ public:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *);
+    void setPlaying(bool val);
 
 signals:
     void playClicked();
+    void playToggled(bool val);
     void previousClicked();
     void nextClicked();
     
@@ -28,6 +30,8 @@ private:
     QImage* playingPressed;
     QImage* pause;
     QImage* pausePressed;
+    QImage* progress;
+
     bool nextCurrentlyPressed;
     bool previousCurrentlyPressed;
     bool playPauseCurrentlyPressed;

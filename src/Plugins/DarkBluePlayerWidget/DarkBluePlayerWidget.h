@@ -2,6 +2,8 @@
 #define DARKBLUEPLAYERWIDGET_H
 
 #include "Interfaces/IPlayerWidget.h"
+#include <QMainWindow>
+#include "PlayerControl.h"
 
 namespace Ui {
 class DarkBluePlayerWidget;
@@ -24,6 +26,15 @@ class DarkBluePlayerWidget : public IPlayerWidget
 
         void loadStylesheet();
         Ui::DarkBluePlayerWidget *ui;
+        QWidget* window;
+        PlayerControl* playerControl;
+
+    private slots:
+        void objectAddedToObjectPool(QObject* object);
+
+protected:
+        bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // DARKBLUEPLAYERWIDGET_H

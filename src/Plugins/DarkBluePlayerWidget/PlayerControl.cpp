@@ -17,6 +17,7 @@ PlayerControl::PlayerControl(QWidget *parent) :
     playingPressed  = new QImage(":/control/Ressources/control/playing_pressed.png");
     pause           = new QImage(":/control/Ressources/control/paused.png");
     pausePressed    = new QImage(":/control/Ressources/control/paused_pressed.png");
+    progress    = new QImage(":/control/Ressources/control/progress.png");
 
     this->setMinimumHeight(65);
     this->setMaximumHeight(65);
@@ -53,17 +54,46 @@ void PlayerControl::paintEvent(QPaintEvent *event)
             painter.drawImage(43,3, *pausePressed);
     }
 
+     painter.drawImage(44,5, *progress);
 }
 
 void PlayerControl::mousePressEvent(QMouseEvent *event)
 {
-  //  if(pos.x() > 75 && pos.x() < 75 + next->width() && pos.y() > 27 && pos.y() < 27 + next->width())
-  //      qDebug()<< "NEXT";
+    if(event->x() > 105 && event->x() < 75 + next->width() && event->y() > 27 && event->y() < 27 + next->width())
+        nextCurrentlyPressed = true;
+
+    if(event->x() < next->width() -30 && event->y() > 27) //&& event->y() < 27 + next->width())
+        previousCurrentlyPressed = true;
+
+    if(event->x() > 43 && event->x() < 105)
+    {
+        playPauseCurrentlyPressed = true;
+    }
+    repaint();
 }
 
 void PlayerControl::mouseReleaseEvent(QMouseEvent *)
 {
+
+    if(playPauseCurrentlyPressed)
+    {
+        isPlaying = !isPlaying;
+        Q_EMIT playToggled(isPlaying);
+    }
+
+    if(nextCurrentlyPressed)
+    {
+        Q_EMIT nextClicked();
+    }
+
     nextCurrentlyPressed = false;
     previousCurrentlyPressed = false;
     playPauseCurrentlyPressed = false;
+
+    repaint();
+}
+
+void PlayerControl::setPlaying(bool val)
+{
+    isPlaying = val;
 }
