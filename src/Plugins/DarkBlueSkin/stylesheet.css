@@ -1,3 +1,16 @@
+QMainWindow
+{
+    background-image: url(:border_images/Ressources/mainwindow_background.png);
+    background-color: red;
+}
+
+QLineEdit
+{
+    border-image:url(:border_images/Ressources/combobo_normal.png) 1 1 1 1;
+    border-width:1px;
+    color: #FFFFFF;
+}
+
 QMenuBar
 {
     background-image: url(:border_images/Ressources/menubar_background.png);

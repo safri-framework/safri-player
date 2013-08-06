@@ -1,6 +1,6 @@
 QWidget[type="player_mainframe"]
 {
-    background-image: url(:border_images/Ressources/player_background.png);
+     background-image: url(:border_images/Ressources/player_background.png);
 }
 
 QLabel[type="currentSong"]

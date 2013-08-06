@@ -3,6 +3,10 @@ QWidget[type="frame"]
     background-color:#d3d3d3;
 }
 
+QMainWindow
+{
+
+}
 
   QScrollBar:horizontal {
       border: none;

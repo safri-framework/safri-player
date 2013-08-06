@@ -1,7 +1,7 @@
 #include "Safri3SkinPlugin.h"
 
 #include <QDebug>
-#include "MainWindowSkin.h"
+#include "Safri3Skin.h"
 
 using namespace Plugins;
 
@@ -16,9 +16,10 @@ bool Safri3SkinPlugin::initialize(QStringList &arguments)
 
     qDebug() << "Safri3Skin Plugin";
 
-    MainWindowSkin* skin = new MainWindowSkin("Safri3Skin", ":stylesheet/stylesheet.css", this);
+    //MainWindowSkin* skin = new MainWindowSkin("Safri3Skin", ":stylesheet/stylesheet.css", this);
+    //addObject(skin);
 
-    addObject(skin);
+    addObject(new Safri3Skin() );
 
     return true;
 }

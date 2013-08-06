@@ -16,6 +16,7 @@
         <file>Ressources/combobo_normal.png</file>
         <file>Ressources/combobo_pressed.png</file>
         <file>Ressources/dropdown_icon.png</file>
+        <file>Ressources/mainwindow_background.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>
