@@ -359,10 +359,14 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
             if(skin)
             {
+                if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ALBUM)
+                {
+                    return ICore::instance()->assetController()->getAsset("DisplayRole", dataItemPtr);
+                }
+
                 QIcon* icon = skin->getIcon(item->getTypeName());
                 if(icon)
                     return *icon;
-
             }
 
 

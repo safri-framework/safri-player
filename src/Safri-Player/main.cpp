@@ -15,6 +15,11 @@
 class Style_tweaks : public QProxyStyle
 {
     public:
+
+        void drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
+        {
+            QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text);
+        }
         void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
         {
             /* do not draw focus rectangles - this permits modern styling */
