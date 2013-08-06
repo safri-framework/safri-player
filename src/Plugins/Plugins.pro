@@ -24,6 +24,7 @@ SUBDIRS += SafriApp
 SUBDIRS += TagLibMediaTagger
 SUBDIRS += Safri3Skin
 SUBDIRS += DarkBlueSkin
+SUBDIRS += TabbedPlaylistWidget
 
 #SUBDIRS += HackingWidget
 #SUBDIRS += TouchEventFilterPlugin

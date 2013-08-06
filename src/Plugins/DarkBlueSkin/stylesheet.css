@@ -11,9 +11,47 @@ QLineEdit
     color: #FFFFFF;
 }
 
+QTabWidget
+{
+    background: red;
+    border: 0px;
+}
+
+QPushButton[type="addTabButton"]
+{
+    border: 0px;
+    min-width: 40px;
+    min-height: 28px;
+    max-height: 28px;
+    color: #FFFFFF;
+
+    image: url(:icons/Ressources/add_tab_button.png)
+}
+
+QTabBar::tab
+{
+    min-height: 28px;
+    max-height: 28px;
+    min-width: 100px;
+    background-color: rgba(255, 255, 255, 0%);
+    color: white;
+}
+
+QTabBar::close-button
+{
+    image: url(:icons/Ressources/close_button.png)
+}
+
+QTabBar::tab::selected
+{
+    background: #4e6d86;
+    color: #FFFFFF;
+}
+
 QMenuBar
 {
     background-image: url(:border_images/Ressources/menubar_background.png);
+    color: #FFFFFF;
 }
 
 QMenuBar::item
@@ -116,7 +154,13 @@ QPushButton[place="menu_left"][type="menu_button_last"]
 
 QPushButton:checked[place="menu_left"][type="menu_button_last"]
 {
-    border-image: url(:buttons/Ressources/button_sidebar_on.png);
+    min-width:      80px;
+    max-width:      80px;
+    min-height:     50px;
+    max-height:     50px;
+    margin-left:    10px;
+
+    border-image: url(:buttons/Ressources/sidebar_button.png);
 }
 
 QScrollBar:vertical

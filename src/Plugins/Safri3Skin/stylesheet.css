@@ -3,6 +3,11 @@ QWidget[type="frame"]
     background-color:#d3d3d3;
 }
 
+QWidget[type="centralWidget"]
+{
+
+}
+
 QMainWindow
 {
 

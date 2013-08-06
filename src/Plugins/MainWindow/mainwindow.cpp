@@ -195,6 +195,7 @@ void MainWindow::changePlayerWidget()
 void MainWindow::changePlaylistWidget()
 {
     Core::IPlaylistWidget* playlistWidget = guiController->getPlaylistWidget();
+    playlistWidget->setParent(this);
     ui->playlistWidget->layout()->addWidget(playlistWidget);
 }
 

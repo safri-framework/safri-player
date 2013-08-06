@@ -31,7 +31,10 @@ QStyledItemDelegate *Safri3Skin::getPlaylistItemDelegate()
 
 void Safri3Skin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    Q_UNUSED(painter)
+    if (index.column() == 0)
+    {
+        painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
+    }
     Q_UNUSED(option)
     Q_UNUSED(index)
 }
@@ -58,5 +61,5 @@ QSize Safri3Skin::playlistRowSizeHint(const QStyleOptionViewItem &option, const 
 {
     Q_UNUSED(option)
     Q_UNUSED(index)
-    return QSize(option.rect.width(), 30);
+    return QSize(option.rect.width(), 20);
 }

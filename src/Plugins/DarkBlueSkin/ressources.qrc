@@ -5,6 +5,8 @@
         <file>Ressources/Collection_16.png</file>
         <file>Ressources/Genre_16.png</file>
         <file>Ressources/Song_16.png</file>
+        <file>Ressources/close_button.png</file>
+        <file>Ressources/add_tab_button.png</file>
     </qresource>
     <qresource prefix="/border_images">
         <file>Ressources/sidebar_background.png</file>
