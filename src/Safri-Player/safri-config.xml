@@ -20,6 +20,6 @@
         <setting name="port">8085</setting>
     </settingsmodule>
   <settingsmodule name="org.safri.app">
-        <setting name="isRESTClient">true</setting>
+        <setting name="isRESTClient">false</setting>
     </settingsmodule>
 </safri-configuration>
