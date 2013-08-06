@@ -14,6 +14,7 @@
         <file>Ressources/slider_handle.png</file>
         <file>Ressources/progress_auszen.png</file>
         <file>Ressources/progress_innen.png</file>
+        <file>Ressources/no_cover.svg</file>
     </qresource>
     <qresource prefix="/control">
         <file>Ressources/control/next_normal.png</file>

@@ -9,6 +9,11 @@ namespace Ui {
 class DarkBluePlayerWidget;
 }
 
+namespace Core {
+class IPlaybackController;
+class Media;
+}
+
 class DarkBluePlayerWidget : public IPlayerWidget
 {
     Q_OBJECT
@@ -24,15 +29,22 @@ class DarkBluePlayerWidget : public IPlayerWidget
 
     private:
 
-        void loadStylesheet();
-        Ui::DarkBluePlayerWidget *ui;
-        QWidget* window;
-        PlayerControl* playerControl;
+        void                            loadStylesheet();
+        Ui::DarkBluePlayerWidget*   ui;
+        QWidget*                    window;
+        PlayerControl*              playerControl;
+        Core::IPlaybackController*  playbackController;
 
     private slots:
-        void objectAddedToObjectPool(QObject* object);
 
-protected:
+        void objectAddedToObjectPool(QObject* object);
+        void playToggled(bool isPlaying);
+        void update(int currentTime);
+        void mediaChanged(Core::Media* media);
+        void changePlaybackController();
+
+    protected:
+
         bool eventFilter(QObject *obj, QEvent *event);
 
 };

@@ -59,6 +59,10 @@ namespace Core
             static void                         showSettingsDialog();
 
 
+        signals:
+
+            void playbackControllerChanged();
+
         private slots:
 
             void objectAddedToObjectPool(QObject *object);

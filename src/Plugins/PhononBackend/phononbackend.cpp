@@ -22,6 +22,8 @@ PhononBackend::PhononBackend(QObject* parent):IMediaBackend(parent)
     //qDebug()<<Q_FUNC_INFO;
     duration = 0;
     player = new QMediaPlayer(this);
+    player->setNotifyInterval(750);
+
     player->setVolume(100);
     connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(tick(qint64)));

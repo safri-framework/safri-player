@@ -66,6 +66,7 @@ void ICore::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "IPlaybackController class added";
         m_playbackController = pbc;
+        Q_EMIT playbackControllerChanged();
         return;
     }
 
