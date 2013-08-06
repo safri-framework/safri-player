@@ -59,5 +59,7 @@
         <file>qml/resources/Online.svg</file>
         <file>qml/resources/player_background_remote.png</file>
         <file>qml/Covers.qml</file>
+        <file>qml/resources/no_cover.svg</file>
+        <file>qml/resources/no_cover2.svg</file>
     </qresource>
 </RCC>
