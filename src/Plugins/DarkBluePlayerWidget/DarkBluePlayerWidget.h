@@ -18,7 +18,7 @@ class DataItem;
 class DarkBluePlayerWidget : public IPlayerWidget
 {
     Q_OBJECT
-    
+
     public:
 
         explicit DarkBluePlayerWidget(QWidget *parent = 0);

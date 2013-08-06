@@ -1,7 +1,8 @@
 #include "DarkBlueSkinPlugin.h"
 
 #include <QDebug>
-#include "MainWindowSkin.h"
+
+#include "DarkBlueSkin.h"
 
 using namespace Plugins;
 
@@ -16,9 +17,10 @@ bool DarkBlueSkinPlugin::initialize(QStringList &arguments)
 
     qDebug() << "DarkBlueSkin Plugin";
 
-    MainWindowSkin* skin = new MainWindowSkin("DarkBlueSkin", ":stylesheet/stylesheet.css", this);
+ //   MainWindowSkin* skin = new MainWindowSkin("DarkBlueSkin", ":stylesheet/stylesheet.css", this);
 
-    addObject(skin);
+ //   addObject(skin);
+    addObject(new DarkBlueSkin());
 
     return true;
 }

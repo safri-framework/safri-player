@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QTimer>
 PlayerControl::PlayerControl(QWidget *parent) :
     QWidget(parent),
     nextCurrentlyPressed(false),
@@ -23,6 +24,11 @@ PlayerControl::PlayerControl(QWidget *parent) :
     this->setMaximumHeight(65);
     this->setMinimumWidth(149);
     this->setMaximumWidth(149);
+
+    QTimer* rotationTimer = new QTimer(this);
+    rotationTimer->setInterval(50);
+    connect(rotationTimer, SIGNAL(timeout()), this, SLOT(timeout()));
+    rotationTimer->start();
 }
 
 void PlayerControl::paintEvent(QPaintEvent *event)
@@ -54,7 +60,9 @@ void PlayerControl::paintEvent(QPaintEvent *event)
             painter.drawImage(43,3, *pausePressed);
     }
 
-     painter.drawImage(44,5, *progress);
+
+    QTransform transform;
+     painter.drawImage(44,5, progress->transformed(transform));
 }
 
 void PlayerControl::mousePressEvent(QMouseEvent *event)
@@ -101,4 +109,10 @@ void PlayerControl::mouseReleaseEvent(QMouseEvent *)
 void PlayerControl::setPlaying(bool val)
 {
     isPlaying = val;
+}
+
+void PlayerControl::timeout()
+{
+    rotation = ++rotation%360;
+    repaint();
 }

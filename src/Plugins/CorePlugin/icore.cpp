@@ -6,6 +6,7 @@
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/ICollectionController.h"
 #include "Interfaces/imediacollectionfactory.h"
+#include "Interfaces/ISafriSkin.h"
 #include "CoreData/media.h"
 #include "CoreSupply/infocontroller.h"
 #include "CoreSupply/AssetController.h"
@@ -23,7 +24,7 @@ using namespace Core;
 ICore* ICore::m_instance = 0;
 
 ICore::ICore()
-    : m_playbackController(0), m_audioBackend(0), m_playlistFactory(0), m_guiController(0), m_collectionController(0)
+    : m_playbackController(0), m_audioBackend(0), m_playlistFactory(0), m_guiController(0), m_collectionController(0), m_skin(0)
 {
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
@@ -115,6 +116,14 @@ void ICore::objectAddedToObjectPool(QObject *object)
         m_collectionFactories.insert(collectionFactory->getCollectionType(), collectionFactory);
         return;
     }
+
+    ISafriSkin* skin = qobject_cast<ISafriSkin*>(object);
+    if(skin != 0)
+    {
+        qDebug() <<"Skin class adde";
+        m_skin = skin;
+        return;
+    }
 }
 
 QSharedPointer<IPlaylist> ICore::createPlaylist()
@@ -192,6 +201,11 @@ void ICore::showSettingsDialog()
     {
         dialog.saveSettings();
     }
+}
+
+ISafriSkin *ICore::skin()
+{
+    return m_instance->m_skin;
 }
 
 

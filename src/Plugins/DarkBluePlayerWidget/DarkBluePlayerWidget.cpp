@@ -28,7 +28,7 @@ DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
 
 */
      connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
-
+     qDebug()<<"HAAALLLOO";
      setNextSongCover( getCoverPath(0) );
 }
 
@@ -235,16 +235,12 @@ void DarkBluePlayerWidget::mediaChanged(Core::Media* media)
 
 bool DarkBluePlayerWidget::eventFilter(QObject *obj, QEvent *event)
 {
-
     if(event->type() == QEvent::Resize)
     {
-            qDebug()<<"TEST";
             playerControl->move(window->width()/2-74, window->height()-88);
     }
     return false;
 }
-
-
 void DarkBluePlayerWidget::setVolumeEnabled(bool value)
 {
     Q_UNUSED(value)

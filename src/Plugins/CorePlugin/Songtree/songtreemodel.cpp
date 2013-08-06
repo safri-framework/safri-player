@@ -35,6 +35,7 @@ SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     connect(songTree, SIGNAL(endInsertItem()), this, SLOT(endInsertItem()));
     connect(songTree, SIGNAL(beginRemoveItem(SongTreeItem*,int)), this, SLOT(beginRemoveItem(SongTreeItem*,int)));
     connect(songTree, SIGNAL(endRemoveItem()), this, SLOT(endRemoveItem()));
+    skin = Core::ICore::instance()->skin();
 }
 
 Qt::ItemFlags SongTreeModel::flags(const QModelIndex &index) const
@@ -355,6 +356,14 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
             break;
         */
         case Qt::DecorationRole:
+
+            if(skin)
+            {
+                QIcon* icon = skin->getIcon(item->getTypeName());
+                if(icon)
+                    return *icon;
+
+            }
 
 
             if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::SONG)

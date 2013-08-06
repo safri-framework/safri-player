@@ -9,6 +9,7 @@
 #include "../CorePlugin_global.h"
 #include "songtree.h"
 #include "songtreeitem.h"
+#include "Interfaces/ISafriSkin.h"
 
 /**
     \brief model for the song tree
@@ -138,6 +139,7 @@ private:
         QMap<SongTreeItem*, QModelIndex> indexMap;
 
         QModelIndex getModelIndexForItem(SongTreeItem* item);
+        ISafriSkin* skin;
 
 signals:
 

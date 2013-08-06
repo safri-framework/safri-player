@@ -28,6 +28,7 @@ namespace Core
     class Media;
     class IMediaCollection;
     class IMediaCollectionFactory;
+    class ISafriSkin;
     class SettingsManager;
 
 
@@ -57,6 +58,8 @@ namespace Core
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName, QUrl url = QUrl());
              Controller::AssetController*       assetController();
             static void                         showSettingsDialog();
+            static ISafriSkin*                  skin();
+
 
 
         signals:
@@ -80,6 +83,8 @@ namespace Core
             Controller::AssetController* m_assetController;
             QMap<QString, IMediaBackend*> m_mediaBackends;
             QMap<QString, IMediaCollectionFactory*> m_collectionFactories;
+            ISafriSkin* m_skin;
+
     };
 }
 

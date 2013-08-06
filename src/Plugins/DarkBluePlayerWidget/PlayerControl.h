@@ -19,6 +19,8 @@ signals:
     void previousClicked();
     void nextClicked();
     
+private slots:
+    void timeout();
 public slots:
 
 private:
@@ -36,6 +38,7 @@ private:
     bool previousCurrentlyPressed;
     bool playPauseCurrentlyPressed;
     bool isPlaying;
+    int rotation;
 
 };
 

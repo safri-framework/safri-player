@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += gui
 
 TARGET = DarkBlueSkin
 TEMPLATE = lib
@@ -12,16 +12,21 @@ TEMPLATE = lib
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 
+INCLUDEPATH += ../CorePlugin
+LIBS += -L"../../../bin/plugins/safri" -lCore
+
 # Link against the MainWindow plugin for the skin interface
-INCLUDEPATH += ../MainWindow
-LIBS += -L"../../../bin/plugins/safri" -lMainWindow
+#INCLUDEPATH += ../MainWindow
+#LIBS += -L"../../../bin/plugins/safri" -lMainWindow
 
 DEFINES += DARKBLUESKIN_LIBRARY
 
-SOURCES += DarkBlueSkinPlugin.cpp
+SOURCES += DarkBlueSkinPlugin.cpp \
+    DarkBlueSkin.cpp
 
 HEADERS += DarkBlueSkinPlugin.h\
-        darkblueskin_global.h
+        darkblueskin_global.h \
+    DarkBlueSkin.h
 
 OTHER_FILES += \
     DarkBlueSkin.xml \

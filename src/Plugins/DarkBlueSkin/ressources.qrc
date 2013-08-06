@@ -1,6 +1,10 @@
 <RCC>
-    <qresource prefix="/stylesheet">
-        <file>stylesheet.css</file>
+    <qresource prefix="/icons">
+        <file>Ressources/Album_16.png</file>
+        <file>Ressources/Artist_16.png</file>
+        <file>Ressources/Collection_16.png</file>
+        <file>Ressources/Genre_16.png</file>
+        <file>Ressources/Song_16.png</file>
     </qresource>
     <qresource prefix="/border_images">
         <file>Ressources/sidebar_background.png</file>
@@ -16,5 +20,8 @@
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>
         <file>Ressources/button_sidebar_on.png</file>
+    </qresource>
+    <qresource prefix="/stylesheet">
+        <file>stylesheet.css</file>
     </qresource>
 </RCC>

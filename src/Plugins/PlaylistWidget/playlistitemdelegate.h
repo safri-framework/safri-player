@@ -4,6 +4,7 @@
 #include <QItemDelegate>
 #include "../CorePlugin/iplaybackcontroller.h"
 #include "playlistwidget.h"
+#include "Interfaces/ISafriSkin.h"
 
 class PlaylistItemDelegate : public QItemDelegate
 {
@@ -16,6 +17,7 @@ public:
 private:
     Core::IPlaybackController* playbackConntroller;
     PlaylistWidget* plWidget;
+    Core::ISafriSkin* skin;
 };
 
 #endif // PLAYLISTITEMDELEGATE_H

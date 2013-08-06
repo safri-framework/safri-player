@@ -8,7 +8,7 @@
 #include <QDebug>
 #include "Interfaces/iguicontroller.h"
 #include "Interfaces/iplaylistwidget.h"
-#include "Interfaces/IMainWindowSkin.h"
+#include "Interfaces/ISafriSkin.h"
 #include "icore.h"
 #include <QWidget>
 
@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), visiblePlugins(0)
 {
     ui->setupUi(this);
+
+    Core::ISafriSkin* skin = Core::ICore::instance()->skin();
+    if(skin)
+        this->setStyleSheet(skin->getStyleSheet());
 
     splitter = new QSplitter(Qt::Horizontal, this->ui->mainframe);
     splitter->addWidget(this->ui->widget_frame);
@@ -68,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     showTestPlaylist();
     this->setWindowTitle("Safri-Player");
     this->show();
+
 }
 
 MainWindow::~MainWindow()
@@ -329,10 +334,10 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::objectAddedToObjectPool(QObject *object)
 {
-    IMainWindowSkin *skin = qobject_cast<IMainWindowSkin*>(object);
+    Core::ISafriSkin *skin = qobject_cast<Core::ISafriSkin*>(object);
     if (skin != 0)
     {
         qDebug() << "IMainWindowSkin class added: " << skin->getName();
-        this->setStyleSheet( skin->getStylesheet() );
+        this->setStyleSheet(skin->getStyleSheet());
     }
 }
