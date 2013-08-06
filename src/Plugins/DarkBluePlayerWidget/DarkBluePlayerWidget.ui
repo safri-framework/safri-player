@@ -47,6 +47,9 @@
       <string>player_mainframe</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,100">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="leftMargin">
        <number>6</number>
       </property>
@@ -80,6 +83,9 @@
       </item>
       <item>
        <layout class="QVBoxLayout" name="player_InnerFrame">
+        <property name="leftMargin">
+         <number>13</number>
+        </property>
         <item>
          <widget class="QWidget" name="widget_2" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -101,7 +107,10 @@
            <item>
             <widget class="QLabel" name="currentSongInfo">
              <property name="text">
-              <string>&lt;b&gt;No Prayer For The Dying&lt;/b&gt;&lt;br&gt;Iron Maiden - Tailgunner</string>
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
              <property name="type" stdset="0">
               <string>currentSong</string>
@@ -111,10 +120,10 @@
            <item>
             <widget class="QLabel" name="nextSongInfo">
              <property name="text">
-              <string>&lt;b&gt;Next Song&lt;/b&gt;&lt;br&gt;Iron Maiden - No Prayers For The Dying</string>
+              <string>&lt;b&gt;Next Song&lt;/b&gt;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
              </property>
              <property name="type" stdset="0">
               <string>nextSong</string>
@@ -166,7 +175,7 @@
          <widget class="QWidget" name="widget_3" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <property name="spacing">
-            <number>4</number>
+            <number>7</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -180,6 +189,28 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <widget class="QLabel" name="repeatIcon">
+             <property name="minimumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="ressources.qrc">:/border_images/Ressources/repeat.png</pixmap>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QLabel" name="currentTime">
              <property name="text">
@@ -211,6 +242,28 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="shuffleIcon">
+             <property name="minimumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="ressources.qrc">:/border_images/Ressources/shuffle.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QSlider" name="volumeSlider">
              <property name="minimumSize">
               <size>
@@ -232,6 +285,28 @@
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="ressources.qrc">:/border_images/Ressources/volume.png</pixmap>
              </property>
             </widget>
            </item>

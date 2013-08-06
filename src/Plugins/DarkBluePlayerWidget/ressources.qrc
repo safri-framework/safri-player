@@ -15,6 +15,9 @@
         <file>Ressources/progress_auszen.png</file>
         <file>Ressources/progress_innen.png</file>
         <file>Ressources/no_cover.svg</file>
+        <file>Ressources/repeat.png</file>
+        <file>Ressources/volume.png</file>
+        <file>Ressources/shuffle.png</file>
     </qresource>
     <qresource prefix="/control">
         <file>Ressources/control/next_normal.png</file>
