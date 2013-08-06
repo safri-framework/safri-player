@@ -4,8 +4,11 @@
 #include <pluginmanager.h>
 #include <QResizeEvent>
 #include <QDebug>
+#include <QPainter>
+#include <QSharedPointer>
 #include "icore.h"
 #include "iplaybackcontroller.h"
+#include "iplaylist.h"
 #include "CoreData/song.h"
 #include "CoreSupply/AssetController.h"
 #include "math.h"
@@ -26,6 +29,7 @@ DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
 */
      connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
 
+     setNextSongCover( getCoverPath(0) );
 }
 
 DarkBluePlayerWidget::~DarkBluePlayerWidget()
@@ -51,6 +55,58 @@ void DarkBluePlayerWidget::loadStylesheet()
     this->setStyleSheet(styleSheet);
 }
 
+QString DarkBluePlayerWidget::getTimeStringFromMS(int ms)
+{
+    float tmp = ms / 1000;
+    int min = tmp / 60;
+
+    QString minStr = QString::number(min);
+    if (min < 10)
+    {
+        minStr = "0" + minStr;
+    }
+
+    int sec = round( ( (int) tmp ) % 60);
+
+    QString secStr = QString::number(sec);
+    if (sec < 10)
+    {
+        secStr = "0" + secStr;
+    }
+
+    return minStr + ":" + secStr;
+}
+
+QString DarkBluePlayerWidget::getCoverPath(Core::DataItem *dataItem)
+{
+    QString coverPath;
+
+    coverPath = Core::ICore::instance()->assetController()->getAsset("CoverURL", dataItem ).toString();
+
+    if ( coverPath.isEmpty() )
+    {
+        coverPath = ":/border_images/Ressources/no_cover.svg";
+    }
+
+    return coverPath;
+}
+
+void DarkBluePlayerWidget::setNextSongCover(QString coverPath)
+{
+    QPixmap cover = QPixmap( coverPath ).scaled(31, 31, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPixmap result( cover.size() );
+
+    result.fill(Qt::transparent);
+
+    QPainter painter;
+    painter.begin(&result);
+    painter.setOpacity(0.3);
+    painter.drawPixmap(0, 0, cover);
+    painter.end();
+
+    ui->nextSongCover->setPixmap( result );
+}
+
 void DarkBluePlayerWidget::objectAddedToObjectPool(QObject * object)
 {
     QMainWindow* mainWindow = qobject_cast<QMainWindow*>(object);
@@ -58,8 +114,9 @@ void DarkBluePlayerWidget::objectAddedToObjectPool(QObject * object)
     {
       window = mainWindow->centralWidget();
       playerControl = new PlayerControl(window);
-      connect(playerControl, SIGNAL(playToggled(bool)),     this,                               SLOT( playToggled(bool) ) );
-      connect(playerControl, SIGNAL(nextClicked()),         playbackController->nextAction(),   SLOT( trigger() ) );
+      connect(playerControl, SIGNAL( playToggled(bool) ),     this,                                   SLOT( playToggled(bool) ) );
+      connect(playerControl, SIGNAL( nextClicked() ),         playbackController->nextAction(),       SLOT( trigger() ) );
+      connect(playerControl, SIGNAL( previousClicked() ),     playbackController->previousAction(),   SLOT( trigger() ) );
       window->installEventFilter(this);
       playerControl->move(window->width()/2-74, window->height()-93);
       playerControl->show();
@@ -78,6 +135,39 @@ void DarkBluePlayerWidget::playToggled(bool isPlaying)
     }
 }
 
+void DarkBluePlayerWidget::stateChanged(Core::playState state)
+{
+    switch (state)
+    {
+        case Core::PLAY:
+
+            if ( playerControl )
+            {
+                playerControl->setPlaying(true);
+            }
+            break;
+
+        case Core::STOP:
+
+            if ( playerControl )
+            {
+                playerControl->setPlaying(false);
+            }
+            break;
+
+        case Core::PAUSE:
+
+            if ( playerControl )
+            {
+                playerControl->setPlaying(false);
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
 void DarkBluePlayerWidget::update(int currentTime)
 {
     int totalTime = playbackController->getMediaTotalTime();
@@ -85,42 +175,8 @@ void DarkBluePlayerWidget::update(int currentTime)
     ui->seekSlider->setMaximum(totalTime);
     ui->seekSlider->setValue(currentTime);
 
-    /*
-    int tmp = currentTime/1000;
-    int h = tmp / 3600;
-    tmp = tmp % 3600;
-    int min = tmp / 60;
-    int sec = tmp % 60;
-
-    QString minStr = QString::number(min);
-
-    QString secStr = QString::number(sec);
-    if (sec <10)
-    {
-        secStr = "0"+secStr;
-    }
-    */
-
-    float tmp = currentTime / 1000;
-    int min = tmp / 60;
-
-    QString minStr = QString::number(min);
-    if (min < 10)
-    {
-        minStr = "0" + minStr;
-    }
-
-    int sec = round( ( (int) tmp ) % 60) + 1;
-
-    QString secStr = QString::number(sec);
-    if (sec < 10)
-    {
-        secStr = "0" + secStr;
-    }
-
-    this->ui->currentTime->setText(minStr+":"+secStr);
-
-
+    ui->totalTime->setText( getTimeStringFromMS(totalTime) );
+    ui->currentTime->setText( getTimeStringFromMS(currentTime) );
 }
 
 void DarkBluePlayerWidget::changePlaybackController()
@@ -128,8 +184,11 @@ void DarkBluePlayerWidget::changePlaybackController()
     playbackController = Core::ICore::playbackController();
 
     connect(playbackController, SIGNAL( mediaChanged(Core::Media*) ),   this, SLOT( mediaChanged(Core::Media*) ) );
+    connect(playbackController, SIGNAL( stateChanged(Core::playState)), this, SLOT( stateChanged(Core::playState) ) );
     connect(playbackController, SIGNAL( update(int)),                   this, SLOT( update(int) ) );
+
     connect(ui->seekSlider,     SIGNAL( sliderMoved(int)),              playbackController, SLOT( seek(int) ) );
+    connect(ui->volumeSlider,   SIGNAL( sliderMoved(int)),              playbackController, SLOT( setVolume(int) ) );
 }
 
 void DarkBluePlayerWidget::mediaChanged(Core::Media* media)
@@ -137,19 +196,40 @@ void DarkBluePlayerWidget::mediaChanged(Core::Media* media)
     if ( media->getType() == Core::Media::SONG)
     {
         Core::Song* song = qobject_cast<Core::Song*>(media);
+        QString coverPath;
 
         if(song)
         {
             ui->currentSongInfo->setText( "<b>" + song->getAlbum()->getName() + "</b><br>" + song->getArtist()->getName() + " - " + song->getName() );
-            QString coverPath = Core::ICore::instance()->assetController()->getAsset("CoverURL", song->getAlbum() ).toString();
-
-            if ( coverPath.isEmpty() )
-            {
-                coverPath = ":/border_images/Ressources/no_cover.svg";
-            }
+            coverPath = getCoverPath( song->getAlbum() );
 
             ui->coverImage->setPixmap( QPixmap( coverPath ).scaled(63, 63, Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
         }
+
+        ui->totalTime->setText( getTimeStringFromMS( playbackController->getMediaTotalTime() ) );
+
+        QSharedPointer<Core::IPlaylist> playlist = playbackController->getPlaylist();
+        int nextSongPosition = playlist->getCurrentMediaPosition() + 1;
+
+        coverPath = getCoverPath(0);
+
+        if ( nextSongPosition < playlist->getSize() )
+        {
+            song = qobject_cast<Core::Song*>( playlist->getMediaAt(nextSongPosition) );
+
+            if (song)
+            {
+                coverPath = getCoverPath( song->getAlbum() );
+                ui->nextSongInfo->setText( "<b>Next Song</b><br>" + song->getArtist()->getName() + " - " + song->getName() );
+            }
+
+        }
+        else
+        {            
+            ui->nextSongInfo->setText("<b>Next Song</b>");
+        }
+
+        setNextSongCover( coverPath );
     }
 }
 

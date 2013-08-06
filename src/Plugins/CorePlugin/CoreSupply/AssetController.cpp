@@ -21,25 +21,31 @@ QVariant AssetController::getAsset(QString serviceName, Core::DataItem *item)
 {   
     Core::IAssetService* service;
 
-    QMap<QString, IAssetService*>* tmp = assetServices.value(item->getType(), 0);
-    if(tmp)
+    if ( item )
     {
-        service = tmp->value(serviceName, 0);
-        if(service)
+
+        QMap<QString, IAssetService*>* tmp = assetServices.value(item->getType(), 0);
+        if(tmp)
         {
-            return service->getAsset(item, serviceName);
+            service = tmp->value(serviceName, 0);
+            if(service)
+            {
+                return service->getAsset(item, serviceName);
+            }
         }
+
+        tmp = assetServices.value(DataItem::NONE);
+        if(tmp)
+        {
+           service = tmp->value(serviceName, 0);
+           if(service)
+           {
+               return service->getAsset(item, serviceName);
+           }
+        }
+
     }
 
-    tmp = assetServices.value(DataItem::NONE);
-    if(tmp)
-    {
-       service = tmp->value(serviceName, 0);
-       if(service)
-       {
-           return service->getAsset(item, serviceName);
-       }
-    }
     return QVariant();
 }
 

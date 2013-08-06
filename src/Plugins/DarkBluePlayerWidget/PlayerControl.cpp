@@ -86,6 +86,11 @@ void PlayerControl::mouseReleaseEvent(QMouseEvent *)
         Q_EMIT nextClicked();
     }
 
+    if(previousCurrentlyPressed)
+    {
+        Q_EMIT previousClicked();
+    }
+
     nextCurrentlyPressed = false;
     previousCurrentlyPressed = false;
     playPauseCurrentlyPressed = false;

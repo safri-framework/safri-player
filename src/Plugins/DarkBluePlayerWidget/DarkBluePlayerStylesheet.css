@@ -3,14 +3,20 @@ QWidget[type="player_mainframe"]
     background-image: url(:border_images/Ressources/player_background.png);
 }
 
+QLabel[type="currentSong"]
+{
+    color: #DFDFDF;
+}
+
 QLabel
 {
-    color: #FFFFFF;
+    color: rgba(173, 212, 224, 100%);
 }
 
 QLabel[type="nextSong"]
 {
     padding-right: 5px;
+    color: rgba(223, 223, 223, 30%);
 }
 
 QSlider

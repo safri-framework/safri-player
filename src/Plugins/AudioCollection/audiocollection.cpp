@@ -659,6 +659,7 @@ void AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
          song->setAlbum(album);
 
          song->setTrack(mediaInfo.getMediaInfo(InfoTrack).toInt());
+         song->setLength(mediaInfo.getMediaInfo(InfoLength).toInt());
 
          song->setArtist(artist);
 

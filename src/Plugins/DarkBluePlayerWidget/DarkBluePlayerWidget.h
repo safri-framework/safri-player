@@ -2,6 +2,7 @@
 #define DARKBLUEPLAYERWIDGET_H
 
 #include "Interfaces/IPlayerWidget.h"
+#include "iplaybackcontroller.h"
 #include <QMainWindow>
 #include "PlayerControl.h"
 
@@ -10,8 +11,8 @@ class DarkBluePlayerWidget;
 }
 
 namespace Core {
-class IPlaybackController;
 class Media;
+class DataItem;
 }
 
 class DarkBluePlayerWidget : public IPlayerWidget
@@ -30,6 +31,9 @@ class DarkBluePlayerWidget : public IPlayerWidget
     private:
 
         void                            loadStylesheet();
+        QString                         getTimeStringFromMS(int ms);
+        QString                         getCoverPath(Core::DataItem* dataItem);
+        void                            setNextSongCover(QString coverPath);
         Ui::DarkBluePlayerWidget*   ui;
         QWidget*                    window;
         PlayerControl*              playerControl;
@@ -39,6 +43,7 @@ class DarkBluePlayerWidget : public IPlayerWidget
 
         void objectAddedToObjectPool(QObject* object);
         void playToggled(bool isPlaying);
+        void stateChanged(Core::playState state);
         void update(int currentTime);
         void mediaChanged(Core::Media* media);
         void changePlaybackController();
