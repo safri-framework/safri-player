@@ -103,7 +103,11 @@ void DarkBlueSkin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &
 QSize DarkBlueSkin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
    SongTreeItem* item = (SongTreeItem*) index.internalPointer();
-   //if(item->getTypeName() == "AlbumType")
+   if(item->getTypeName() == "AlbumType")
+   {
+       return QSize(option.rect.width(), 43);
+   }
+   else
    {
        return QSize(option.rect.width(), 25);
    }
