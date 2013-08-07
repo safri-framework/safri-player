@@ -19,13 +19,17 @@
         <file>Ressources/combobo_pressed.png</file>
         <file>Ressources/dropdown_icon.png</file>
         <file>Ressources/mainwindow_background.png</file>
+        <file>Ressources/scrollBar_horizontal.png</file>
+        <file>Ressources/scrollBar_vertical.png</file>
+        <file>Ressources/search_edit.png</file>
+        <file>Ressources/search_edit_active.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>
         <file>Ressources/button_sidebar_on.png</file>
+        <file>Ressources/button_sidebar_off.png</file>
     </qresource>
     <qresource prefix="/stylesheet">
         <file>stylesheet.css</file>
     </qresource>
-    <qresource prefix="/new/prefix1"/>
 </RCC>
