@@ -71,6 +71,7 @@ QWidget[type="treeView"]
 {
     background-image: url(:border_images/Ressources/background.png);
     border: none;
+
 }
 
 
@@ -85,6 +86,7 @@ QWidget[type="frame"]
     background-image: url(:border_images/Ressources/background.png);
 
 }
+
 
 QWidget[place="menu_left"][type="frame"]
 {
@@ -112,6 +114,7 @@ QSplitter::handle
     border-right: 3px solid rgba(62, 75, 84, 100%);
 }
 
+/*
 QPushButton[place="menu_left"][type="menu_button"]
 {
     min-width:      80px;
@@ -122,7 +125,7 @@ QPushButton[place="menu_left"][type="menu_button"]
     margin-bottom:  -1px;
 
     border-image: url(:buttons/Ressources/sidebar_button.png);
-}
+}*/
 
 PlayerWidget
 {
@@ -162,10 +165,7 @@ QPushButton[place="menu_left"][type="menu_button_last"]
 
 QPushButton:checked[place="menu_left"][type="menu_button_last"]
 {
-
-
     border-image: url(:buttons/Ressources/button_sidebar_on.png) ;
-
 }
 
 QScrollBar:vertical
@@ -270,7 +270,7 @@ QComboBox::down-arrow {
 }
 
 
-QTreeView
+QTreeView[]
 {
     background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
     color: #FFFFFF;
@@ -278,6 +278,18 @@ QTreeView
     height:50px;
     font-size:12px;
 }
+
+
+QTreeView[type="s
+{
+    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
+    color: #FFFFFF;
+    qproperty-alternatingRowColors: "false";
+    height:50px;
+    font-size:12px;
+}
+
+
 /*
 QTreeView::item
 {
