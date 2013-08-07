@@ -22,7 +22,8 @@ class PlaylistView : public QTreeView
 
         void setModel(QAbstractItemModel *model);
 
-        QString getName();
+        QString     getName();
+        void        setName(QString name);
 
     private:
         QPoint startDragPosition;

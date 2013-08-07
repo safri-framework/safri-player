@@ -22,6 +22,16 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     connect(Core::ICore::playbackController(), SIGNAL(stateChanged(Core::playState)), this, SLOT(playbackControllerStateChanged(Core::playState)));
 
     newTabWidget = addNewPlaylist("Safri", Core::ICore::createPlaylist());
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
+    newTabWidget = addNewPlaylist("Safri", newTabWidget);
     //addNewPlaylist("Wusel", newTabWidget);
     //addNewPlaylist("Dusel", newTabWidget);
     //addNewPlaylist("+", newTabWidget);
@@ -74,7 +84,7 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
 {
     PlaylistView *view = new PlaylistView(name, tabWidget);
 
-    PlaylistItemDelegate* itemDelegate = new PlaylistItemDelegate(this, this);
+    PlaylistItemDelegate* itemDelegate = new PlaylistItemDelegate(this, view);
     view->setItemDelegate(itemDelegate);
 
     PlaylistModel *model;
@@ -84,7 +94,6 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
         tabWidget = addNewTabWidget();
     }
 
-    qDebug() << "foo";
     model = new PlaylistModel(playlist, view);
     view->setModel(model);
     connect(view, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(playlistViewDoubleClicked(QModelIndex)));
@@ -129,6 +138,7 @@ void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
                 currentPlaylistTabWidget = tabWidget;
                 currentPlaylistIndex = currentPlaylistTabWidget->indexOf(senderView);
                 currentPlayingListView = senderView;
+
                 tabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/ressources/play_icon_little.png"));
             }
         }
@@ -147,7 +157,7 @@ void TabbedPlaylistWidget::lastTabRemoved(PlaylistTabWidget *tabWidget)
 
     if (ui->splitter->count() < 1)
     {
-        addNewPlaylist("Neu");
+        addNewTab(0);
     }
 }
 
@@ -164,11 +174,14 @@ void TabbedPlaylistWidget::playbackControllerStateChanged(Core::playState state)
         switch (state)
         {
             case Core::PLAY:
-                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/ressources/play_icon_little.png"));
+
+                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/Ressources/tab_playing_indicator.png") );
+
                 break;
             case Core::PAUSE:
-                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/ressources/pause_icon_little.png"));
+                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/Ressources/tab_pause_indicator.png") );
                 break;
+
             default:
                 break;
         }
@@ -178,33 +191,54 @@ void TabbedPlaylistWidget::playbackControllerStateChanged(Core::playState state)
 
 void TabbedPlaylistWidget::onTabWidgetCostumContextMenuRequested(const QPoint &pos)
 {
-    PlaylistTabWidget *senderView = qobject_cast<PlaylistTabWidget*>(sender());
+    PlaylistTabWidget *senderView = qobject_cast<PlaylistTabWidget*>(sender()->parent());
 
     QAction* requestedAction;
 
     QMenu contextMenu("Kontext menü", this);
     QAction splitAction("Teilen", &contextMenu);
-    //connect(&splitAction, SIGNAL( triggered() ), this, SLOT( onSplitActionTriggered() ));
+    QAction newTabAction("Neuer Tab", &contextMenu);
+    QAction closeTab("Tab schließen", &contextMenu);
+    QAction renameTab("Umbenennen", &contextMenu);
 
-    contextMenu.addAction(new QAction("Neuer Tab", &contextMenu));
+    if ( senderView->count() < 2)
+    {
+        splitAction.setEnabled(false);
+    }
+
+    contextMenu.addAction(&newTabAction);
     contextMenu.addSeparator();
-    contextMenu.addAction(new QAction("Umbenennen", &contextMenu));
+    contextMenu.addAction(&renameTab);
     contextMenu.addAction(&splitAction);
-    contextMenu.addAction(new QAction("Tab schließen", &contextMenu));
-    requestedAction = contextMenu.exec(senderView->mapToGlobal(pos));
+    contextMenu.addAction(&closeTab);
+    requestedAction = contextMenu.exec(senderView->tabBar()->mapToGlobal(pos));
+
+    int tabIndex = senderView->tabBar()->tabAt(pos);
 
     if (requestedAction == &splitAction)
+    {     
+        splitTabWidgetView( senderView,  tabIndex);
+    }
+    else if (requestedAction == &newTabAction)
     {
-        splitCurrentTabWidgetView( senderView );
+        addNewTab(senderView);
+    }
+    else if (requestedAction == &closeTab)
+    {
+        senderView->removePlaylistTab(tabIndex);
+    }
+    else if (requestedAction == &renameTab)
+    {
+        senderView->editTabName(tabIndex);
     }
 }
 
-void TabbedPlaylistWidget::splitCurrentTabWidgetView(PlaylistTabWidget *tabWidget)
+void TabbedPlaylistWidget::splitTabWidgetView(PlaylistTabWidget *tabWidget, int index)
 {
-    PlaylistView* playlistView = qobject_cast<PlaylistView*>(tabWidget->currentWidget());
+    PlaylistView* playlistView = qobject_cast<PlaylistView*>( tabWidget->widget(index) );
     PlaylistTabWidget* newTab = addNewTabWidget();
 
-    tabWidget->removeTab( tabWidget->currentIndex() );
+    tabWidget->removeTab( index );
     newTab->addTab( playlistView, playlistView->getName() );
 }
 
@@ -212,11 +246,21 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewTabWidget()
 {
     PlaylistTabWidget* tabWidget = new PlaylistTabWidget(ui->splitter);
 
-    tabWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(tabWidget, SIGNAL( lastTabRemoved(PlaylistTabWidget*) ),    this, SLOT( lastTabRemoved(PlaylistTabWidget*) ) );
-    connect(tabWidget, SIGNAL( customContextMenuRequested(QPoint) ),    this, SLOT( onTabWidgetCostumContextMenuRequested(QPoint) ) );
-    connect(tabWidget, SIGNAL( addNewTab(PlaylistTabWidget*) ),         this, SLOT( addNewTab(PlaylistTabWidget*) ) );
+    tabWidget->tabBar()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(tabWidget,              SIGNAL( lastTabRemoved(PlaylistTabWidget*) ),    this, SLOT( lastTabRemoved(PlaylistTabWidget*) ) );
+    connect(tabWidget->tabBar(),    SIGNAL( customContextMenuRequested(QPoint) ),    this, SLOT( onTabWidgetCostumContextMenuRequested(QPoint) ) );
+    connect(tabWidget,              SIGNAL( addNewTab(PlaylistTabWidget*) ),         this, SLOT( addNewTab(PlaylistTabWidget*) ) );
     ui->splitter->addWidget(tabWidget);
+
+
+    int sameSize = ui->splitter->width() / ui->splitter->count();
+    QList<int> sizes;
+    for (int i = 0; i < ui->splitter->count(); i++)
+    {
+        sizes.append(sameSize);
+    }
+    ui->splitter->setSizes(sizes);
+
 
     return tabWidget;
 }

@@ -7,6 +7,12 @@
         <file>Ressources/Song_16.png</file>
         <file>Ressources/close_button.png</file>
         <file>Ressources/add_tab_button.png</file>
+        <file>Ressources/tab_left_arrow.svg</file>
+        <file>Ressources/tab_left_arrow.png</file>
+        <file>Ressources/tab_right_arrow.png</file>
+        <file>Ressources/close_button_hover.png</file>
+        <file>Ressources/tab_playing_indicator.png</file>
+        <file>Ressources/tab_pause_indicator.png</file>
     </qresource>
     <qresource prefix="/border_images">
         <file>Ressources/sidebar_background.png</file>

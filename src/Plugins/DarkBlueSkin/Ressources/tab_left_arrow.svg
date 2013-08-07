@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="5.2147841"
+   height="9.9999981"
+   id="svg5706"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="tab_left_arrow.svg"
+   inkscape:export-filename="/home/sascha/safri/checkout/src/Plugins/DarkBlueSkin/Ressources/tab_right_arrow.png"
+   inkscape:export-xdpi="108"
+   inkscape:export-ydpi="108">
+  <defs
+     id="defs5708" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="20.48"
+     inkscape:cx="9.2580347"
+     inkscape:cy="3.5071621"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1178"
+     inkscape:window-height="687"
+     inkscape:window-x="561"
+     inkscape:window-y="296"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="true"
+     inkscape:snap-page="false" />
+  <metadata
+     id="metadata5711">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-387.00856,-558.52133)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path478"
+       style="fill:#dfdfdf;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 390.71771,558.79392 c -0.32054,0.35138 -3.45271,4.0481 -3.45271,4.0481 -0.1707,0.18758 -0.25644,0.43327 -0.25644,0.67931 0,0.24603 0.0857,0.49172 0.25644,0.67914 0,0 3.13217,3.69689 3.45271,4.04826 0.32025,0.35138 0.89692,0.37534 1.23894,0 0.34187,-0.37482 0.36901,-0.89827 -2.4e-4,-1.35827 l -2.87327,-3.36913 2.87327,-3.36897 c 0.36932,-0.46017 0.34217,-0.98344 2.4e-4,-1.35844 -0.34202,-0.37534 -0.91869,-0.35138 -1.23894,0"
+       inkscape:export-filename="/home/sascha/safri/checkout/src/Plugins/DarkBlueSkin/Ressources/tab_left_arrow.png"
+       inkscape:export-xdpi="108.00002"
+       inkscape:export-ydpi="108.00002" />
+  </g>
+</svg>

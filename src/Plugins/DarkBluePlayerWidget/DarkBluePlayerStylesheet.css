@@ -15,7 +15,6 @@ QLabel
 
 QLabel[type="nextSong"]
 {
-    padding-right: 5px;
     color: rgba(223, 223, 223, 30%);
 }
 

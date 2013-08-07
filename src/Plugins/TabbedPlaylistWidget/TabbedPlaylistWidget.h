@@ -49,7 +49,7 @@ class TabbedPlaylistWidget : public Core::IPlaylistWidget
         void addNewTab(PlaylistTabWidget* tabWidget);
         void playbackControllerStateChanged(Core::playState state);
         void onTabWidgetCostumContextMenuRequested(const QPoint &pos);
-        void splitCurrentTabWidgetView(PlaylistTabWidget* tabWidget);
+        void splitTabWidgetView(PlaylistTabWidget* tabWidget, int index);
 
 
     private:

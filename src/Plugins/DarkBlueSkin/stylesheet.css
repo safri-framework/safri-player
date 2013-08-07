@@ -4,7 +4,9 @@ QMainWindow
     background-color: none;;
 }
 
-QLineEdit
+
+
+QLineEdit[type="search"]
 {
     border-image:url(:border_images/Ressources/search_edit.png) 4 4 4 30;
     border-width:4px;
@@ -12,10 +14,16 @@ QLineEdit
     color: #FFFFFF;
 }
 
-QLineEdit:focus
+QLineEdit:focus[type="search"]
 {
     border-image:url(:border_images/Ressources/search_edit_active.png) 4 4 4 30;
     color: black;
+}
+
+QLineEdit[type="tabRename"]
+{
+    border: none;
+    background-color: rgba(255, 255, 255, 0%);
 }
 
 QTabWidget
@@ -24,15 +32,63 @@ QTabWidget
     border: 0px;
 }
 
+QTabBar QToolBar
+{
+    margin-left: 20px;
+}
+
+QTabBar QToolButton
+{ /* the scroll buttons are tool buttons */
+     border: none;
+     background-image: url(:border_images/Ressources/background.png);
+}
+
+QTabBar QToolButton::left-arrow
+{
+    min-height: 10px;
+    max-height: 10px;
+    min-width: 15px;
+    image: url(:icons/Ressources/tab_left_arrow.png)
+}
+
+QTabBar QToolButton::right-arrow
+{
+    min-height: 10px;
+    max-height: 10px;
+    min-width: 15px;
+    image: url(:icons/Ressources/tab_right_arrow.png)
+}
+
+QTabBar QToolButton::left-arrow:hover
+{
+    background-color: rgba(255, 255, 255, 5%);
+}
+
+QTabBar QToolButton::right-arrow:hover
+{
+    background-color: rgba(255, 255, 255, 5%);
+}
+
+QTabBar::tear
+{
+     image: none;
+}
+
 QPushButton[type="addTabButton"]
 {
     border: 0px;
-    min-width: 40px;
-    min-height: 28px;
-    max-height: 28px;
+    min-width: 25px;
+    min-height: 25px;
+    max-height: 25px;
     color: #FFFFFF;
+    padding-bottom: 3px;
 
     image: url(:icons/Ressources/add_tab_button.png)
+}
+
+QPushButton[type="addTabButton"]:hover
+{
+    background-color: rgba(255, 255, 255, 5%);
 }
 
 QTabBar::tab
@@ -40,9 +96,13 @@ QTabBar::tab
     min-height: 28px;
     max-height: 28px;
     min-width: 130px;
-    max-width: 130px;
     background-color: rgba(255, 255, 255, 0%);
     color: white;
+}
+
+QTabBar QIcon
+{
+    border: 2px solid red;
 }
 
 QTabWidget::tab-bar
@@ -52,7 +112,15 @@ QTabWidget::tab-bar
 
 QTabBar::close-button
 {
-    image: url(:icons/Ressources/close_button.png)
+    image: url(:icons/Ressources/close_button.png);
+    margin-bottom: 2px;
+}
+
+QTabBar::close-button:hover
+{
+    background-color: rgba(255, 255, 255, 0%);
+    image: url(:icons/Ressources/close_button_hover.png);
+    margin-bottom: 2px;
 }
 
 QTabBar::tab::selected
@@ -61,6 +129,11 @@ QTabBar::tab::selected
     max-height: 28px;
     background: #4e6d86;
     color: #FFFFFF;
+}
+
+QTabBar::tab[type="playingTab"]
+{
+    background: red;
 }
 
 QMenuBar

@@ -159,6 +159,11 @@ QString PlaylistView::getName()
     return name;
 }
 
+void PlaylistView::setName(QString name)
+{
+    this->name = name;
+}
+
 void PlaylistView::keyPressEvent(QKeyEvent *event)
 {
     /*

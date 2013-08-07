@@ -9,6 +9,9 @@ class PlaylistTabWidget : public QTabWidget
     public:
         explicit PlaylistTabWidget(QWidget *parent = 0);
 
+        void removePlaylistTab(int index);
+        void editTabName(int index);
+
     signals:
 
         void lastTabRemoved(PlaylistTabWidget *tabWidget);
@@ -18,8 +21,11 @@ class PlaylistTabWidget : public QTabWidget
 
         void onTabCloseRequested(int index);
         void onAddTabButtonClicked();
+        void tabTextEditedFinished();
 
-    public slots:
+    private:
+
+        int tabIndexEdit;
 };
 
 #endif // PLAYLISTTABWIDGET_H
