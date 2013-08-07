@@ -18,7 +18,7 @@ class Style_tweaks : public QProxyStyle
 
         void drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
         {
-            QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text,textRole);
+            QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text);
         }
         void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
         {
@@ -35,9 +35,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("Safri-Player");
 
-    a.palette().setColor(QPalette::ButtonText, QColor("white"));
-    a.palette().setColor(QPalette::Text, QColor("white"));
-    a.palette().setColor(QPalette::WindowText, QColor("white"));
+    QPalette palette = a.palette();
+
+    //ui->pLabel->setPalette(palette);
+    palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
+    palette.setColor(QPalette::Text, QColor("#DFDFDF"));
+    palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
+    a.setPalette(palette);
     a.setStyle(new Style_tweaks());
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "";

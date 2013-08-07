@@ -383,7 +383,6 @@ QPushButton[type="nav_bar_button"][place="left_widget"]
 QWidget[type="treeView"]
 {
     border: none;
-
 }
 
 QWidget[type="treeViewFrame"]

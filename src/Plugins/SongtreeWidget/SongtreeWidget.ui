@@ -50,6 +50,9 @@
         <property name="type" stdset="0">
          <string>treeView</string>
         </property>
+        <property name="ident" stdset="0">
+         <string>playlist</string>
+        </property>
        </widget>
       </item>
      </layout>

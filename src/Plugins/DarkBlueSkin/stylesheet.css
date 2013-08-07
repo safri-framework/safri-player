@@ -73,15 +73,8 @@ QWidget[type="treeView"]
 {
     background-image: url(:border_images/Ressources/background.png);
     border: none;
-
 }
 
-
-
-QTableView
-{
-
-}
 
 QWidget[type="frame"]
 {
@@ -97,10 +90,7 @@ QWidget[place="menu_left"][type="frame"]
     min-width: 100px;
     max-width: 100px;
     border-right: 3px solid rgba(62, 75, 84, 100%);
-
 }
-
-
 
 
 QSplitter
@@ -116,18 +106,6 @@ QSplitter::handle
     border-right: 3px solid rgba(62, 75, 84, 100%);
 }
 
-/*
-QPushButton[place="menu_left"][type="menu_button"]
-{
-    min-width:      80px;
-    max-width:      80px;
-    min-height:     50px;
-    max-height:     50px;
-    margin-left:    10px;
-    margin-bottom:  -1px;
-
-    border-image: url(:buttons/Ressources/sidebar_button.png);
-}*/
 
 PlayerWidget
 {
@@ -224,6 +202,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 }
 
 
+
 QWidget[ident="playlistFrame"]
 {
 border-left: 3px solid #2F3A42;
@@ -232,7 +211,6 @@ margin-left: 3px;
 
 QWidget[type="playlistWidget"]
 {
-
 margin-left: 3px;
 }
 
@@ -272,25 +250,34 @@ QComboBox::down-arrow {
 }
 
 
-QTreeView[]
+
+
+QTreeView
+{
+    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
+    color: #FFFFFF;
+    qproperty-alternatingRowColors: "true";
+    qproperty-SelectionBehavior:2;
+    height:50px;
+    font-size:12px;
+    border: 10px solid rgba(255,255,255,25);
+    alternate-background-color: rgba(255,255,255,12);
+    show-decoration-selected: 1;
+
+}
+
+
+
+PlaylistView
 {
     background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
     color: #FFFFFF;
     qproperty-alternatingRowColors: "false";
     height:50px;
     font-size:12px;
+
+    selection-background-color: rgba(255,255,255,25);
 }
-
-
-QTreeView[type="s
-{
-    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
-    color: #FFFFFF;
-    qproperty-alternatingRowColors: "false";
-    height:50px;
-    font-size:12px;
-}
-
 
 /*
 QTreeView::item
@@ -303,7 +290,6 @@ QTreeView::item
 */
 QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
 {
-
     min-width::21px;
     max-width:21px;
     padding-left: 2px;
@@ -311,8 +297,6 @@ QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
     min-height:26px;
     max-height:26px;
     border-width:1px;
-
-
 }
 /*
 QPushButton:hover[type="tiny"]
