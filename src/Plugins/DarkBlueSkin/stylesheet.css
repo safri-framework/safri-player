@@ -1,7 +1,7 @@
 QMainWindow
 {
     background-image: url(:border_images/Ressources/mainwindow_background.png);
-    background-color: red;
+    background-color: none;;
 }
 
 QLineEdit
@@ -20,7 +20,7 @@ QLineEdit:focus
 
 QTabWidget
 {
-    background: red;
+    background: none;
     border: 0px;
 }
 
@@ -115,7 +115,7 @@ QSplitter::handle
 
 PlayerWidget
 {
-    background-color:red;
+    background-color:none;
     background-image: none;
 }
 
@@ -175,7 +175,7 @@ QScrollBar::handle:vertical
 QScrollBar::add-line:vertical
 {
     border-bottom: none;
-      background: red;
+      background: none;
       height: 0px;
       subcontrol-position: bottom;
 
@@ -209,6 +209,32 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 
 
 
+  QScrollBar:horizontal {
+      border: none;
+      background: rgba(255,255,255,0);
+      height: 7px;
+      margin: 0px;
+  }
+
+  QScrollBar::handle:horizontal {
+    border-image: url(:border_images/Ressources/scrollBar_horizontal.png) 0px 5px 0px 5px;
+    border-width: 0px 5px 0px 5px;
+    margin-bottom:1px;
+  }
+
+
+  QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal  {
+
+      background: white;
+      height: 0px;
+      subcontrol-origin: margin;
+  }
+
+
+
+
+
+
 QWidget[ident="playlistFrame"]
 {
 border-left: 3px solid #2F3A42;
@@ -228,7 +254,6 @@ QComboBox
     border-width:1px;
     color: #DFDFDF;
     font-size:  12px;
-
 }
 
 QComboBox:pressed
@@ -257,7 +282,6 @@ QComboBox::down-arrow {
 
 
 
-
 QTreeView
 {
     background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
@@ -272,11 +296,30 @@ QTreeView
 
 }
 
+QComboBox QListView
+{
+    background-color:rgb(79,97,106);
+    border-color: #293138;
+    border:none;
+}
 
 
+QComboBox QListView::item {
+    color: rgb(80, 80, 80);
+    border: 1px solid red;
+}
+
+QComboBox QListView::item:checked {
+    color: green;
+}
+
+
+QComboBox QListView::item:hover {
+    color: blue;
+}
 PlaylistView
 {
-    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
+    background-color: rgba(255, 0, 0, 0%);/*rgba(255, 255, 255, 0%);*/
     color: #FFFFFF;
     qproperty-alternatingRowColors: "false";
     height:50px;

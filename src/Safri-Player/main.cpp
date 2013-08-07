@@ -34,14 +34,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("Safri-Player");
-
-    QPalette palette = a.palette();
-
-    //ui->pLabel->setPalette(palette);
-    palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
-    palette.setColor(QPalette::Text, QColor("#DFDFDF"));
-    palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
-    a.setPalette(palette);
     a.setStyle(new Style_tweaks());
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "";

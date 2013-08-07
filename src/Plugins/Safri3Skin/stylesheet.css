@@ -36,6 +36,7 @@ QMainWindow
 
 
 
+
 QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
 {
     min-height:21px;

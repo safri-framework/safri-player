@@ -1,6 +1,6 @@
 #include "DarkBlueSkin.h"
 #include <QFile>
-
+#include <QApplication>
 
 DarkBlueSkin::DarkBlueSkin()
 {
@@ -16,6 +16,14 @@ DarkBlueSkin::DarkBlueSkin()
     iconMap.insert("SongType", new QIcon(":icons/Ressources/Song_16.png"));
     iconMap.insert("CollectionType", new QIcon(":icons/Ressources/Collection_16.png"));
     iconMap.insert("GenreType", new QIcon(":icons/Ressources/Genre_16.png"));
+
+    QPalette palette = qApp->palette();
+    //ui->pLabel->setPalette(palette);
+    palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
+    palette.setColor(QPalette::Text, QColor("#DFDFDF"));
+    palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
+    palette.setColor(QPalette::Highlight,QColor(0,255,0));
+    qApp->setPalette(palette);
 }
 
 DarkBlueSkin::~DarkBlueSkin()

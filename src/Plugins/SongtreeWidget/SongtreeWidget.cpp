@@ -44,7 +44,6 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),  this, SLOT(loadSongtreeModel(int)));
     buildHierarchy();
 
-
     loadAudioCollections();
     loadSongtreeModel(0);
     //proxy->setSourceModel(model);
@@ -54,8 +53,6 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
     this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->treeView->setModel(proxy);
-
-
 }
 
 SongtreeWidget::~SongtreeWidget()
