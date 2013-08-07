@@ -92,23 +92,63 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     {
         QByteArray encodedData = data->data("MediaFromPlaylist");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
-        QList<Core::Media*> draggedItems;
+
         QList<int> draggedRows;
         int draggedFromRow = 0;
-        while (!stream.atEnd())
+
+        qint64 playlistPointer;
+        stream >> playlistPointer;
+
+        // check if the drop comes from the own playlist
+        if ( playlistPointer == (qint64) playlist.data() )
         {
-            qint64 pointer = 0;
-            stream  >> pointer >> draggedFromRow ;
-            Core::Media* mediaItem =(Core::Media*) pointer;
-            draggedItems.append(mediaItem);
-            draggedRows.append(draggedFromRow);
-            qDebug()<< pointer << draggedFromRow;
+            QList<Core::Media*> draggedItems;
+            qDebug() << "OWN PLAYLIST";
+            while (!stream.atEnd())
+            {
+                qint64 pointer = 0;
+                stream  >> pointer >> draggedFromRow ;
+                Core::Media* mediaItem =(Core::Media*) pointer;
+                draggedItems.append(mediaItem);
+                draggedRows.append(draggedFromRow);
+                //qDebug()<< pointer << draggedFromRow;
+            }
+
+            for(int i = 0; i < draggedRows.size(); i++)
+            {
+                 playlist->moveMedia(draggedRows.at(i), parent.row()+i);
+            }
+        }
+        else
+        {
+            QList<Core::Item*> draggedItems;
+            qDebug() << "OTHER PLAYLIST";
+
+            while (!stream.atEnd())
+            {
+                qint64 pointer = 0;
+                stream  >> pointer >> draggedFromRow ;
+                Core::Item* mediaItem = (Core::Item*) pointer;
+                draggedItems.append(mediaItem);
+                draggedRows.append(draggedFromRow);
+                //qDebug()<< pointer << draggedFromRow;
+            }
+
+            int insertPos;
+
+            if ( parent.isValid() )
+            {
+                insertPos = parent.row();
+            }
+            else
+            {
+                insertPos = playlist->getSize();
+            }
+
+            playlist->insertMediaAt(insertPos, draggedItems);
         }
 
-        for(int i = 0; i < draggedRows.size(); i++)
-        {
-             playlist->moveMedia(draggedRows.at(i), parent.row()+i);
-        }
+
     }
     return true;
 }
@@ -168,6 +208,11 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     QList<QUrl> filenames;
     QMimeData *mimeData;
     QByteArray encodedData;
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+
+    qint64 playlistPointer = (qint64) playlist.data();
+
+    stream << playlistPointer;
 
     mimeData = QAbstractItemModel::mimeData(indexes);
     Core::Media* mediaAtIndex;
@@ -179,7 +224,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
             int row = index.row();
             filenames.append( mediaAtIndex->getURL().toLocalFile());
             qint64 pointer = (qint64) mediaAtIndex;
-            QDataStream stream(&encodedData, QIODevice::WriteOnly);
+
             stream <<  pointer << row;
         }
     }

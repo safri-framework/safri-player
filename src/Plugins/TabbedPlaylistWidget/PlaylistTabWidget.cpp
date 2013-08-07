@@ -2,6 +2,7 @@
 #include <QPushButton>
 #include <QVariant>
 #include <QDebug>
+#include <QTabBar>
 
 PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
     QTabWidget(parent)
@@ -13,6 +14,9 @@ PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
     QPushButton* addTabButton = new QPushButton(parent);
     addTabButton->setProperty("type", QVariant("addTabButton") );
     connect(addTabButton, SIGNAL (clicked() ), this, SLOT( onAddTabButtonClicked() ) );
+
+    this->setMovable(true);
+    this->tabBar()->setExpanding(true);
 
     this->setCornerWidget(addTabButton, Qt::TopRightCorner );
 }

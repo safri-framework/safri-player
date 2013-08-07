@@ -25,8 +25,8 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     //addNewPlaylist("Wusel", newTabWidget);
     //addNewPlaylist("Dusel", newTabWidget);
     //addNewPlaylist("+", newTabWidget);
-    newTabWidget = addNewPlaylist("Neuer Tab " + QString::number(newTabCount) );
-    newTabCount++;
+    //newTabWidget = addNewPlaylist("Neuer Tab " + QString::number(newTabCount) );
+    //newTabCount++;
     //addNewPlaylist("+", newTabWidget);
     //addNewPlaylist("Dusel");
     //addNewPlaylist("+", newTabWidget);
