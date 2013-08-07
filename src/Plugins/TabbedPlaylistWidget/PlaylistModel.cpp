@@ -214,15 +214,19 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 
     stream << playlistPointer;
 
+    qDebug() << "Index Count: " << indexes.size();
+
     mimeData = QAbstractItemModel::mimeData(indexes);
     Core::Media* mediaAtIndex;
     foreach (QModelIndex index, indexes)
     {
+        qDebug() << "Process Model Index";
         if (index.isValid())
         {
             mediaAtIndex = playlist->getMediaAt(index.row());
             int row = index.row();
             filenames.append( mediaAtIndex->getURL().toLocalFile());
+            qDebug() << "add to mime: " << mediaAtIndex->getName();
             qint64 pointer = (qint64) mediaAtIndex;
 
             stream <<  pointer << row;

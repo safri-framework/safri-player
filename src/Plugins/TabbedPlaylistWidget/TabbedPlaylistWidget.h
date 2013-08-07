@@ -54,13 +54,16 @@ class TabbedPlaylistWidget : public Core::IPlaylistWidget
 
     private:
 
-        PlaylistTabWidget* addNewTabWidget();
+        PlaylistTabWidget*  addNewTabWidget();
+        void                removeCurrentTabIcon();
+        void                setCurrentTabIcon();
 
         Ui::TabbedPlaylistWidget *ui;
         PlaylistTabWidget* currentPlaylistTabWidget;
         PlaylistView* currentPlayingListView;
         int currentPlaylistIndex;
         int newTabCount;
+        Core::playState currentState;
 };
 
 #endif // TABBEDPLAYLISTWIDGET_H

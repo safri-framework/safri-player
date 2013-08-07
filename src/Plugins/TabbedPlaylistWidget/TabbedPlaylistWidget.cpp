@@ -14,7 +14,7 @@
 
 TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     IPlaylistWidget(parent),
-    ui(new Ui::TabbedPlaylistWidget), currentPlaylistTabWidget(0), currentPlayingListView(0), newTabCount(1)
+    ui(new Ui::TabbedPlaylistWidget), currentPlaylistTabWidget(0), currentPlayingListView(0), newTabCount(1), currentState(Core::NODATA)
 {
     ui->setupUi(this);
     PlaylistTabWidget* newTabWidget;
@@ -22,16 +22,6 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     connect(Core::ICore::playbackController(), SIGNAL(stateChanged(Core::playState)), this, SLOT(playbackControllerStateChanged(Core::playState)));
 
     newTabWidget = addNewPlaylist("Safri", Core::ICore::createPlaylist());
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
-    newTabWidget = addNewPlaylist("Safri", newTabWidget);
     //addNewPlaylist("Wusel", newTabWidget);
     //addNewPlaylist("Dusel", newTabWidget);
     //addNewPlaylist("+", newTabWidget);
@@ -121,26 +111,19 @@ void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
 
             Core::Media* media = playlist->getCurrentMedia();
 
-            qDebug() << media->getURL();
+            PlaylistTabWidget *tabWidget = qobject_cast<PlaylistTabWidget*>(senderView->parent()->parent());
+            if (tabWidget != 0)
+            {
+                removeCurrentTabIcon();
+                currentPlaylistTabWidget = tabWidget;
+                currentPlaylistIndex = currentPlaylistTabWidget->indexOf(senderView);
+                currentPlayingListView = senderView;
+            }
 
             Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
             playbackConntroller->stopAction()->trigger();
             playbackConntroller->setPlaylist(playlist);
             playbackConntroller->playAction()->trigger();
-
-            PlaylistTabWidget *tabWidget = qobject_cast<PlaylistTabWidget*>(senderView->parent()->parent());
-            if (tabWidget != 0)
-            {
-                if (currentPlaylistTabWidget != 0)
-                {
-                    currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon());
-                }
-                currentPlaylistTabWidget = tabWidget;
-                currentPlaylistIndex = currentPlaylistTabWidget->indexOf(senderView);
-                currentPlayingListView = senderView;
-
-                tabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/ressources/play_icon_little.png"));
-            }
         }
     }
 }
@@ -169,23 +152,14 @@ void TabbedPlaylistWidget::addNewTab(PlaylistTabWidget *tabWidget)
 
 void TabbedPlaylistWidget::playbackControllerStateChanged(Core::playState state)
 {
-    if (currentPlaylistTabWidget != 0)
+    if (state == currentState)
     {
-        switch (state)
-        {
-            case Core::PLAY:
-
-                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/Ressources/tab_playing_indicator.png") );
-
-                break;
-            case Core::PAUSE:
-                currentPlaylistTabWidget->setTabIcon(currentPlaylistIndex, QIcon(":/icons/Ressources/tab_pause_indicator.png") );
-                break;
-
-            default:
-                break;
-        }
+        return;
     }
+
+    currentState = state;
+
+    setCurrentTabIcon();
 }
 
 
@@ -240,6 +214,15 @@ void TabbedPlaylistWidget::splitTabWidgetView(PlaylistTabWidget *tabWidget, int 
 
     tabWidget->removeTab( index );
     newTab->addTab( playlistView, playlistView->getName() );
+
+    if (currentPlayingListView == playlistView)
+    {
+        removeCurrentTabIcon();
+        currentPlaylistTabWidget = newTab;
+        currentPlaylistIndex = 0;
+        setCurrentTabIcon();
+    }
+
 }
 
 PlaylistTabWidget *TabbedPlaylistWidget::addNewTabWidget()
@@ -263,4 +246,40 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewTabWidget()
 
 
     return tabWidget;
+}
+
+void TabbedPlaylistWidget::removeCurrentTabIcon()
+{
+    if (currentPlaylistTabWidget != 0)
+    {
+        currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, QIcon() );
+    }
+}
+
+void TabbedPlaylistWidget::setCurrentTabIcon()
+{
+
+    if (currentPlaylistTabWidget == 0)
+    {
+        return;
+    }
+
+    switch (currentState)
+    {
+        case Core::PLAY:
+
+            currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, QIcon(":/icons/Ressources/tab_playing_indicator.png") );
+            break;
+
+        case Core::PAUSE:
+        case Core::STOP:
+
+            currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, QIcon(":/icons/Ressources/tab_pause_indicator.png") );
+            break;
+
+        default:
+
+            removeCurrentTabIcon();
+            break;
+    }
 }

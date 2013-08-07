@@ -62,12 +62,18 @@ QStyledItemDelegate *DarkBlueSkin::getPlaylistItemDelegate()
 void DarkBlueSkin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(index)
+
+    painter->fillRect(option.rect, QColor(81,112,138, 255) );
+
     painter->setPen(QColor(47,47,47, 220));
     painter->drawLine(option.rect.x(), option.rect.height()-1+option.rect.y(), option.rect.width()+option.rect.x(), option.rect.height()-1+option.rect.y());
     painter->setPen(QColor(255,255,255,12));
     painter->drawLine(option.rect.x(), option.rect.y(), option.rect.width()+option.rect.x(), option.rect.y());
-    painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
-    painter->fillRect(option.rect, QColor(81,112,138, 255) );
+
+    if (index.column() == 0)
+    {
+        painter->drawPixmap(option.rect.x()+5, option.rect.y() + 8, 13, 13, QPixmap(":/icons/Ressources/playlist_playing_indicator.png"));
+    }
 }
 
 void DarkBlueSkin::paintRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

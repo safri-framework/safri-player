@@ -119,7 +119,14 @@ void SongTreeItem::addSong(Song* song)
 
 QString SongTreeItem::getTypeName()
 {
-    return type->getTypeName();
+    if (type)
+    {
+        return type->getTypeName();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 int SongTreeItem::getNumberOfChilds() const

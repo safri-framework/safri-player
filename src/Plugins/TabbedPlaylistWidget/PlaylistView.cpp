@@ -19,6 +19,9 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     this->header()->setStretchLastSection(false);
     this->setAlternatingRowColors(true);
 
+    this->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    this->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
 }
 
@@ -32,33 +35,18 @@ void PlaylistView::mousePressEvent (QMouseEvent *event)
 
 void PlaylistView::mouseMoveEvent(QMouseEvent *event)
 {
+    QTreeView::mouseMoveEvent(event);
 
-    if(event->buttons())
-    {
-        qDebug()<<"blub";
-    }
-    else
-    {
-        qDebug()<<"blab";
-    }
-
-    QModelIndex index = this->indexAt(startDragPosition);
     if ((event->pos() - startDragPosition).manhattanLength() < QApplication::startDragDistance())
     {
-        qDebug()<<"blah";
         return;
     }
-    if (!(index.isValid()))
-        return;
 
-    QModelIndexList modelIndexList;
-    modelIndexList.append(index);
+    QModelIndexList modelIndexList = selectedIndexes();
 
 
     QMimeData *mimeData = 0;
     mimeData = this->model()->mimeData(modelIndexList);
-    if(mimeData)
-        qDebug()<<"mime";
 
     if (!(event->buttons() & Qt::RightButton))
     {
@@ -87,26 +75,8 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 */
 
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
- {
-    bool accepted = true;
-    const QMimeData *mimeData = event->mimeData();
-//event->acceptProposedAction();
-event->accept();
-/*
-if (mimeData->hasUrls())
-    {
-
-        QList<QUrl> urllist = mimeData->urls();
-        foreach (QUrl i, urllist)
-        {
-
-
-        }
-
-    }
-
-*/
-qDebug()<<"dragEnter";
+{
+    QTreeView::dragEnterEvent(event);
 }
 
 
@@ -135,7 +105,7 @@ QPixmap QAbstractItemViewPrivate::renderToPixmap(const QModelIndexList &indexes,
 
 QModelIndexList PlaylistView::selectedIndexes() const
 {
-    return QTreeView::selectedIndexes();
+    return selectionModel()->selectedRows(0);
 }
 
 void PlaylistView::setModel(QAbstractItemModel *model)
@@ -166,25 +136,34 @@ void PlaylistView::setName(QString name)
 
 void PlaylistView::keyPressEvent(QKeyEvent *event)
 {
-    /*
     if (event->key() == Qt::Key_Delete)
     {
         QModelIndexList indexes = selectedIndexes();
-        Pl* playlistProxy = (PlaylistProxyModel*) model();
-        PlaylistModel* playlistModel = (PlaylistModel*) playlistProxy->sourceModel();
-        Playlist* playlist = playlistModel->getPlaylist();
-        playlist->deleteSong(playlistProxy->mapToSource(indexes.at(0)).row());
+
+        QList<int> intList;
+        for (int i = 0; i < indexes.size(); i++)
+        {
+            intList.append(indexes.at(i).row());
+        }
+
+        qSort(intList.begin(), intList.end());
+
+        PlaylistModel* playlistModel = qobject_cast<PlaylistModel*>( this->model() );
+
+        QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
+
+        for(int i = intList.size()-1;  i >= 0 ; i--)
+        {
+            playlist->deleteMedia(intList.at(i));
+        }
+
     }
-    */
+
 }
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 {
-    if(dragStarted)
-    {
-
-
-    }
+    QTreeView::dragMoveEvent(event);
 }
 
 void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)

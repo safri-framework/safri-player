@@ -13,6 +13,8 @@ PlaylistItemDelegate::PlaylistItemDelegate(TabbedPlaylistWidget *plWidget, QObje
 
 void PlaylistItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    painter->save();
+
     if(skin)
     {
         if ( plWidget->isCurrentPlayingView( parent() ) && index.data(Qt::UserRole).toBool())
@@ -27,10 +29,11 @@ void PlaylistItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->fillRect(option.rect, QColor("#E1DBBD") );
             if(index.column() == 0)
             {
-                painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
+                painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":/icons/Ressources/tab_playing_indicator.png"));
             }
         }
     }
+    painter->restore();
     QItemDelegate::paint(painter, option, index);
 }
 

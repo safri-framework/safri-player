@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="13"
+   height="13"
+   id="svg6523"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="playlist_playing_indicator.svg"
+   inkscape:export-filename="/home/sascha/safri/checkout/src/Plugins/DarkBlueSkin/Ressources/tab_pause_indicator.png"
+   inkscape:export-xdpi="28.5"
+   inkscape:export-ydpi="28.5">
+  <defs
+     id="defs6525" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="-0.52784978"
+     inkscape:cy="8.0959299"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1148"
+     inkscape:window-height="839"
+     inkscape:window-x="195"
+     inkscape:window-y="50"
+     inkscape:window-maximized="0"
+     inkscape:snap-page="false" />
+  <metadata
+     id="metadata6528">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-423.6326,-437.56031)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path944"
+       style="fill:#dfdfdf;fill-opacity:0.78431373;fill-rule:nonzero;stroke:none"
+       d="m 435.24488,443.50168 -9.32071,-5.77442 c -0.67913,-0.44549 -1.23502,-0.11772 -1.23502,0.72855 l 0,11.20937 c 0,0.8457 0.55589,1.17361 1.23502,0.72834 l 9.32071,-5.7742 c 0,0 0.33117,-0.23299 0.33117,-0.55893 0,-0.32574 -0.33117,-0.55871 -0.33117,-0.55871"
+       inkscape:export-filename="/home/sascha/safri/checkout/src/Plugins/DarkBlueSkin/Ressources/tab_playing_indicator.png"
+       inkscape:export-xdpi="20.734274"
+       inkscape:export-ydpi="20.734274" />
+  </g>
+</svg>
