@@ -228,7 +228,18 @@ QPushButton:checked[place="menu_left"][type="menu_button_last"]
     border-image: url(:buttons/Ressources/button_sidebar_on.png) ;
 }
 
+
+
 QScrollBar:vertical
+{
+      border: none;
+      background: transparent;
+      width: 7px;
+      margin: 30px 0px 1px 0px;
+
+}
+
+PlaylistView QScrollBar:vertical
 {
       border: none;
       background: rgba(0,0,0,56)  ;
@@ -270,11 +281,18 @@ QScrollBar::sub-line:vertical
     border-right:   none;
     border-bottom:  none;
 
-      height: 30px;
+      height: 28px;
 
       subcontrol-position: top;
       subcontrol-origin: margin;
 }
+
+
+PlaylistView QScrollBar::sub-line:vertical
+{
+    height: 28px;
+}
+
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
@@ -407,6 +425,39 @@ PlaylistView
 }
 
 
+
+
+ QTreeView::branch
+ {
+
+     background-color:transparent;
+ }
+
+ QTreeView::branch:closed:has-children:has-siblings {
+    image:url(:border_images/Ressources/tree_closed.png);
+
+ }
+
+ QTreeView::branch:has-children:!has-siblings:closed {
+    image:url(:border_images/Ressources/tree_closed.png);
+
+ }
+
+ QTreeView::branch:open:has-children:has-siblings {
+    image:url(:border_images/Ressources/tree_opened.png);
+
+ }
+
+ QTreeView::branch:open:has-children:!has-siblings {
+     image:url(:border_images/Ressources/tree_opened.png);
+ }
+
+ QTreeView::branch:open:has-children:!has-siblings:hover {
+     image:url(:border_images/Ressources/tree_opened.png);
+ }
+
+
+
 SongTreeView
 {
     border:none; /*2px solid rgba(255,255,255,25);*/
@@ -417,10 +468,34 @@ SongTreeView
     font-size:12px;
     show-decoration-selected: 1;
     selection-background-color:rgba(78,109,134);
-    alternate-background-color: rgba(255,255,255,12);
+    alternate-background-color:rgba(255,255,255,7);
+    qproperty-rootIsDecorated:"true";
 }
 
+/*
+ SongTreeView::branch:open
+ {
+    image:url(:border_images/Ressources/tree_opened.png);
+    background:none;
+ }
 
+ SongTreeView::branch:open:hover
+ {
+    image:url(:border_images/Ressources/tree_opened_hover.png);
+    background:none;
+ }
+
+ SongTreeView::branch:closed
+ {
+    image:url(:border_images/Ressources/tree_closed.png);
+    background:none;
+ }
+
+ SongTreeView::branch:closed:hover
+ {
+    image:url(:border_images/Ressources/tree_closed_hover.png);
+    background:none;
+ }*/
 
 QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
 {

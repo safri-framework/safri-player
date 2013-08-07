@@ -29,6 +29,10 @@
         <file>Ressources/scrollBar_vertical.png</file>
         <file>Ressources/search_edit.png</file>
         <file>Ressources/search_edit_active.png</file>
+        <file>Ressources/tree_closed.png</file>
+        <file>Ressources/tree_closed_hover.png</file>
+        <file>Ressources/tree_opened.png</file>
+        <file>Ressources/tree_opened_hover.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>Ressources/sidebar_button.png</file>

@@ -11,6 +11,7 @@ DarkBlueSkin::DarkBlueSkin()
     QString styleSheet = QLatin1String( file.readAll() );
     file.close();
     style = styleSheet;
+    qApp->setStyle("macintosh");
 
     iconMap.insert("ArtistType", new QIcon(":icons/Ressources/Artist_16.png"));
     iconMap.insert("AlbumType", new QIcon(":icons/Ressources/Album_16.png"));
@@ -30,6 +31,7 @@ DarkBlueSkin::DarkBlueSkin()
 
 
     qApp->setPalette(palette);
+
 }
 
 DarkBlueSkin::~DarkBlueSkin()
@@ -70,6 +72,9 @@ void DarkBlueSkin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyle
 
 void DarkBlueSkin::paintRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+
+
+
     Q_UNUSED(index)
     painter->setPen(QColor(47,47,47, 220));
     painter->drawLine(option.rect.x(), option.rect.height()-1+option.rect.y(), option.rect.width()+option.rect.x(), option.rect.height()-1+option.rect.y());
@@ -96,8 +101,8 @@ QSize DarkBlueSkin::playlistRowSizeHint(const QStyleOptionViewItem &option, cons
 void DarkBlueSkin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 
-
-
+    if(option.features && QStyleOptionViewItem::Alternate)
+        painter->fillRect(option.rect, QColor(255,255,255,7));
 }
 
 QSize DarkBlueSkin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
