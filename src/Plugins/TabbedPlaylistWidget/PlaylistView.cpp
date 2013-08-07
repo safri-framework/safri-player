@@ -35,17 +35,17 @@ void PlaylistView::mousePressEvent (QMouseEvent *event)
 
 void PlaylistView::mouseMoveEvent(QMouseEvent *event)
 {
-    QTreeView::mouseMoveEvent(event);
-
     if ((event->pos() - startDragPosition).manhattanLength() < QApplication::startDragDistance())
     {
+        qDebug()<<"blah";
         return;
     }
 
-    QModelIndexList modelIndexList = selectedIndexes();
+    QModelIndexList modelIndexList = selectionModel()->selectedRows(0);
 
 
     QMimeData *mimeData = 0;
+
     mimeData = this->model()->mimeData(modelIndexList);
 
     if (!(event->buttons() & Qt::RightButton))
@@ -76,7 +76,7 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 {
-    //QTreeView::dragEnterEvent(event);
+    QTreeView::dragEnterEvent(event);
     event->accept();
 }
 
@@ -139,7 +139,7 @@ void PlaylistView::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete)
     {
-        QModelIndexList indexes = selectedIndexes();
+        QModelIndexList indexes = selectionModel()->selectedRows(0);
 
         QList<int> intList;
         for (int i = 0; i < indexes.size(); i++)
@@ -159,24 +159,18 @@ void PlaylistView::keyPressEvent(QKeyEvent *event)
         }
 
     }
-
 }
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 {
-    //QTreeView::dragMoveEvent(event);
-    event->accept();
+    QTreeView::dragMoveEvent(event);
 }
 
 void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)
 {
-    /*
     QPushButton* btn = qobject_cast<QPushButton*>(newFocus);
     if(oldFocus == this && !btn)
     {
         this->selectionModel()->clear();
     }
-    */
 }
-
-

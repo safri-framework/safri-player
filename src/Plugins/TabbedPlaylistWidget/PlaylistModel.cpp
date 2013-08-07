@@ -102,27 +102,50 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         // check if the drop comes from the own playlist
         if ( playlistPointer == (qint64) playlist.data() )
         {
-            QList<Core::Media*> draggedItems;
-            qDebug() << "OWN PLAYLIST";
+            // OWN PLAYLIST
+
+            int minDraggedRow = playlist->getSize() + 1;
+
             while (!stream.atEnd())
             {
                 qint64 pointer = 0;
                 stream  >> pointer >> draggedFromRow ;
-                Core::Media* mediaItem =(Core::Media*) pointer;
-                draggedItems.append(mediaItem);
+
                 draggedRows.append(draggedFromRow);
-                //qDebug()<< pointer << draggedFromRow;
+
+                if (draggedFromRow < minDraggedRow)
+                {
+                    minDraggedRow = draggedFromRow;
+                }
+
             }
 
-            for(int i = 0; i < draggedRows.size(); i++)
+            if ( minDraggedRow < parent.row() )
             {
-                 playlist->moveMedia(draggedRows.at(i), parent.row()+i);
+                // dragging items down
+
+                qSort(draggedRows.begin(), draggedRows.end());
+
+                for(int i = draggedRows.size()-1;  i >= 0 ; i--)
+                {
+                    playlist->moveMedia( draggedRows.at(i), parent.row() + i );
+                }
+
             }
+            else
+            {
+                // dragging items up
+
+                for(int i = 0; i < draggedRows.size(); i++)
+                {
+                     playlist->moveMedia(draggedRows.at(i), parent.row()+i);
+                }
+            }
+
         }
         else
         {
             QList<Core::Item*> draggedItems;
-            qDebug() << "OTHER PLAYLIST";
 
             while (!stream.atEnd())
             {
@@ -253,7 +276,7 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
     {
         if(playlist->getSize() > 0)
         {
-            return defaultFlags;
+            return defaultFlags | Qt::ItemIsDropEnabled;
         }
         else
         {
