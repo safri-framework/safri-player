@@ -23,9 +23,17 @@ void SongTreeItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
 QSize SongTreeItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+
+    QSize defaultSize = QItemDelegate::sizeHint(option, index);
     if(skin)
     {
-        return skin->treeViewSizeHint(option, index);
+        QSize skinSize =  skin->treeViewSizeHint(option, index);
+
+        if(skinSize.height() > defaultSize.height())
+            return skinSize;
+
     }
-    return QItemDelegate::sizeHint(option, index);
+
+
+    return defaultSize;
 }
