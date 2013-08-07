@@ -16,15 +16,18 @@ class PlaylistView : public QTreeView
 {
     Q_OBJECT
     public:
-        explicit PlaylistView(QWidget *parent = 0);
+        explicit PlaylistView(QString name, QWidget *parent = 0);
 
         QModelIndexList selectedIndexes() const;
 
         void setModel(QAbstractItemModel *model);
 
+        QString getName();
+
     private:
         QPoint startDragPosition;
         bool dragStarted;
+        QString name;
 
     signals:
 

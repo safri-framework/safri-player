@@ -16,6 +16,7 @@ namespace Core {
 
 class QTabWidget;
 class PlaylistTabWidget;
+class PlaylistView;
 
 class TabbedPlaylistWidget : public Core::IPlaylistWidget
 {
@@ -39,18 +40,27 @@ class TabbedPlaylistWidget : public Core::IPlaylistWidget
         PlaylistTabWidget* addNewPlaylist(QString name, PlaylistTabWidget *tabWidget = 0);
         PlaylistTabWidget* addNewPlaylist(QString name, QSharedPointer<Core::IPlaylist> playlist, PlaylistTabWidget *tabWidget = 0);
 
+        bool isCurrentPlayingView(QObject* listView);
+
     private slots:
 
         void playlistViewDoubleClicked(const QModelIndex &index);
         void lastTabRemoved(PlaylistTabWidget* tabWidget);
+        void addNewTab(PlaylistTabWidget* tabWidget);
         void playbackControllerStateChanged(Core::playState state);
         void onTabWidgetCostumContextMenuRequested(const QPoint &pos);
+        void splitCurrentTabWidgetView(PlaylistTabWidget* tabWidget);
+
 
     private:
 
+        PlaylistTabWidget* addNewTabWidget();
+
         Ui::TabbedPlaylistWidget *ui;
         PlaylistTabWidget* currentPlaylistTabWidget;
+        PlaylistView* currentPlayingListView;
         int currentPlaylistIndex;
+        int newTabCount;
 };
 
 #endif // TABBEDPLAYLISTWIDGET_H

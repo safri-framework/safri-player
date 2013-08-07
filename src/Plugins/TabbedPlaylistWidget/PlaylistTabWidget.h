@@ -12,10 +12,12 @@ class PlaylistTabWidget : public QTabWidget
     signals:
 
         void lastTabRemoved(PlaylistTabWidget *tabWidget);
+        void addNewTab(PlaylistTabWidget* tabWidget);
 
     private slots:
 
         void onTabCloseRequested(int index);
+        void onAddTabButtonClicked();
 
     public slots:
 };

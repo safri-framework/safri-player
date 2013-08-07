@@ -1,6 +1,7 @@
 #include "PlaylistTabWidget.h"
 #include <QPushButton>
 #include <QVariant>
+#include <QDebug>
 
 PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
     QTabWidget(parent)
@@ -11,6 +12,7 @@ PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
 
     QPushButton* addTabButton = new QPushButton(parent);
     addTabButton->setProperty("type", QVariant("addTabButton") );
+    connect(addTabButton, SIGNAL (clicked() ), this, SLOT( onAddTabButtonClicked() ) );
 
     this->setCornerWidget(addTabButton, Qt::TopRightCorner );
 }
@@ -25,4 +27,9 @@ void PlaylistTabWidget::onTabCloseRequested(int index)
     {
         Q_EMIT lastTabRemoved(this);
     }
+}
+
+void PlaylistTabWidget::onAddTabButtonClicked()
+{
+    Q_EMIT addNewTab(this);
 }

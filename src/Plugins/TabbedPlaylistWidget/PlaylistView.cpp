@@ -5,8 +5,8 @@
 #include <QHeaderView>
 #include <QPushButton>
 
-PlaylistView::PlaylistView(QWidget *parent) :
-    QTreeView(parent)
+PlaylistView::PlaylistView(QString name, QWidget *parent) :
+    QTreeView(parent), name(name)
 {
     this->setHeaderHidden(false);
     this->setAcceptDrops(true);
@@ -151,6 +151,11 @@ void PlaylistView::setModel(QAbstractItemModel *model)
     this->header()->setSectionResizeMode(6, QHeaderView::Fixed);
     this->header()->resizeSection(0,25);
     this->header()->resizeSection(1,25);
+}
+
+QString PlaylistView::getName()
+{
+    return name;
 }
 
 void PlaylistView::keyPressEvent(QKeyEvent *event)

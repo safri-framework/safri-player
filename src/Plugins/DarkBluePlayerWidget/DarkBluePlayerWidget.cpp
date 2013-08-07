@@ -85,7 +85,7 @@ QString DarkBluePlayerWidget::getCoverPath(Core::DataItem *dataItem)
 
     if ( coverPath.isEmpty() )
     {
-        coverPath = ":/border_images/Ressources/no_cover.svg";
+        coverPath = ":/border_images/Ressources/no_cover.png";
     }
 
     return coverPath;
