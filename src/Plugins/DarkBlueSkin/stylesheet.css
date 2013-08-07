@@ -75,7 +75,8 @@ QMenuBar::item
     color: #FFFFFF;
 }
 
-QWidget[type="treeView"]
+
+QWidget[ident="playlist"]
 {
     background-image: url(:border_images/Ressources/background.png);
     border: none;
@@ -281,10 +282,10 @@ QComboBox::down-arrow {
 }
 
 
-
-QTreeView
+/*
+PlaylistView
 {
-    background-color: rgba(255, 0, 0, 100%);/*rgba(255, 255, 255, 0%);*/
+    background-color: rgba(255, 0, 0, 100%);
     color: #FFFFFF;
     qproperty-alternatingRowColors: "true";
     qproperty-SelectionBehavior:2;
@@ -295,6 +296,7 @@ QTreeView
     show-decoration-selected: 1;
 
 }
+*/
 
 QComboBox QListView
 {
@@ -317,26 +319,36 @@ QComboBox QListView::item:checked {
 QComboBox QListView::item:hover {
     color: blue;
 }
+
+
+
 PlaylistView
 {
-    background-color: rgba(255, 0, 0, 0%);/*rgba(255, 255, 255, 0%);*/
+    background-color: rgba(255, 0, 0, 0%);
     color: #FFFFFF;
     qproperty-alternatingRowColors: "false";
     height:50px;
     font-size:12px;
-
+    show-decoration-selected: 1;
     selection-background-color: rgba(255,255,255,25);
 }
 
-/*
-QTreeView::item
+
+SongTreeView
 {
-    background-color: green;
+    border:none; /*2px solid rgba(255,255,255,25);*/
+    background-color: rgba(0, 0, 0, 15);
     color: #FFFFFF;
-    qproperty-alternatingRowColors: "false";
-    height:
+    qproperty-alternatingRowColors: "true";
+    height:50px;
+    font-size:12px;
+    show-decoration-selected: 1;
+    selection-background-color:rgba(78,109,134);
+    alternate-background-color: rgba(255,255,255,12);
 }
-*/
+
+
+
 QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
 {
     min-width::21px;
@@ -347,13 +359,8 @@ QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
     max-height:26px;
     border-width:1px;
 }
-/*
-QPushButton:hover[type="tiny"]
-{
-    border-image: url(:border_images/SAFRI_UI/tiny_button_hover_2.png);
 
 
-}*/
 QPushButton:pressed[type="tiny"],QPushButton:checked[type="tiny"]
 {
     border-image:url(:border_images/Ressources/combobo_pressed.png);

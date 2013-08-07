@@ -18,6 +18,8 @@ class Safri3Skin : public Core::ISafriSkin
         QIcon*                  getIcon(QString itemType);
         QString                 getName();
         QSize                   playlistRowSizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+        void                    paintTreeItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+        virtual QSize            treeViewSizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
 
     private:

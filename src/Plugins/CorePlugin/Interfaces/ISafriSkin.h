@@ -25,6 +25,8 @@ namespace Core
         virtual QString getName() = 0;
         virtual void paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const = 0;
         virtual void paintRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const = 0;
+        virtual void paintTreeItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const = 0;
+        virtual QSize treeViewSizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const = 0;
         virtual QSize playlistRowSizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const = 0;
 
     signals:

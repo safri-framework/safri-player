@@ -387,10 +387,10 @@ QVariant SongTreeModel::data(const QModelIndex &index, int role) const
 
             return QIcon(":/icons/ressources/music_icon.png");
 
-        if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ARTIST)
-        {
-            return "qrc:/icons/ressources/artist_icon.png";
-        }
+            if (dataItemPtr != 0 && dataItemPtr->getType() == DataItem::ARTIST)
+            {
+                return "qrc:/icons/ressources/artist_icon.png";
+            }
 
             return "qrc:/icons/ressources/music_icon.png";
 

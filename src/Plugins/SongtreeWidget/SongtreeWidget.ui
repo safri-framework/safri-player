@@ -40,18 +40,24 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QTreeView" name="treeView">
+       <widget class="SongTreeView" name="treeView">
         <property name="dragEnabled">
          <bool>true</bool>
         </property>
         <property name="dragDropMode">
          <enum>QAbstractItemView::DragDrop</enum>
         </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
         <property name="type" stdset="0">
          <string>treeView</string>
         </property>
         <property name="ident" stdset="0">
-         <string>playlist</string>
+         <string>songTree</string>
+        </property>
+        <property name="foo" stdset="0">
+         <string>bar</string>
         </property>
        </widget>
       </item>
@@ -63,6 +69,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SongTreeView</class>
+   <extends>QTreeView</extends>
+   <header>SongTreeView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

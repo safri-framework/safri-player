@@ -1,6 +1,7 @@
 #include "DarkBlueSkin.h"
 #include <QFile>
 #include <QApplication>
+#include "Songtree/songtreeitem.h"
 
 DarkBlueSkin::DarkBlueSkin()
 {
@@ -17,12 +18,17 @@ DarkBlueSkin::DarkBlueSkin()
     iconMap.insert("CollectionType", new QIcon(":icons/Ressources/Collection_16.png"));
     iconMap.insert("GenreType", new QIcon(":icons/Ressources/Genre_16.png"));
 
+
     QPalette palette = qApp->palette();
     //ui->pLabel->setPalette(palette);
     palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
     palette.setColor(QPalette::Text, QColor("#DFDFDF"));
     palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
-    palette.setColor(QPalette::Highlight,QColor(0,255,0));
+    palette.setColor(QPalette::Highlight,QColor(0,0,0,0));
+     palette.setColor(QPalette::Light,QColor(0,255,0));
+
+
+
     qApp->setPalette(palette);
 }
 
@@ -85,4 +91,20 @@ QString DarkBlueSkin::getName()
 QSize DarkBlueSkin::playlistRowSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     return QSize(option.rect.width(), 30);
+}
+
+void DarkBlueSkin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+
+
+
+}
+
+QSize DarkBlueSkin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+   SongTreeItem* item = (SongTreeItem*) index.internalPointer();
+   //if(item->getTypeName() == "AlbumType")
+   {
+       return QSize(option.rect.width(), 25);
+   }
 }

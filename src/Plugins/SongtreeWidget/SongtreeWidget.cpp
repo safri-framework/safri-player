@@ -16,6 +16,7 @@
 #include <QTreeView>
 #include "../CorePlugin/icore.h"
 #include <QtWidgets/QPushButton>
+#include <songtreeitemdelegate.h>
 
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
     QWidget(parent),
@@ -53,6 +54,7 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
     this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->treeView->setModel(proxy);
+    this->ui->treeView->setItemDelegate(new SongTreeItemDelegate(this));
 }
 
 SongtreeWidget::~SongtreeWidget()

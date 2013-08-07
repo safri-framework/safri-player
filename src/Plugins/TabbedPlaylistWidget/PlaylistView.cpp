@@ -15,6 +15,7 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     this->setDropIndicatorShown(true);
     this->setRootIsDecorated(false);
     this->setProperty("type", QVariant("treeView"));
+    this->setProperty("ident", QVariant("playlist"));
     this->header()->setStretchLastSection(false);
     this->setAlternatingRowColors(true);
 
