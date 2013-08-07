@@ -76,7 +76,8 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 {
-    QTreeView::dragEnterEvent(event);
+    //QTreeView::dragEnterEvent(event);
+    event->accept();
 }
 
 
@@ -163,16 +164,19 @@ void PlaylistView::keyPressEvent(QKeyEvent *event)
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 {
-    QTreeView::dragMoveEvent(event);
+    //QTreeView::dragMoveEvent(event);
+    event->accept();
 }
 
 void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)
 {
+    /*
     QPushButton* btn = qobject_cast<QPushButton*>(newFocus);
     if(oldFocus == this && !btn)
     {
         this->selectionModel()->clear();
     }
+    */
 }
 
 
