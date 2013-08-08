@@ -120,15 +120,17 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
             }
 
-            if ( minDraggedRow < parent.row() )
+            if ( minDraggedRow < getDropRow(parent, 0) )
             {
                 // dragging items down
 
                 qSort(draggedRows.begin(), draggedRows.end());
+                int count = 1;
 
                 for(int i = draggedRows.size()-1;  i >= 0 ; i--)
                 {
-                    playlist->moveMedia( draggedRows.at(i), parent.row() + i );
+                    playlist->moveMedia( draggedRows.at(i), getDropRow(parent, - count));
+                    count++;
                 }
 
             }
@@ -505,4 +507,16 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
     }
 
     return QVariant();
+}
+
+int PlaylistModel::getDropRow(const QModelIndex &index, int i)
+{
+    if ( index.isValid() )
+    {
+        return index.row() + i;
+    }
+    else
+    {
+        return playlist->getSize() + i;
+    }
 }

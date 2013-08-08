@@ -54,6 +54,7 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
         drag->setMimeData(mimeData);
         drag->exec(Qt::MoveAction);
         dragStarted = true;
+        selectionModel()->clear();
     }
 
 
@@ -63,6 +64,7 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
         drag->setMimeData(mimeData);
         drag->exec(Qt::CopyAction);
         dragStarted = true;
+        selectionModel()->clear();
     }
 }
 

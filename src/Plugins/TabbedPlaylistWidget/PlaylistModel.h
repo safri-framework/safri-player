@@ -38,6 +38,7 @@ private slots:
     private:
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;
         QSharedPointer<Core::IPlaylist> playlist;
+        int getDropRow(const QModelIndex& index, int i);
 
     signals:
         void sizeHintChanged(QModelIndex index);
