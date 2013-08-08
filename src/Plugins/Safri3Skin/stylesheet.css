@@ -280,11 +280,9 @@ PlayerWidget
 
 QWidget[place="menu_left"][type="frame"]
 {
-
     background-image: url(:border_images/SAFRI_UI/sidebar_background.png);
     min-width:77px;
     max-width:77px;
-
 }
 
 
@@ -339,22 +337,26 @@ QWidget[place="webview_frame"]
 
 }
 
-QPushButton[type="addTabButton"]
-{
-    border: 0px;
-    min-width: 25px;
-    min-height: 25px;
-    max-height: 25px;
-    color: #FFFFFF;
-    padding-bottom: 3px;
+/*
 
-    image: url(:icons/Ressources/add_tab_button.png)
+QWidget[place="left_widget"][type="nav_bar"]
+{
+        border: 1px solid grey;
+        border-radius: 10px;
+        padding: 5px;
+        background: qradialgradient(cx: 0.3, cy: -0.4,
+        fx: 0.3, fy: -0.4,
+        radius: 1, stop: 0 #F0F0F0, stop: 1 white);
+        min-width: 80px;
 }
 
-QPushButton[type="addTabButton"]:hover
+
+QPushButton[type="nav_bar_button"][place="left_widget"]
 {
-    background-color: rgba(255, 255, 255, 5%);
+        background-color: transparent;
 }
+
+*/
 
 
 QWidget[type="treeView"]
@@ -438,8 +440,29 @@ QTabBar::close-button:hover
 }
 
 
+QPushButton[type="addTabButton"]
+{
+    border: 0px;
+    min-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    color: #FFFFFF;
+    padding-bottom: 6px;
 
+    image: url(:border_images/SAFRI_UI/add_tab.png)
+}
 
+QPushButton[type="addTabButton"]:hover
+{
+    background-color: rgba(255, 255, 255, 5%);
+    image: url(:border_images/SAFRI_UI/add_tab_hover.png)
+}
+
+QPushButton[type="addTabButton"]:pressed
+{
+    background-color: rgba(255, 255, 255, 5%);
+    image: url(:border_images/SAFRI_UI/add_tab_pressed.png)
+}
 
 /*
 QTabBar::tab[type="playingTab"]

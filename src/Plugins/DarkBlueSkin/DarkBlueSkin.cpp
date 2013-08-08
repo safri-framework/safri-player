@@ -25,7 +25,7 @@ DarkBlueSkin::DarkBlueSkin()
     palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
     palette.setColor(QPalette::Text, QColor("#DFDFDF"));
     palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
-    palette.setColor(QPalette::Highlight,QColor(95,176,212));
+    palette.setColor(QPalette::Highlight,QColor(132,195,237));
     palette.setColor(QPalette::HighlightedText,QColor(255,255,255));
     palette.setColor(QPalette::Light,QColor(0,255,0));
 

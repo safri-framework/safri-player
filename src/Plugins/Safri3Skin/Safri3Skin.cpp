@@ -51,6 +51,8 @@ void Safri3Skin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOp
     {
         painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
     }
+    painter->fillRect(option.rect, QColor("#E1DBBD") );
+
     Q_UNUSED(option)
     Q_UNUSED(index)
 }
