@@ -45,7 +45,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(playbackController, SIGNAL(mediaChanged(Core::Media*)), this, SLOT(mediaChanged(Core::Media*)));
     connect(playbackController, SIGNAL(update(int)), this, SLOT(update(int)));
 
-    ui->volumeSlider->setValue(playbackController->getVolume());
+    ui->volumeSlider->setValue(100);
     this->setMaximumHeight(100);
     this->setMinimumHeight(100);
 }

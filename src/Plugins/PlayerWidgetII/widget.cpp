@@ -38,7 +38,7 @@ Widget::Widget(QWidget *parent) :
     connect(m_pbController, SIGNAL(update(int)), this, SLOT(update(int)));
     connect(m_pbController->shuffleAction(), SIGNAL(toggled(bool)), this, SLOT(shuffleActionChecked(bool)));
     qDebug()<<"Current Volume"<<m_pbController->getVolume();
-    ui->volume_slider->setValue(m_pbController->getVolume());
+    ui->volume_slider->setValue(100);
     //this->showLoadingIndicator("HALLO (=");
 }
 

@@ -100,6 +100,7 @@ QMenuBar
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
     stop: 0 #686868, stop: 0.5 #545454 stop: 0.51 #494949 stop: 1.0 #4b4b4b);
     padding-left: 77px;
+    color: #DFDFDF;
 
 }
 
