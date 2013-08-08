@@ -25,8 +25,9 @@ DarkBlueSkin::DarkBlueSkin()
     palette.setColor(QPalette::ButtonText, QColor("#DFDFDF"));
     palette.setColor(QPalette::Text, QColor("#DFDFDF"));
     palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
-    palette.setColor(QPalette::Highlight,QColor(0,0,0,0));
-     palette.setColor(QPalette::Light,QColor(0,255,0));
+    palette.setColor(QPalette::Highlight,QColor(95,176,212));
+    palette.setColor(QPalette::HighlightedText,QColor(255,255,255));
+    palette.setColor(QPalette::Light,QColor(0,255,0));
 
 
 
@@ -78,9 +79,6 @@ void DarkBlueSkin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyle
 
 void DarkBlueSkin::paintRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
-
-
     Q_UNUSED(index)
     painter->setPen(QColor(47,47,47, 220));
     painter->drawLine(option.rect.x(), option.rect.height()-1+option.rect.y(), option.rect.width()+option.rect.x(), option.rect.height()-1+option.rect.y());

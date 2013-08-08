@@ -78,7 +78,6 @@ bool PlaylistWidget::isCurrentPlayingPlaylist()
     return isCurrentPl;
 }
 
-
 void PlaylistWidget::showCurrentPlaylist()
 {
     Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
@@ -141,8 +140,6 @@ void PlaylistWidget::newPlaylist(QSharedPointer<Core::IPlaylist> pl)
 void PlaylistWidget::deleteSlot()
 {
     QModelIndexList selectedIndizes = ui->playlistView->selectionModel()->selectedRows();
-
-
     QList<int> intList;
     for (int i = 0; i < selectedIndizes.size(); i++)
     {
@@ -150,7 +147,6 @@ void PlaylistWidget::deleteSlot()
     }
 
     qSort(intList.begin(),intList.end());
-
     for(int i = intList.size()-1;  i >= 0 ; i--)
     {
         currentPL->deleteMedia(intList.at(i));

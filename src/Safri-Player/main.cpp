@@ -11,7 +11,8 @@
 #include <QUrl>
 #include <QDir>
 #include <QProxyStyle>
-
+#include <QPainter>
+#include <QStyleOption>
 class Style_tweaks : public QProxyStyle
 {
     public:
@@ -25,6 +26,14 @@ class Style_tweaks : public QProxyStyle
             /* do not draw focus rectangles - this permits modern styling */
             if (element == QStyle::PE_FrameFocusRect)
                 return;
+
+            if(element == QStyle::PE_IndicatorItemViewItemDrop)
+            {
+                painter->setPen(qApp->palette().color(QPalette::Highlight));
+                painter->drawLine(option->rect.x(), option->rect.y(), option->rect.x()+option->rect.width(), option->rect.y());
+                return;
+            }
+
             QProxyStyle::drawPrimitive(element, option, painter, widget);
         }
 };

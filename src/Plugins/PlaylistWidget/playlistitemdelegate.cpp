@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QPainter>
 
-
 PlaylistItemDelegate::PlaylistItemDelegate(PlaylistWidget* plWidget, QObject *parent) :
     QItemDelegate(parent), plWidget(plWidget)
 {
@@ -32,6 +31,8 @@ void PlaylistItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
     }
     QItemDelegate::paint(painter, option, index);
+
+
 }
 
 QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

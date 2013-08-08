@@ -30,7 +30,6 @@ private:
     QMap<QUrl, IAudioCollection*> audioCollMap;
     void loadAudioCollections();
     QList<IAudioCollection*> audioCollList;
-
     void buildHierarchy();
     //QList<ITreeItemType*>*  treeHierarchy;
     SongtreeProxyModel* proxy;
@@ -42,6 +41,7 @@ private slots:
     void returnPressed();
     void on_treeView_doubleClicked(const QModelIndex &index);
     void loadSongtreeModel(int hierarchy);
+    void textEdited(QString string);
 };
 
 #endif // SONGTREEWIDGET_H

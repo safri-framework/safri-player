@@ -11,6 +11,7 @@
 namespace Ui { class PlaylistWidget; }
 
 class PlaylistModel;
+class QTreeView;
 
 class PlaylistWidget : public Core::IPlaylistWidget
 {

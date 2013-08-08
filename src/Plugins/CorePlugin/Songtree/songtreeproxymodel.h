@@ -4,6 +4,7 @@
 #include <QSortFilterProxyModel>
 #include "../CorePlugin_global.h"
 #include "../icore.h"
+#include <QColor>
 
 using namespace Core;
 class COREPLUGINSHARED_EXPORT SongtreeProxyModel : public QSortFilterProxyModel
@@ -26,6 +27,8 @@ signals:
 
 private:
      QVariant data( const QModelIndex & index, int role ) const;
+     QColor textColor;
+     QColor disabledTextColor;
 };
 
 #endif // SONGTREEPROXYMODEL_H

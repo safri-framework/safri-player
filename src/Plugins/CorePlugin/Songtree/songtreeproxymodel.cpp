@@ -1,15 +1,20 @@
 #include "songtreeproxymodel.h"
 #include "songtreeitem.h"
-#include <QColor>
+
 #include <QFont>
 #include <QDebug>
 #include <QStack>
+#include <QApplication>
+#include <QPalette>
 
 using namespace Core;
 SongtreeProxyModel::SongtreeProxyModel(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
+    textColor = qApp->palette().color(QPalette::HighlightedText);
 
+    QColor tmp = qApp->palette().color(QPalette::Text);
+    disabledTextColor = QColor(tmp.red(), tmp.green(), tmp.blue(), 70);
 }
 
 
@@ -35,11 +40,11 @@ QVariant SongtreeProxyModel::data( const QModelIndex & index, int role ) const
       {
           if (highlight)
           {
-            return QVariant(QColor(Qt::black));
+              return QVariant(textColor);
           }
           else
           {
-            return QVariant(QColor(Qt::darkGray));
+            return QVariant(disabledTextColor);
           }
       }
 
