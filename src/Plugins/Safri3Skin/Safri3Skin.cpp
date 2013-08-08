@@ -3,6 +3,8 @@
 #include <QSize>
 #include <QPainter>
 #include <QtWidgets/qstyleoption.h>
+#include <QApplication>
+#include <QPalette>
 
 Safri3Skin::Safri3Skin()
 {
@@ -12,6 +14,20 @@ Safri3Skin::Safri3Skin()
     QString styleSheet = QLatin1String( file.readAll() );
     file.close();
     style = styleSheet;
+
+
+    QPalette palette = qApp->palette();
+    //ui->pLabel->setPalette(palette);
+    palette.setColor(QPalette::ButtonText, QColor(45,45,46));
+    palette.setColor(QPalette::Text, QColor("#2C2D2E"));
+    palette.setColor(QPalette::WindowText, QColor(45,45,46));
+    palette.setColor(QPalette::Highlight,QColor(243,237,222));
+    palette.setColor(QPalette::HighlightedText,QColor("black"));
+    palette.setColor(QPalette::Light,QColor(0,255,0));
+
+
+
+    qApp->setPalette(palette);
 }
 
 QString Safri3Skin::getStyleSheet()
@@ -73,5 +89,5 @@ void Safri3Skin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &op
 
 QSize Safri3Skin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    return QSize(option.rect.width(), 20);
 }

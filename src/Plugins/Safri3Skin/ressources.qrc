@@ -18,6 +18,8 @@
         <file>SAFRI_UI/tiny_button_pressed.png</file>
         <file>SAFRI_UI/tiny_button_normal1.png</file>
         <file>SAFRI_UI/tiny_button_hover_2.png</file>
+        <file>SAFRI_UI/tab_close.png</file>
+        <file>SAFRI_UI/tab_close_hover.png</file>
     </qresource>
     <qresource prefix="/buttons">
         <file>SAFRI_UI/tab_normal.png</file>
