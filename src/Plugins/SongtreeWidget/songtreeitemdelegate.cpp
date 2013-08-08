@@ -34,6 +34,6 @@ QSize SongTreeItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 
     }
 
-
+    defaultSize.setHeight(defaultSize.height()+8);
     return defaultSize;
 }

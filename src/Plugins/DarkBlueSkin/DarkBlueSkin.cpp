@@ -21,7 +21,12 @@ DarkBlueSkin::DarkBlueSkin()
 
     iconMap.insert("TabPlayingIndicator", new QIcon(":/icons/Ressources/tab_playing_indicator.png"));
     iconMap.insert("TabPauseIndicator", new QIcon(":/icons/Ressources/tab_pause_indicator.png"));
+    iconMap.insert("NoCoverCover", new QIcon(":icons/Ressources/no_cover.png"));
 
+     QIcon* note = new QIcon();
+     note->addPixmap(QPixmap(":/icons/Ressources/note_highlight.png"), QIcon::Normal, QIcon::On);
+     note->addPixmap(QPixmap(":/icons/Ressources/note_passive.png"),QIcon::Normal, QIcon::Off);
+     iconMap.insert("Note",note);
 
     QPalette palette = qApp->palette();
     //ui->pLabel->setPalette(palette);
@@ -30,7 +35,7 @@ DarkBlueSkin::DarkBlueSkin()
     palette.setColor(QPalette::WindowText, QColor("#DFDFDF"));
     palette.setColor(QPalette::Highlight,QColor(132,195,237));
     palette.setColor(QPalette::HighlightedText,QColor(255,255,255));
-    palette.setColor(QPalette::Light,QColor(0,255,0));
+    palette.setColor(QPalette::Light,QColor(132,195,237));
 
 
 

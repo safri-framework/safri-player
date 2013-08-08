@@ -22,10 +22,13 @@ Safri3Skin::Safri3Skin()
     palette.setColor(QPalette::ButtonText, QColor(45,45,46));
     palette.setColor(QPalette::Text, QColor("#2C2D2E"));
     palette.setColor(QPalette::WindowText, QColor(45,45,46));
-    palette.setColor(QPalette::Highlight,QColor(243,237,222));
+    palette.setColor(QPalette::Highlight,QColor(229,204,128,40));
     palette.setColor(QPalette::HighlightedText,QColor("black"));
-    palette.setColor(QPalette::Light,QColor(0,255,0));
+    palette.setColor(QPalette::Light,QColor(229,204,128));
 
+    QIcon* note = new QIcon();
+    note->addPixmap(QPixmap(":/icons/SAFRI_UI/music_icon.png"), QIcon::Normal);
+    iconMap.insert("Note",note);
 
     qApp->setPalette(palette);
 }

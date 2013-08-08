@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QIcon>
 #include <QBitmap>
+#include <Interfaces/ISafriSkin.h>
 
 SongTreeSidebarWrapper::SongTreeSidebarWrapper()
 {
@@ -15,7 +16,17 @@ SongTreeSidebarWrapper::SongTreeSidebarWrapper()
 
     //button->setMask( QPixmap(":icons/ressources/music_icon.png").mask() );
 
-    button->setIcon(QIcon(":icons/ressources/music_icon2.png"));
+    ISafriSkin* skin = Core::ICore::instance()->skin();
+    if(skin)
+    {
+        QIcon* icon = skin->getIcon("Note");
+        if(icon)
+        button->setIcon(*icon);
+    }
+    else
+    {
+        button->setIcon(QIcon(":icons/ressources/music_icon2.png"));
+    }
     menuBarWidget = button;
     sideBarWidget = new SongtreeWidget();
     sideBarWidget->setMinimumHeight(300);

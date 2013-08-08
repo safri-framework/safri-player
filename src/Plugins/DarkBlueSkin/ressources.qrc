@@ -14,6 +14,9 @@
         <file>Ressources/tab_playing_indicator.png</file>
         <file>Ressources/tab_pause_indicator.png</file>
         <file>Ressources/playlist_playing_indicator.png</file>
+        <file>Ressources/note_highlight.png</file>
+        <file>Ressources/note_passive.png</file>
+        <file>Ressources/no_cover.png</file>
     </qresource>
     <qresource prefix="/border_images">
         <file>Ressources/sidebar_background.png</file>

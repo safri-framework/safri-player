@@ -5,6 +5,7 @@
     <qresource prefix="/icons">
         <file>SAFRI_UI/tab_playing_indicator.png</file>
         <file>SAFRI_UI/tab_pause_indicator.png</file>
+        <file>SAFRI_UI/music_icon.png</file>
     </qresource>
     <qresource prefix="/border_images">
         <file>SAFRI_UI/sidebar_background.png</file>

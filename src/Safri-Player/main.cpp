@@ -29,7 +29,7 @@ class Style_tweaks : public QProxyStyle
 
             if(element == QStyle::PE_IndicatorItemViewItemDrop)
             {
-                painter->setPen(qApp->palette().color(QPalette::Highlight));
+                painter->setPen(qApp->palette().color(QPalette::Light));
                 painter->drawLine(0, option->rect.y(), option->rect.x()+option->rect.width(), option->rect.y());
                 return;
             }

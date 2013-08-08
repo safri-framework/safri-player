@@ -25,7 +25,7 @@ private slots:
 private:
    bool saveHiresCovers;
    bool overwriteCovers;
-
+   QIcon* noCoverCover;
 
 signals:
 

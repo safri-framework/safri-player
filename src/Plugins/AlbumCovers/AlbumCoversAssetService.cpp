@@ -10,14 +10,24 @@
 #include <QImage>
 #include "icore.h"
 #include <QFile>
+#include <Interfaces/ISafriSkin.h>
+#include <QIcon>
 
 AlbumCoversAssetService::AlbumCoversAssetService(QObject *parent) :
     IAssetService(parent),
     saveHiresCovers(true),
-    overwriteCovers(false)
+    overwriteCovers(false),
+    noCoverCover(0)
 {
     ICollectionController* collController = ICore::collectionController();
     connect(collController, SIGNAL(newItem(Core::DataItem*)), this, SLOT(getCover(Core::DataItem*)));
+    ISafriSkin* skin = Core::ICore::instance()->skin();
+    if(skin)
+    {
+        QIcon* tmp = skin->getIcon("NoCoverCover");
+        if(tmp)
+          noCoverCover = tmp;
+    }
 }
 
 DataItem::DATA_ITEM_TYPE AlbumCoversAssetService::getSupportedDataType()
@@ -99,6 +109,8 @@ QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
         QImage cover(path);
         if (cover.isNull())
         {
+            if(noCoverCover)
+                return noCoverCover->pixmap(43,43);
             cover = QImage(":/icons/ressources/default.png");
         }
         return cover;
