@@ -120,7 +120,9 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
             }
 
-            if ( minDraggedRow < getDropRow(parent, 0) )
+            int droppedRow = getDropRow(parent, 0);
+
+            if ( minDraggedRow <  droppedRow)
             {
                 // dragging items down
 
@@ -133,15 +135,28 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                     count++;
                 }
 
+                //qDebug() << "SELECT TOP LEFT: " << droppedRow - draggedRows.size();
+                //qDebug() << "SELECT BOTTOM RIGHT: " << droppedRow - 1;
+
+                QItemSelection newSelection( index(droppedRow - draggedRows.size(), 0), index(droppedRow - 1, 0) );
+
+                Q_EMIT selectedIndexesMoved(newSelection);
+
             }
             else
             {
                 // dragging items up
 
+                qSort(draggedRows.begin(), draggedRows.end());
+
                 for(int i = 0; i < draggedRows.size(); i++)
                 {
                      playlist->moveMedia(draggedRows.at(i), parent.row()+i);
                 }
+
+                QItemSelection newSelection( index(parent.row(), 0), index(parent.row() + draggedRows.size() - 1, 0) );
+
+                Q_EMIT selectedIndexesMoved(newSelection);
             }
 
         }

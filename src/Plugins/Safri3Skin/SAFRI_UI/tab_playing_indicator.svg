@@ -39,8 +39,8 @@
      fit-margin-bottom="0"
      inkscape:window-width="1148"
      inkscape:window-height="839"
-     inkscape:window-x="195"
-     inkscape:window-y="50"
+     inkscape:window-x="284"
+     inkscape:window-y="142"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata6528">
@@ -62,7 +62,7 @@
     <path
        inkscape:connector-curvature="0"
        id="path944"
-       style="fill:#dfdfdf;fill-opacity:0.78431374;fill-rule:nonzero;stroke:none"
+       style="fill:#3e3e3e;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 469.20286,419.94875 -40.23858,-24.9288 c -2.93186,-1.92324 -5.33168,-0.50855 -5.33168,3.14524 l 0,48.39214 c 0,3.65096 2.39982,5.0666 5.33168,3.1443 l 40.23858,-24.92786 c 0,0 1.42974,-1.0058 1.42974,-2.41298 0,-1.40624 -1.42974,-2.41204 -1.42974,-2.41204"
        inkscape:export-filename="/home/sascha/safri/checkout/src/Plugins/DarkBlueSkin/Ressources/tab_playing_indicator.png"
        inkscape:export-xdpi="20.734274"

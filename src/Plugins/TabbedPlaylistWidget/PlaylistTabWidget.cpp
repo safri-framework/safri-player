@@ -2,13 +2,20 @@
 #include <QPushButton>
 #include <QVariant>
 #include <QDebug>
-#include <QTabBar>
 #include <QLineEdit>
 #include "PlaylistView.h"
+
+#include "PlaylistTabBar.h"
 
 PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
     QTabWidget(parent), tabIndexEdit(-1)
 {
+
+    PlaylistTabBar* playlistTabBar = new PlaylistTabBar(0);
+    connect(playlistTabBar, SIGNAL( tabDoubleClicked(int) ), this, SLOT( onTabDoubleClicked(int) ) );
+
+    this->setTabBar( playlistTabBar );
+
     this->setTabsClosable(true);
     //this->setTabShape(QTabWidget::Triangular);
     connect(this, SIGNAL(tabCloseRequested(int)), this, SLOT(onTabCloseRequested(int)));
@@ -19,6 +26,7 @@ PlaylistTabWidget::PlaylistTabWidget(QWidget *parent) :
 
     this->setMovable(true);
     this->tabBar()->setExpanding(true);
+
 
     this->setCornerWidget(addTabButton, Qt::TopRightCorner );
 }
@@ -38,7 +46,8 @@ void PlaylistTabWidget::editTabName(int index)
     tabBar()->setTabText(index, "");
 
     tabIndexEdit = index;
-    connect( lineEdit, SIGNAL( returnPressed() ), this, SLOT( tabTextEditedFinished() ) );
+    qDebug() << "EDIT INDEX: " << index;
+    connect( lineEdit, SIGNAL( editingFinished() ), this, SLOT( tabTextEditedFinished() ) );
 
     this->tabBar()->setTabButton(index, QTabBar::LeftSide, lineEdit );
 
@@ -57,6 +66,11 @@ void PlaylistTabWidget::onTabCloseRequested(int index)
     }
 }
 
+void PlaylistTabWidget::onTabDoubleClicked(int index)
+{
+    editTabName(index);
+}
+
 void PlaylistTabWidget::onAddTabButtonClicked()
 {
     Q_EMIT addNewTab(this);
@@ -64,20 +78,26 @@ void PlaylistTabWidget::onAddTabButtonClicked()
 
 void PlaylistTabWidget::tabTextEditedFinished()
 {
-    QLineEdit* senderEdit = qobject_cast<QLineEdit*>( sender() );
-
-
     if (tabIndexEdit != -1)
     {
+        // we save the tabIndexEdit in a temporary variable
+        // the removing of the LineEdit from the TabBar will trigger the editingFinished signal
+        // again, an this function will be called recursively
+        // to prevent the recursive call to process this editing again
+        // we set tabIndexEdit to -1 emediately
+        int tmpTabIndexEdit = tabIndexEdit;
+        tabIndexEdit = -1;
 
-        tabBar()->setTabButton(tabIndexEdit, QTabBar::LeftSide, 0);
-        tabBar()->setTabText(tabIndexEdit, senderEdit->text() );
-        PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(tabIndexEdit) );
+        QLineEdit* senderEdit = qobject_cast<QLineEdit*>( sender() );
+
+        tabBar()->setTabButton(tmpTabIndexEdit, QTabBar::LeftSide, 0);
+        tabBar()->setTabText(tmpTabIndexEdit, senderEdit->text() );
+        PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(tmpTabIndexEdit) );
         playlistView->setName( senderEdit->text() );
 
-        tabIndexEdit = -1;
-    }
 
-    senderEdit->deleteLater();
-    senderEdit = 0;
+
+        senderEdit->deleteLater();
+        senderEdit = 0;
+    }
 }

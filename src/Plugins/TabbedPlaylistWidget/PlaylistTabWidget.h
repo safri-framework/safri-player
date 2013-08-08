@@ -20,6 +20,7 @@ class PlaylistTabWidget : public QTabWidget
     private slots:
 
         void onTabCloseRequested(int index);
+        void onTabDoubleClicked(int index);
         void onAddTabButtonClicked();
         void tabTextEditedFinished();
 

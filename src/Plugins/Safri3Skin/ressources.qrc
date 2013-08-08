@@ -2,7 +2,10 @@
     <qresource prefix="/stylesheet">
         <file>stylesheet.css</file>
     </qresource>
-    <qresource prefix="/icons"/>
+    <qresource prefix="/icons">
+        <file>SAFRI_UI/tab_playing_indicator.png</file>
+        <file>SAFRI_UI/tab_pause_indicator.png</file>
+    </qresource>
     <qresource prefix="/border_images">
         <file>SAFRI_UI/sidebar_background.png</file>
         <file>SAFRI_UI/search_fokus.png</file>

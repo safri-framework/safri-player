@@ -264,17 +264,26 @@ void TabbedPlaylistWidget::setCurrentTabIcon()
         return;
     }
 
+    Core::ISafriSkin *skin = Core::ICore::skin();
+
+
     switch (currentState)
     {
         case Core::PLAY:
 
-            currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, QIcon(":/icons/Ressources/tab_playing_indicator.png") );
+            if (skin)
+            {
+                currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, *skin->getIcon("TabPlayingIndicator") );
+            }
             break;
 
         case Core::PAUSE:
         case Core::STOP:
 
-            currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, QIcon(":/icons/Ressources/tab_pause_indicator.png") );
+            if (skin)
+            {
+                currentPlaylistTabWidget->setTabIcon( currentPlaylistIndex, *skin->getIcon("TabPauseIndicator") );
+            }
             break;
 
         default:

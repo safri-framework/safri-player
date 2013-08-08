@@ -54,7 +54,6 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
         drag->setMimeData(mimeData);
         drag->exec(Qt::MoveAction);
         dragStarted = true;
-        selectionModel()->clear();
     }
 
 
@@ -64,7 +63,6 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
         drag->setMimeData(mimeData);
         drag->exec(Qt::CopyAction);
         dragStarted = true;
-        selectionModel()->clear();
     }
 }
 
@@ -114,6 +112,9 @@ QModelIndexList PlaylistView::selectedIndexes() const
 void PlaylistView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
+
+    connect (model, SIGNAL(selectedIndexesMoved(QItemSelection&) ), this, SLOT(selectIndexes(QItemSelection&)));
+
     this->header()->setSectionResizeMode(0, QHeaderView::Fixed);
     this->header()->setSectionResizeMode(1, QHeaderView::Fixed);
     this->header()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -173,6 +174,12 @@ void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)
     QPushButton* btn = qobject_cast<QPushButton*>(newFocus);
     if(oldFocus == this && !btn)
     {
-        this->selectionModel()->clear();
+        //this->selectionModel()->clear();
     }
+}
+
+void PlaylistView::selectIndexes(QItemSelection &newSelection)
+{
+    selectionModel()->clear();
+    selectionModel()->select(newSelection, QItemSelectionModel::Rows | QItemSelectionModel::Current | QItemSelectionModel::Select);
 }

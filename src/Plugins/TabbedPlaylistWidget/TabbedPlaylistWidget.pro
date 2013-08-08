@@ -23,7 +23,8 @@ SOURCES += TabbedPlaylistWidgetPlugin.cpp \
     PlaylistView.cpp \
     PlaylistModel.cpp \
     PlaylistTabWidget.cpp \
-    playlistitemdelegate.cpp
+    playlistitemdelegate.cpp \
+    PlaylistTabBar.cpp
 
 HEADERS += TabbedPlaylistWidgetPlugin.h\
         tabbedplaylistwidget_global.h \
@@ -32,7 +33,8 @@ HEADERS += TabbedPlaylistWidgetPlugin.h\
     PlaylistView.h \
     PlaylistModel.h \
     PlaylistTabWidget.h \
-    playlistitemdelegate.h
+    playlistitemdelegate.h \
+    PlaylistTabBar.h
 
 OTHER_FILES += \
     TabbedPlaylistWidget.xml \

@@ -42,6 +42,7 @@ class PlaylistView : public QTreeView
         void keyPressEvent(QKeyEvent *event);
         void dragMoveEvent(QDragMoveEvent *event);
         void focusChanged(QWidget* oldFocus, QWidget* newFocus);
+        void selectIndexes(QItemSelection &newSelection);
 
 };
 

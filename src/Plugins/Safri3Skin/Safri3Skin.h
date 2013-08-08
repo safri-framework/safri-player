@@ -2,6 +2,7 @@
 #define SAFRI3SKIN_H
 
 #include "Interfaces/ISafriSkin.h"
+#include <QMap>
 
 class Safri3Skin : public Core::ISafriSkin
 {
@@ -9,6 +10,7 @@ class Safri3Skin : public Core::ISafriSkin
     public:
 
         Safri3Skin();
+        ~Safri3Skin();
 
         QString                 getStyleSheet();
         QStyledItemDelegate*    getSongTreeItemDelegate();
@@ -25,6 +27,7 @@ class Safri3Skin : public Core::ISafriSkin
     private:
 
         QString style;
+        QMap<QString, QIcon*> iconMap;
 };
 
 #endif // SAFRI3SKIN_H

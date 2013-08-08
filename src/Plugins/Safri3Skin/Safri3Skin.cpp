@@ -4,7 +4,6 @@
 #include <QPainter>
 #include <QtWidgets/qstyleoption.h>
 #include <QApplication>
-#include <QPalette>
 
 Safri3Skin::Safri3Skin()
 {
@@ -15,6 +14,8 @@ Safri3Skin::Safri3Skin()
     file.close();
     style = styleSheet;
 
+	iconMap.insert("TabPlayingIndicator", new QIcon(":/icons/SAFRI_UI/tab_playing_indicator.png"));
+	iconMap.insert("TabPauseIndicator", new QIcon(":/icons/SAFRI_UI/tab_pause_indicator.png"));
 
     QPalette palette = qApp->palette();
     //ui->pLabel->setPalette(palette);
@@ -26,8 +27,16 @@ Safri3Skin::Safri3Skin()
     palette.setColor(QPalette::Light,QColor(0,255,0));
 
 
-
     qApp->setPalette(palette);
+}
+
+Safri3Skin::~Safri3Skin()
+{
+    QList<QIcon*> icons = iconMap.values();
+    for(int i = 0; i < icons.size(); i++)
+    {
+        delete icons.at(i);
+    }
 }
 
 QString Safri3Skin::getStyleSheet()
@@ -47,12 +56,11 @@ QStyledItemDelegate *Safri3Skin::getPlaylistItemDelegate()
 
 void Safri3Skin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    painter->fillRect(option.rect, QColor("#E1DBBD") );
     if (index.column() == 0)
     {
-        painter->drawPixmap(option.rect.x()+5, option.rect.y() + 1, 13, 13, QPixmap(":images/ressources/play_icon.png"));
+        painter->drawPixmap(option.rect.x()+5, option.rect.y() + 3, 13, 13, QPixmap(":/icons/SAFRI_UI/tab_playing_indicator.png"));
     }
-    painter->fillRect(option.rect, QColor("#E1DBBD") );
-
     Q_UNUSED(option)
     Q_UNUSED(index)
 }
@@ -66,8 +74,7 @@ void Safri3Skin::paintRowInPlaylist(QPainter *painter, const QStyleOptionViewIte
 
 QIcon *Safri3Skin::getIcon(QString itemType)
 {
-    Q_UNUSED(itemType)
-    return 0;
+    return iconMap.value(itemType, 0);
 }
 
 QString Safri3Skin::getName()
@@ -91,5 +98,5 @@ void Safri3Skin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &op
 
 QSize Safri3Skin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(option.rect.width(), 20);
+
 }

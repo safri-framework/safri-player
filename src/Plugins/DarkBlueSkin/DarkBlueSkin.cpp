@@ -19,6 +19,9 @@ DarkBlueSkin::DarkBlueSkin()
     iconMap.insert("CollectionType", new QIcon(":icons/Ressources/Collection_16.png"));
     iconMap.insert("GenreType", new QIcon(":icons/Ressources/Genre_16.png"));
 
+    iconMap.insert("TabPlayingIndicator", new QIcon(":/icons/Ressources/tab_playing_indicator.png"));
+    iconMap.insert("TabPauseIndicator", new QIcon(":/icons/Ressources/tab_pause_indicator.png"));
+
 
     QPalette palette = qApp->palette();
     //ui->pLabel->setPalette(palette);

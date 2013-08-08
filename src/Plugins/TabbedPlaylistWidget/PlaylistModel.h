@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QSharedPointer>
 #include <QMimeData>
+#include <QItemSelection>
 
 namespace Core { class Song; }
 
@@ -42,6 +43,7 @@ private slots:
 
     signals:
         void sizeHintChanged(QModelIndex index);
+        void selectedIndexesMoved(QItemSelection &newSelection);
 
 };
 
