@@ -32,7 +32,7 @@ private:
     QList<IAudioCollection*> audioCollList;
     void buildHierarchy();
     //QList<ITreeItemType*>*  treeHierarchy;
-    SongtreeProxyModel* proxy;
+    SongtreeProxyModel* searchProxy;
     QMap<int, QList<ITreeItemType*>*> hierarchyList;
 
 private slots:

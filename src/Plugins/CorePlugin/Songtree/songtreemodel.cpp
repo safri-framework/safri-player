@@ -16,7 +16,6 @@
 #include "../CoreData/dataitem.h"
 #include "../icore.h"
 
-
 SongTreeModel::SongTreeModel(SongTree* songTree, QObject *parent) :
     QAbstractItemModel(parent), songTree(songTree)
 {

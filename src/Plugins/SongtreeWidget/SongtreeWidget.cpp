@@ -18,6 +18,7 @@
 #include <QtWidgets/QPushButton>
 #include <songtreeitemdelegate.h>
 
+
 SongtreeWidget::SongtreeWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongtreeWidget),
@@ -40,7 +41,8 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     button->move(50, 5);
     */
 
-    proxy = new SongtreeProxyModel();
+    searchProxy = new SongtreeProxyModel();
+
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),  this, SLOT(loadSongtreeModel(int)));
     buildHierarchy();
@@ -48,12 +50,13 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     loadAudioCollections();
     loadSongtreeModel(0);
     //proxy->setSourceModel(model);
-    proxy->setDynamicSortFilter(true);
+    searchProxy->setDynamicSortFilter(true);
+    searchProxy->sort(0);
     connect(this->ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(textEdited(QString)));
-    connect(proxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
+    connect(searchProxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
     this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    this->ui->treeView->setModel(proxy);
+    this->ui->treeView->setModel(searchProxy);
     this->ui->treeView->setItemDelegate(new SongTreeItemDelegate(this));
 }
 
@@ -78,7 +81,7 @@ void SongtreeWidget::loadAudioCollections()
 
 void SongtreeWidget::textEdited(QString string)
 {
-    proxy->setFilterRegExp(string);
+    searchProxy->setFilterRegExp(string);
     if(string == "")
     {
         returnPressed();
@@ -118,7 +121,7 @@ void SongtreeWidget::loadSongtreeModel(int hierarchy)
         model = 0;
     }
     model = new SongTreeModel(tree, this);
-    proxy->setSourceModel(model);
+    searchProxy->setSourceModel(model);
 }
 
 void SongtreeWidget::buildHierarchy()
@@ -197,7 +200,7 @@ void SongtreeWidget::returnPressed()
 void SongtreeWidget::on_treeView_doubleClicked(const QModelIndex &index)
 {
 
-    SongTreeItem* item = static_cast<SongTreeItem*>(proxy->mapToSource(index).internalPointer());
+    SongTreeItem* item = static_cast<SongTreeItem*>(searchProxy->mapToSource(index).internalPointer());
     QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
     QList<Core::Item*> items;
     items.append(static_cast<Core::Item*>(item));
