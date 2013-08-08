@@ -25,6 +25,11 @@ QSlider
      max-height:6px;
 }
 
+QPushButton
+{
+    border: none;
+    background-color: rgba(0, 0, 0, 0%);
+}
 
 QSlider::handle:horizontal
 {

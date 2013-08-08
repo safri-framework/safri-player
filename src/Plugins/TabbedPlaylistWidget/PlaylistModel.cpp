@@ -186,6 +186,10 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             }
 
             playlist->insertMediaAt(insertPos, draggedItems);
+
+            QItemSelection newSelection( index(insertPos, 0), index(insertPos + draggedItems.size() - 1, 0) );
+
+            Q_EMIT selectedIndexesMoved(newSelection);
         }
 
 

@@ -260,24 +260,36 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="repeatIcon">
+            <widget class="QPushButton" name="pushButton_2">
              <property name="minimumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="pixmap">
-              <pixmap resource="ressources.qrc">:/border_images/Ressources/repeat.png</pixmap>
+             <property name="icon">
+              <iconset>
+               <activeoff>:/border_images/Ressources/repeat_inactive.png</activeoff>
+               <activeon>:/border_images/Ressources/repeat_active.png</activeon>
+              </iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -312,24 +324,39 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="shuffleIcon">
+            <widget class="QPushButton" name="shuffleButton">
              <property name="minimumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="pixmap">
-              <pixmap resource="ressources.qrc">:/border_images/Ressources/shuffle.png</pixmap>
+             <property name="icon">
+              <iconset resource="ressources.qrc">
+               <normaloff>:/border_images/Ressources/shuffle_inactive.png</normaloff>
+               <normalon>:/border_images/Ressources/shuffle_active.png</normalon>
+               <activeoff>:/border_images/Ressources/shuffle_inactive.png</activeoff>:/border_images/Ressources/shuffle_inactive.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="type" stdset="0">
+              <string>shuffleButton</string>
              </property>
             </widget>
            </item>
@@ -362,14 +389,14 @@
             <widget class="QLabel" name="label">
              <property name="minimumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>22</width>
-               <height>22</height>
+               <width>24</width>
+               <height>24</height>
               </size>
              </property>
              <property name="text">

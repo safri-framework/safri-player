@@ -12,6 +12,8 @@
 #include "CoreData/song.h"
 #include "CoreSupply/AssetController.h"
 #include "math.h"
+#include "Settings/SettingsManager.h"
+
 
 DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
     IPlayerWidget(parent),
@@ -21,6 +23,26 @@ DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     loadStylesheet();
+
+    bool showNextDisplay;
+
+    Core::SettingsModule *playerSettings = Core::ICore::settingsManager()->getModule("org.safri.darkblueplayer");
+
+    if (playerSettings)
+    {
+        showNextDisplay = playerSettings->getSetting("showNextSongDisplay").toBool();
+    }
+    else
+    {
+        showNextDisplay = false;
+    }
+
+    if (!showNextDisplay)
+    {
+        ui->nextSongCover->setVisible(false);
+        ui->nextSongInfo->setVisible(false);
+    }
+
     changePlaybackController();
 
 //    QMainWindow* window = qApp->findChildren<QMainWindow *>().at(0);
@@ -30,6 +52,8 @@ DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
      connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
      qDebug()<<"HAAALLLOO";
      setNextSongCover( getCoverPath(0) );
+
+     connect (ui->shuffleButton, SIGNAL(toggled(bool)), this, SLOT(shuffleToggled(bool)));
 }
 
 DarkBluePlayerWidget::~DarkBluePlayerWidget()
@@ -189,6 +213,11 @@ void DarkBluePlayerWidget::changePlaybackController()
 
     connect(ui->seekSlider,     SIGNAL( sliderMoved(int)),              playbackController, SLOT( seek(int) ) );
     connect(ui->volumeSlider,   SIGNAL( sliderMoved(int)),              playbackController, SLOT( setVolume(int) ) );
+}
+
+void DarkBluePlayerWidget::shuffleToggled(bool value)
+{
+    playbackController->getPlaylist()->setShuffle(value);
 }
 
 void DarkBluePlayerWidget::mediaChanged(Core::Media* media)

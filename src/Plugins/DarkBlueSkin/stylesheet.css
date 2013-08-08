@@ -12,6 +12,7 @@ QLineEdit[type="search"]
     border-width:4px;
     border-left:30px;
     color: #FFFFFF;
+    height: 15px;
 }
 
 QLineEdit:focus[type="search"]
@@ -30,6 +31,7 @@ QTabWidget
 {
     background: none;
     border: 0px;
+
 }
 
 QTabBar QToolBar

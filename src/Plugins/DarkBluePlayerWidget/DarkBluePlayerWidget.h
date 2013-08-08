@@ -47,6 +47,7 @@ class DarkBluePlayerWidget : public IPlayerWidget
         void update(int currentTime);
         void mediaChanged(Core::Media* media);
         void changePlaybackController();
+        void shuffleToggled(bool value);
 
     protected:
 

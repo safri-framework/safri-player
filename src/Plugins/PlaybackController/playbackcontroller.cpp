@@ -255,6 +255,10 @@ void PlaybackController::backendStateChanged(Core::IMediaBackend::BackendState s
 
 void PlaybackController::nextActionSlot()
 {
+
+    if ( playlist.isNull() )
+        return;
+
     Core::Media *media = playlist->getNextMedia();
 
     if (media)
@@ -267,6 +271,9 @@ void PlaybackController::nextActionSlot()
 
 void PlaybackController::previousActionSlot()
 {
+    if ( playlist.isNull() )
+        return;
+
     Core::Media *media = playlist->getPreviousMedia();
     if (media)
     {

@@ -5,6 +5,7 @@
 #include "../CorePlugin/Songtree/CoreItemTypes/artistitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/songitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/decadeitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/mediacollectionitemtype.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
 #include "../CorePlugin/iplaylist.h"
@@ -136,6 +137,19 @@ void SongtreeWidget::buildHierarchy()
 
     hierarchyList.insert(0, treeHierarchy);
 
+
+
+    treeHierarchy = new QList<ITreeItemType*>();
+    treeHierarchy->append(new DecadeItemType());
+    treeHierarchy->append(new GenreItemType());
+    treeHierarchy->append(new ArtistItemType());
+    treeHierarchy->append(new SongItemType());
+
+
+    hierarchyList.insert(1, treeHierarchy);
+
+
+
     treeHierarchy = new QList<ITreeItemType*>();
     treeHierarchy->append(new GenreItemType());
     treeHierarchy->append(new ArtistItemType());
@@ -143,7 +157,7 @@ void SongtreeWidget::buildHierarchy()
     treeHierarchy->append(new SongItemType());
 
 
-    hierarchyList.insert(1, treeHierarchy);
+    hierarchyList.insert(2, treeHierarchy);
 
     treeHierarchy = new QList<ITreeItemType*>();
 
@@ -151,7 +165,7 @@ void SongtreeWidget::buildHierarchy()
     treeHierarchy->append(new AlbumItemType());
     treeHierarchy->append(new SongItemType());
 
-    hierarchyList.insert(2, treeHierarchy);
+    hierarchyList.insert(3, treeHierarchy);
 
 
     treeHierarchy = new QList<ITreeItemType*>();
@@ -159,11 +173,12 @@ void SongtreeWidget::buildHierarchy()
     treeHierarchy->append(new SongItemType());
 
 
-    hierarchyList.insert(3, treeHierarchy);
+    hierarchyList.insert(4, treeHierarchy);
 
 
 
     ui->comboBox->addItem("Collection > Genre > Artist > Album > Song");
+    ui->comboBox->addItem("Dekade > Genre > Artist > Song");
     ui->comboBox->addItem("Genre > Artist > Album > Song");
     ui->comboBox->addItem("Artist > Album > Song");
     ui->comboBox->addItem("Album > Song");
