@@ -16,8 +16,10 @@ DarkBlueSkin::DarkBlueSkin()
     iconMap.insert("ArtistType", new QIcon(":icons/Ressources/Artist_16.png"));
     iconMap.insert("AlbumType", new QIcon(":icons/Ressources/Album_16.png"));
     iconMap.insert("SongType", new QIcon(":icons/Ressources/Song_16.png"));
+    iconMap.insert("MediaCollectionType", new QIcon(":icons/Ressources/Collection_16.png"));
     iconMap.insert("CollectionType", new QIcon(":icons/Ressources/Collection_16.png"));
     iconMap.insert("GenreType", new QIcon(":icons/Ressources/Genre_16.png"));
+    iconMap.insert("DecadeType", new QIcon(":icons/Ressources/Song_16.png"));
 
     iconMap.insert("TabPlayingIndicator", new QIcon(":/icons/Ressources/tab_playing_indicator.png"));
     iconMap.insert("TabPauseIndicator", new QIcon(":/icons/Ressources/tab_pause_indicator.png"));

@@ -139,6 +139,25 @@ void SongtreeWidget::buildHierarchy()
 
 
 
+
+    treeHierarchy = new QList<ITreeItemType*>();
+    treeHierarchy->append(new GenreItemType());
+    treeHierarchy->append(new ArtistItemType());
+    treeHierarchy->append(new AlbumItemType());
+    treeHierarchy->append(new SongItemType());
+
+
+    hierarchyList.insert(1, treeHierarchy);
+
+    treeHierarchy = new QList<ITreeItemType*>();
+
+    treeHierarchy->append(new ArtistItemType());
+    treeHierarchy->append(new AlbumItemType());
+    treeHierarchy->append(new SongItemType());
+
+    hierarchyList.insert(2, treeHierarchy);
+
+
     treeHierarchy = new QList<ITreeItemType*>();
     treeHierarchy->append(new DecadeItemType());
     treeHierarchy->append(new GenreItemType());
@@ -146,27 +165,7 @@ void SongtreeWidget::buildHierarchy()
     treeHierarchy->append(new SongItemType());
 
 
-    hierarchyList.insert(1, treeHierarchy);
-
-
-
-    treeHierarchy = new QList<ITreeItemType*>();
-    treeHierarchy->append(new GenreItemType());
-    treeHierarchy->append(new ArtistItemType());
-    treeHierarchy->append(new AlbumItemType());
-    treeHierarchy->append(new SongItemType());
-
-
-    hierarchyList.insert(2, treeHierarchy);
-
-    treeHierarchy = new QList<ITreeItemType*>();
-
-    treeHierarchy->append(new ArtistItemType());
-    treeHierarchy->append(new AlbumItemType());
-    treeHierarchy->append(new SongItemType());
-
     hierarchyList.insert(3, treeHierarchy);
-
 
     treeHierarchy = new QList<ITreeItemType*>();
     treeHierarchy->append(new AlbumItemType());
@@ -178,9 +177,9 @@ void SongtreeWidget::buildHierarchy()
 
 
     ui->comboBox->addItem("Collection > Genre > Artist > Album > Song");
-    ui->comboBox->addItem("Dekade > Genre > Artist > Song");
     ui->comboBox->addItem("Genre > Artist > Album > Song");
     ui->comboBox->addItem("Artist > Album > Song");
+    ui->comboBox->addItem("Dekade > Genre > Artist > Song");
     ui->comboBox->addItem("Album > Song");
 }
 
