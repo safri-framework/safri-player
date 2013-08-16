@@ -56,7 +56,7 @@ RESTAppController::~RESTAppController()
     }
 }
 
-QAbstractItemModel *RESTAppController::getSongtreeModel()
+QAbstractItemModel *RESTAppController::getSongtreeModel(TREE_HIERARCHY hierarchy)
 {
     songtree = new RESTSongtree(restClient);
     songtreeModel = new RESTSongtreeModel(songtree->getRoot());

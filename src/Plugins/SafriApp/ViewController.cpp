@@ -330,9 +330,9 @@ void ViewController::showErrorMessage(QString message)
      QMetaObject::invokeMethod(dialogController, "showError", Q_ARG(QVariant, message));
 }
 
-void ViewController::setupSongtreeModel()
+void ViewController::setupSongtreeModel(IAppController::TREE_HIERARCHY hierarchy)
 {
-    model = appController->getSongtreeModel();
+    model = appController->getSongtreeModel(hierarchy);
     proxy = new QSortFilterProxyModel(this);
     proxy->setSourceModel(model);
     proxy->sort(0);
@@ -388,6 +388,9 @@ void ViewController::QMLStatusChanged(QQuickView::Status status)
         playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
         coverView           = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("coverView"));
 
+        genreButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("genreButton"));
+        artistButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("artistButton"));
+        albumButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("albumButton"));
 
 
         //connect( silentButton,       SIGNAL(buttonClicked()),                    this, SLOT(testPlay())) ;
@@ -400,6 +403,9 @@ void ViewController::QMLStatusChanged(QQuickView::Status status)
         connect( shuffleButton, 	 SIGNAL(buttonClicked()), 					 this, SLOT(shuffleClicked()));
         connect( songTreeView,       SIGNAL(playModelIndexView(QVariant)),       this, SLOT(playModelIndex(QVariant)));
         connect( songTreeView,       SIGNAL(enqueueModelIndexView(QVariant)),    this, SLOT(enqueueModelIndex(QVariant)));
+        connect( genreButton,        SIGNAL(buttonClicked()),                    this, SLOT(setGenreTree()));
+        connect( artistButton,       SIGNAL(buttonClicked()),                    this, SLOT(setArtistTree()));
+        connect( albumButton,        SIGNAL(buttonClicked()),                    this, SLOT(setAlbumTree()));
 
         playPauseButton->setProperty("enabled", false);
         nextButton->setProperty("enabled", false);
@@ -423,6 +429,21 @@ void ViewController::QMLStatusChanged(QQuickView::Status status)
         changeAppController(appController);
         isInitialized = true;
     }
+}
+
+void ViewController::setGenreTree()
+{
+    setupSongtreeModel(IAppController::GENRE);
+}
+
+void ViewController::setAlbumTree()
+{
+    setupSongtreeModel(IAppController::ALBUM);
+}
+
+void ViewController::setArtistTree()
+{
+    setupSongtreeModel(IAppController::ARTIST);
 }
 
 

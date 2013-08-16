@@ -26,7 +26,7 @@ namespace SafriRESTClient
             explicit RESTAppController(QObject *parent = 0);
             virtual ~RESTAppController();
 
-            virtual QAbstractItemModel*         getSongtreeModel();
+            virtual QAbstractItemModel*         getSongtreeModel(TREE_HIERARCHY hierarchy);
             virtual QAbstractItemModel*         getPlaylistModel();
             virtual void                        moveMediaInPlaylist(int from, int to);
             virtual void                        playTreeModelIndex(QModelIndex treeIndex);

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QModelIndex>
 
-class QAbstractItemModel;
+class SongTreeModel;
 
 class IAppController : public QObject
 {
@@ -15,8 +15,9 @@ class IAppController : public QObject
         virtual ~IAppController();
 
         enum APP_MODE { LOCAL, REST };
+        enum TREE_HIERARCHY {ALBUM, ARTIST, GENRE};
 
-        virtual QAbstractItemModel*         getSongtreeModel() = 0;
+        virtual QAbstractItemModel*         getSongtreeModel(TREE_HIERARCHY hierarchy = GENRE) = 0;
         virtual QAbstractItemModel*         getPlaylistModel() = 0;
         virtual void                        moveMediaInPlaylist(int from, int to) = 0;
         virtual void                        playTreeModelIndex(QModelIndex treeIndex) = 0;

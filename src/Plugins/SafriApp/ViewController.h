@@ -56,10 +56,14 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void connectTo(QVariant host, QVariant port);
         void disconnect();
 
-        void setupSongtreeModel();
+        void setupSongtreeModel(IAppController::TREE_HIERARCHY hierarchy = IAppController::ARTIST);
         void restSettingsChanged(QString setting);
         void volumeChangedByPBController(int vol);
         void QMLStatusChanged(QQuickView::Status status);
+
+        void setGenreTree();
+        void setAlbumTree();
+        void setArtistTree();
 
     private:
         IAppController* appController;
@@ -79,6 +83,9 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* portTextField;
         QObject* dialogController;
         QObject* coverView;
+        QObject* genreButton;
+        QObject* artistButton;
+        QObject* albumButton;
         QAbstractItemModel* model;
         QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;

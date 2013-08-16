@@ -20,6 +20,7 @@ SongTree::SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy)
     }
 }
 
+
 void SongTree::print()
 {
     rootNode->print();

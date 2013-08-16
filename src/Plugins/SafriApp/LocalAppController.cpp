@@ -21,7 +21,7 @@
 #include "playlistmodel.h"
 
 LocalAppController::LocalAppController(QObject *parent) :
-    IAppController(parent), songTree(0), playlist(0), playlistModel(0)
+    IAppController(parent), songTree(0), playlist(0), playlistModel(0), treeHierarchy(0), model(0)
 {
 
     playlistModel = new PlaylistModel(Core::ICore::createPlaylist(), this);
@@ -30,7 +30,7 @@ LocalAppController::LocalAppController(QObject *parent) :
     connect(Core::ICore::playbackController(), SIGNAL(playlistChanged()),this, SLOT(pbControllerHasNewPlaylist()));
 }
 
-QAbstractItemModel *LocalAppController::getSongtreeModel()
+QAbstractItemModel *LocalAppController::getSongtreeModel(TREE_HIERARCHY hierarchy)
 {
     QMap<QUrl, Core::IAudioCollection*> audioCollMap;
     QList<Core::Song*> songList;
@@ -51,14 +51,22 @@ QAbstractItemModel *LocalAppController::getSongtreeModel()
         songList.append(audioCollList.at(i)->getSongs());
     }
 
-    songTree = new Core::SongTree(songList, createTreeHierachy());
+    if(songTree)
+        delete songTree;
+
+
+    songTree = new Core::SongTree(songList, createTreeHierachy(hierarchy));
 
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
         connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), songTree, SLOT(addItem(Core::DataItem*)));
     }
 
-    return new SongTreeModel(songTree, this);
+    if(model)
+        delete model;
+
+    model = new SongTreeModel(songTree, this);
+    return model;
 }
 
 QAbstractItemModel *LocalAppController::getPlaylistModel()
@@ -149,15 +157,42 @@ void LocalAppController::shutdown()
     // unused
 }
 
-QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy()
+QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy(TREE_HIERARCHY hierarchy)
 {
-    QList<Core::ITreeItemType *> *treeHierarchy;
+
+
+    if(treeHierarchy)
+    {
+        for(int i = 0; i < treeHierarchy->size(); i++)
+        {
+            delete treeHierarchy->at(i);
+        }
+        delete treeHierarchy;
+        treeHierarchy = 0;
+    }
 
     treeHierarchy = new QList<ITreeItemType*>();
-    treeHierarchy->append(new GenreItemType());
-    treeHierarchy->append(new ArtistItemType());
-    treeHierarchy->append(new AlbumItemType());
-    treeHierarchy->append(new SongItemType());
+
+    switch(hierarchy)
+    {
+        case IAppController::GENRE:
+            treeHierarchy->append(new GenreItemType());
+            treeHierarchy->append(new ArtistItemType());
+            treeHierarchy->append(new AlbumItemType());
+            treeHierarchy->append(new SongItemType());
+            break;
+
+        case IAppController::ARTIST:
+            treeHierarchy->append(new ArtistItemType());
+            treeHierarchy->append(new AlbumItemType());
+            treeHierarchy->append(new SongItemType());
+            break;
+
+        case IAppController::ALBUM:
+            treeHierarchy->append(new AlbumItemType());
+            treeHierarchy->append(new SongItemType());
+            break;
+    }
 
     return treeHierarchy;
 }

@@ -8,7 +8,7 @@ Rectangle {
     Rectangle
     {
         width: view.width - 20  * root.globalScaleFactor
-        height: view.height - 20 * root.globalScaleFactor
+        height: view.height - 30 * root.globalScaleFactor - treeMenu.height
         radius: 10 * root.globalScaleFactor
         x:10 * root.globalScaleFactor;
         y:10 * root.globalScaleFactor;
@@ -86,6 +86,73 @@ Rectangle {
 
 
         }
+    }
+    Rectangle
+    {
+        id:treeMenu
+        x:10 * root.globalScaleFactor;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin: 10 * root.globalScaleFactor;
+        height: 45 * root.globalScaleFactor;
+        width: parent.width - 20 * root.globalScaleFactor
+        radius: 10 * root.globalScaleFactor
+        color:"#1B1B1B"
+
+        Rectangle
+        {
+            color: "transparent"
+            width: treeMenu.width / 3
+            height: treeMenu.height
+            x:0
+            y:0
+            PlayerButton
+            {
+                width: parent.width
+                height: parent.height
+                checkable: true
+                iconScale:1.2
+                icon1: "resources/genre.png"
+                objectName: "genreButton";
+            }
+        }
+        Rectangle
+        {
+            width: treeMenu.width / 3
+            height: treeMenu.height
+            color: "transparent"
+            x:(treeMenu.width / 3) * 1
+            y:0
+            PlayerButton
+            {
+                width: parent.width
+                height: parent.height
+                checkable: true
+                iconScale: 1.2
+                //enabled: true
+                icon1: "resources/artist.png"
+                objectName: "artistButton";
+            }
+        }
+        Rectangle
+        {
+            width: treeMenu.width / 3
+            height: treeMenu.height
+            color: "transparent"
+            x:(treeMenu.width / 3) * 2
+            y:0
+            PlayerButton
+            {
+                width: parent.width
+                height: parent.height
+                icon1: "resources/album.png"
+                iconScale: 1.2
+                checkable: true
+                onEnabledChanged: view.interactive = !enabled
+                id: editModeButton
+                objectName: "albumButton";
+            }
+        }
+
     }
 }
 

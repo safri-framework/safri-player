@@ -21,7 +21,7 @@ class LocalAppController : public IAppController
 
         explicit LocalAppController(QObject *parent = 0);
 
-        virtual QAbstractItemModel*         getSongtreeModel();
+        virtual QAbstractItemModel*         getSongtreeModel(TREE_HIERARCHY);
         virtual QAbstractItemModel*         getPlaylistModel();
         virtual void                        moveMediaInPlaylist(int from, int to);
         virtual void                        playTreeModelIndex(QModelIndex treeIndex);
@@ -34,11 +34,12 @@ class LocalAppController : public IAppController
 
     private:
 
-        QList<Core::ITreeItemType*>*        createTreeHierachy();
-
+        QList<Core::ITreeItemType*>*                createTreeHierachy(TREE_HIERARCHY hierarchy);
+        SongTreeModel*                              model;
         Core::SongTree*                             songTree;
         QSharedPointer<Core::IPlaylist>             playlist;
         PlaylistModel*                              playlistModel;
+        QList<Core::ITreeItemType *> *              treeHierarchy;
 
     private slots:
         void pbControllerHasNewPlaylist();

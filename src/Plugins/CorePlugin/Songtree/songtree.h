@@ -21,7 +21,6 @@ namespace Core
 
             SongTree(QList<Song*> songs, QList<ITreeItemType*>* hierarchy);
 
-
             void print();
 
             /**
