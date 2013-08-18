@@ -164,6 +164,7 @@ void ViewController::volumeSlot(QVariant vol)
             currentVol = 0;
 
         Core::ICore::playbackController()->setVolume(currentVol);
+        volumeIndicator->setProperty("volume", currentVol);
 }
 
 void ViewController::setMusicProgress(int val)
@@ -360,6 +361,7 @@ void ViewController::restSettingsChanged(QString setting)
 void ViewController::volumeChangedByPBController(int vol)
 {
     currentVol = vol;
+    volumeIndicator->setProperty("volume", vol);
 }
 
 void ViewController::QMLStatusChanged(QQuickView::Status status)
@@ -387,6 +389,7 @@ void ViewController::QMLStatusChanged(QQuickView::Status status)
         dialogController    = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("dialogController"));
         playerPanel         = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("playerPanel"));
         coverView           = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("coverView"));
+        volumeIndicator     = qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("volumeIndicator"));
 
         genreButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("genreButton"));
         artistButton 		= qobject_cast<QObject*>(view->rootObject()->findChild<QObject*>("artistButton"));

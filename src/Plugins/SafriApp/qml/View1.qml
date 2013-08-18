@@ -113,6 +113,8 @@ Rectangle {
                 iconScale:1.2
                 icon1: "resources/genre.png"
                 objectName: "genreButton";
+                id: genreButton
+                onButtonClicked: {albumButton.enabled = false; artistButton.enabled = false}
             }
         }
         Rectangle
@@ -124,6 +126,7 @@ Rectangle {
             y:0
             PlayerButton
             {
+                id: artistButton;
                 width: parent.width
                 height: parent.height
                 checkable: true
@@ -131,6 +134,7 @@ Rectangle {
                 //enabled: true
                 icon1: "resources/artist.png"
                 objectName: "artistButton";
+                onButtonClicked: {albumButton.enabled = false; genreButton.enabled = false}
             }
         }
         Rectangle
@@ -142,14 +146,14 @@ Rectangle {
             y:0
             PlayerButton
             {
+                id:albumButton
                 width: parent.width
                 height: parent.height
                 icon1: "resources/album.png"
                 iconScale: 1.2
                 checkable: true
-                onEnabledChanged: view.interactive = !enabled
-                id: editModeButton
                 objectName: "albumButton";
+                onButtonClicked: {artistButton.enabled = false; genreButton.enabled = false}
             }
         }
 

@@ -62,4 +62,5 @@
         <file>qml/resources/no_cover.svg</file>
         <file>qml/resources/no_cover2.svg</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

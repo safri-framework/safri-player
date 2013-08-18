@@ -113,6 +113,7 @@ Rectangle {
                      color: "#838383"
                      text: currentSongDisplay.artistName
                      id: artistNameLabel
+
                  }
 
                  Text

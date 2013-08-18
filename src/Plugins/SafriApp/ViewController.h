@@ -86,6 +86,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QObject* genreButton;
         QObject* artistButton;
         QObject* albumButton;
+        QObject* volumeIndicator;
         QAbstractItemModel* model;
         QQuickItem* songTreeView;
         QSortFilterProxyModel* proxy;
