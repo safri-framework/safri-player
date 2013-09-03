@@ -46,6 +46,7 @@ SongTreeItem::SongTreeItem(SongTreeItem *sample, SongTreeItem *parentItem, QObje
 
 bool SongTreeItem::ancestorsContains(QRegExp exp)
 {
+
     SongTreeItem* temp = this;
 
     while(temp != 0)

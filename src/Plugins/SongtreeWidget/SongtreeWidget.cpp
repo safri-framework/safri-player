@@ -54,7 +54,7 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     searchProxy->setDynamicSortFilter(true);
     searchProxy->sort(0);
     connect(this->ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(textEdited(QString)));
-    connect(searchProxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
+    //connect(searchProxy, SIGNAL(expandIndex(QModelIndex)), this->ui->treeView, SLOT(expand(QModelIndex)));
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
     this->ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->ui->treeView->setModel(searchProxy);
@@ -82,6 +82,7 @@ void SongtreeWidget::loadAudioCollections()
 
 void SongtreeWidget::textEdited(QString string)
 {
+    this->ui->treeView->expandAll();
     searchProxy->setFilterRegExp(string);
     if(string == "")
     {

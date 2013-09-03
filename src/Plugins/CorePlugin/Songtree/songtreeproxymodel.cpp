@@ -15,6 +15,7 @@ SongtreeProxyModel::SongtreeProxyModel(QObject *parent) :
 
     QColor tmp = qApp->palette().color(QPalette::Text);
     disabledTextColor = QColor(tmp.red(), tmp.green(), tmp.blue(), 70);
+    this->setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 
