@@ -51,25 +51,19 @@ void SafriAppInstance::connectTo(QString host, int port)
     if ( testSocket.waitForConnected(5000) )
     {
         testSocket.close();
-
         isRESTClient = true;
-
         Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
         Core::SettingsModule *appSettings = Core::ICore::settingsManager()->getModule("org.safri.app");
-
         restSettings->setSetting("host", host);
         restSettings->setSetting("port", port);
         appSettings->setSetting("isRESTClient", true);
-
         Core::ICore::settingsManager()->saveSettings();
 
         delete appController;
 
         RESTAppController* restAppController  = new RESTAppController();
-
         connect(restAppController, SIGNAL( connectionFailed() ), this, SLOT(    connectionFailed()  ));
         appController = restAppController;
-
         viewController->changeAppController(appController);
     }
     else

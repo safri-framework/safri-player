@@ -54,6 +54,7 @@ DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
      setNextSongCover( getCoverPath(0) );
 
      connect (ui->shuffleButton, SIGNAL(toggled(bool)), this, SLOT(shuffleToggled(bool)));
+
 }
 
 DarkBluePlayerWidget::~DarkBluePlayerWidget()
@@ -211,8 +212,9 @@ void DarkBluePlayerWidget::changePlaybackController()
     connect(playbackController, SIGNAL( stateChanged(Core::playState)), this, SLOT( stateChanged(Core::playState) ) );
     connect(playbackController, SIGNAL( update(int)),                   this, SLOT( update(int) ) );
 
-    connect(ui->seekSlider,     SIGNAL( sliderMoved(int)),              playbackController, SLOT( seek(int) ) );
-    connect(ui->volumeSlider,   SIGNAL( sliderMoved(int)),              playbackController, SLOT( setVolume(int) ) );
+    connect(ui->seekSlider,     SIGNAL( sliderMoved(int)),              playbackController,     SLOT( seek(int) ) );
+    connect(ui->volumeSlider,   SIGNAL( sliderMoved(int)),              playbackController,     SLOT( setVolume(int) ) );
+    connect(playbackController, SIGNAL(volumeChanged(int)),             this->ui->volumeSlider, SLOT(setValue(int)));
 }
 
 void DarkBluePlayerWidget::shuffleToggled(bool value)

@@ -30,7 +30,8 @@ ViewController::ViewController(IAppController *appController, QObject* parent): 
     signalConnectionsInitialized(false),
     view(0),
     isInitialized(false),
-    dialogController(0)
+    dialogController(0),
+    currentVol(100)
 {
     view = new QQuickView();
     connect(view, SIGNAL(statusChanged(QQuickView::Status)), this, SLOT(QMLStatusChanged(QQuickView::Status)));
@@ -51,11 +52,19 @@ bool ViewController::eventFilter(QObject *obj, QEvent *event)
     switch ( event->type() )
     {
         case QEvent::KeyPress:
-
-            //QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-            //qDebug() << "Ate key press" << keyEvent->key();
-
-            break;
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            qDebug() << "Ate key press" << keyEvent->key();
+            if(keyEvent->key() == Qt::Key_VolumeUp)
+            {
+                volumeSlot(10);
+            }
+            if(keyEvent->key() == Qt::Key_VolumeDown)
+            {
+                 volumeSlot(-10);
+            }
+        }
+        break;
 
         case QEvent::Close:
 
@@ -127,7 +136,6 @@ void ViewController::playModelIndex(QVariant var)
 {
     QModelIndex proxyIndex = var.value<QModelIndex>();
     QModelIndex treeIndex = proxy->mapToSource(proxyIndex);
-
     appController->playTreeModelIndex(treeIndex);
 
     // pbcontroller will emit a signal which will reset the playlistmodel
@@ -164,6 +172,8 @@ void ViewController::volumeSlot(QVariant vol)
             currentVol = 0;
 
         Core::ICore::playbackController()->setVolume(currentVol);
+
+        //if(appController->getMode() == IAppController::LOCAL)
         volumeIndicator->setProperty("volume", currentVol);
 }
 
@@ -261,6 +271,13 @@ void ViewController::disconnect()
     Q_EMIT requestDisconnect();
 }
 
+void ViewController::setupCoverModel()
+{
+    QAbstractItemModel* coverModel = appController->getCoverModel();
+    if(coverModel)
+        context->setContextProperty("coverModel", coverModel);
+}
+
 void ViewController::changeAppController(IAppController *newController)
 {
 
@@ -314,6 +331,7 @@ void ViewController::changeAppController(IAppController *newController)
     signalConnectionsInitialized = true;
 
     setupSongtreeModel();
+    setupCoverModel();
 
     plModel = appController->getPlaylistModel();
 
@@ -430,6 +448,7 @@ void ViewController::QMLStatusChanged(QQuickView::Status status)
         connect(restSettings, SIGNAL( settingsChanged(QString) ), this, SLOT( restSettingsChanged(QString) ) );
 
         changeAppController(appController);
+        volumeIndicator->setProperty("volume", currentVol);
         isInitialized = true;
     }
 }

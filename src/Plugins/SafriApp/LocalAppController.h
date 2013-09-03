@@ -10,6 +10,7 @@ namespace Core
     class SongTree;
     class ITreeItemType;
     class IPlaylist;
+    class Song;
 }
 
 class PlaylistModel;
@@ -23,6 +24,7 @@ class LocalAppController : public IAppController
 
         virtual QAbstractItemModel*         getSongtreeModel(TREE_HIERARCHY);
         virtual QAbstractItemModel*         getPlaylistModel();
+        virtual QAbstractItemModel*         getCoverModel();
         virtual void                        moveMediaInPlaylist(int from, int to);
         virtual void                        playTreeModelIndex(QModelIndex treeIndex);
         virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex);
@@ -36,10 +38,16 @@ class LocalAppController : public IAppController
 
         QList<Core::ITreeItemType*>*                createTreeHierachy(TREE_HIERARCHY hierarchy);
         SongTreeModel*                              model;
+        SongTreeModel*                              coverModel;
+        Core::SongTree*                             coverSongTree;
         Core::SongTree*                             songTree;
+
+
+
         QSharedPointer<Core::IPlaylist>             playlist;
         PlaylistModel*                              playlistModel;
         QList<Core::ITreeItemType *> *              treeHierarchy;
+
 
     private slots:
         void pbControllerHasNewPlaylist();

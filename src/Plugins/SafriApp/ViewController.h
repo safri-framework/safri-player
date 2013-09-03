@@ -56,6 +56,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         void connectTo(QVariant host, QVariant port);
         void disconnect();
 
+        void setupCoverModel();
         void setupSongtreeModel(IAppController::TREE_HIERARCHY hierarchy = IAppController::ARTIST);
         void restSettingsChanged(QString setting);
         void volumeChangedByPBController(int vol);

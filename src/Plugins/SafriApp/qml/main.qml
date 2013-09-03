@@ -104,6 +104,7 @@ Rectangle
         color:"green"
         Player
         {
+            id:player
             anchors.fill: parent
         }
     }

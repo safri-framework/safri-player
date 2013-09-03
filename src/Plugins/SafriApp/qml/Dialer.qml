@@ -22,8 +22,9 @@ Rectangle {
     }*/
 
     Item {
+        anchors.fill: parent;
         focus: true
-        Keys.onPressed: {if(event.key == Qt.Key_VolumeUp) console.log("TEST")}
+        Keys.onVolumeUpPressed:  {volumeChanged(10);console.log("TEST")}
     }
 
 
@@ -90,8 +91,6 @@ Rectangle {
         z:-1
     }
     // the dialer stop layer
-
-
 
     MouseArea {
 	anchors.fill: parent

@@ -28,6 +28,7 @@ namespace SafriRESTClient
 
             virtual QAbstractItemModel*         getSongtreeModel(TREE_HIERARCHY hierarchy);
             virtual QAbstractItemModel*         getPlaylistModel();
+            virtual QAbstractItemModel*         getCoverModel();
             virtual void                        moveMediaInPlaylist(int from, int to);
             virtual void                        playTreeModelIndex(QModelIndex treeIndex);
             virtual void                        enqueueTreeModelIndex(QModelIndex treeIndex);

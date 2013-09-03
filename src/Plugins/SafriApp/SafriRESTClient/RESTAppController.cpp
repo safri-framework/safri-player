@@ -79,6 +79,11 @@ QAbstractItemModel *RESTAppController::getPlaylistModel()
     return playlistModel;
 }
 
+QAbstractItemModel *RESTAppController::getCoverModel()
+{
+    return 0;
+}
+
 void RESTAppController::moveMediaInPlaylist(int from, int to)
 {
     playlist->moveMedia(from, to);

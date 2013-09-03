@@ -44,6 +44,19 @@ Rectangle {
                 source: folderModel.folder + fileName
                 scale: defaultSize / Math.max(sourceSize.width, sourceSize.height)
                 antialiasing: true
+                visible: rot.angle < 90 ? true : false;
+                transform:
+                Rotation
+                {
+                    id: rot
+                    origin.x:image.width/2;
+                    origin.y:image.height/2;
+                    axis.x:0; axis.y:1; axis.z:0
+                    angle:0
+                    Behavior on angle { PropertyAnimation{duration: 500; easing.type: Easing.InOutQuad} }
+                }
+
+
             }
             PinchArea {
                 anchors.fill: parent
@@ -56,6 +69,7 @@ Rectangle {
                 MouseArea {
                     onPressed: {view.interactive = false; photoFrame.z = ++coverView.highestZ;}
                     onReleased: view.interactive = true
+                    onClicked: rot.angle = (rot.angle + 180) % 360
                     id: dragArea
                     hoverEnabled: true
                     anchors.fill: parent

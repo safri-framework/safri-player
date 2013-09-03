@@ -8,7 +8,7 @@ Rectangle {
     Rectangle
     {
         width: view.width - 20  * root.globalScaleFactor
-        height: view.height - 30 * root.globalScaleFactor - treeMenu.height
+        height:player.online ? view.height - 20 *root.globalScaleFactor : view.height - 30 * root.globalScaleFactor - treeMenu.height
         radius: 10 * root.globalScaleFactor
         x:10 * root.globalScaleFactor;
         y:10 * root.globalScaleFactor;
@@ -90,6 +90,7 @@ Rectangle {
     Rectangle
     {
         id:treeMenu
+        visible: !player.online
         x:10 * root.globalScaleFactor;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 10 * root.globalScaleFactor;

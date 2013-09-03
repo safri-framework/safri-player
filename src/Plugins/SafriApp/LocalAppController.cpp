@@ -21,7 +21,7 @@
 #include "playlistmodel.h"
 
 LocalAppController::LocalAppController(QObject *parent) :
-    IAppController(parent), songTree(0), playlist(0), playlistModel(0), treeHierarchy(0), model(0)
+    IAppController(parent), songTree(0), playlist(0), playlistModel(0), treeHierarchy(0), model(0), coverModel(0), coverSongTree(0)
 {
 
     playlistModel = new PlaylistModel(Core::ICore::createPlaylist(), this);
@@ -51,6 +51,7 @@ QAbstractItemModel *LocalAppController::getSongtreeModel(TREE_HIERARCHY hierarch
         songList.append(audioCollList.at(i)->getSongs());
     }
 
+
     if(songTree)
         delete songTree;
 
@@ -73,6 +74,49 @@ QAbstractItemModel *LocalAppController::getPlaylistModel()
 {
     return playlistModel;
 }
+
+QAbstractItemModel *LocalAppController::getCoverModel()
+{
+    qDebug()<<"GETCOVERMODEL";
+    QMap<QUrl, Core::IAudioCollection*> audioCollMap;
+    QList<Core::Song*> songList;
+
+    Core::ICollectionController* collController = Core::ICore::collectionController();
+    QList<Core::IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
+    for (int i = 0; i < mediaColl.size(); i++)
+    {
+        Core::IAudioCollection* tempAudioColl = qobject_cast<Core::IAudioCollection*>(mediaColl.at(i));
+        if(tempAudioColl)
+        {
+            audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
+        }
+    }
+    QList<Core::IAudioCollection*> audioCollList = audioCollMap.values();
+    for(int i = 0 ; i < audioCollList.size(); i++)
+    {
+        songList.append(audioCollList.at(i)->getSongs());
+    }
+
+
+    if(coverSongTree)
+        delete coverSongTree;
+
+
+    coverSongTree = new Core::SongTree(songList, createTreeHierachy(ALBUM));
+
+    for(int i = 0 ; i < audioCollList.size(); i++)
+    {
+        connect(audioCollList.at(i), SIGNAL(itemAdded(Core::DataItem*)), coverSongTree, SLOT(addItem(Core::DataItem*)));
+    }
+
+    if(coverModel)
+        delete coverModel;
+
+    coverModel = new SongTreeModel(coverSongTree, this);
+    return coverModel;
+}
+
+
 
 void LocalAppController::moveMediaInPlaylist(int from, int to)
 {
@@ -193,9 +237,9 @@ QList<Core::ITreeItemType *> *LocalAppController::createTreeHierachy(TREE_HIERAR
             treeHierarchy->append(new SongItemType());
             break;
     }
-
     return treeHierarchy;
 }
+
 
 void LocalAppController::pbControllerHasNewPlaylist()
 {

@@ -1,7 +1,9 @@
 import QtQuick 2.0
 
 Rectangle {
+    id: player
     property double scaleFactor:1
+    property bool online: false;
     onHeightChanged: scaleFactor = height / 97
     color:"black"
     BorderImage
@@ -41,6 +43,7 @@ Rectangle {
 
         function setOnlineIndicator(enabled)
         {
+            online  = enabled;
             if (enabled === true)
             {
                 playerImage.source = "resources/player_background_remote.png"

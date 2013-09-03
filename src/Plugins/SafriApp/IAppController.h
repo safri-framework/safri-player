@@ -25,6 +25,7 @@ class IAppController : public QObject
         virtual void                        playPlaylistIndex(int index) = 0;
         virtual void                        removeIndexFromPlaylist(int index) = 0;
         virtual void                        setShuffle(bool enabled) = 0;
+        virtual QAbstractItemModel*         getCoverModel() = 0;
         virtual APP_MODE                    getMode() = 0;
         virtual void                        shutdown() = 0;
 
