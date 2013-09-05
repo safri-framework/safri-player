@@ -301,7 +301,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="seekSlider">
+            <widget class="JumpSlider" name="seekSlider">
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -417,6 +417,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JumpSlider</class>
+   <extends>QSlider</extends>
+   <header>JumpSlider.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="ressources.qrc"/>
  </resources>

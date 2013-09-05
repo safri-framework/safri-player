@@ -23,6 +23,7 @@ class PlaylistTabWidget : public QTabWidget
         void onTabDoubleClicked(int index);
         void onAddTabButtonClicked();
         void tabTextEditedFinished();
+        void abortTabTextEditing();
 
     private:
 

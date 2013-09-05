@@ -56,6 +56,8 @@ void PlaylistTabWidget::editTabName(int index)
 
 void PlaylistTabWidget::onTabCloseRequested(int index)
 {
+    abortTabTextEditing();
+
     QWidget* tabWidgetToRemove = this->widget(index);
     this->removeTab(index);
     delete tabWidgetToRemove;
@@ -68,7 +70,11 @@ void PlaylistTabWidget::onTabCloseRequested(int index)
 
 void PlaylistTabWidget::onTabDoubleClicked(int index)
 {
-    editTabName(index);
+    // only edit tab, when it's not already beeing edited
+    if (tabIndexEdit == -1)
+    {
+        editTabName(index);
+    }
 }
 
 void PlaylistTabWidget::onAddTabButtonClicked()
@@ -99,5 +105,18 @@ void PlaylistTabWidget::tabTextEditedFinished()
 
         senderEdit->deleteLater();
         senderEdit = 0;
+    }
+}
+
+void PlaylistTabWidget::abortTabTextEditing()
+{
+    if (tabIndexEdit != -1)
+    {
+        tabIndexEdit = -1;
+
+        int tmpTabIndexEdit = tabIndexEdit;
+        tabIndexEdit = -1;
+
+        tabBar()->setTabButton(tmpTabIndexEdit, QTabBar::LeftSide, 0);
     }
 }

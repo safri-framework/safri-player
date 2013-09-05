@@ -67,7 +67,8 @@ SOURCES += coreplugin.cpp \
     Interfaces/ITreeItem.cpp \
     CoreSupply/BasicTreeItem.cpp \
     IPlaybackController.cpp \
-    Interfaces/ISafriSkin.cpp
+    Interfaces/ISafriSkin.cpp \
+    Songtree/CoreItemTypes/artistsongitemtype.cpp
 
 HEADERS += coreplugin.h\
         CorePlugin_global.h \
@@ -128,7 +129,8 @@ HEADERS += coreplugin.h\
     CoreData/albumartist.h \
     Interfaces/ITreeItem.h \
     CoreSupply/BasicTreeItem.h \
-    Interfaces/ISafriSkin.h
+    Interfaces/ISafriSkin.h \
+    Songtree/CoreItemTypes/artistsongitemtype.h
 
 OTHER_FILES += \
     Core.xml \

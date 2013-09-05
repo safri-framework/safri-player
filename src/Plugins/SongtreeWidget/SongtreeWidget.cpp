@@ -7,6 +7,7 @@
 #include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/decadeitemtype.h"
 #include "../CorePlugin/Songtree/CoreItemTypes/mediacollectionitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/artistsongitemtype.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
 #include "../CorePlugin/iplaylist.h"
 #include "../CorePlugin/iplaybackcontroller.h"
@@ -176,12 +177,18 @@ void SongtreeWidget::buildHierarchy()
     hierarchyList.insert(4, treeHierarchy);
 
 
+    treeHierarchy = new QList<ITreeItemType*>();
+    treeHierarchy->append(new ArtistSongItemType());
+
+
+    hierarchyList.insert(5, treeHierarchy);
 
     ui->comboBox->addItem("Collection > Genre > Artist > Album > Song");
     ui->comboBox->addItem("Genre > Artist > Album > Song");
     ui->comboBox->addItem("Artist > Album > Song");
     ui->comboBox->addItem("Dekade > Genre > Artist > Song");
     ui->comboBox->addItem("Album > Song");
+    ui->comboBox->addItem("Artist - Song");
 }
 
 

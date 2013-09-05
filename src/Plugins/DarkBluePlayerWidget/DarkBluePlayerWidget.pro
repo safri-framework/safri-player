@@ -20,13 +20,15 @@ DEFINES += DARKBLUEPLAYERWIDGET_LIBRARY
 SOURCES += DarkBluePlayerWidgetPlugin.cpp \
     DarkBluePlayerWidget.cpp \
     PlayerWidgetFactory.cpp \
-    PlayerControl.cpp
+    PlayerControl.cpp \
+    JumpSlider.cpp
 
 HEADERS += DarkBluePlayerWidgetPlugin.h\
         darkblueplayerwidget_global.h \
     DarkBluePlayerWidget.h \
     PlayerWidgetFactory.h \
-    PlayerControl.h
+    PlayerControl.h \
+    JumpSlider.h
 
 OTHER_FILES += \
     darkblueplayerwidget.json \
