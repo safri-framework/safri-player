@@ -1,7 +1,7 @@
 #ifndef SHOUTCASTSIDEBAR_H
 #define SHOUTCASTSIDEBAR_H
 
-#include "Interfaces/isidebarplugin.h"
+#include "Interfaces/ISideBarPlugin.h"
 #include <QtWidgets/QWidget>
 #include <QtWebKitWidgets/QWebView>
 #include <QUrl>

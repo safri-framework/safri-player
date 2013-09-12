@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QDebug>
 
-#include "icore.h"
+#include "Interfaces/ICore.h"
 
 using namespace Core;
 

@@ -1,7 +1,7 @@
 #ifndef RESTPLAYBACKCONTROLLER_H
 #define RESTPLAYBACKCONTROLLER_H
 
-#include "iplaybackcontroller.h"
+#include "Interfaces/IPlaybackController.h"
 
 #include <QStateMachine>
 #include <QJsonObject>

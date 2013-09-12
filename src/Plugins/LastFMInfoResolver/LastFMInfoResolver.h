@@ -3,7 +3,7 @@
 #include <QNetworkAccessManager>
 #include <QUrlQuery>
 #include "CoreSupply/AbstractInfoResolver.h"
-#include "CoreData/album.h"
+#include "CoreData/Album.h"
 
 
 

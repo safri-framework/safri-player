@@ -1,15 +1,14 @@
 #include "PlaylistHelper.h"
 #include "Interfaces/IPlaylistFactory.h"
 #include "Interfaces/ICollectionController.h"
-#include "CoreData/dataitem.h"
-#include "CoreData/item.h"
-#include "CoreData/media.h"
+#include "CoreData/DataItem.h"
+#include "CoreData/Item.h"
+#include "CoreData/Media.h"
 #include "Interfaces/IMediaCollection.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "JSONSerializer.h"
 #include <QJsonObject>
-#include "iplaybackcontroller.h"
-#include "icore.h"
+#include "Interfaces/IPlaybackController.h"
 #include <QDebug>
 #include <QMutexLocker>
 

@@ -2,7 +2,7 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractTableModel>
-#include "iplaylist.h"
+#include "Interfaces/IPlaylist.h"
 #include <QStringList>
 #include <QSharedPointer>
 #include <QMimeData>

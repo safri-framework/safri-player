@@ -1,7 +1,7 @@
 #ifndef SHOUTCASTSTREAM_H
 #define SHOUTCASTSTREAM_H
 
-#include "CoreData/media.h"
+#include "CoreData/Media.h"
 
 using namespace Core;
 class ShoutCastStream : public Media

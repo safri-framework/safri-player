@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlRecord>
-#include <icore.h>
+#include <Interfaces/ICore.h>
 #include <QStringList>
-#include "CoreData/audio.h"
+#include "CoreData/Audio.h"
 #include "Interfaces/IAudioCollection.h"
 #include "Settings/SettingsManager.h"
 #include <QFileInfo>

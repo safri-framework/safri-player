@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
-#include "Interfaces/isidebarplugin.h"
+#include "Interfaces/ISideBarPlugin.h"
 #include <QPushButton>
 #include "pluginmanager.h"
 #include <QSplitter>

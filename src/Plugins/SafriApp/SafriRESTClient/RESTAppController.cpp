@@ -5,7 +5,7 @@
 #include "RESTPlaylist.h"
 #include "RESTPlaylistModel.h"
 #include "RESTClient.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "Settings/SettingsManager.h"
 #include "Interfaces/ITreeItem.h"
 #include "RESTActions.h"

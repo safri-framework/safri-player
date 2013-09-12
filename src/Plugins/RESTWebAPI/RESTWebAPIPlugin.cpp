@@ -4,7 +4,7 @@
 #include "httplistener.h"
 #include "requestmapper.h"
 #include "staticfilecontroller.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "controller/PlaylistHelper.h"
 
 using namespace Plugins;

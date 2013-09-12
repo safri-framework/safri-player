@@ -1,7 +1,7 @@
 #ifndef AUDIOCOLLECTIONFACTORY_H
 #define AUDIOCOLLECTIONFACTORY_H
 
-#include "Interfaces/imediacollectionfactory.h"
+#include "Interfaces/IMediaCollectionFactory.h"
 #include <QUrl>
 class AudioCollectionFactory : public Core::IMediaCollectionFactory
 {

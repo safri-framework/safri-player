@@ -2,7 +2,7 @@
 #define AUDIOSQLSTORAGE_H
 
 #include "AudioSQLStorage_global.h"
-#include "Interfaces/imediacollectionstorage.h"
+#include "Interfaces/IMediaCollectionStorage.h"
 #include <QUrl>
 #include <QSqlQuery>
 #include <QMap>

@@ -2,11 +2,11 @@
 #define IMEDIACOLLECTION_H
 
 #include "../CorePlugin_global.h"
-#include "../CoreData/dataitem.h"
-#include "../CoreData/media.h"
-#include "../CoreData/mediainfocontainer.h"
+#include "../CoreData/DataItem.h"
+#include "../CoreData/Media.h"
+#include "../CoreData/MediaInfoContainer.h"
 #include <QUrl>
-#include "../CoreData/mediainfocontainer.h"
+#include "../CoreData/MediaInfoContainer.h"
 
 class InfoContainer;
 namespace Core

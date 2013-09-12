@@ -2,10 +2,10 @@
 #define PLAYLIST_H
 
 #include "Playlist_global.h"
-#include "iplaylist.h"
-#include "CoreData/song.h"
+#include "Interfaces/IPlaylist.h"
+#include "CoreData/Song.h"
 #include <QList>
-#include "CoreData/song.h"
+#include "CoreData/Song.h"
 #include <QReadWriteLock>
 
 using namespace Core;

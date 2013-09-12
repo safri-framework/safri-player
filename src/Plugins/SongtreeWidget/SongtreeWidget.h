@@ -3,9 +3,9 @@
 #define SONGTREEWIDGET_H
 #include "SongtreeWidget_global.h"
 #include "../CorePlugin/Interfaces/IAudioCollection.h"
-#include "../CorePlugin/Songtree/songtreemodel.h"
-#include "../CorePlugin/Songtree/songtreeproxymodel.h"
-#include "../CorePlugin/Songtree/songtree.h"
+#include "../CorePlugin/Songtree/SongTreeModel.h"
+#include "../CorePlugin/Songtree/SongTreeProxyModel.h"
+#include "../CorePlugin/Songtree/SongTree.h"
 #include "../CorePlugin/Interfaces/ICollectionController.h"
 #include <QWidget>
 

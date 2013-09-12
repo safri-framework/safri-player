@@ -2,7 +2,7 @@
 #define PLAYLISTITEMDELEGATE_H
 
 #include <QItemDelegate>
-#include "../CorePlugin/iplaybackcontroller.h"
+#include "Interfaces/IPlaybackController.h"
 #include "playlistwidget.h"
 #include "Interfaces/ISafriSkin.h"
 

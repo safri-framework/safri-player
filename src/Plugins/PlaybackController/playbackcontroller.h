@@ -2,9 +2,9 @@
 #define PLAYBACKCONTROLLER_H
 #include <QStateMachine>
 #include "Interfaces/IMediaBackend.h"
-#include "iplaybackcontroller.h"
+#include "Interfaces/IPlaybackController.h"
 #include <QtWidgets/QAction>
-#include <CoreData/media.h>
+#include <CoreData/Media.h>
 
 class PlaybackController : public Core::IPlaybackController
 {

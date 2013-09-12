@@ -8,7 +8,7 @@
 #include "httpconnectionhandlerpool.h"
 #include <QCoreApplication>
 
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "Settings/SettingsManager.h"
 
 HttpListener::HttpListener(QSettings* settings, HttpRequestHandler* requestHandler, QObject *parent)

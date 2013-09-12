@@ -4,9 +4,9 @@
 #include <QDebug>
 #include "Interfaces/IPlaylistFactory.h"
 #include "shoutcaststream.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include <QHash>
-#include "iplaybackcontroller.h"
+#include "Interfaces/IPlaybackController.h"
 
 PlsOpener::PlsOpener(QObject *parent) :
     QObject(parent)

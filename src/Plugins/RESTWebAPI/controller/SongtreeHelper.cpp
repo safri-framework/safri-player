@@ -1,13 +1,13 @@
 #include "SongtreeHelper.h"
-#include "Songtree/CoreItemTypes/artistitemtype.h"
-#include "Songtree/CoreItemTypes/albumitemtype.h"
-#include "Songtree/CoreItemTypes/songitemtype.h"
-#include "Songtree/CoreItemTypes/mediacollectionitemtype.h"
-#include "Songtree/CoreItemTypes/genreitemtype.h"
+#include "Songtree/CoreItemTypes/ArtistItemType.h"
+#include "Songtree/CoreItemTypes/AlbumItemType.h"
+#include "Songtree/CoreItemTypes/SongItemType.h"
+#include "Songtree/CoreItemTypes/MediaCollectionItemType.h"
+#include "Songtree/CoreItemTypes/GenreItemType.h"
 #include "Interfaces/ICollectionController.h"
 #include "PlaylistHelper.h"
 #include <QJsonArray>
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "JSONSerializer.h"
 #include <QDebug>
 

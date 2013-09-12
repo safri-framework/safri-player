@@ -2,7 +2,7 @@
 #define IPLAYLISTFACTORY_H
 
 #include "../CorePlugin_global.h"
-#include "../iplaylist.h"
+#include "IPlaylist.h"
 #include <QObject>
 #include <QSharedPointer>
 

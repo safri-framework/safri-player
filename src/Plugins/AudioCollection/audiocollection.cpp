@@ -1,10 +1,10 @@
 #include "audiocollection.h"
-#include "Interfaces/imediacollectionstoragefactory.h"
-#include "Interfaces/imediacollectionstorage.h"
+#include "Interfaces/IMediaCollectionStorageFactory.h"
+#include "Interfaces/IMediaCollectionStorage.h"
 #include "pluginmanager.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "Interfaces/IInfoResolver.h"
-#include "CoreSupply/infocontroller.h"
+#include "CoreSupply/InfoController.h"
 #include "CoreSupply/InfoRequest.h"
 #include <QDebug>
 #include <QDir>

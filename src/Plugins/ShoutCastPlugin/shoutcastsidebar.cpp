@@ -3,8 +3,8 @@
 #include <QtWebKit>
 #include <QtWebKitWidgets/QWebView>
 #include <QDebug>
-#include "icore.h"
-#include "iplaybackcontroller.h"
+#include "Interfaces/ICore.h"
+#include "Interfaces/IPlaybackController.h"
 #include <QIcon>
 
 ShoutCastSideBar::ShoutCastSideBar(QWidget *parent)

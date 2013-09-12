@@ -3,8 +3,8 @@
 
 #include <QtWidgets/QWidget>
 #include "Interfaces/IPlayerWidget.h"
-#include "iplaybackcontroller.h"
-#include "CoreData/media.h"
+#include "Interfaces/IPlaybackController.h"
+#include "CoreData/Media.h"
 #include "PlayerWidgetII_global.h"
 
 namespace Ui {

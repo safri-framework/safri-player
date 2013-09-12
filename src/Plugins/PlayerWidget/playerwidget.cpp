@@ -5,9 +5,9 @@
 #include <QFile>
 #include <QPalette>
 
-#include "iplaybackcontroller.h"
-#include "icore.h"
-#include "CoreData/media.h"
+#include "Interfaces/IPlaybackController.h"
+#include "Interfaces/ICore.h"
+#include "CoreData/Media.h"
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
     IPlayerWidget(parent), ui(new Ui::PlayerWidget), playbackController(Core::ICore::playbackController())

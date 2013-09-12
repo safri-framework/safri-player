@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QMap>
 #include "../Interfaces/IAssetService.h"
-#include "CoreData/dataitem.h"
+#include "CoreData/DataItem.h"
 
 namespace Controller
 {

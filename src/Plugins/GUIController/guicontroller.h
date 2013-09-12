@@ -2,7 +2,7 @@
 #define GUICONTROLLER_H
 
 #include "GUIController_global.h"
-#include "Interfaces/iguicontroller.h"
+#include "Interfaces/IGUIController.h"
 #include "Interfaces/IPlayerWidget.h"
 
 namespace Core

@@ -1,5 +1,5 @@
 #include "songtreeitemdelegate.h"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include <QDebug>
 #include <QPainter>
 #include <QStyleOptionViewItem>

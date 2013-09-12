@@ -1,7 +1,7 @@
 #ifndef PLAYERWIDGETFACTORY_H
 #define PLAYERWIDGETFACTORY_H
 
-#include "Interfaces/iplayerwidgetfactory.h"
+#include "Interfaces/IPlayerWidgetFactory.h"
 
 class PlayerWidgetFactory : public Core::IPlayerWidgetFactory
 {

@@ -2,7 +2,7 @@
 #define AUDIOSQLSTORAGEFACTORY_H
 
 #include "AudioSQLStorage_global.h"
-#include "Interfaces/imediacollectionstoragefactory.h"
+#include "Interfaces/IMediaCollectionStorageFactory.h"
 
 class AUDIOSQLSTORAGESHARED_EXPORT AudioSQLStorageFactory : public Core::IMediaCollectionStorageFactory
 {

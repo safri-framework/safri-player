@@ -2,7 +2,7 @@
 #define DARKBLUEPLAYERWIDGET_H
 
 #include "Interfaces/IPlayerWidget.h"
-#include "iplaybackcontroller.h"
+#include "Interfaces/IPlaybackController.h"
 #include <QMainWindow>
 #include "PlayerControl.h"
 

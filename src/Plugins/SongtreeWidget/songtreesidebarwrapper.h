@@ -1,7 +1,7 @@
 #ifndef SONGTREESIDEBARWRAPPER_H
 #define SONGTREESIDEBARWRAPPER_H
 
-#include "Interfaces/isidebarplugin.h"
+#include "Interfaces/ISideBarPlugin.h"
 
 using namespace Core;
 

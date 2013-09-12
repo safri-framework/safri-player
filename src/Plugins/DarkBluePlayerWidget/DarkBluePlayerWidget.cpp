@@ -6,10 +6,10 @@
 #include <QDebug>
 #include <QPainter>
 #include <QSharedPointer>
-#include "icore.h"
-#include "iplaybackcontroller.h"
-#include "iplaylist.h"
-#include "CoreData/song.h"
+#include "Interfaces/ICore.h"
+#include "Interfaces/IPlaybackController.h"
+#include "Interfaces/IPlaylist.h"
+#include "CoreData/Song.h"
 #include "CoreSupply/AssetController.h"
 #include "math.h"
 #include "Settings/SettingsManager.h"

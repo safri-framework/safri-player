@@ -1,10 +1,10 @@
 #ifndef SONGTREEHELPER_H
 #define SONGTREEHELPER_H
-#include "Songtree/songtree.h"
+#include "Songtree/SongTree.h"
 #include <QObject>
-#include  "Interfaces/itreeitemtype.h"
+#include "Interfaces/ITreeItemType.h"
 #include "Interfaces/IAudioCollection.h"
-#include "Songtree/songtreeitem.h"
+#include "Songtree/SongTreeItem.h"
 
 class SongtreeHelper : public QObject
 {

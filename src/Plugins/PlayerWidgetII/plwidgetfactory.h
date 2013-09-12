@@ -3,7 +3,7 @@
 
 
 #include "PlayerWidgetII_global.h"
-#include "Interfaces/iplayerwidgetfactory.h"
+#include "Interfaces/IPlayerWidgetFactory.h"
 
 
 class PLAYERWIDGETIISHARED_EXPORT PLWidgetFactory : public Core::IPlayerWidgetFactory

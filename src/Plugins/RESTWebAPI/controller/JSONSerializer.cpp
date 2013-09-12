@@ -1,8 +1,8 @@
 #include "JSONSerializer.h"
-#include "iplaybackcontroller.h"
-#include "CoreData/audio.h"
-#include "icore.h"
-#include "iplaylist.h"
+#include "Interfaces/IPlaybackController.h"
+#include "CoreData/Audio.h"
+#include "Interfaces/ICore.h"
+#include "Interfaces/IPlaylist.h"
 #include "Interfaces/IMediaCollection.h"
 #include <QJsonDocument>
 #include <QDebug>

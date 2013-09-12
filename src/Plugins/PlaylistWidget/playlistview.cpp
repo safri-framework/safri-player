@@ -1,5 +1,5 @@
 #include "playlistview.h"
-#include "Songtree/songtreeproxymodel.h"
+#include "Songtree/SongTreeProxyModel.h"
 #include "playlistmodel.h"
 #include <QDrag>
 #include <QHeaderView>

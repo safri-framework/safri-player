@@ -6,16 +6,16 @@
 // only for testing the taglib plugin
 #include <QList>
 #include <QDebug>
-#include "Interfaces/iguicontroller.h"
-#include "Interfaces/iplaylistwidget.h"
-#include "icore.h"
+#include "Interfaces/IGUIController.h"
+#include "Interfaces/IPlaylistWidget.h"
+#include "Interfaces/ICore.h"
 
-#include "../CorePlugin/CoreData/song.h"
-#include "../CorePlugin/iplaylist.h"
+#include "../CorePlugin/CoreData/Song.h"
+#include "Interfaces/IPlaylist.h"
 
 #include "Interfaces/ICollectionController.h"
 #include "Interfaces/IMediaTagger.h"
-#include "CoreSupply/filesysteminserter.h"
+#include "CoreSupply/FileSystemInserter.h"
 
 #include "../../PluginSystem/pluginmanager.h"
 // *************************************************************

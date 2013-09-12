@@ -1,22 +1,22 @@
 
 #include "SongtreeWidget.h"
 #include "ui_SongtreeWidget.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/albumitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/artistitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/songitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/genreitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/decadeitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/mediacollectionitemtype.h"
-#include "../CorePlugin/Songtree/CoreItemTypes/artistsongitemtype.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/AlbumItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/ArtistItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/SongItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/GenreItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/DecadeItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/MediaCollectionItemType.h"
+#include "../CorePlugin/Songtree/CoreItemTypes/ArtistSongItemType.h"
 #include "../CorePlugin/Interfaces/IMediaCollection.h"
-#include "../CorePlugin/iplaylist.h"
-#include "../CorePlugin/iplaybackcontroller.h"
-#include "Interfaces/iguicontroller.h"
-#include "Interfaces/iplaylistwidget.h"
+#include "Interfaces/IPlaylist.h"
+#include "Interfaces/IPlaybackController.h"
+#include "Interfaces/IGUIController.h"
+#include "Interfaces/IPlaylistWidget.h"
 #include "../PluginSystem/pluginmanager.h"
 #include <QDebug>
 #include <QTreeView>
-#include "../CorePlugin/icore.h"
+#include "Interfaces/ICore.h"
 #include <QtWidgets/QPushButton>
 #include <songtreeitemdelegate.h>
 

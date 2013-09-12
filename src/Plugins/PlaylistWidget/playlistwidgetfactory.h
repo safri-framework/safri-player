@@ -2,7 +2,7 @@
 #define PLAYLISTWIDGETFACTORY_H
 
 #include "PlaylistWidget_global.h"
-#include "Interfaces/iplaylistwidgetfactory.h"
+#include "Interfaces/IPlaylistWidgetFactory.h"
 
 class PLAYLISTWIDGETSHARED_EXPORT PlaylistWidgetFactory : public Core::IPlaylistWidgetFactory
 {

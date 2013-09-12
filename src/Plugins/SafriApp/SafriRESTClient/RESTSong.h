@@ -2,7 +2,7 @@
 #define RESTSONG_H
 
 #include <QJsonObject>
-#include "CoreData/song.h"
+#include "CoreData/Song.h"
 
 namespace SafriRESTClient
 {

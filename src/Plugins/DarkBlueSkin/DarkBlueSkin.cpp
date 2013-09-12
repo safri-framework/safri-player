@@ -1,7 +1,7 @@
 #include "DarkBlueSkin.h"
 #include <QFile>
 #include <QApplication>
-#include "Songtree/songtreeitem.h"
+#include "Songtree/SongTreeItem.h"
 
 DarkBlueSkin::DarkBlueSkin()
 {

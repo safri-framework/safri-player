@@ -5,7 +5,7 @@
 #include <QList>
 #include <QUrl>
 #include "../CorePlugin_global.h"
-#include "../CoreData/dataitem.h"
+#include "../CoreData/DataItem.h"
 
 namespace Core
 {

@@ -3,7 +3,7 @@
 
 #include <QModelIndex>
 
-#include "Interfaces/iplaylistwidget.h"
+#include "Interfaces/IPlaylistWidget.h"
 #include <QPixmap>
 #include <QtWidgets/QLabel>
 #include <QModelIndex>

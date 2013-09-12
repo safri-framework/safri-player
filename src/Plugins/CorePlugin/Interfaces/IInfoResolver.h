@@ -2,7 +2,7 @@
 #define IINFORESOLVER_H
 #include "../CoreSupply/InfoTypeDefinition.h"
 #include <QObject>
-#include "CoreData/dataitem.h"
+#include "CoreData/DataItem.h"
 #include "../CorePlugin_global.h"
 
 

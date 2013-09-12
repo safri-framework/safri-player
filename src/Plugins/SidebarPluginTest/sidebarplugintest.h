@@ -1,7 +1,7 @@
 #ifndef SIDEBARPLUGINTEST_H
 #define SIDEBARPLUGINTEST_H
 
-#include "Interfaces/isidebarplugin.h"
+#include "Interfaces/ISideBarPlugin.h"
 #include <QtWidgets/QWidget>
 
 using namespace Core;

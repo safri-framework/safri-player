@@ -2,11 +2,11 @@
 #include "ui_TabbedPlaylistWidget.h"
 
 #include "playlistitemdelegate.h"
-#include "icore.h"
-#include "iplaybackcontroller.h"
+#include "Interfaces/ICore.h"
+#include "Interfaces/IPlaybackController.h"
 #include "PlaylistView.h"
 #include "PlaylistModel.h"
-#include "CoreData/media.h"
+#include "CoreData/Media.h"
 #include "PlaylistTabWidget.h"
 #include <QIcon>
 #include <QMenu>

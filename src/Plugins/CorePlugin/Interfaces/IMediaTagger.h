@@ -3,7 +3,7 @@
 #include "../CorePlugin_global.h"
 #include <QObject>
 #include <QUrl>
-#include "../CoreData/mediainfocontainer.h"
+#include "../CoreData/MediaInfoContainer.h"
 
 
 namespace Core

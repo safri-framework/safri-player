@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QSharedPointer>
-#include "iplaylist.h"
+#include "Interfaces/IPlaylist.h"
 #include <QJsonArray>
 #include <QMutex>
 

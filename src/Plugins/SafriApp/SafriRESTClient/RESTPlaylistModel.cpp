@@ -1,7 +1,7 @@
 #include "RESTPlaylistModel.h"
 
 #include "RESTPlaylist.h"
-#include "CoreData/mediainfocontainer.h"
+#include "CoreData/MediaInfoContainer.h"
 
 #include <QDebug>
 

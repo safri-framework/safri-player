@@ -2,8 +2,8 @@
 #include "ui_playlistwidget.h"
 #include "playlistmodel.h"
 #include <QDebug>
-#include "../CorePlugin/iplaybackcontroller.h"
-#include "../CorePlugin/icore.h"
+#include "Interfaces/IPlaybackController.h"
+#include "Interfaces/ICore.h"
 #include "playlistitemdelegate.h"
 #include <QAction>
 #include <QHeaderView>

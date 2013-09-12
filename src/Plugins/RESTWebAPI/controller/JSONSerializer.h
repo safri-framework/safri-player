@@ -1,10 +1,10 @@
 #ifndef STATICPLAYERHELPER_H
 #define STATICPLAYERHELPER_H
 
-#include "CoreData/media.h"
+#include "CoreData/Media.h"
 #include <QJsonObject>
 #include <QObject>
-#include <Songtree/songtreeitem.h>
+#include <Songtree/SongTreeItem.h>
 
 namespace Core
 {

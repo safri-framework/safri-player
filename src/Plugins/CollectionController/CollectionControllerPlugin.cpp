@@ -1,6 +1,6 @@
 #include "CollectionControllerPlugin.h"
 #include "CollectionController.h"
-#include "../CorePlugin/icore.h"
+#include "Interfaces/ICore.h"
 #include "CollectionControllerSettingsDialog.h"
 #include "Settings/SettingsManager.h"
 #include <QDebug>

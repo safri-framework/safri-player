@@ -14,45 +14,45 @@ include(../../SafriPlugin.pri)
 
 DEFINES += COREPLUGIN_LIBRARY
 
-SOURCES += coreplugin.cpp \
-    CoreData/genre.cpp \
-    CoreData/artist.cpp \
-    CoreData/album.cpp \
-    CoreData/song.cpp \
-    icore.cpp \
-    CoreData/dataitem.cpp \
-    Interfaces/iplayerwidgetfactory.cpp \
-    Interfaces/isidebarplugin.cpp \
-    Interfaces/iguicontroller.cpp \
-    Interfaces/iplaylistwidget.cpp \
-    Interfaces/iplaylistwidgetfactory.cpp \
-    Interfaces/itreeitemtype.cpp \
-    Songtree/CoreItemTypes/tracksongitemtype.cpp \
-    Songtree/CoreItemTypes/songitemtype.cpp \
-    Songtree/CoreItemTypes/genreitemtype.cpp \
-    Songtree/CoreItemTypes/decadeitemtype.cpp \
-    Songtree/CoreItemTypes/artistitemtype.cpp \
-    Songtree/CoreItemTypes/albumitemtype.cpp \
-    Songtree/songtree.cpp \
-    Songtree/songtreeitem.cpp \
-    Songtree/changedflags.cpp \
-    Songtree/songtreemodel.cpp \ 
-    Songtree/CoreItemTypes/mediacollectionitemtype.cpp \
+SOURCES += CorePlugin.cpp \
+    CoreData/Genre.cpp \
+    CoreData/Artist.cpp \
+    CoreData/Album.cpp \
+    CoreData/Song.cpp \
+    Interfaces/ICore.cpp \
+    CoreData/DataItem.cpp \
+    Interfaces/IPlayerWidgetFactory.cpp \
+    Interfaces/ISideBarPlugin.cpp \
+    Interfaces/IGUIController.cpp \
+    Interfaces/IPlaylistWidget.cpp \
+    Interfaces/IPlaylistWidgetFactory.cpp \
+    Interfaces/ITreeItemType.cpp \
+    Songtree/CoreItemTypes/TrackSongItemType.cpp \
+    Songtree/CoreItemTypes/SongItemType.cpp \
+    Songtree/CoreItemTypes/GenreItemType.cpp \
+    Songtree/CoreItemTypes/DecadeItemType.cpp \
+    Songtree/CoreItemTypes/ArtistItemType.cpp \
+    Songtree/CoreItemTypes/AlbumItemType.cpp \
+    Songtree/SongTree.cpp \
+    Songtree/SongTreeItem.cpp \
+    Songtree/ChangedFlags.cpp \
+    Songtree/SongTreeModel.cpp \ 
+    Songtree/CoreItemTypes/MediaCollectionItemType.cpp \
     Interfaces/IPlayerWidget.cpp \
     Interfaces/IMediaBackend.cpp \
     Interfaces/IMediaTagger.cpp \
     Interfaces/IMediaTaggerFactory.cpp \
-    CoreData/mediainfocontainer.cpp \
+    CoreData/MediaInfoContainer.cpp \
     Interfaces/IMediaCollection.cpp \
     Interfaces/IAudioCollection.cpp \
-    Interfaces/imediainserter.cpp \
-    CoreSupply/filesysteminserter.cpp \
-    iplaylist.cpp \
-    Songtree/songtreeproxymodel.cpp \
-    Interfaces/imediacollectionstorage.cpp \
-    Interfaces/imediacollectionstoragefactory.cpp \
-    Interfaces/imediacollectionfactory.cpp \
-				CoreSupply/infocontroller.cpp \
+    Interfaces/IMediaInserter.cpp \
+    CoreSupply/FileSystemInserter.cpp \
+    Interfaces/IPlaylist.cpp \
+    Songtree/SongTreeProxyModel.cpp \
+    Interfaces/IMediaCollectionStorage.cpp \
+    Interfaces/IMediaCollectionStorageFactory.cpp \
+    Interfaces/IMediaCollectionFactory.cpp \
+                                CoreSupply/InfoController.cpp \
 				Interfaces/IInfoResolver.cpp \
 				CoreSupply/InfoRequest.cpp \
 				CoreSupply/AbstractInfoResolver.cpp \
@@ -63,59 +63,59 @@ SOURCES += coreplugin.cpp \
     Interfaces/ISettingsModuleWidget.cpp \
     Interfaces/IAssetService.cpp \
     CoreSupply/AssetController.cpp \
-    CoreData/albumartist.cpp \
+    CoreData/AlbumArtist.cpp \
     Interfaces/ITreeItem.cpp \
     CoreSupply/BasicTreeItem.cpp \
-    IPlaybackController.cpp \
+    Interfaces/IPlaybackController.cpp \
     Interfaces/ISafriSkin.cpp \
-    Songtree/CoreItemTypes/artistsongitemtype.cpp
+    Songtree/CoreItemTypes/ArtistSongItemType.cpp 
 
-HEADERS += coreplugin.h\
+HEADERS += CorePlugin.h\
         CorePlugin_global.h \
-    iplaybackcontroller.h \
-    CoreData/genre.h \
-    CoreData/artist.h \
-    CoreData/album.h \
-    CoreData/song.h\
-    iplaylist.h \
-    icore.h \
-    CoreData/dataitem.h \
-    CoreData/item.h \
-    CoreData/media.h \
+    Interfaces/IPlaybackController.h \
+    CoreData/Genre.h \
+    CoreData/Artist.h \
+    CoreData/Album.h \
+    CoreData/Song.h\
+    Interfaces/IPlaylist.h \
+    Interfaces/ICore.h \
+    CoreData/DataItem.h \
+    CoreData/Item.h \
+    CoreData/Media.h \
     Interfaces/IPlaylistFactory.h \
     Interfaces/IMediaCollection.h \
     Interfaces/IAudioCollection.h \
-    Interfaces/iplayerwidgetfactory.h \
-    Interfaces/isidebarplugin.h \
-    Interfaces/iguicontroller.h \
-    Interfaces/iplaylistwidget.h \
-    Interfaces/iplaylistwidgetfactory.h \
-    Interfaces/itreeitemtype.h \
-    Songtree/CoreItemTypes/tracksongitemtype.h \
-    Songtree/CoreItemTypes/songitemtype.h \
-    Songtree/CoreItemTypes/genreitemtype.h \
-    Songtree/CoreItemTypes/decadeitemtype.h \
-    Songtree/CoreItemTypes/artistitemtype.h \
-    Songtree/CoreItemTypes/albumitemtype.h \
-    Songtree/songtree.h \
-    Songtree/songtreeitem.h \
-    Songtree/changedflags.h \
-    Songtree/songtreemodel.h \
+    Interfaces/IPlayerWidgetFactory.h \
+    Interfaces/ISideBarPlugin.h \
+    Interfaces/IGUIController.h \
+    Interfaces/IPlaylistWidget.h \
+    Interfaces/IPlaylistWidgetFactory.h \
+    Interfaces/ITreeItemType.h \
+    Songtree/CoreItemTypes/TrackSongItemType.h \
+    Songtree/CoreItemTypes/SongItemType.h \
+    Songtree/CoreItemTypes/GenreItemType.h \
+    Songtree/CoreItemTypes/DecadeItemType.h \
+    Songtree/CoreItemTypes/ArtistItemType.h \
+    Songtree/CoreItemTypes/AlbumItemType.h \
+    Songtree/SongTree.h \
+    Songtree/SongTreeItem.h \
+    Songtree/ChangedFlags.h \
+    Songtree/SongTreeModel.h \
     Interfaces/ICollectionController.h \
-    Songtree/CoreItemTypes/mediacollectionitemtype.h \
+    Songtree/CoreItemTypes/MediaCollectionItemType.h \
     Interfaces/IPlayerWidget.h \
     Interfaces/IMediaBackend.h \
-    CoreData/mediainfocontainer.h \
+    CoreData/MediaInfoContainer.h \
     Interfaces/IMediaTagger.h \
     Interfaces/IMediaTaggerFactory.h \
-    Interfaces/imediainserter.h \
-    CoreSupply/filesysteminserter.h \
-    Songtree/songtreeproxymodel.h \
-    Interfaces/imediacollectionstorage.h \
-    Interfaces/imediacollectionstoragefactory.h \
-    Interfaces/imediacollectionfactory.h \
-    CoreData/audio.h \
-				CoreSupply/infocontroller.h \
+    Interfaces/IMediaInserter.h \
+    CoreSupply/FileSystemInserter.h \
+    Songtree/SongTreeProxyModel.h \
+    Interfaces/IMediaCollectionStorage.h \
+    Interfaces/IMediaCollectionStorageFactory.h \
+    Interfaces/IMediaCollectionFactory.h \
+    CoreData/Audio.h \
+				CoreSupply/InfoController.h \
 				Interfaces/IInfoResolver.h \
 				CoreSupply/InfoRequest.h \
 				CoreSupply/AbstractInfoResolver.h \
@@ -126,11 +126,11 @@ HEADERS += coreplugin.h\
     Interfaces/ISettingsModuleWidget.h \
     Interfaces/IAssetService.h \
     CoreSupply/AssetController.h \
-    CoreData/albumartist.h \
+    CoreData/AlbumArtist.h \
     Interfaces/ITreeItem.h \
     CoreSupply/BasicTreeItem.h \
     Interfaces/ISafriSkin.h \
-    Songtree/CoreItemTypes/artistsongitemtype.h
+    Songtree/CoreItemTypes/ArtistSongItemType.h 
 
 OTHER_FILES += \
     Core.xml \

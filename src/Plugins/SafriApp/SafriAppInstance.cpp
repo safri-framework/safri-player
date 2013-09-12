@@ -5,7 +5,7 @@
 #include "LocalAppController.h"
 #include "SafriRESTClient/RESTAppController.h"
 
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "Settings/SettingsManager.h"
 
 #include <QDebug>

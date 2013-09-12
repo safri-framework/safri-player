@@ -1,8 +1,8 @@
 #include "guicontroller.h"
 #include <pluginmanager.h>
-#include "Interfaces/iplayerwidgetfactory.h"
-#include "Interfaces/iplaylistwidgetfactory.h"
-#include "Interfaces/iplaylistwidget.h"
+#include "Interfaces/IPlayerWidgetFactory.h"
+#include "Interfaces/IPlaylistWidgetFactory.h"
+#include "Interfaces/IPlaylistWidget.h"
 #include <QDebug>
 
 GUIController::GUIController(QObject *parent) :

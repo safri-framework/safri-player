@@ -2,7 +2,7 @@
 #define IAUDIOCOLLECTION_H
 #include "../CorePlugin_global.h"
 #include "IMediaCollection.h"
-#include "../CoreData/audio.h"
+#include "../CoreData/Audio.h"
 
 namespace Core
 {

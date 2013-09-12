@@ -1,6 +1,6 @@
 #include "PlayerController.h"
-#include "iplaybackcontroller.h"
-#include "icore.h"
+#include "Interfaces/IPlaybackController.h"
+#include "Interfaces/ICore.h"
 #include <QtWidgets/QAction>
 #include "JSONSerializer.h"
 #include <QJsonDocument>

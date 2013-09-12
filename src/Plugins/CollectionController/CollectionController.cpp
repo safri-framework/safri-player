@@ -1,9 +1,9 @@
 #include "CollectionController.h"
 
-#include "../Plugins/CorePlugin/icore.h"
+#include "Interfaces/ICore.h"
 #include "../PluginSystem/pluginmanager.h"
-#include "Interfaces/imediacollectionstoragefactory.h"
-#include "Interfaces/imediacollectionstorage.h"
+#include "Interfaces/IMediaCollectionStorageFactory.h"
+#include "Interfaces/IMediaCollectionStorage.h"
 #include "Interfaces/IMediaCollection.h"
 #include <QStringList>
 #include <QDebug>

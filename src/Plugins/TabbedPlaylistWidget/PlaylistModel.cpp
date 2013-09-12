@@ -1,10 +1,10 @@
 #include "PlaylistModel.h"
-#include "CoreData/media.h"
-#include "CoreData/song.h"
-#include "CoreData/item.h"
-#include "CoreData/media.h"
+#include "CoreData/Media.h"
+#include "CoreData/Song.h"
+#include "CoreData/Item.h"
+#include "CoreData/Media.h"
 #include <QDebug>
-#include "Songtree/songtreeitem.h"
+#include "Songtree/SongTreeItem.h"
 #include <QSize>
 
 

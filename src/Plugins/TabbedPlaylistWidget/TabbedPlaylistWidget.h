@@ -1,8 +1,8 @@
 #ifndef TABBEDPLAYLISTWIDGET_H
 #define TABBEDPLAYLISTWIDGET_H
 
-#include "Interfaces/iplaylistwidget.h"
-#include "iplaybackcontroller.h"
+#include "Interfaces/IPlaylistWidget.h"
+#include "Interfaces/IPlaybackController.h"
 #include <QSharedPointer>
 #include <QModelIndex>
 

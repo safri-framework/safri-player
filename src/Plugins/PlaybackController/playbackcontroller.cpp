@@ -1,8 +1,8 @@
 #include "playbackcontroller.h"
 
-#include "iplaylist.h"
-#include "CoreData/song.h"
-#include "icore.h"
+#include "Interfaces/IPlaylist.h"
+#include "CoreData/Song.h"
+#include "Interfaces/ICore.h"
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QApplication>
 #include <QDebug>

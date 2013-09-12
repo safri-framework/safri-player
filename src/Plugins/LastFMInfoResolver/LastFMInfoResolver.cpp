@@ -1,6 +1,6 @@
 #include "LastFMInfoResolver.h"
 #include <QStringList>
-#include "CoreData/artist.h"
+#include "CoreData/Artist.h"
 #include <QNetworkReply>
 #include <QDomDocument>
 #include <QPixmap>

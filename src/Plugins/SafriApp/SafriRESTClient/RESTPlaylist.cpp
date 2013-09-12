@@ -2,7 +2,7 @@
 
 #include "RESTClient.h"
 #include "RESTActions.h"
-#include "CoreData/mediainfocontainer.h"
+#include "CoreData/MediaInfoContainer.h"
 
 #include <QDebug>
 #include <QNetworkReply>

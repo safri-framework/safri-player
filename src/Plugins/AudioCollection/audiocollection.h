@@ -4,8 +4,8 @@
 #include "Interfaces/IAudioCollection.h"
 #include <QUrl>
 #include <QReadWriteLock>
-#include "CoreData/dataitem.h"
-#include "CoreData/media.h"
+#include "CoreData/DataItem.h"
+#include "CoreData/Media.h"
 #include <QMap>
 
 using namespace Core;

@@ -1,14 +1,14 @@
 #include "AlbumCoversAssetService.h"
 #include "Interfaces/IMediaCollection.h"
-#include "CoreData/album.h"
+#include "CoreData/Album.h"
 #include "Interfaces/ICollectionController.h"
-#include "CoreSupply/infocontroller.h"
+#include "CoreSupply/InfoController.h"
 #include "CoreSupply/InfoRequest.h"
 #include <QPixmap>
 #include <QImage>
 #include <QDebug>
 #include <QImage>
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include <QFile>
 #include <Interfaces/ISafriSkin.h>
 #include <QIcon>

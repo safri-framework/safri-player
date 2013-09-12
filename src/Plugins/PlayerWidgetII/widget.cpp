@@ -1,12 +1,12 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include "QFile"
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include <QDebug>
 #include <QIcon>
 #include <QMovie>
 
-#include "../CorePlugin/CoreData/song.h"
+#include "../CorePlugin/CoreData/Song.h"
 
 Widget::Widget(QWidget *parent) :
     IPlayerWidget(parent),

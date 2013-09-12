@@ -1,6 +1,6 @@
 #ifndef INFOREQUEST_H
 #define INFOREQUEST_H
-#include "CoreData/dataitem.h"
+#include "CoreData/DataItem.h"
 #include "../CorePlugin_global.h"
 #include <QObject>
 #include <QVariant>

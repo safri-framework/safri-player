@@ -2,7 +2,7 @@
 #define TABBEDPLWIDGETFACTORY_H
 
 #include "tabbedplaylistwidget_global.h"
-#include "Interfaces/iplaylistwidgetfactory.h"
+#include "Interfaces/IPlaylistWidgetFactory.h"
 
 namespace Core {
     class IPlaylistWidget;
