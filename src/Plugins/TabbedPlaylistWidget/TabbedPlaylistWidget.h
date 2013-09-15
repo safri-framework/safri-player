@@ -50,6 +50,7 @@ class TabbedPlaylistWidget : public Core::IPlaylistWidget
         void playbackControllerStateChanged(Core::playState state);
         void onTabWidgetCostumContextMenuRequested(const QPoint &pos);
         void splitTabWidgetView(PlaylistTabWidget* tabWidget, int index);
+        void savePlaylist(QSharedPointer<Core::IPlaylist> playlist);
 
 
     private:

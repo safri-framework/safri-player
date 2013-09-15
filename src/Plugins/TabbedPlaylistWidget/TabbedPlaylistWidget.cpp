@@ -4,6 +4,8 @@
 #include "playlistitemdelegate.h"
 #include "Interfaces/ICore.h"
 #include "Interfaces/IPlaybackController.h"
+#include "Interfaces/IPlaylistStorage.h"
+#include "pluginmanager.h"
 #include "PlaylistView.h"
 #include "PlaylistModel.h"
 #include "CoreData/Media.h"
@@ -11,6 +13,9 @@
 #include <QIcon>
 #include <QMenu>
 #include <QDebug>
+#include <QList>
+#include <QMap>
+#include <QFileDialog>
 
 TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     IPlaylistWidget(parent),
@@ -174,6 +179,7 @@ void TabbedPlaylistWidget::onTabWidgetCostumContextMenuRequested(const QPoint &p
     QAction newTabAction("Neuer Tab", &contextMenu);
     QAction closeTab("Tab schließen", &contextMenu);
     QAction renameTab("Umbenennen", &contextMenu);
+    QAction savePlaylistAction("Playliste speichern", &contextMenu);
 
     if ( senderView->count() < 2)
     {
@@ -182,6 +188,7 @@ void TabbedPlaylistWidget::onTabWidgetCostumContextMenuRequested(const QPoint &p
 
     contextMenu.addAction(&newTabAction);
     contextMenu.addSeparator();
+    contextMenu.addAction(&savePlaylistAction);
     contextMenu.addAction(&renameTab);
     contextMenu.addAction(&splitAction);
     contextMenu.addAction(&closeTab);
@@ -205,6 +212,10 @@ void TabbedPlaylistWidget::onTabWidgetCostumContextMenuRequested(const QPoint &p
     {
         senderView->editTabName(tabIndex);
     }
+    else if (requestedAction == &savePlaylistAction)
+    {
+        savePlaylist( senderView->getPlaylist(tabIndex) );
+    }
 }
 
 void TabbedPlaylistWidget::splitTabWidgetView(PlaylistTabWidget *tabWidget, int index)
@@ -223,6 +234,45 @@ void TabbedPlaylistWidget::splitTabWidgetView(PlaylistTabWidget *tabWidget, int 
         setCurrentTabIcon();
     }
 
+}
+
+void TabbedPlaylistWidget::savePlaylist(QSharedPointer<Core::IPlaylist> playlist)
+{
+    QList<Core::IPlaylistStorage*> playlistStorage = PluginSystem::PluginManager::getObjects<Core::IPlaylistStorage>();
+    QMap<QString, Core::IPlaylistStorage*> filterMap;
+    QString fileFilter, selectedFilter, filter;
+    QString saveFilename;
+    Core::IPlaylistStorage* storage;
+
+    for (int i = 0; i < playlistStorage.size(); i++)
+    {
+        storage = playlistStorage.at(i);
+
+        filter = storage->getDescription() + " (*." + storage->getFileExtension() + ")";
+        filterMap.insert(filter, storage);
+
+        if (i > 0)
+        {
+            fileFilter += ";;";
+        }
+
+        fileFilter += filter;
+    }
+
+    //qDebug() << "Filter: " << fileFilter;
+    saveFilename = QFileDialog::getSaveFileName(this, "Playliste speichern", "", fileFilter, &selectedFilter);
+
+    storage = filterMap.value(selectedFilter);
+
+    qDebug() << "save to Filename: " << saveFilename;
+    qDebug() << "selected Filter: " << selectedFilter;
+
+    if ( !saveFilename.endsWith("." + storage->getFileExtension(), Qt::CaseInsensitive ) )
+    {
+        saveFilename += "." + storage->getFileExtension();
+    }
+
+    storage->savePlaylist(saveFilename, playlist );
 }
 
 PlaylistTabWidget *TabbedPlaylistWidget::addNewTabWidget()

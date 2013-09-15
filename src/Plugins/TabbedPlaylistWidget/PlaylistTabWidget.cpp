@@ -54,6 +54,15 @@ void PlaylistTabWidget::editTabName(int index)
     lineEdit->setFocus();
 }
 
+QSharedPointer<Core::IPlaylist> PlaylistTabWidget::getPlaylist(int index)
+{
+    PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(index) );
+
+    PlaylistModel* playlistModel = qobject_cast<PlaylistModel*>( playlistView->model() );
+
+    return playlistModel->getPlaylist();
+}
+
 void PlaylistTabWidget::onTabCloseRequested(int index)
 {
     abortTabTextEditing();

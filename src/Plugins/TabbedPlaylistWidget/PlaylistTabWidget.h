@@ -2,6 +2,12 @@
 #define PLAYLISTTABWIDGET_H
 
 #include <QTabWidget>
+#include <QSharedPointer>
+
+namespace Core
+{
+    class IPlaylist;
+}
 
 class PlaylistTabWidget : public QTabWidget
 {
@@ -11,6 +17,7 @@ class PlaylistTabWidget : public QTabWidget
 
         void removePlaylistTab(int index);
         void editTabName(int index);
+        QSharedPointer<Core::IPlaylist> getPlaylist(int index);
 
     signals:
 

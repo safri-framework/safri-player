@@ -1,0 +1,15 @@
+<SafriPlugin name="M3UPlaylistStorage" version="0.1">
+
+    <vendor>Safri</vendor>
+
+    <copyright>Sa &amp; Fri</copyright>
+    <license>GNU</license>
+    <description>Stores & loads playlist in m3u format.</description>
+    <url>www.safri-player.org</url>
+    <category>IO</category>
+
+    <dependencyList>
+        <dependency name="" version="">
+    </dependencyList>
+
+</SafriPlugin>
