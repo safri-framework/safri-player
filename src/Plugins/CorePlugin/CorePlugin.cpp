@@ -15,6 +15,7 @@ CorePlugin::CorePlugin()
 CorePlugin::~CorePlugin()
 {
     qDebug() << "~CorePlugin";
+    delete Core::ICore::m_instance;
 }
 
 bool CorePlugin::initialize(QStringList  &arguments)

@@ -34,6 +34,11 @@ ICore::ICore()
     m_settingsManager = SettingsManager::getInstance();
 }
 
+ICore::~ICore()
+{
+    qDebug() << "~ICore";
+}
+
 ICore *ICore::instance()
 {
     return m_instance;
@@ -206,6 +211,11 @@ void ICore::showSettingsDialog()
 ISafriSkin *ICore::skin()
 {
     return m_instance->m_skin;
+}
+
+void ICore::close()
+{
+    Q_EMIT m_instance->aboutToClose();
 }
 
 

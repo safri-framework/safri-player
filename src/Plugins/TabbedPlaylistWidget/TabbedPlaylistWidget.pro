@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += widgets xml
 
 TARGET = TabbedPlaylistWidget
 TEMPLATE = lib
@@ -24,7 +24,8 @@ SOURCES += TabbedPlaylistWidgetPlugin.cpp \
     PlaylistModel.cpp \
     PlaylistTabWidget.cpp \
     playlistitemdelegate.cpp \
-    PlaylistTabBar.cpp
+    PlaylistTabBar.cpp \
+    TabbedPlaylistSettingsWidget.cpp
 
 HEADERS += TabbedPlaylistWidgetPlugin.h\
         tabbedplaylistwidget_global.h \
@@ -34,14 +35,16 @@ HEADERS += TabbedPlaylistWidgetPlugin.h\
     PlaylistModel.h \
     PlaylistTabWidget.h \
     playlistitemdelegate.h \
-    PlaylistTabBar.h
+    PlaylistTabBar.h \
+    TabbedPlaylistSettingsWidget.h
 
 OTHER_FILES += \
     TabbedPlaylistWidget.xml \
     TabbedPlaylistWidget.json
 
 FORMS += \
-    TabbedPlaylistWidget.ui
+    TabbedPlaylistWidget.ui \
+    TabbedPlaylistSettingsWidget.ui
 
 RESOURCES += \
     ressources.qrc

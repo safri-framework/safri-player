@@ -23,6 +23,7 @@
 
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,12 +73,21 @@ MainWindow::MainWindow(QWidget *parent) :
     showTestPlaylist();
     this->setWindowTitle("Safri-Player");
     this->show();
-
+    qDebug() << "KONSTRUKTOR MainWindow";
 }
 
 MainWindow::~MainWindow()
 {
+    qDebug() << "DESTRUKTOR MainWindow";
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    qDebug() << "close Event";
+    //event->ignore();
+    Core::ICore::close();
+    event->accept();
 }
 
 void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)

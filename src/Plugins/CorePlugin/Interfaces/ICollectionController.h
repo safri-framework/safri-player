@@ -5,11 +5,12 @@
 #include <QList>
 #include <QUrl>
 #include "../CorePlugin_global.h"
-#include "../CoreData/DataItem.h"
 
 namespace Core
 {
     class IMediaCollection;
+    class Media;
+    class DataItem;
 
     class COREPLUGINSHARED_EXPORT ICollectionController : public QObject
     {
@@ -22,12 +23,13 @@ namespace Core
             virtual IMediaCollection*               getMediaCollection(QUrl filename) = 0;
             virtual IMediaCollection*               getMediaCollectionByHash(QString hash) = 0;
             virtual bool                            saveCollections() = 0;
+            virtual Media*                          findMediaByURL(QUrl &filename) = 0;
 
         signals:
             void mediaCollectionRemoved(QUrl filename);
             void mediaCollectionAdded(IMediaCollection* collection);
             void mediaCollectionChanged(QUrl filename);
-            void newItem(Core::DataItem* item);
+            void newItem(DataItem* item);
 
     };
 }

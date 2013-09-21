@@ -51,7 +51,12 @@ class TabbedPlaylistWidget : public Core::IPlaylistWidget
         void onTabWidgetCostumContextMenuRequested(const QPoint &pos);
         void splitTabWidgetView(PlaylistTabWidget* tabWidget, int index);
         void savePlaylist(QSharedPointer<Core::IPlaylist> playlist);
+        void loadPlaylist(PlaylistTabWidget* tabWidget);
+        QSharedPointer<Core::IPlaylist> loadPlaylist(QString filename);
 
+        void onClose();
+        void saveTabConfiguration();
+        bool loadTabConfiguration();
 
     private:
 

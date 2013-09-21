@@ -24,6 +24,7 @@ namespace Core
             virtual Core::DataItem* getByID(DataItem::DATA_ITEM_TYPE type, int id) = 0;
             virtual QList<Core::DataItem*> getDataItems(DataItem::DATA_ITEM_TYPE type) = 0;
             virtual QList<Core::Media*> getMedia() = 0;
+            virtual Core::Media* getMediaByURL(QUrl &url) = 0;
             virtual QString getName() = 0;
             virtual QUrl getAssetFolderPath(QString subfolder) = 0;
             virtual bool isAvailable() = 0;

@@ -223,6 +223,12 @@ QList<Core::Media *> AudioCollection::getMedia()
     return list;
 }
 
+Media *AudioCollection::getMediaByURL(QUrl &url)
+{
+    //qDebug() << "AudioCollection::getMediaByURL " << url.toLocalFile();
+    return m_PathToSongMap->value( url.toLocalFile() );
+}
+
 QString AudioCollection::getName()
 {
     return this->m_name;
@@ -553,6 +559,7 @@ void AudioCollection::insertSong(Song* song)
         song->setMediaCollection(this);
         m_IDtoSongMap->insert(ID, song);
         m_nameToSongMap->insert(song->getName(), song);
+        m_PathToSongMap->insert( song->getFileName(), song );
         if (ID > currentSongID)
             currentSongID = ID;
     m_lock.unlock();
@@ -599,7 +606,7 @@ void AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
         QString genreName = mediaInfo.getMediaInfo(InfoGenre).toString();
 
 
-        song = audioCollection->getSongByPath(mediaInfo.getURL().toString());
+        song = audioCollection->getSongByPath( mediaInfo.getURL().toLocalFile() );
         if(!song) //Song doesn't already exists
         {
             song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt(), mediaInfo.getURL());

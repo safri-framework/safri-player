@@ -213,7 +213,7 @@ QHeaderView::section
     max-height: 27;
 }
 
-QPushButton[place="menu_left"][type="menu_button_last"]
+QPushButton[place="menu_left"]
 {
     min-width:      70px;
     max-width:      70px;
@@ -225,7 +225,7 @@ QPushButton[place="menu_left"][type="menu_button_last"]
     border: 8px;
 }
 
-QPushButton:checked[place="menu_left"][type="menu_button_last"]
+QPushButton:checked[place="menu_left"]
 {
     border-image: url(:buttons/Ressources/button_sidebar_on.png) ;
 }

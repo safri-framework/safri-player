@@ -474,6 +474,9 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 
         case 6:
 
+            if (song->getYear() == 0)
+                return QVariant();
+
             return song->getYear();
 
         case 5:

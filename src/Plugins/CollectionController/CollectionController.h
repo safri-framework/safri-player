@@ -11,6 +11,7 @@ namespace Core
 {
     class IMediaCollection;
     class IMediaCollectionStorageFactory;
+    class Media;
 }
 
 namespace Controller
@@ -26,6 +27,7 @@ namespace Controller
         IMediaCollection*                               getMediaCollection(QUrl filename);
         virtual IMediaCollection*                       getMediaCollectionByHash(QString hash);
         virtual bool                                    saveCollections();
+        virtual Core::Media*                            findMediaByURL(QUrl &filename);
 
     private slots:
 

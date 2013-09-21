@@ -44,6 +44,8 @@ namespace Core
 
         public:
 
+            ~ICore();
+
             static ICore*                       instance();
             static Controller::InfoController*  infoController();
             static SettingsManager*             settingsManager();
@@ -56,15 +58,16 @@ namespace Core
             static IMediaBackend*               getBackendForMedia(Media* media);
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName, QUrl url = QUrl());
-             Controller::AssetController*       assetController();
+            Controller::AssetController*       assetController();
             static void                         showSettingsDialog();
             static ISafriSkin*                  skin();
-
+            static void                         close();
 
 
         signals:
 
             void playbackControllerChanged();
+            void aboutToClose();
 
         private slots:
 

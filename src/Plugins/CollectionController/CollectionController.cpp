@@ -1,5 +1,6 @@
 #include "CollectionController.h"
 
+#include "CoreData/DataItem.h"
 #include "Interfaces/ICore.h"
 #include "../PluginSystem/pluginmanager.h"
 #include "Interfaces/IMediaCollectionStorageFactory.h"
@@ -114,6 +115,26 @@ bool Controller::CollectionController::saveCollections()
     }
 
     return result;
+}
+
+Media *Controller::CollectionController::findMediaByURL(QUrl& filename)
+{
+    QList<IMediaCollection*> allCollections = m_collectionMap.values();
+    Media* foundMedia = 0;
+
+    for (int i = 0; i < allCollections.size(); i++)
+    {
+        //qDebug() << "findMediaByURL: " << filename;
+        foundMedia = allCollections.at(i)->getMediaByURL(filename);
+
+        if (foundMedia)
+        {
+            // returns the first found media
+            return foundMedia;
+        }
+    }
+
+    return foundMedia;
 }
 
 void Controller::CollectionController::loadExtensionMap()
