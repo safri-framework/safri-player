@@ -69,7 +69,10 @@ SOURCES += CorePlugin.cpp \
     Interfaces/IPlaybackController.cpp \
     Interfaces/ISafriSkin.cpp \
     Songtree/CoreItemTypes/ArtistSongItemType.cpp \ 
-    Interfaces/IPlaylistStorage.cpp
+    Interfaces/IPlaylistStorage.cpp \
+    CoreSupply/NotificationController.cpp \
+    CoreSupply/Notification.cpp \
+    CoreSupply/ProgressNotification.cpp
 
 HEADERS += CorePlugin.h\
         CorePlugin_global.h \
@@ -132,7 +135,10 @@ HEADERS += CorePlugin.h\
     CoreSupply/BasicTreeItem.h \
     Interfaces/ISafriSkin.h \
     Songtree/CoreItemTypes/ArtistSongItemType.h \ 
-    Interfaces/IPlaylistStorage.h
+    Interfaces/IPlaylistStorage.h \
+    CoreSupply/NotificationController.h \
+    CoreSupply/Notification.h \
+    CoreSupply/ProgressNotification.h
 
 OTHER_FILES += \
     Core.xml \
