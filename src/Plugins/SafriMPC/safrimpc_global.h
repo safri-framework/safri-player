@@ -1,0 +1,12 @@
+#ifndef SAFRIMPC_GLOBAL_H
+#define SAFRIMPC_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(SAFRIMPC_LIBRARY)
+#  define SAFRIMPCSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define SAFRIMPCSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // SAFRIMPC_GLOBAL_H
