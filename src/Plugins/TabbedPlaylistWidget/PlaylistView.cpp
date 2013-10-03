@@ -4,6 +4,10 @@
 #include <QDrag>
 #include <QHeaderView>
 #include <QPushButton>
+#include <QDebug>
+#include <QMenu>
+
+#include "PlaylistHeaderView.h"
 
 PlaylistView::PlaylistView(QString name, QWidget *parent) :
     QTreeView(parent), name(name)
@@ -16,13 +20,17 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     this->setRootIsDecorated(false);
     this->setProperty("type", QVariant("treeView"));
     this->setProperty("ident", QVariant("playlist"));
-    this->header()->setStretchLastSection(false);
+
     this->setAlternatingRowColors(true);
 
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
+
+    setHeader( new PlaylistHeaderView(this) );
+
+    this->header()->setStretchLastSection(false);
 }
 
 
@@ -182,4 +190,11 @@ void PlaylistView::selectIndexes(QItemSelection &newSelection)
 {
     selectionModel()->clear();
     selectionModel()->select(newSelection, QItemSelectionModel::Rows | QItemSelectionModel::Current | QItemSelectionModel::Select);
+}
+
+void PlaylistView::onCustomContextMenuRequested(const QPoint &pos)
+{
+    qDebug() << "KONTEXT MENU";
+
+
 }

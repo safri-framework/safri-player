@@ -69,6 +69,8 @@ class MainWindow : public QMainWindow
 
         void objectAddedToObjectPool(QObject *object);
 
+        void on_actionClose_triggered();
+
 public slots:
 
         void pluginAdded(QObject* plugin);

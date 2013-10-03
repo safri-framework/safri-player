@@ -11,7 +11,6 @@
 #include <QApplication>
 #include <QModelIndexList>
 
-
 class PlaylistView : public QTreeView
 {
     Q_OBJECT
@@ -43,6 +42,10 @@ class PlaylistView : public QTreeView
         void dragMoveEvent(QDragMoveEvent *event);
         void focusChanged(QWidget* oldFocus, QWidget* newFocus);
         void selectIndexes(QItemSelection &newSelection);
+
+    private slots:
+
+        void onCustomContextMenuRequested(const QPoint &pos);
 
 };
 

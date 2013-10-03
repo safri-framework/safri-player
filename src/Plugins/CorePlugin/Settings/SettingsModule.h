@@ -3,6 +3,7 @@
 
 #include "Interfaces/ISettingsModule.h"
 #include <QMap>
+#include <QReadWriteLock>
 
 namespace Core
 {
@@ -32,6 +33,7 @@ namespace Core
             bool modified;
             QString moduleName;
 
+            QReadWriteLock lock;
 
     };
 }

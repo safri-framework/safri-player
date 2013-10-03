@@ -3,7 +3,7 @@
 using namespace Core;
 
 SettingsModule::SettingsModule(QString moduleName, QObject *parent) :
-    ISettingsModule(parent), moduleName(moduleName)
+    ISettingsModule(parent), moduleName(moduleName), lock(QReadWriteLock::Recursive)
 {
 }
 
@@ -14,16 +14,24 @@ QString SettingsModule::getModulename()
 
 QVariant SettingsModule::getSetting(QString setting)
 {
-    return settings.value(setting, QVariant() );
+    QVariant settingResult;
+
+    lock.lockForRead();
+        settingResult = settings.value(setting, QVariant() );
+    lock.unlock();
+
+    return settingResult;
 }
 
 void SettingsModule::setSetting(QString setting, QVariant value)
 {
-    if (settings.value(setting, QVariant()) != value )
+    if ( getSetting(setting) != value )
     {
-        //qDebug() << "Setting modified: " << moduleName + "." + setting << " -> " << value.toString() ;
-        modified = true;
-        settings.insert(setting, value);
+        lock.lockForWrite();
+            //qDebug() << "Setting modified: " << moduleName + "." + setting << " -> " << value.toString() ;
+            modified = true;
+            settings.insert(setting, value);
+        lock.unlock();
 
         Q_EMIT settingsChanged(setting);
     }
@@ -31,24 +39,36 @@ void SettingsModule::setSetting(QString setting, QVariant value)
 
 QMap<QString, QVariant> SettingsModule::getSettingsMap()
 {
-    return settings;
+    QMap<QString, QVariant> map;
+
+    lock.lockForRead();
+        map = settings;
+    lock.unlock();
+
+    return map;
 }
 
 void SettingsModule::setSettingsMap(QMap<QString, QVariant> settings)
 {
-    this->settings = settings;
+    lock.lockForWrite();
+        this->settings = settings;
+    lock.unlock();
 }
 
 bool SettingsModule::isModified()
 {
-    if (modified)
-    {
-        // reset by read:
-        // soon as the user noticed the modification, we reset the flag
-        modified = false;
+    bool resultModified = false;
 
-        return true;
-    }
+    lock.lockForWrite();
+        if (modified)
+        {
+            // reset by read:
+            // soon as the user noticed the modification, we reset the flag
+            modified = false;
 
-    return false;
+            resultModified = true;
+        }
+    lock.unlock();
+
+    return resultModified;
 }

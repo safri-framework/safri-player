@@ -352,3 +352,8 @@ void MainWindow::objectAddedToObjectPool(QObject *object)
         this->setStyleSheet(skin->getStyleSheet());
     }
 }
+
+void MainWindow::on_actionClose_triggered()
+{
+    this->close();
+}

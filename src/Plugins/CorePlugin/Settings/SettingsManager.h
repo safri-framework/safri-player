@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QStringList>
+#include <QReadWriteLock>
 #include "CorePlugin_global.h"
 #include "SettingsModule.h"
 
@@ -31,6 +32,8 @@ namespace Core
             explicit SettingsManager(QObject *parent = 0);
 
             QMap<QString, SettingsModule*> modules;
+
+            QReadWriteLock lock;
     };
 }
 

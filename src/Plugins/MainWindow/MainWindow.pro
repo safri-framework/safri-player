@@ -35,3 +35,6 @@ OTHER_FILES += \
     MainWindow.xml \
     mainwindow.json
 
+RESOURCES += \
+    ressources.qrc
+

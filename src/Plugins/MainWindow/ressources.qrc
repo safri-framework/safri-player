@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>safrilogo7.svg</file>
+        <file>safrilogo8.svg</file>
+    </qresource>
+</RCC>

@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Safri-Player</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/icons/safrilogo7.svg</normaloff>:/icons/safrilogo7.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="type" stdset="0">
     <string>centralWidget</string>
@@ -352,7 +356,7 @@
    </property>
    <widget class="QMenu" name="menuPlugin">
     <property name="title">
-     <string>Plugin</string>
+     <string>Plugins</string>
     </property>
     <addaction name="actionPlugins_show"/>
    </widget>
@@ -369,9 +373,16 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
-   <addaction name="menuPlugin"/>
+   <widget class="QMenu" name="menuSafri_Player">
+    <property name="title">
+     <string>Safri-Player</string>
+    </property>
+    <addaction name="actionClose"/>
+   </widget>
+   <addaction name="menuSafri_Player"/>
    <addaction name="menuHinzuf_gen"/>
    <addaction name="menuEinstellungen"/>
+   <addaction name="menuPlugin"/>
   </widget>
   <action name="actionPlugins_show">
    <property name="text">
@@ -393,7 +404,14 @@
     <string>Einstellungen</string>
    </property>
   </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
