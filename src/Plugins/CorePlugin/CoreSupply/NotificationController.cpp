@@ -13,5 +13,7 @@ ProgressNotification *NotificationController::createProgressNotification(QString
 
     progressNotifications.append(newProgress);
 
+    Q_EMIT newNotification(newProgress);
+
     return newProgress;
 }

@@ -10,6 +10,7 @@
 #include "CoreData/Media.h"
 #include "CoreSupply/InfoController.h"
 #include "CoreSupply/AssetController.h"
+#include "CoreSupply/NotificationController.h"
 #include "Settings/SettingsManager.h"
 
 #include <QDebug>
@@ -30,6 +31,8 @@ ICore::ICore()
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
     m_infoController = new Controller::InfoController(this);
     m_assetController = new Controller::AssetController(this);
+    m_notificationController = new NotificationController(this);
+
     PluginSystem::PluginManager::instance()->addObject(m_assetController);
     m_settingsManager = SettingsManager::getInstance();
 }
@@ -149,6 +152,11 @@ IGUIController *ICore::guiController()
 ICollectionController *ICore::collectionController()
 {
     return m_instance->m_collectionController;
+}
+
+NotificationController ICore::notificationController()
+{
+    return m_instance->m_notificationController;
 }
 
 QString ICore::storageDirectory()

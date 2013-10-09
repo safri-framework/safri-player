@@ -30,6 +30,7 @@ namespace Core
     class IMediaCollectionFactory;
     class ISafriSkin;
     class SettingsManager;
+    class NotificationController;
 
 
     class COREPLUGINSHARED_EXPORT ICore : public QObject
@@ -47,22 +48,28 @@ namespace Core
             ~ICore();
 
             static ICore*                       instance();
-            static Controller::InfoController*  infoController();
+
             static SettingsManager*             settingsManager();
-            static IPlaybackController*         playbackController();
             static IMediaBackend*               audioBackend();
             static QSharedPointer<IPlaylist>    createPlaylist();
-            static IGUIController*              guiController();
-            static ICollectionController*       collectionController();
             static QString                      storageDirectory();
             static IMediaBackend*               getBackendForMedia(Media* media);
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName, QUrl url = QUrl());
-            Controller::AssetController*       assetController();
+            Controller::AssetController*        assetController();
             static void                         showSettingsDialog();
             static ISafriSkin*                  skin();
             static void                         close();
 
+            // ------------------- controller access methods -------------------
+
+            static Controller::InfoController*  infoController();
+            static IPlaybackController*         playbackController();
+            static IGUIController*              guiController();
+            static ICollectionController*       collectionController();
+            static NotificationController       notificationController();
+
+            // -----------------------------------------------------------------
 
         signals:
 
@@ -76,17 +83,25 @@ namespace Core
         private:
 
             static Core::ICore* m_instance;
-            IPlaybackController* m_playbackController;
+
             IMediaBackend* m_audioBackend;
-            IPlaylistFactory* m_playlistFactory;
-            IGUIController* m_guiController;
-            Controller::InfoController*  m_infoController;
-            ICollectionController* m_collectionController;
+            IPlaylistFactory* m_playlistFactory;         
             SettingsManager* m_settingsManager;
             Controller::AssetController* m_assetController;
             QMap<QString, IMediaBackend*> m_mediaBackends;
             QMap<QString, IMediaCollectionFactory*> m_collectionFactories;
             ISafriSkin* m_skin;
+
+            // ------------------- controller objects members -------------------
+
+            IPlaybackController*            m_playbackController;
+            IGUIController*                 m_guiController;
+            Controller::InfoController*     m_infoController;
+            ICollectionController*          m_collectionController;
+            NotificationController*         m_notificationController;
+
+            // ------------------------------------------------------------------
+
 
     };
 }

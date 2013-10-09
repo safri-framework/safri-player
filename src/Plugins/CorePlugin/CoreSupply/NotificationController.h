@@ -13,13 +13,14 @@ namespace Core
         Q_OBJECT
 
         public:
+
             explicit NotificationController(QObject *parent = 0);
 
-        ProgressNotification*   createProgressNotification(QString text, int min, int max);
+            ProgressNotification*   createProgressNotification(QString text, int min, int max);
 
         signals:
 
-        public slots:
+            void newNotification(Notification* notification);
 
         private:
 
