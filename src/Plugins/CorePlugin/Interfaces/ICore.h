@@ -67,7 +67,7 @@ namespace Core
             static IPlaybackController*         playbackController();
             static IGUIController*              guiController();
             static ICollectionController*       collectionController();
-            static NotificationController       notificationController();
+            static NotificationController*       notificationController();
 
             // -----------------------------------------------------------------
 

@@ -154,7 +154,7 @@ ICollectionController *ICore::collectionController()
     return m_instance->m_collectionController;
 }
 
-NotificationController ICore::notificationController()
+NotificationController* ICore::notificationController()
 {
     return m_instance->m_notificationController;
 }
