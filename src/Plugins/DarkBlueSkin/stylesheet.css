@@ -515,3 +515,45 @@ QPushButton:pressed[type="tiny"],QPushButton:checked[type="tiny"]
 {
     border-image:url(:border_images/Ressources/combobo_pressed.png);
 }
+
+
+
+QProgressBar
+{
+     border-image:  url(:border_images/Ressources/progress_auszen.png) 0px 4px 0px 4px;
+     border-width: 0px 4px 0px 4px;
+     min-height:6px;
+     max-height:6px;
+     color:transparent;
+     padding-left:-4px;
+}
+
+ QProgressBar::chunk
+ {
+    border-image:  url(:border_images/Ressources/progress_innen.png) 0px 4px 0px 4px;
+    border-width: 0px 4px 0px 4px;
+    min-height:5px;
+    max-height:5px;
+    margin-top: 1px;
+    min-width:5px;
+ }
+
+QPushButton[ident="cancelProgress"]
+{
+    min-width:5px;
+    max-width:5px;
+    min-height:5px;
+    max-height:5px;
+    background-color:transparent;
+    border-image: url(:icons/Ressources/close_button.png);
+    margin-top:1px;
+}
+
+QPushButton:hover[ident="cancelProgress"]
+{
+    background-color: rgba(255, 255, 255, 0%);
+    border-image: url(:icons/Ressources/close_button_hover.png);
+
+}
+
+

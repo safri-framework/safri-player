@@ -2,7 +2,7 @@
 
 #include "CoreData/DataItem.h"
 #include "Interfaces/ICore.h"
-#include "../PluginSystem/pluginmanager.h"
+#include  "pluginmanager.h"
 #include "Interfaces/IMediaCollectionStorageFactory.h"
 #include "Interfaces/IMediaCollectionStorage.h"
 #include "Interfaces/IMediaCollection.h"
@@ -12,6 +12,8 @@
 
 Controller::CollectionController::CollectionController()
 {
+
+    QObject::connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
     // build list of storage factories
     QList<Core::IMediaCollectionStorageFactory*> objects = PluginSystem::PluginManager::getObjects<Core::IMediaCollectionStorageFactory>();
     int size = objects.size();
@@ -28,13 +30,13 @@ QList<IMediaCollection *> Controller::CollectionController::getCollections(QStri
 {
 
     QList<IMediaCollection*> tempList;
-    QList<IMediaCollection*> allCollections = m_collectionMap.values();
 
-    for(int i = 0; i < allCollections.size(); i++)
+
+    for(int i = 0; i < m_allCollections.size(); i++)
     {
-        if ( allCollections.at(i)->getContentType() == type )
+        if ( m_allCollections.at(i)->getContentType() == type )
         {
-            tempList.append(allCollections.at(i));
+            tempList.append(m_allCollections.at(i));
         }
     }
 
@@ -60,6 +62,7 @@ bool Controller::CollectionController::loadMediaCollection(QUrl filename)
         {
             m_collectionMap.insert(filename.toString(), mediaCollection);
             m_collectionHashMap.insert(mediaCollection->getHash(), mediaCollection);
+            m_allCollections.append(mediaCollection);
             connect(mediaCollection, SIGNAL(itemAdded(Core::DataItem*)), this, SIGNAL(newItem(Core::DataItem*)));
             delete collectionStorage;
             return true;
@@ -160,4 +163,12 @@ QString Controller::CollectionController::getStorageTypeByFilename(QUrl filename
 void Controller::CollectionController::objectAddedToObjectPool(QObject *object)
 {
     Q_UNUSED(object)
+    IMediaCollection* mediaCollection = qobject_cast<IMediaCollection*>(object);
+    if(mediaCollection)
+    {
+        m_collectionHashMap.insert(mediaCollection->getHash(), mediaCollection);
+        m_allCollections.append(mediaCollection);
+        connect(mediaCollection, SIGNAL(itemAdded(Core::DataItem*)), this, SIGNAL(newItem(Core::DataItem*)));
+    }
+    Q_EMIT  mediaCollectionAdded(mediaCollection);
 }

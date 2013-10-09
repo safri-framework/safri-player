@@ -5,7 +5,7 @@ CONFIG += ordered
 SUBDIRS += \
         src/PluginSystem \
         src/Plugins \
-	src/Safri-Player
+        src/Safri-Player
 
 OTHER_FILES += \
     android/src/org/qtproject/qt5/android/bindings/QtApplication.java \

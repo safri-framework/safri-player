@@ -2,9 +2,14 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
+
+
+SUBDIRS += SafriMPC
+
 SUBDIRS += CorePlugin
 SUBDIRS += DarkBluePlayerWidget
 SUBDIRS += M3UPlaylistStorage
+
 SUBDIRS += Playlist
 SUBDIRS += PlaybackController
 SUBDIRS += PhononBackend
@@ -16,6 +21,7 @@ SUBDIRS += PlaylistWidget
 SUBDIRS += SongtreeWidget
 SUBDIRS += PlayerWidgetII
 #SUBDIRS += SafriMobileGuiQML
+SUBDIRS += ProgressSidebarWidget
 SUBDIRS += LastFMInfoResolver
 SUBDIRS += AlbumCovers
 SUBDIRS += AudioCollection

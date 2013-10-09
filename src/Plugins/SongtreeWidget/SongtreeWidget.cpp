@@ -71,6 +71,7 @@ SongtreeWidget::~SongtreeWidget()
 void SongtreeWidget::loadAudioCollections()
 {
    QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
+   qDebug()<<mediaColl.size()<<"SSSIZZZE";
    for (int i = 0; i < mediaColl.size(); i++)
    {
        IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(mediaColl.at(i));

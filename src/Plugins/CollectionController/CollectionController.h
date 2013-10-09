@@ -19,6 +19,8 @@ namespace Controller
     class COLLECTIONCONTROLLERSHARED_EXPORT  CollectionController : public Core::ICollectionController
     {
 
+        Q_OBJECT
+
     public:
 
         CollectionController();
@@ -42,6 +44,7 @@ namespace Controller
         QMap<QString, IMediaCollection*>                m_collectionHashMap;
         QMap<QString, IMediaCollectionStorageFactory*>  m_storageFactories;
         QMap<QString, QString>                          m_fileExtensionMap;
+        QList<IMediaCollection*>                        m_allCollections;
 
     };
 }

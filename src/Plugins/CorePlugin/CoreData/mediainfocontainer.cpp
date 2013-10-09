@@ -1,4 +1,4 @@
-#include "MediaInfoContainer.h"
+#include "mediainfocontainer.h"
 
 using namespace Core;
 
@@ -21,10 +21,12 @@ void MediaInfoContainer::setMediaInfo(MediaInfoType type, QVariant info)
 
 QVariant MediaInfoContainer::getMediaInfo(MediaInfoType type)
 {
-    QVariant value =  infoMap.value(type);
-    if(!value.isValid())
+    if(type == InfoTitle && !infoMap.value(type).isValid())
+        return getMediaInfo(InfoURL);
+    if(infoMap.value(type).isValid())
+        return infoMap.value(type);
+    else
         return tr("Unbekannt");
-    return value;
 }
 
 QUrl MediaInfoContainer::getURL()

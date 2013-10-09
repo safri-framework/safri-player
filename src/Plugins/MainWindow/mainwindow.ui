@@ -28,16 +28,7 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -46,16 +37,7 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -82,16 +64,7 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -116,16 +89,7 @@
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
             </layout>
@@ -150,16 +114,7 @@
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
             </layout>
@@ -176,7 +131,7 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>42</width>
-              <height>28</height>
+              <height>2</height>
              </size>
             </property>
            </spacer>
@@ -190,16 +145,7 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -268,16 +214,7 @@
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                </layout>
@@ -295,16 +232,7 @@
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                </layout>
@@ -328,16 +256,7 @@
        <property name="sizeConstraint">
         <enum>QLayout::SetMaximumSize</enum>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
       </layout>
@@ -351,7 +270,7 @@
      <x>0</x>
      <y>0</y>
      <width>1204</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPlugin">
