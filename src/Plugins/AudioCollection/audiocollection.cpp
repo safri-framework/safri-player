@@ -223,7 +223,7 @@ QList<Core::Media *> AudioCollection::getMedia()
     return list;
 }
 
-Media *AudioCollection::getMediaByURL(QUrl &url)
+Media *AudioCollection::getMediaByURL(const QUrl &url)
 {
     //qDebug() << "AudioCollection::getMediaByURL " << url.toLocalFile();
     return m_PathToSongMap->value( url.toLocalFile() );

@@ -3,6 +3,8 @@
 #include "CoreData/Song.h"
 #include "CoreData/Item.h"
 #include "CoreData/Media.h"
+#include "Interfaces/ICore.h"
+#include "Interfaces/ICollectionController.h"
 #include <QDebug>
 #include "Songtree/SongTreeItem.h"
 #include <QSize>
@@ -46,20 +48,58 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     Q_UNUSED(column)
     QList<Core::Media*> mediaList;
 
+    /*
     qDebug()<<"DROP";
-    if (data->hasFormat("Item"))
+
+    QStringList formats = data->formats();
+
+    for (int i = 0; i < formats.size(); i++)
     {
-        QByteArray encodedData = data->data("Item");
-        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+        qDebug() << formats.at(i) << " - " << data->data(formats.at(i));
+    }
+    */
+
+    if ( ( data->hasFormat("Item") ) || data->hasUrls() )
+    {
+        // inserting either "real dragged Items" or constructed Items by their URLs
+
         QList<Core::Item*> draggedItems;
 
-        while (!stream.atEnd()) {
+        if ( data->hasFormat("Item") )
+        {
+            // dragging "real" Items
 
-            qint64 pointer = 0;
-            stream  >> pointer ;
-            Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
-            draggedItems.append(static_cast<Core::Item*>(treeItem));
-            qDebug()<<pointer;
+            QByteArray encodedData = data->data("Item");
+            QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+            while (!stream.atEnd()) {
+
+                qint64 pointer = 0;
+                stream  >> pointer ;
+                Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
+                draggedItems.append(static_cast<Core::Item*>(treeItem));
+                qDebug()<<pointer;
+            }
+        }
+        else
+        {
+            // construction Items by their URLs
+            QList<QUrl> urls = data->urls();
+            Core::Media* media;
+
+            Core::ICollectionController* collectionController = Core::ICore::collectionController();
+
+            for (int i = 0; i < urls.size(); i++)
+            {
+                qDebug() << "DROP url: " << urls.at(i);
+                media = collectionController->findMediaByURL( urls.at(i) );
+
+                if (media)
+                {
+                    draggedItems.append(media);
+                }
+            }
+
         }
 
         qDebug()<<draggedItems.size();
@@ -74,21 +114,24 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
         if(parent.isValid())
         {
-            for(int i=0; i<draggedItems.size(); i++)
-            {
+            // TODO: examin: insertMediaAt inserts the complete list at once
+            // so, no loop should be needed here!?
+            //for(int i=0; i<draggedItems.size(); i++)
+            //{
                 playlist->insertMediaAt(row, draggedItems);
-            }
+            //}
         }
         else
         {
-            for(int i=0; i<draggedItems.size(); i++)
-            {
+            // TODO: examin: insertMediaAt inserts the complete list at once
+            // so, no loop should be needed here!?
+            //for(int i=0; i<draggedItems.size(); i++)
+            //{
                 playlist->insertMediaAt(playlist->getSize(), draggedItems);
-            }
+            //}
         }
     }
-
-    if(data->hasFormat("MediaFromPlaylist"))
+    else if( data->hasFormat("MediaFromPlaylist") )
     {
         QByteArray encodedData = data->data("MediaFromPlaylist");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
@@ -194,6 +237,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
 
     }
+
     return true;
 }
 

@@ -1,5 +1,6 @@
 #include "Album.h"
 #include "Song.h"
+#include <QDebug>
 
 using namespace Core;
 
@@ -15,6 +16,11 @@ QList<Media *> Album::getMedia()
     return media;
 }
 
+bool Album::albumYearLessThan(Album *album1, Album *album2)
+{
+    return album1->getSongs().at(0)->getYear() < album2->getSongs().at(0)->getYear();
+}
+
 Album::Album(int sID, QString sName, QObject *parent) :
     DataItem(sID, sName, DataItem::ALBUM,  parent)
 {
@@ -25,6 +31,11 @@ Album::Album(Album* album, QObject *parent) :
     DataItem(-1 /* TODO */,album->getName(),album->getType(), parent)
 {
 
+}
+
+void Album::sortByYear(QList<Album *> &albums)
+{
+    qSort(albums.begin(), albums.end(), Album::albumYearLessThan);
 }
 
 Album::Album(int sID, QString sName, bool temporary, QObject *parent):

@@ -117,7 +117,7 @@ bool Controller::CollectionController::saveCollections()
     return result;
 }
 
-Media *Controller::CollectionController::findMediaByURL(QUrl& filename)
+Media *Controller::CollectionController::findMediaByURL(const QUrl &filename)
 {
     QList<IMediaCollection*> allCollections = m_collectionMap.values();
     Media* foundMedia = 0;

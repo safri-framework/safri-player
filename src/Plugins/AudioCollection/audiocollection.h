@@ -27,7 +27,7 @@ class AudioCollection : public Core::IAudioCollection
         DataItem* getByID(DataItem::DATA_ITEM_TYPE type, int id);
         QList<DataItem*> getDataItems(DataItem::DATA_ITEM_TYPE type);
         QList<Media*> getMedia();
-        Media* getMediaByURL(QUrl &url);
+        Media* getMediaByURL(const QUrl &url);
         QString getName();
         QUrl getAssetFolderPath(QString subfolder);
         bool isAvailable();

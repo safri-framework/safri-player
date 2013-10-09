@@ -29,6 +29,8 @@ namespace Core
             explicit Album(int sID, QString sName, bool temporary, QObject *parent = 0);
             explicit Album(Album* album, QObject *parent = 0);
 
+            static void sortByYear(QList<Album *> &albums);
+
         public slots:
 
             void addArtist(Artist* sArtist);
@@ -64,6 +66,8 @@ namespace Core
             QString albumCoverFile;
 
             QList<Song*> songs;
+
+            static bool albumYearLessThan(Album* album1, Album* album2);
     };
 }
 

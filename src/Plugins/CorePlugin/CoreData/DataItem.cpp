@@ -1,6 +1,7 @@
 #include "DataItem.h"
 
 #include <QDebug>
+#include "Interfaces/IMediaCollection.h"
 
 using namespace Core;
 
@@ -126,7 +127,7 @@ DataItem::DATA_ITEM_TYPE DataItem::stringToType(QString type)
     return DataItem::NONE;
 }
 
-IMediaCollection *DataItem::getMediaCollection()
+IMediaCollection *DataItem::getMediaCollection() const
 {
     return mediaCollection;
 }

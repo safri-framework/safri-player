@@ -51,9 +51,8 @@ namespace Core
             static QString typeToString(DATA_ITEM_TYPE type);
             static DataItem::DATA_ITEM_TYPE stringToType(QString type);
 
-            IMediaCollection* getMediaCollection();
+            IMediaCollection* getMediaCollection() const;
             void setMediaCollection(IMediaCollection* sMediaCollection);
-
 
         protected:
 
