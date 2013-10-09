@@ -5,19 +5,32 @@
 
 using namespace Core;
 
+namespace Core
+{
+    class Notification;
+}
+class QPushButton;
+
 class SongTreeSidebarWrapper : public ISideBarPlugin
 {
-public:
-    SongTreeSidebarWrapper();
-    QWidget* getSideBarWidget();
-    QString getName();
-    QWidget* getMenuBarWidget();
-    bool isVisible();
-private:
+    Q_OBJECT
+    public:
+        SongTreeSidebarWrapper();
+        QWidget* getSideBarWidget();
+        QString getName();
+        QWidget* getMenuBarWidget();
+        bool isVisible();
 
-    QWidget* sideBarWidget;
-    QWidget* menuBarWidget;
-    QString name;
+    private slots:
+
+        void notificationReceived(Notification* notification);
+
+
+    private:
+
+        QWidget* sideBarWidget;
+        QPushButton* menuBarWidget;
+        QString name;
 };
 
 #endif // SONGTREESIDEBARWRAPPER_H

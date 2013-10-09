@@ -11,9 +11,10 @@ namespace Core
         Q_OBJECT
         public:
 
-            explicit ProgressNotification(QString text, int min, int max, QObject *parent = 0);
+            explicit ProgressNotification(QString text, int min, int max, bool cancelable, QObject *parent = 0);
 
             int getProgress();
+            bool isCancelable();
 
         signals:
 
@@ -33,6 +34,7 @@ namespace Core
             int minimum;
             int maximum;
             int currentProgress;
+            bool cancelabel;
 
     };
 

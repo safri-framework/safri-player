@@ -5,6 +5,8 @@
 #include <QIcon>
 #include <QBitmap>
 #include <Interfaces/ISafriSkin.h>
+#include "CoreSupply/NotificationController.h"
+#include "Interfaces/ICore.h"
 
 SongTreeSidebarWrapper::SongTreeSidebarWrapper()
 {
@@ -31,6 +33,9 @@ SongTreeSidebarWrapper::SongTreeSidebarWrapper()
     sideBarWidget = new SongtreeWidget();
     sideBarWidget->setMinimumHeight(300);
     //sideBarWidget->show();
+
+
+    connect(Core::ICore::notificationController(), SIGNAL( newNotification(Notification*) ), this, SLOT( notificationReceived(Notification*) ) );
 }
 
 QWidget *SongTreeSidebarWrapper::getSideBarWidget()
@@ -52,4 +57,13 @@ bool SongTreeSidebarWrapper::isVisible()
 {
       QPushButton* btn =  qobject_cast<QPushButton*>(menuBarWidget);
       return btn->isChecked();
+}
+
+void SongTreeSidebarWrapper::notificationReceived(Notification *notification)
+{
+    qDebug() << "SongTreeSidebarWrapper::notificationReceived(...)";
+    if (notification->getType() == NotificationMediaInserterFinished)
+    {
+        menuBarWidget->click();
+    }
 }

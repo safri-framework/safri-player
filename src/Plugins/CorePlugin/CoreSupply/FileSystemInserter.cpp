@@ -5,6 +5,7 @@
 #include "../Interfaces/IMediaTagger.h"
 #include "../Interfaces/IMediaCollection.h"
 #include "../Interfaces/ICollectionController.h"
+#include "CoreSupply/NotificationController.h"
 #include "pluginmanager.h"
 #include <QList>
 #include <QDirIterator>
@@ -26,6 +27,8 @@ FileSystemInserter::~FileSystemInserter()
 void FileSystemInserter::start()
 {
     Q_EMIT mediaInsertionStarted(collection);
+
+    Core::ProgressNotification* progressNotification;
 
     QFileInfo fileInfo(mediaUrlToInsert.toString());
 
@@ -50,15 +53,23 @@ void FileSystemInserter::start()
         }
 
         numberOfFiles = files.size();
+
+        progressNotification = Core::ICore::notificationController()->createProgressNotification("File insertion", 0, numberOfFiles, true);
+
         connect(taggerForInsert, SIGNAL(mediaTagged(MediaInfoContainer)), this, SLOT(mediaTagged(MediaInfoContainer)));
 
         for (currentFile = 0; currentFile < numberOfFiles; currentFile++)
         {
             taggerForInsert->tagMedia(QUrl(files.at(currentFile)));
+
+            progressNotification->incrementProgress();
         }
 
         disconnect(taggerForInsert, SIGNAL(mediaTagged(MediaInfoContainer)), this, SLOT(mediaTagged(MediaInfoContainer)));
     }
+
+    progressNotification->finish(true);
+    Core::ICore::notificationController()->createNotification(NotificationMediaInserterFinished, "Einfügen beendet");
 
     collection->moveToThread(QApplication::instance()->thread());
     taggerForInsert->moveToThread(QApplication::instance()->thread());

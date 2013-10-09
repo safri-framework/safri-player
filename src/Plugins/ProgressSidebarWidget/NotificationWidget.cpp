@@ -27,7 +27,7 @@ void NotificationWidget::showNotification(Notification *notification)
         NotificationItem* item = new NotificationItem(progressNotification->getDescription());
         connect(item, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         notificatioMap.insert(progressNotification, item);
-        connect(progressNotification, SIGNAL(finished(bool)), this, SLOT(notificationFinished()));
+        connect(progressNotification, SIGNAL(finished(bool)), this, SLOT(notificationFinished(bool)));
         connect(progressNotification, SIGNAL(progressChanged(int, int)), this, SLOT(progressChanged(int,int)));
         this->layout()->addWidget(item);
     }

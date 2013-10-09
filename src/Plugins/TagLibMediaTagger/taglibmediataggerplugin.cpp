@@ -33,6 +33,9 @@ bool TagLibMediaTaggerPlugin::initialize(QStringList &arguments)
 
     // testing the plugin
     // *******************************************************
+
+#ifdef ANDROID
+
     Core::ICollectionController *cc = Core::ICore::collectionController();
     QList<Core::IMediaTagger*> taggers = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaTagger>();
 
@@ -48,7 +51,7 @@ bool TagLibMediaTaggerPlugin::initialize(QStringList &arguments)
     else
         qDebug()<<"No Media-Taggers found!";
     // *******************************************************
-
+#endif
 
     return true;
 }

@@ -25,12 +25,13 @@ private slots:
     void showNotification(Notification* notification);
     void progressChanged(int current, int max);
     void cancelClicked();
+    void notificationFinished(bool success);
 
 private:
     Ui::NotificationWidget *ui;
     NotificationController* notificationController;
     QMap<Notification*, NotificationItem*> notificatioMap;
-    void notificationFinished(bool success);
+
 
 };
 

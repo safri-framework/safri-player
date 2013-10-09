@@ -2,14 +2,19 @@
 
 using namespace Core;
 
-ProgressNotification::ProgressNotification(QString text, int min, int max, QObject *parent) :
-    Notification(NotificationProgress, text, parent), minimum(min), maximum(max), currentProgress(min)
+ProgressNotification::ProgressNotification(QString text, int min, int max, bool cancelable, QObject *parent) :
+    Notification(NotificationProgress, text, parent), minimum(min), maximum(max), currentProgress(min), cancelabel(cancelable)
 {
 }
 
 int ProgressNotification::getProgress()
 {
     return currentProgress;
+}
+
+bool ProgressNotification::isCancelable()
+{
+    return cancelabel;
 }
 
 void ProgressNotification::cancel()
