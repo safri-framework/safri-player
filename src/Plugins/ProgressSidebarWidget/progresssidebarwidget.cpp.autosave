@@ -1,0 +1,6 @@
+#include "ProgressSidebarWidget.h"
+
+
+ProgressSidebarWidget::ProgressSidebarWidget()
+{
+}
