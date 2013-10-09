@@ -25,7 +25,7 @@ void ProgressNotification::finish(bool success)
 void ProgressNotification::setProgress(int progress)
 {
     currentProgress = progress;
-    Q_EMIT progressChanged(currentProgress);
+    Q_EMIT progressChanged(currentProgress, maximum);
 }
 
 void ProgressNotification::incrementProgress(int increment)

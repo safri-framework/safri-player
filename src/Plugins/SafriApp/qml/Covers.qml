@@ -44,7 +44,7 @@ Rectangle {
                 source: folderModel.folder + fileName
                 scale: defaultSize / Math.max(sourceSize.width, sourceSize.height)
                 antialiasing: true
-                visible: rot.angle < 90 ? true : false;
+               // visible: rot.angle < 90 ? true : false;
                 transform:
                 Rotation
                 {
@@ -53,7 +53,7 @@ Rectangle {
                     origin.y:image.height/2;
                     axis.x:0; axis.y:1; axis.z:0
                     angle:0
-                    Behavior on angle { PropertyAnimation{duration: 500; easing.type: Easing.InOutQuad} }
+                    Behavior on angle { PropertyAnimation{duration: 1000; easing.type: Easing.InOutCubic} }
                 }
 
 

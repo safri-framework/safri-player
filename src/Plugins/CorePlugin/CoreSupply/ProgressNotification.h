@@ -19,7 +19,7 @@ namespace Core
 
             void finished(bool success);
             void cancelRequested();
-            void progressChanged(int progress);
+            void progressChanged(int progress, int max);
 
         public slots:
 
