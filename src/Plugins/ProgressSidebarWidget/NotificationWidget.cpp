@@ -27,13 +27,13 @@ void NotificationWidget::showNotification(Notification *notification)
         NotificationItem* item = new NotificationItem(progressNotification->getDescription());
         connect(item, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         notificatioMap.insert(progressNotification, item);
-        connect(notification, SIGNAL(destroyed()), this, SLOT(notificationDestroyed()));
-        connect(notification, SIGNAL(progressChanged(int, int)), this, SLOT(progressChanged(int,int)));
+        connect(progressNotification, SIGNAL(finished(bool)), this, SLOT(notificationFinished()));
+        connect(progressNotification, SIGNAL(progressChanged(int, int)), this, SLOT(progressChanged(int,int)));
         this->layout()->addWidget(item);
     }
 }
 
-void NotificationWidget::notificationDestroyed()
+void NotificationWidget::notificationFinished(bool success)
 {
     Notification* notification = qobject_cast<Notification*>(sender());
     if(notification)

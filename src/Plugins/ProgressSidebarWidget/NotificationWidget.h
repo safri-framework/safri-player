@@ -30,7 +30,7 @@ private:
     Ui::NotificationWidget *ui;
     NotificationController* notificationController;
     QMap<Notification*, NotificationItem*> notificatioMap;
-    void notificationDestroyed();
+    void notificationFinished(bool success);
 
 };
 
