@@ -53,6 +53,7 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
 
     if(modelIndexList.size() == 0)
         return;
+
     QMimeData *mimeData = 0;
 
     mimeData = this->model()->mimeData(modelIndexList);

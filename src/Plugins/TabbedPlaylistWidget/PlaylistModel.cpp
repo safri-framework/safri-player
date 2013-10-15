@@ -97,13 +97,14 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                 if (media)
                 {
                     draggedItems.append(media);
+                    qDebug()<<draggedItems.size();
+                    qDebug() << draggedItems.at(0)->getMedia().size();
                 }
             }
 
         }
 
-        qDebug()<<draggedItems.size();
-        qDebug() << draggedItems.at(0)->getMedia().size();
+
 /*
         for ( int i = 0; i < draggedItems.size(); i++)
         {
