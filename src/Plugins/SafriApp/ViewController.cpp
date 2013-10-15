@@ -273,9 +273,11 @@ void ViewController::disconnect()
 
 void ViewController::setupCoverModel()
 {
+    /*
     QAbstractItemModel* coverModel = appController->getCoverModel();
     if(coverModel)
         context->setContextProperty("coverModel", coverModel);
+        */
 }
 
 void ViewController::changeAppController(IAppController *newController)

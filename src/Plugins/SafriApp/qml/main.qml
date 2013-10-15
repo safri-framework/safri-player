@@ -42,7 +42,7 @@ Rectangle
         View1{id: view1; }
         View2{}
         View3{}
-        Covers{}
+        //Covers{}
     }
 
     DialogController

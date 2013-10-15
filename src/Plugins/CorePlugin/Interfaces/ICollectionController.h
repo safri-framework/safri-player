@@ -29,7 +29,7 @@ namespace Core
             void mediaCollectionRemoved(QUrl filename);
             void mediaCollectionAdded(IMediaCollection* collection);
             void mediaCollectionChanged(QUrl filename);
-            void newItem(DataItem* item);
+            void newItem(Core::DataItem* item);
 
     };
 }

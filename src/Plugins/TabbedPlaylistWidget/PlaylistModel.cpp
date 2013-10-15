@@ -320,6 +320,8 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
             stream <<  pointer << row;
         }
     }
+    if(encodedData.size() > 0)
+
     mimeData->setData("MediaFromPlaylist", encodedData);
     mimeData->setUrls(filenames);
     return mimeData;
@@ -341,7 +343,7 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
     {
         if(playlist->getSize() > 0)
         {
-            return defaultFlags | Qt::ItemIsDropEnabled;
+            return /*defaultFlags | */ Qt::ItemIsDropEnabled;
         }
         else
         {

@@ -4,7 +4,7 @@
 #include "SafriMobileGuiQML_global.h"
 #include <QObject>
 #include <QtQuick/QQuickItem>
-#include "icore.h"
+#include "Interfaces/ICore.h"
 #include "iplaybackcontroller.h"
 #include "Interfaces/IAudioCollection.h"
 #include "Songtree/songtree.h"
