@@ -60,7 +60,8 @@ void FileSystemInserter::start()
 
         for (currentFile = 0; currentFile < numberOfFiles; currentFile++)
         {
-            taggerForInsert->tagMedia(QUrl(files.at(currentFile)));
+            qDebug() << "taggerForInsert: " << files.at(currentFile);
+            taggerForInsert->tagMedia(QUrl::fromLocalFile(files.at(currentFile)));
 
             progressNotification->incrementProgress();
         }

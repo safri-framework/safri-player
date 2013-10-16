@@ -202,6 +202,7 @@ void SongtreeWidget::addNewCollection(IMediaCollection *collection)
     if(collection)
     {
         QList<Core::Song*> songs = audioCollection->getSongs();
+        connect(audioCollection, SIGNAL(itemAdded(Core::DataItem*)), tree, SLOT(addItem(Core::DataItem*)));
         for(int i = 0; i <  songs.size(); i++)
         {
             tree->addSong(songs.at(i));

@@ -26,7 +26,7 @@ TaglibMediaTagger::~TaglibMediaTagger()
 
 void TaglibMediaTagger::tagMedia(QUrl media)
 {
-        QByteArray filename = QFile::encodeName( media.toString() );
+        QByteArray filename = QFile::encodeName( media.toLocalFile() );
         QString album;
         QString artist ;
         QString title ;

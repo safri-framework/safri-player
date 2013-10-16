@@ -144,13 +144,14 @@ Media *Controller::CollectionController::findMediaByURL(const QUrl &filename)
     {
         IMediaCollection* mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio","not in Database");
         m_tempAudioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
-         objectAddedToObjectPool(m_tempAudioCollection);
+       objectAddedToObjectPool(m_tempAudioCollection);
         first = true;
     }
 
     MediaInfoContainer info(filename);
     info.setMediaInfo(InfoTitle, filename.toString());
     foundMedia = m_tempAudioCollection->addMedia(info);
+
     return foundMedia;
 }
 

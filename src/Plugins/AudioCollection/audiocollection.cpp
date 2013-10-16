@@ -435,7 +435,7 @@ Genre *AudioCollection::newGenre(QString name)
 
 Song *AudioCollection::newSong(QString name, int year, QUrl url)
 {
-    Song* song = new Song(newSongID(), name, year, url.toString(), this);
+    Song* song = new Song(newSongID(), name, year, url.toLocalFile(), this);
     insertSong(song);
     return song;
 }

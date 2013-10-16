@@ -5,11 +5,11 @@ CONFIG += ordered
 
 
 
-SUBDIRS += SafriMPC
+#SUBDIRS += SafriMPC
 
 SUBDIRS += CorePlugin
-#SUBDIRS += DarkBluePlayerWidget
-#SUBDIRS += M3UPlaylistStorage
+SUBDIRS += DarkBluePlayerWidget
+SUBDIRS += M3UPlaylistStorage
 
 SUBDIRS += Playlist
 SUBDIRS += PlaybackController
