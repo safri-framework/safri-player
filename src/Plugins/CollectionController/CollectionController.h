@@ -45,6 +45,7 @@ namespace Controller
         QMap<QString, IMediaCollectionStorageFactory*>  m_storageFactories;
         QMap<QString, QString>                          m_fileExtensionMap;
         QList<IMediaCollection*>                        m_allCollections;
+        Core::IMediaCollection*                         m_tempAudioCollection;
 
     };
 }

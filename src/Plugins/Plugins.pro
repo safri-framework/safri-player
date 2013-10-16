@@ -4,7 +4,8 @@ CONFIG += ordered
 
 
 
-#SUBDIRS += SafriMPC
+
+SUBDIRS += SafriMPC
 
 SUBDIRS += CorePlugin
 #SUBDIRS += DarkBluePlayerWidget

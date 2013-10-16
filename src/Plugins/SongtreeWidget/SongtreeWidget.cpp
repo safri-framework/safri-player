@@ -32,7 +32,7 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     collController = ICore::collectionController();
     Q_ASSERT(collController);
     //TODO: No such slot
-    //connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(newCollectionAvailable(QUrl)));
+    connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(addNewCollection(IMediaCollection*)));
 
     /*QPushButton* button = new QPushButton();
     button->setParent(ui->lineEdit);
@@ -48,8 +48,6 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),  this, SLOT(loadSongtreeModel(int)));
     buildHierarchy();
-
-    loadAudioCollections();
     loadSongtreeModel(0);
     //proxy->setSourceModel(model);
     searchProxy->setDynamicSortFilter(true);
@@ -68,20 +66,6 @@ SongtreeWidget::~SongtreeWidget()
 }
 
 
-void SongtreeWidget::loadAudioCollections()
-{
-   QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
-   qDebug()<<mediaColl.size()<<"SSSIZZZE";
-   for (int i = 0; i < mediaColl.size(); i++)
-   {
-       IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(mediaColl.at(i));
-       if(tempAudioColl)
-       {
-           audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
-       }
-   }
-}
-
 void SongtreeWidget::textEdited(QString string)
 {
     this->ui->treeView->expandAll();
@@ -94,13 +78,23 @@ void SongtreeWidget::textEdited(QString string)
 
 void SongtreeWidget::loadSongtreeModel(int hierarchy)
 {
+    QList<IAudioCollection*> audioCollList;
+    QList<IMediaCollection*> mediaColl = collController->getCollections("org.safri.collection.audio");
+    for (int i = 0; i < mediaColl.size(); i++)
+    {
+        IAudioCollection* tempAudioColl = qobject_cast<IAudioCollection*>(mediaColl.at(i));
+        if(tempAudioColl)
+        {
+            audioCollList.append(tempAudioColl);
+        }
+    }
 
     qDebug()<<hierarchy;
     if(songList.size() > 0)
     {
         songList.clear();
     }
-    QList<IAudioCollection*> audioCollList = audioCollMap.values();
+    // = audioCollMap.values();
     for(int i = 0 ; i < audioCollList.size(); i++)
     {
         songList.append(audioCollList.at(i)->getSongs());
@@ -199,6 +193,19 @@ void SongtreeWidget::newAudioCollectionAvailable(QUrl collURL)
     if (tempAudioColl)
     {
         audioCollMap.insert(tempAudioColl->getDatabaseLocation(), tempAudioColl);
+    }
+}
+
+void SongtreeWidget::addNewCollection(IMediaCollection *collection)
+{
+    IAudioCollection* audioCollection = qobject_cast<IAudioCollection*>(collection);
+    if(collection)
+    {
+        QList<Core::Song*> songs = audioCollection->getSongs();
+        for(int i = 0; i <  songs.size(); i++)
+        {
+            tree->addSong(songs.at(i));
+        }
     }
 }
 

@@ -28,7 +28,6 @@ private:
     SongTree* tree;
     QList<Song*> songList;
     QMap<QUrl, IAudioCollection*> audioCollMap;
-    void loadAudioCollections();
     QList<IAudioCollection*> audioCollList;
     void buildHierarchy();
     //QList<ITreeItemType*>*  treeHierarchy;
@@ -37,6 +36,7 @@ private:
 
 private slots:
     void newAudioCollectionAvailable(QUrl collURL);
+    void addNewCollection(IMediaCollection* collection);
     void removeCollection(QUrl collURL);
     void returnPressed();
     void on_treeView_doubleClicked(const QModelIndex &index);

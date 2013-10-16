@@ -8,9 +8,10 @@
 #include "Interfaces/IMediaCollection.h"
 #include <QStringList>
 #include <QDebug>
-
-
-Controller::CollectionController::CollectionController()
+#include "Interfaces/IMediaTagger.h"
+#include "Interfaces/IAudioCollection.h"
+Controller::CollectionController::CollectionController():
+    m_tempAudioCollection(0)
 {
 
     QObject::connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));
@@ -137,6 +138,19 @@ Media *Controller::CollectionController::findMediaByURL(const QUrl &filename)
         }
     }
 
+
+    bool first = false;
+    if(!m_tempAudioCollection)
+    {
+        IMediaCollection* mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio","not in Database");
+        m_tempAudioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
+         objectAddedToObjectPool(m_tempAudioCollection);
+        first = true;
+    }
+
+    MediaInfoContainer info(filename);
+    info.setMediaInfo(InfoTitle, filename.toString());
+    foundMedia = m_tempAudioCollection->addMedia(info);
     return foundMedia;
 }
 
@@ -169,6 +183,7 @@ void Controller::CollectionController::objectAddedToObjectPool(QObject *object)
         m_collectionHashMap.insert(mediaCollection->getHash(), mediaCollection);
         m_allCollections.append(mediaCollection);
         connect(mediaCollection, SIGNAL(itemAdded(Core::DataItem*)), this, SIGNAL(newItem(Core::DataItem*)));
+        Q_EMIT  mediaCollectionAdded(mediaCollection);
     }
-    Q_EMIT  mediaCollectionAdded(mediaCollection);
+
 }
