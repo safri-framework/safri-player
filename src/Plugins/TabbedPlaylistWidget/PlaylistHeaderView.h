@@ -2,7 +2,7 @@
 #define PLAYLISTHEADERVIEW_H
 
 #include <QHeaderView>
-#include <QList>
+#include <QBitArray>
 
 class PlaylistHeaderView : public QHeaderView
 {
@@ -12,18 +12,23 @@ class PlaylistHeaderView : public QHeaderView
         explicit PlaylistHeaderView(QWidget *parent = 0);
         ~PlaylistHeaderView();
 
-        virtual void setModel(QAbstractItemModel *model);
+        virtual void setModel(QAbstractItemModel* model);
+
+        void setSectionHideable(int logicalIndex, bool hideable);
+        bool isSectionHideable(int logicalIndex);
+
+    signals:
+
+        void sectionVisibilityChanged(int logicalIndex);
 
     private slots:
 
         void onContextMenuRequested(QPoint pos);
         void toggleSectionVisibility(int section);
-        void saveSectionVisibilitySettings();
-        void settingsChanged(QString setting);
 
     private:
 
-        void setSectionVisibilityFromSettings(QString selectedHeaders);
+        QBitArray sectionHideable;
 };
 
 #endif // PLAYLISTHEADERVIEW_H

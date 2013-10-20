@@ -11,6 +11,8 @@
 #include <QApplication>
 #include <QModelIndexList>
 
+class PlaylistHeaderView;
+
 class PlaylistView : public QTreeView
 {
     Q_OBJECT
@@ -25,9 +27,15 @@ class PlaylistView : public QTreeView
         void        setName(QString name);
 
     private:
+
+        void setSectionVisibilityFromSettings(QString selectedHeaders);
+        void saveSectionVisibilitySettings();
+
         QPoint startDragPosition;
         bool dragStarted;
         QString name;
+        PlaylistHeaderView* headerView;
+
 
     signals:
 
@@ -46,6 +54,8 @@ class PlaylistView : public QTreeView
     private slots:
 
         void onCustomContextMenuRequested(const QPoint &pos);
+        void onSectionVisibilityChanged(int logicalIndex);
+        void onSettingsChanged(QString setting);
 
 };
 

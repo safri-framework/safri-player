@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QMenu>
 
+#include "Interfaces/ICore.h"
+#include "Settings/SettingsManager.h"
 #include "PlaylistHeaderView.h"
 
 PlaylistView::PlaylistView(QString name, QWidget *parent) :
@@ -28,7 +30,14 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
 
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
 
-    setHeader( new PlaylistHeaderView(this) );
+    Core::SettingsModule* settingsModule = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+    connect( settingsModule, SIGNAL( settingsChanged(QString) ), this, SLOT( onSettingsChanged(QString) ) );
+
+    headerView = new PlaylistHeaderView(this);
+
+    connect(headerView, SIGNAL( sectionVisibilityChanged(int) ), this, SLOT( onSectionVisibilityChanged(int) ) );
+
+    setHeader( headerView );
 
     this->header()->setStretchLastSection(false);
 }
@@ -75,14 +84,6 @@ void PlaylistView::mouseMoveEvent(QMouseEvent *event)
         dragStarted = true;
     }
 }
-
-/*
-void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
-{
-    QTreeView::dragEnterEvent(event);
-
-}
-*/
 
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event)
 {
@@ -136,6 +137,14 @@ void PlaylistView::setModel(QAbstractItemModel *model)
     this->header()->setSectionResizeMode(6, QHeaderView::Fixed);
     this->header()->resizeSection(0,25);
     this->header()->resizeSection(1,25);
+
+    headerView->setSectionHideable(0, false);
+    headerView->setSectionHideable(3, false);
+
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+    QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
+
+    setSectionVisibilityFromSettings(selectedHeaders);
 }
 
 QString PlaylistView::getName()
@@ -146,6 +155,47 @@ QString PlaylistView::getName()
 void PlaylistView::setName(QString name)
 {
     this->name = name;
+}
+
+void PlaylistView::setSectionVisibilityFromSettings(QString selectedHeaders)
+{
+    QStringList selectedHeadersList = selectedHeaders.split(";", QString::SkipEmptyParts);
+    bool hide;
+
+    if ( headerView->count() >= 0)
+    {
+        headerView->setSectionHidden(0, false);
+
+        for (int i = 1; i < headerView->count(); i++)
+        {
+            hide = ! selectedHeadersList.contains( QString::number(i) );
+
+            headerView->setSectionHidden(i, hide);
+        }
+    }
+}
+
+void PlaylistView::saveSectionVisibilitySettings()
+{
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+
+    QString selectedHeaders = "";
+
+    for (int i = 1; i < headerView->count(); i++)
+    {
+        if ( !headerView->isSectionHidden(i) )
+        {
+            if ( !selectedHeaders.isEmpty() )
+            {
+                selectedHeaders += ";";
+            }
+
+            selectedHeaders += QString::number(i);
+        }
+    }
+
+    settings->setSetting("selectedHeaders", selectedHeaders);
+    Core::ICore::settingsManager()->saveSettings();
 }
 
 void PlaylistView::keyPressEvent(QKeyEvent *event)
@@ -197,6 +247,21 @@ void PlaylistView::selectIndexes(QItemSelection &newSelection)
 void PlaylistView::onCustomContextMenuRequested(const QPoint &pos)
 {
     qDebug() << "KONTEXT MENU";
+}
 
+void PlaylistView::onSectionVisibilityChanged(int logicalIndex)
+{
+    Q_UNUSED(logicalIndex)
+    saveSectionVisibilitySettings();
+}
 
+void PlaylistView::onSettingsChanged(QString setting)
+{
+    if ( setting == "selectedHeaders" )
+    {
+        Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+        QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
+
+        setSectionVisibilityFromSettings(selectedHeaders);
+    }
 }
