@@ -17,9 +17,18 @@ class PlaylistHeaderView : public QHeaderView
         void setSectionHideable(int logicalIndex, bool hideable);
         bool isSectionHideable(int logicalIndex);
 
+        void setSectionResizable(int logicalIndex, bool resizable);
+        bool isSectionResizable(int logicalIndex);
+
     signals:
 
         void sectionVisibilityChanged(int logicalIndex);
+
+    public slots:
+
+        void setSectionManualResizing();
+        void setSectionAutoResizeAvailableSpace();
+        void setSectionAutoResizeToContent();
 
     private slots:
 
@@ -29,6 +38,7 @@ class PlaylistHeaderView : public QHeaderView
     private:
 
         QBitArray sectionHideable;
+        QBitArray sectionResizable;
 };
 
 #endif // PLAYLISTHEADERVIEW_H

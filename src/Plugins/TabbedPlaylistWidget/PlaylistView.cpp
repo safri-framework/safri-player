@@ -38,8 +38,6 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     connect(headerView, SIGNAL( sectionVisibilityChanged(int) ), this, SLOT( onSectionVisibilityChanged(int) ) );
 
     setHeader( headerView );
-
-    this->header()->setStretchLastSection(false);
 }
 
 
@@ -126,6 +124,10 @@ void PlaylistView::setModel(QAbstractItemModel *model)
 
     connect (model, SIGNAL(selectedIndexesMoved(QItemSelection&) ), this, SLOT(selectIndexes(QItemSelection&)));
 
+//#define OLD_HEADER
+
+#ifdef OLD_HEADER
+
     this->header()->setSectionResizeMode(0, QHeaderView::Fixed);
     this->header()->setSectionResizeMode(1, QHeaderView::Fixed);
     this->header()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -138,8 +140,30 @@ void PlaylistView::setModel(QAbstractItemModel *model)
     this->header()->resizeSection(0,25);
     this->header()->resizeSection(1,25);
 
-    headerView->setSectionHideable(0, false);
-    headerView->setSectionHideable(3, false);
+#else
+
+    headerView->setSectionResizable(0, false);
+    headerView->resizeSection(0,25);
+
+    headerView->setSectionResizable(1, false);
+    headerView->resizeSection(1,25);
+
+    headerView->setSectionResizable(6, false);
+    headerView->resizeSection(6,43);
+
+    headerView->setSectionResizable(7, false);
+    headerView->resizeSection(7,43);
+
+    headerView->setSectionAutoResizeAvailableSpace();
+
+#endif
+
+    headerView->setSectionHideable(0, false);   // column for play icon
+    headerView->setSectionHideable(2, false);   // title column
+
+    //headerView->setCascadingSectionResizes(true);
+
+    //this->header()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
     QString selectedHeaders = settings->getSetting("selectedHeaders").toString();

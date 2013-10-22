@@ -378,10 +378,10 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
                     return "#";
 
                 case 2:
-                    return "Interpret";
+                    return "Titel";
 
                 case 3:
-                    return "Titel";
+                    return "Interpret";
 
                 case 4:
                     return "Album";
@@ -509,11 +509,11 @@ QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
 
         case 2:
 
-            return song->getArtist()->getName();
+            return song->getName();
 
         case 3:
 
-            return song->getName();
+            return song->getArtist()->getName();
 
         case 4:
 
