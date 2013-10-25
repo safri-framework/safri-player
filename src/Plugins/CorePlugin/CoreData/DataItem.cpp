@@ -136,3 +136,11 @@ void DataItem::setMediaCollection(IMediaCollection *sMediaCollection)
 {
     mediaCollection = sMediaCollection;
 }
+
+bool Core::operator==(const Core::DataItem& lhs, const Core::DataItem& rhs)
+{
+    qDebug() << "free operator==(const Core::DataItem& lhs, const Core::DataItem& rhs)";
+    return  ( lhs.type == rhs.type ) &&
+            ( lhs.mediaCollection->getHash() == rhs.mediaCollection->getHash() ) &&
+            ( lhs.id == rhs.id);
+}

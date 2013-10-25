@@ -13,6 +13,8 @@ namespace Core
 
     class COREPLUGINSHARED_EXPORT DataItem : public Item
     {
+        friend bool operator==(const Core::DataItem& lhs, const Core::DataItem& rhs);
+
         Q_OBJECT
 
         public:
@@ -71,6 +73,8 @@ namespace Core
             IMediaCollection* mediaCollection;
 
     };
+
+    bool operator==(const Core::DataItem& lhs, const Core::DataItem& rhs);
 }
 
 #endif // DATAITEM_H
