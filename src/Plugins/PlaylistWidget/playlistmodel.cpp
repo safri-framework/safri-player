@@ -184,7 +184,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
         }
     }
     mimeData->setData("MediaFromPlaylist", encodedData);
-    mimeData->setUrls(filenames);
+    //mimeData->setUrls(filenames);
     return mimeData;
 }
 

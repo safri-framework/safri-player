@@ -1,4 +1,4 @@
-#include "PlaylistModel.h"
+ #include "PlaylistModel.h"
 #include "CoreData/Media.h"
 #include "CoreData/Song.h"
 #include "CoreData/Item.h"
@@ -58,6 +58,113 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         qDebug() << formats.at(i) << " - " << data->data(formats.at(i));
     }
     */
+
+    if( data->hasFormat("MediaFromPlaylist") )
+    {
+            QByteArray encodedData = data->data("MediaFromPlaylist");
+            QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+            QList<int> draggedRows;
+            int draggedFromRow = 0;
+
+            qint64 playlistPointer;
+            stream >> playlistPointer;
+
+            // check if the drop comes from the own playlist
+            if ( playlistPointer == (qint64) playlist.data() )
+            {
+                // OWN PLAYLIST
+
+                int minDraggedRow = playlist->getSize() + 1;
+
+                while (!stream.atEnd())
+                {
+                    qint64 pointer = 0;
+                    stream  >> pointer >> draggedFromRow ;
+
+                    draggedRows.append(draggedFromRow);
+
+                    if (draggedFromRow < minDraggedRow)
+                    {
+                        minDraggedRow = draggedFromRow;
+                    }
+
+                }
+
+                int droppedRow = getDropRow(parent, 0);
+
+                if ( minDraggedRow <  droppedRow)
+                {
+                    // dragging items down
+
+                    qSort(draggedRows.begin(), draggedRows.end());
+                    int count = 1;
+
+                    for(int i = draggedRows.size()-1;  i >= 0 ; i--)
+                    {
+                        playlist->moveMedia( draggedRows.at(i), getDropRow(parent, - count));
+                        count++;
+                    }
+
+                    //qDebug() << "SELECT TOP LEFT: " << droppedRow - draggedRows.size();
+                    //qDebug() << "SELECT BOTTOM RIGHT: " << droppedRow - 1;
+
+                    QItemSelection newSelection( index(droppedRow - draggedRows.size(), 0), index(droppedRow - 1, 0) );
+
+                    Q_EMIT selectedIndexesMoved(newSelection);
+
+                }
+                else
+                {
+                    // dragging items up
+
+                    qSort(draggedRows.begin(), draggedRows.end());
+
+                    for(int i = 0; i < draggedRows.size(); i++)
+                    {
+                         playlist->moveMedia(draggedRows.at(i), parent.row()+i);
+                    }
+
+                    QItemSelection newSelection( index(parent.row(), 0), index(parent.row() + draggedRows.size() - 1, 0) );
+
+                    Q_EMIT selectedIndexesMoved(newSelection);
+                }
+
+            }
+            else
+            {
+                QList<Core::Item*> draggedItems;
+
+                while (!stream.atEnd())
+                {
+                    qint64 pointer = 0;
+                    stream  >> pointer >> draggedFromRow ;
+                    Core::Item* mediaItem = (Core::Item*) pointer;
+                    draggedItems.append(mediaItem);
+                    draggedRows.append(draggedFromRow);
+                    //qDebug()<< pointer << draggedFromRow;
+                }
+
+                int insertPos;
+
+                if ( parent.isValid() )
+                {
+                    insertPos = parent.row();
+                }
+                else
+                {
+                    insertPos = playlist->getSize();
+                }
+
+                playlist->insertMediaAt(insertPos, draggedItems);
+
+                QItemSelection newSelection( index(insertPos, 0), index(insertPos + draggedItems.size() - 1, 0) );
+
+                Q_EMIT selectedIndexesMoved(newSelection);
+            }
+
+        return true;
+    }
 
     if ( ( data->hasFormat("Item") ) || data->hasUrls() )
     {
@@ -132,113 +239,6 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             //}
         }
     }
-    else if( data->hasFormat("MediaFromPlaylist") )
-    {
-        QByteArray encodedData = data->data("MediaFromPlaylist");
-        QDataStream stream(&encodedData, QIODevice::ReadOnly);
-
-        QList<int> draggedRows;
-        int draggedFromRow = 0;
-
-        qint64 playlistPointer;
-        stream >> playlistPointer;
-
-        // check if the drop comes from the own playlist
-        if ( playlistPointer == (qint64) playlist.data() )
-        {
-            // OWN PLAYLIST
-
-            int minDraggedRow = playlist->getSize() + 1;
-
-            while (!stream.atEnd())
-            {
-                qint64 pointer = 0;
-                stream  >> pointer >> draggedFromRow ;
-
-                draggedRows.append(draggedFromRow);
-
-                if (draggedFromRow < minDraggedRow)
-                {
-                    minDraggedRow = draggedFromRow;
-                }
-
-            }
-
-            int droppedRow = getDropRow(parent, 0);
-
-            if ( minDraggedRow <  droppedRow)
-            {
-                // dragging items down
-
-                qSort(draggedRows.begin(), draggedRows.end());
-                int count = 1;
-
-                for(int i = draggedRows.size()-1;  i >= 0 ; i--)
-                {
-                    playlist->moveMedia( draggedRows.at(i), getDropRow(parent, - count));
-                    count++;
-                }
-
-                //qDebug() << "SELECT TOP LEFT: " << droppedRow - draggedRows.size();
-                //qDebug() << "SELECT BOTTOM RIGHT: " << droppedRow - 1;
-
-                QItemSelection newSelection( index(droppedRow - draggedRows.size(), 0), index(droppedRow - 1, 0) );
-
-                Q_EMIT selectedIndexesMoved(newSelection);
-
-            }
-            else
-            {
-                // dragging items up
-
-                qSort(draggedRows.begin(), draggedRows.end());
-
-                for(int i = 0; i < draggedRows.size(); i++)
-                {
-                     playlist->moveMedia(draggedRows.at(i), parent.row()+i);
-                }
-
-                QItemSelection newSelection( index(parent.row(), 0), index(parent.row() + draggedRows.size() - 1, 0) );
-
-                Q_EMIT selectedIndexesMoved(newSelection);
-            }
-
-        }
-        else
-        {
-            QList<Core::Item*> draggedItems;
-
-            while (!stream.atEnd())
-            {
-                qint64 pointer = 0;
-                stream  >> pointer >> draggedFromRow ;
-                Core::Item* mediaItem = (Core::Item*) pointer;
-                draggedItems.append(mediaItem);
-                draggedRows.append(draggedFromRow);
-                //qDebug()<< pointer << draggedFromRow;
-            }
-
-            int insertPos;
-
-            if ( parent.isValid() )
-            {
-                insertPos = parent.row();
-            }
-            else
-            {
-                insertPos = playlist->getSize();
-            }
-
-            playlist->insertMediaAt(insertPos, draggedItems);
-
-            QItemSelection newSelection( index(insertPos, 0), index(insertPos + draggedItems.size() - 1, 0) );
-
-            Q_EMIT selectedIndexesMoved(newSelection);
-        }
-
-
-    }
-
     return true;
 }
 
