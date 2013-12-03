@@ -20,13 +20,15 @@ QLabel[type="nextSong"]
 
 QSlider
 {
-
      min-height:6px;
      max-height:6px;
 }
 
 QPushButton
 {
+    min-width:20;
+    max-width:20;
+    border-image:none;
     border: none;
     background-color: rgba(0, 0, 0, 0%);
 }

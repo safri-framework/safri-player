@@ -209,7 +209,7 @@ Controller::AssetController *ICore::assetController()
 void ICore::showSettingsDialog()
 {
     SettingsManagerDialog dialog(ICore::settingsManager());
-
+    dialog.setStyleSheet(skin()->getStyleSheet());
     if ( dialog.exec() == QDialog::Accepted )
     {
         dialog.saveSettings();
