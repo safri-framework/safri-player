@@ -111,7 +111,7 @@ QVariant AlbumCoversAssetService::getAsset(DataItem *item, QString service)
         {
             if(noCoverCover)
                 return noCoverCover->pixmap(43,43);
-            cover = QImage(":/icons/ressources/default.png");
+            cover = QImage(":/border_images/Ressources/no_cover.png").scaled(43, 43, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         }
         return cover;
     }
