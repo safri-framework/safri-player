@@ -6,6 +6,7 @@
 
 TARGET = GUIController
 TEMPLATE = lib
+QT += widgets
 
 PROVIDER = safri
 include(../../SafriPlugin.pri)

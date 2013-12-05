@@ -49,6 +49,18 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     QList<Core::Media*> mediaList;
 
     /*
+    switch (action)
+    {
+        case Qt::MoveAction:
+            qDebug() << "MoveAction";
+            break;
+        case Qt::CopyAction:
+            qDebug() << "CopyAction";
+            break;
+    }
+    */
+
+    /*
     qDebug()<<"DROP";
 
     QStringList formats = data->formats();
@@ -71,7 +83,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             stream >> playlistPointer;
 
             // check if the drop comes from the own playlist
-            if ( playlistPointer == (qint64) playlist.data() )
+            if ( ( playlistPointer == (qint64) playlist.data() ) && action == Qt::MoveAction )
             {
                 // OWN PLAYLIST
 
@@ -314,7 +326,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
         {
             mediaAtIndex = playlist->getMediaAt(index.row());
             int row = index.row();
-            filenames.append( mediaAtIndex->getURL().toLocalFile());
+            filenames.append( mediaAtIndex->getURL() );
             qDebug() << "add to mime: " << mediaAtIndex->getName();
             qint64 pointer = (qint64) mediaAtIndex;
 

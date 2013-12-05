@@ -34,6 +34,7 @@ SUBDIRS += Safri3Skin
 SUBDIRS += DarkBlueSkin
 SUBDIRS += TabbedPlaylistWidget
 #SUBDIRS += CurrentMediaContextSidebar
+#SUBDIRS += OnScreenDisplay
 
 #SUBDIRS += HackingWidget
 #SUBDIRS += TouchEventFilterPlugin

@@ -4,6 +4,7 @@
 #include "Interfaces/IPlaylistWidgetFactory.h"
 #include "Interfaces/IPlaylistWidget.h"
 #include <QDebug>
+#include <QApplication>
 
 GUIController::GUIController(QObject *parent) :
     IGUIController(parent), currentPlayerWidget(0), currentPlayerWidgetFactory(0), currentPlaylistWidget(0)
@@ -49,6 +50,16 @@ QList<Core::ISideBarPlugin*> GUIController::getSideBarPlugins()
     return QList<Core::ISideBarPlugin*>();
 }
 
+bool GUIController::hasFocus()
+{
+    if ( QApplication::focusWidget() == 0 )
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void GUIController::objectAddedToObjectPool(QObject *object)
 {
     Core::IPlayerWidgetFactory *playerWidgetFactory = qobject_cast<Core::IPlayerWidgetFactory*>(object);
@@ -56,6 +67,7 @@ void GUIController::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "GUIController::IPlayerWidgetFactory class added";
         switchPlayerWidgetFactory(playerWidgetFactory);
+        return;
     }
 
     Core::IPlaylistWidgetFactory *playlistWidgetFactory = qobject_cast<Core::IPlaylistWidgetFactory*>(object);
@@ -63,6 +75,7 @@ void GUIController::objectAddedToObjectPool(QObject *object)
     {
         qDebug() << "GUIController::IPlaylistWidgetFactory class added";
         switchPlaylistWidgetFactory(playlistWidgetFactory);
+        return;
     }
 }
 

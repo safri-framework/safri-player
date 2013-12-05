@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QMenu>
+#include <QClipboard>
 
 #include "Interfaces/ICore.h"
 #include "Settings/SettingsManager.h"
@@ -28,6 +29,9 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL( customContextMenuRequested(QPoint) ), this, SLOT( onCustomContextMenuRequested(QPoint) ) );
+
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(focusChanged(QWidget*,QWidget*)));
 
     Core::SettingsModule* settingsModule = Core::ICore::settingsManager()->getModule("org.safri.playlist");
@@ -38,6 +42,7 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     connect(headerView, SIGNAL( sectionVisibilityChanged(int) ), this, SLOT( onSectionVisibilityChanged(int) ) );
 
     setHeader( headerView );
+    headerView->setSectionsMovable(true);
 }
 
 
@@ -169,6 +174,8 @@ void PlaylistView::setModel(QAbstractItemModel *model)
     QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
 
     setSectionVisibilityFromSettings(selectedHeaders);
+
+    //restoreHeaderState();
 }
 
 QString PlaylistView::getName()
@@ -222,29 +229,50 @@ void PlaylistView::saveSectionVisibilitySettings()
     Core::ICore::settingsManager()->saveSettings();
 }
 
-void PlaylistView::keyPressEvent(QKeyEvent *event)
+void PlaylistView::setSectionOrderFromSettings(QString sectionOrder)
 {
-    if (event->key() == Qt::Key_Delete)
+}
+
+void PlaylistView::deleteSelectedSongs()
+{
+    QModelIndexList indexes = selectionModel()->selectedRows(0);
+
+    QList<int> intList;
+    for (int i = 0; i < indexes.size(); i++)
     {
-        QModelIndexList indexes = selectionModel()->selectedRows(0);
+        intList.append(indexes.at(i).row());
+    }
 
-        QList<int> intList;
-        for (int i = 0; i < indexes.size(); i++)
-        {
-            intList.append(indexes.at(i).row());
-        }
+    qSort(intList.begin(), intList.end());
 
-        qSort(intList.begin(), intList.end());
+    PlaylistModel* playlistModel = qobject_cast<PlaylistModel*>( this->model() );
 
-        PlaylistModel* playlistModel = qobject_cast<PlaylistModel*>( this->model() );
+    QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
 
-        QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
+    for(int i = intList.size()-1;  i >= 0 ; i--)
+    {
+        playlist->deleteMedia(intList.at(i));
+    }
+}
 
-        for(int i = intList.size()-1;  i >= 0 ; i--)
-        {
-            playlist->deleteMedia(intList.at(i));
-        }
+void PlaylistView::keyPressEvent(QKeyEvent *event)
+{ 
+    QTreeView::keyPressEvent(event);
 
+    QModelIndexList indexes = selectionModel()->selectedRows(0);
+
+    switch ( event->key() )
+    {
+        case Qt::Key_Delete:
+
+            if (indexes.size() > 0)
+            {
+                deleteSelectedSongs();
+            }
+            break;
+
+        default:
+            break;
     }
 }
 
@@ -270,17 +298,130 @@ void PlaylistView::selectIndexes(QItemSelection &newSelection)
 
 void PlaylistView::onCustomContextMenuRequested(const QPoint &pos)
 {
-    qDebug() << "KONTEXT MENU";
+    QMenu* contextMenu = new QMenu("Kontext menü", this);
+
+    QAction* deleteAction = new QAction("Löschen", contextMenu);
+    QAction* cutAction = new QAction("Ausschneiden", contextMenu);
+    QAction* copyAction = new QAction("Kopieren", contextMenu);
+    QAction* pasteAction = new QAction("Einfügen", contextMenu);
+
+    connect(deleteAction, SIGNAL( triggered() ), this, SLOT( deleteSelectedSongs() ) );
+    connect(copyAction, SIGNAL( triggered() ), this, SLOT( copySelectedSongsToClipboard() ) );
+    connect(pasteAction, SIGNAL( triggered() ), this, SLOT( pasteSongsFromClipboard() ) );
+    connect(cutAction, SIGNAL( triggered() ), this, SLOT( cutSelectedSongsToClipboard() ) );
+
+    QModelIndexList indexes = selectionModel()->selectedRows(0);
+    if (indexes.size() < 1)
+    {
+        deleteAction->setEnabled(false);
+        cutAction->setEnabled(false);
+        copyAction->setEnabled(false);
+    }
+
+    const QMimeData* mimeData = QApplication::clipboard()->mimeData();
+
+    if ( !mimeData->hasUrls() )
+    {
+        pasteAction->setEnabled(false);
+    }
+
+    contextMenu->addAction(cutAction);
+    contextMenu->addAction(copyAction);
+    contextMenu->addAction(pasteAction);
+    contextMenu->addSeparator();
+    contextMenu->addAction(deleteAction);
+
+    contextMenu->exec( viewport()->mapToGlobal(pos) );
 }
+
+void PlaylistView::copySelectedSongsToClipboard()
+{
+    QModelIndexList indexes = selectionModel()->selectedRows(0);
+
+    if (indexes.size() > 0)
+    {
+        QMimeData *mimeData = 0;
+        mimeData = this->model()->mimeData(indexes);
+
+        // only copy MIME type text/uri-list
+        QMimeData *uriList = new QMimeData();
+        uriList->setUrls( mimeData->urls() );
+
+        delete mimeData;
+
+        QApplication::clipboard()->setMimeData(uriList);
+    }
+}
+
+void PlaylistView::cutSelectedSongsToClipboard()
+{
+    copySelectedSongsToClipboard();
+    deleteSelectedSongs();
+}
+
+void PlaylistView::pasteSongsFromClipboard()
+{
+    const QMimeData* mimeData = QApplication::clipboard()->mimeData();
+
+    if ( !mimeData->hasUrls() )
+    {
+        return;
+    }
+
+    QModelIndexList indexes = selectionModel()->selectedRows(0);
+    QModelIndex parentIndex = QModelIndex();
+
+    if (indexes.size() == 1)
+    {
+        // paste below the selected index
+        parentIndex = indexes.at(0);
+    }
+
+     model()->dropMimeData(mimeData, Qt::CopyAction, 0, 0, parentIndex );
+}
+
 
 void PlaylistView::onSectionVisibilityChanged(int logicalIndex)
 {
     Q_UNUSED(logicalIndex)
     saveSectionVisibilitySettings();
+
+    //saveHeaderState();
 }
+
+void PlaylistView::saveHeaderState()
+{
+    qDebug() << "SAVE HEADER STATE";
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+
+    if ( settings != 0)
+    {
+        QByteArray headerState = header()->saveState();
+
+        settings->setSetting("headerState", headerState.toBase64() );
+        Core::ICore::settingsManager()->saveSettings();
+    }
+}
+
+void PlaylistView::restoreHeaderState()
+{
+    qDebug() << "RESTORE HEADER STATE";
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+
+    if ( settings != 0)
+    {
+        QByteArray headerState = settings->getSetting("headerState").toByteArray();
+        this->header()->restoreState( QByteArray::fromBase64(headerState) );
+    }
+}
+
 
 void PlaylistView::onSettingsChanged(QString setting)
 {
+    if ( setting == "headerState" )
+    {
+        restoreHeaderState();
+    }
     if ( setting == "selectedHeaders" )
     {
         Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
@@ -288,4 +429,9 @@ void PlaylistView::onSettingsChanged(QString setting)
 
         setSectionVisibilityFromSettings(selectedHeaders);
     }
+}
+
+void PlaylistView::focusOutEvent(QFocusEvent *event)
+{
+    //this->selectionModel()->clearSelection();
 }

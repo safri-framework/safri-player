@@ -24,6 +24,8 @@ namespace Core
             virtual IPlaylistWidget* getPlaylistWidget() = 0;
             virtual QList<ISideBarPlugin*> getSideBarPlugins() = 0;
 
+            virtual bool hasFocus() = 0;
+
 
         signals:
 

@@ -31,6 +31,13 @@ class PlaylistView : public QTreeView
         void setSectionVisibilityFromSettings(QString selectedHeaders);
         void saveSectionVisibilitySettings();
 
+        void setSectionOrderFromSettings(QString sectionOrder);
+
+
+
+        void saveHeaderState();
+        void restoreHeaderState();
+
         QPoint startDragPosition;
         bool dragStarted;
         QString name;
@@ -51,11 +58,19 @@ class PlaylistView : public QTreeView
         void focusChanged(QWidget* oldFocus, QWidget* newFocus);
         void selectIndexes(QItemSelection &newSelection);
 
+        void deleteSelectedSongs();
+        void copySelectedSongsToClipboard();
+        void cutSelectedSongsToClipboard();
+        void pasteSongsFromClipboard();
+
     private slots:
 
         void onCustomContextMenuRequested(const QPoint &pos);
         void onSectionVisibilityChanged(int logicalIndex);
         void onSettingsChanged(QString setting);
+
+protected:
+        void focusOutEvent(QFocusEvent *event);
 
 };
 
