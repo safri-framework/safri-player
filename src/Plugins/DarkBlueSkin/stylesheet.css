@@ -83,7 +83,6 @@ QTabWidget
 {
     background: none;
     border: 0px;
-
 }
 
 QTabBar QToolBar
@@ -202,6 +201,31 @@ QMenuBar::item
     color: #FFFFFF;
 }
 
+QMenuBar::item:selected
+{
+  background-color: rgba(255,255,255,8%);
+}
+
+QMenuBar::item:pressed
+{
+  background-color: rgba(255,255,255,17%);
+}
+
+QMenu
+{
+   background-image: url(:border_images/Ressources/background.png);
+   color:#FFFFFF;
+}
+
+QMenu::item
+{
+   background-color: rgb(93,102,109);
+}
+
+QMenu::item:pressed, QMenu::item:selected
+{
+ background-color: rgb(107,118,125);
+}
 
 QWidget[ident="playlist"]
 {

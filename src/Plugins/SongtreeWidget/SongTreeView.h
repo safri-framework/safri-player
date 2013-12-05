@@ -12,6 +12,9 @@ public:
 signals:
     
 public slots:
+
+protected:
+    void focusOutEvent(QFocusEvent *event);
     
 };
 

@@ -27,8 +27,8 @@ private:
 signals:
 
     void deleteSongs(QList<int> list);
-public slots:
 
+public slots:
     void mousePressEvent (QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);

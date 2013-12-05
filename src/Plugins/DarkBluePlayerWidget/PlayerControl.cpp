@@ -61,8 +61,8 @@ void PlayerControl::paintEvent(QPaintEvent *event)
     }
 
 
-    QTransform transform;
-     painter.drawImage(44,5, progress->transformed(transform));
+    painter.rotate(8);
+     painter.drawImage(44,5,*progress);
 }
 
 void PlayerControl::mousePressEvent(QMouseEvent *event)

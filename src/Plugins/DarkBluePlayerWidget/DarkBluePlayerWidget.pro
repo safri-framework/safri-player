@@ -21,14 +21,16 @@ SOURCES += DarkBluePlayerWidgetPlugin.cpp \
     DarkBluePlayerWidget.cpp \
     PlayerWidgetFactory.cpp \
     PlayerControl.cpp \
-    JumpSlider.cpp
+    JumpSlider.cpp \
+    ProgressCircle.cpp
 
 HEADERS += DarkBluePlayerWidgetPlugin.h\
         darkblueplayerwidget_global.h \
     DarkBluePlayerWidget.h \
     PlayerWidgetFactory.h \
     PlayerControl.h \
-    JumpSlider.h
+    JumpSlider.h \
+    ProgressCircle.h
 
 OTHER_FILES += \
     darkblueplayerwidget.json \

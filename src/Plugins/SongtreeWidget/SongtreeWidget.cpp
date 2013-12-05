@@ -34,15 +34,6 @@ SongtreeWidget::SongtreeWidget(QWidget *parent) :
     //TODO: No such slot
     connect(collController, SIGNAL(mediaCollectionAdded(IMediaCollection*)), this, SLOT(addNewCollection(IMediaCollection*)));
 
-    /*QPushButton* button = new QPushButton();
-    button->setParent(ui->lineEdit);
-    button->setMinimumSize(20, 20);
-    button->setMaximumSize(20,20);
-    button->setText("");
-    button->show();
-    button->move(50, 5);
-    */
-
     searchProxy = new SongtreeProxyModel();
 
     connect(collController, SIGNAL(mediaCollectionRemoved(QUrl)), this, SLOT(removeCollection(QUrl)));

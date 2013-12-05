@@ -50,6 +50,8 @@ class PlaylistWidget : public Core::IPlaylistWidget
         QAction* deselectAction;
         static bool indexLessThan(QModelIndex a, QModelIndex b);
 
+    protected:
+        void focusOutEvent(QFocusEvent *event);
 };
 
 #endif // PLAYLISTWIDGET_H

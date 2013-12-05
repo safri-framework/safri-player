@@ -42,6 +42,7 @@ private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
     void loadSongtreeModel(int hierarchy);
     void textEdited(QString string);
+
 };
 
 #endif // SONGTREEWIDGET_H
