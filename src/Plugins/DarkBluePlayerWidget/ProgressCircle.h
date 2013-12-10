@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QImage>
+#include <QTimer>
 
 class ProgressCircle : public QWidget
 {
@@ -12,9 +13,14 @@ public:
 
 private:
     QImage* progress;
+    QTimer* timer;
+    int rotation;
+    int speed;
 signals:
     
 public slots:
+    void rotate();
+    void setRotaion(int speed);
 
 protected:
     void paintEvent(QPaintEvent *);

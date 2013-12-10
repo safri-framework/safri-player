@@ -268,7 +268,7 @@ bool DarkBluePlayerWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
     {
-            playerControl->move(window->width()/2-74, window->height()-88);
+            playerControl->move(window->width()/2-74, window->height()-93);
     }
     return false;
 }

@@ -3,12 +3,16 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QTimer>
+#include "ProgressCircle.h"
 PlayerControl::PlayerControl(QWidget *parent) :
     QWidget(parent),
     nextCurrentlyPressed(false),
     previousCurrentlyPressed(false),
     playPauseCurrentlyPressed(false),
-    isPlaying(false)
+    isPlaying(false),
+    showSpinner(false),
+    showProgress(false),
+    count(0)
 {
     next            = new QImage(":/control/Ressources/control/next_normal.png");
     nextPressed     = new QImage(":/control/Ressources/control/next_pressed.png");
@@ -26,7 +30,7 @@ PlayerControl::PlayerControl(QWidget *parent) :
     this->setMaximumWidth(149);
 
     QTimer* rotationTimer = new QTimer(this);
-    rotationTimer->setInterval(50);
+    rotationTimer->setInterval(5);
     connect(rotationTimer, SIGNAL(timeout()), this, SLOT(timeout()));
     rotationTimer->start();
 }
@@ -45,6 +49,8 @@ void PlayerControl::paintEvent(QPaintEvent *event)
     else
         painter.drawImage(0,27, *previousPressed);
 
+
+
     if(isPlaying)
     {
         if(!playPauseCurrentlyPressed)
@@ -60,9 +66,31 @@ void PlayerControl::paintEvent(QPaintEvent *event)
             painter.drawImage(43,3, *pausePressed);
     }
 
+    painter.setRenderHint(QPainter::Antialiasing);
+    QPen pen(QBrush(QColor(132,178,214,100)),4);
+    pen.setCapStyle(Qt::RoundCap);
+    painter.setPen(pen);
 
-    painter.rotate(8);
-     painter.drawImage(44,5,*progress);
+    if(showProgress)
+        painter.drawArc(46,6,progress->width()-2, progress->height()-2, 90*16, -16*progressAngle);
+
+    if(showSpinner)
+    {
+        pen = QPen(QBrush(QColor(90,168,202,200)),4);
+        painter.setPen(pen);
+        painter.drawArc(46,6,progress->width()-2, progress->height()-2, -16*rotation, 32);
+        pen = QPen(QBrush(QColor(132,178,214,100)),4);
+        painter.setPen(pen);
+        painter.drawArc(46,6,progress->width()-2, progress->height()-2, -16*rotation2, 32);
+        painter.drawArc(46,6,progress->width()-2, progress->height()-2, -16*rotation3, 32);
+    }
+
+     /*
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+     painter.translate(45+progress->width()/2,5+progress->height()/2);
+     painter.rotate(rotation);
+     painter.drawImage(progress->width()/-2, progress->height()/-2, *progress);
+     */
 }
 
 void PlayerControl::mousePressEvent(QMouseEvent *event)
@@ -113,6 +141,52 @@ void PlayerControl::setPlaying(bool val)
 
 void PlayerControl::timeout()
 {
+    count = ++count %6;
     rotation = ++rotation%360;
+    if (count % 2 == 0)
+        rotation2 = ++rotation2%360;
+    if (count % 3 == 0)
+        rotation3 = ++rotation3%360;
+
     repaint();
+}
+
+int PlayerControl::getProgressAngle() const
+{
+    return progressAngle;
+}
+
+void PlayerControl::setProgressAngle(int value)
+{
+    progressAngle = value;
+}
+
+int PlayerControl::getProgress() const
+{
+    return (progressAngle/360) * 100 ;
+}
+
+void PlayerControl::setProgress(int value)
+{
+    progressAngle = value * 3.6;
+}
+
+bool PlayerControl::getShowSpinner() const
+{
+    return showSpinner;
+}
+
+void PlayerControl::setShowSpinner(bool value)
+{
+    showSpinner = value;
+}
+
+bool PlayerControl::getShowProgress() const
+{
+    return showProgress;
+}
+
+void PlayerControl::setShowProgress(bool value)
+{
+    showProgress = value;
 }

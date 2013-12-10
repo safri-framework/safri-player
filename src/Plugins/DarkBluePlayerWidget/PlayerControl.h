@@ -13,6 +13,18 @@ public:
     void mouseReleaseEvent(QMouseEvent *);
     void setPlaying(bool val);
 
+    bool getShowProgress() const;
+    void setShowProgress(bool value);
+
+    bool getShowSpinner() const;
+    void setShowSpinner(bool value);
+
+    int getProgress() const;
+    void setProgress(int value);
+
+    int getProgressAngle() const;
+    void setProgressAngle(int value);
+
 signals:
     void playClicked();
     void playToggled(bool val);
@@ -38,7 +50,13 @@ private:
     bool previousCurrentlyPressed;
     bool playPauseCurrentlyPressed;
     bool isPlaying;
+    bool showProgress;
+    bool showSpinner;
     int rotation;
+    int rotation2;
+    int rotation3;
+    int count;
+    int progressAngle;
 
 };
 

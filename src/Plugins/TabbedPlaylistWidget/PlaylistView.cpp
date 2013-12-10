@@ -23,9 +23,9 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
     this->setRootIsDecorated(false);
     this->setProperty("type", QVariant("treeView"));
     this->setProperty("ident", QVariant("playlist"));
-
+    this->setProperty("indicator", true);
     this->setAlternatingRowColors(true);
-
+ //   this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
 
@@ -43,6 +43,7 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
 
     setHeader( headerView );
     headerView->setSectionsMovable(true);
+    this->setAutoScroll(true);
 }
 
 
@@ -283,10 +284,24 @@ void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 
 void PlaylistView::focusChanged(QWidget *oldFocus, QWidget *newFocus)
 {
-    QPushButton* btn = qobject_cast<QPushButton*>(newFocus);
-    if(oldFocus == this && !btn)
+    if(!qobject_cast<PlaylistView*>(oldFocus) || !newFocus)
+        return;
+
+    if (qobject_cast<PlaylistView*>(newFocus))
+        return;
+
+    QWidget* parent = newFocus->parentWidget();
+    while(true)
     {
-        //this->selectionModel()->clear();
+        if(!parent)
+        {
+            this->selectionModel()->clearSelection();
+            return;
+        }
+
+        if(parent == this)
+            return;
+        parent = parent->parentWidget();
     }
 }
 
@@ -299,7 +314,6 @@ void PlaylistView::selectIndexes(QItemSelection &newSelection)
 void PlaylistView::onCustomContextMenuRequested(const QPoint &pos)
 {
     QMenu* contextMenu = new QMenu("Kontext menü", this);
-
     QAction* deleteAction = new QAction("Löschen", contextMenu);
     QAction* cutAction = new QAction("Ausschneiden", contextMenu);
     QAction* copyAction = new QAction("Kopieren", contextMenu);
@@ -434,4 +448,5 @@ void PlaylistView::onSettingsChanged(QString setting)
 void PlaylistView::focusOutEvent(QFocusEvent *event)
 {
     //this->selectionModel()->clearSelection();
+    //event->
 }

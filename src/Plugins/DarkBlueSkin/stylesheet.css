@@ -222,6 +222,14 @@ QMenu::item
    background-color: rgb(93,102,109);
 }
 
+QMenu::separator
+{
+   background-color: rgb(93,102,109);
+   height:0px;
+   border-bottom:1px solid rgba(255,255,255,10%);
+   border-top:1px solid rgba(0,0,0,30%);
+}
+
 QMenu::item:pressed, QMenu::item:selected
 {
  background-color: rgb(107,118,125);
@@ -237,13 +245,11 @@ QWidget[ident="playlist"]
 QWidget[type="frame"]
 {
     background-image: url(:border_images/Ressources/background.png);
-
 }
 
 
 QWidget[place="menu_left"][type="frame"]
 {
-
     background-image: url(:border_images/Ressources/sidebar_background.png);
     min-width: 100px;
     max-width: 100px;
@@ -401,14 +407,10 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
   }
 
 
-
-
-
-
 QWidget[ident="playlistFrame"]
 {
-border-left: 3px solid #2F3A42;
-margin-left: 3px;
+    border-left: 3px solid #2F3A42;
+    margin-left: 3px;
 }
 
 QWidget[type="playlistWidget"]
@@ -445,7 +447,8 @@ QComboBox::drop-down {
     margin-right: 10px;
 }
 
-QComboBox::down-arrow {
+QComboBox::down-arrow
+{
     image: url(:border_images/Ressources/dropdown_icon.png);
     background:none;
 }
