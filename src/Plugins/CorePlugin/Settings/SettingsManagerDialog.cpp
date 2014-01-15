@@ -27,7 +27,7 @@ SettingsManagerDialog::SettingsManagerDialog(SettingsManager *settingsManager, Q
 
         listWidgetItem->setIcon(settingsWidget->getIcon());
         listWidgetItem->setText(settingsWidget->getTitle());
-        listWidgetItem->setTextAlignment(Qt::AlignHCenter);
+        listWidgetItem->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
         listWidgetItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
         listWidgetItem->setBackgroundColor(bgColor);
@@ -45,7 +45,7 @@ SettingsManagerDialog::SettingsManagerDialog(SettingsManager *settingsManager, Q
     connect(ui->settingsModuleIconList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(changeSettingsModuleWidget(QListWidgetItem*,QListWidgetItem*)));
 
     this->setModal(true);
-    this->setStyleSheet("background-image:url();");
+    //this->setStyleSheet("background-image:url();");
 }
 
 SettingsManagerDialog::~SettingsManagerDialog()

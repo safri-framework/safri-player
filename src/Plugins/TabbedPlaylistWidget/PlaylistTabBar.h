@@ -12,6 +12,11 @@ class PlaylistTabBar : public QTabBar
 
         bool eventFilter(QObject *object, QEvent *event);
 
+    protected:
+
+        void dragEnterEvent(QDragEnterEvent *event);
+        void dragMoveEvent(QDragMoveEvent *event);
+
     signals:
 
         void tabDoubleClicked(int index);

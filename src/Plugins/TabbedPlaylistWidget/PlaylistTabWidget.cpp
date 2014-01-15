@@ -3,6 +3,7 @@
 #include <QVariant>
 #include <QDebug>
 #include <QLineEdit>
+#include <QList>
 #include "PlaylistView.h"
 
 #include "PlaylistTabBar.h"
@@ -56,7 +57,7 @@ void PlaylistTabWidget::editTabName(int index)
 
 QSharedPointer<Core::IPlaylist> PlaylistTabWidget::getPlaylist(int index)
 {
-    PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(index) );
+    PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(index)->findChildren<PlaylistView*>().at(0) );
 
     PlaylistModel* playlistModel = qobject_cast<PlaylistModel*>( playlistView->model() );
 
@@ -107,7 +108,7 @@ void PlaylistTabWidget::tabTextEditedFinished()
 
         tabBar()->setTabButton(tmpTabIndexEdit, QTabBar::LeftSide, 0);
         tabBar()->setTabText(tmpTabIndexEdit, senderEdit->text() );
-        PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(tmpTabIndexEdit) );
+        PlaylistView* playlistView = qobject_cast<PlaylistView*>( widget(tmpTabIndexEdit)->findChildren<PlaylistView*>().at(0) );
         playlistView->setName( senderEdit->text() );
 
 

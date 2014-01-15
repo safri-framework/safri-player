@@ -231,25 +231,21 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         }
 */
         int row = parent.row();
+        int insertPos = -1;
 
         if(parent.isValid())
         {
-            // TODO: examin: insertMediaAt inserts the complete list at once
-            // so, no loop should be needed here!?
-            //for(int i=0; i<draggedItems.size(); i++)
-            //{
-                playlist->insertMediaAt(row, draggedItems);
-            //}
+            insertPos = row;
         }
         else
         {
-            // TODO: examin: insertMediaAt inserts the complete list at once
-            // so, no loop should be needed here!?
-            //for(int i=0; i<draggedItems.size(); i++)
-            //{
-                playlist->insertMediaAt(playlist->getSize(), draggedItems);
-            //}
+            insertPos = playlist->getSize();
         }
+
+        playlist->insertMediaAt(insertPos, draggedItems);
+        QItemSelection newSelection( index(insertPos, 0), index(insertPos + draggedItems.size() - 1, 0) );
+
+        Q_EMIT selectedIndexesMoved(newSelection);
     }
     return true;
 }

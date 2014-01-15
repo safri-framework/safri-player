@@ -33,10 +33,23 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     connect(Core::ICore::playbackController(), SIGNAL(stateChanged(Core::playState)), this, SLOT(playbackControllerStateChanged(Core::playState)));
     connect(Core::ICore::instance(), SIGNAL( aboutToClose() ), this, SLOT( onClose() ) );
 
-    if ( !loadTabConfiguration() )
+
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.tabbedplaylist");
+    bool loadTabs = settings->getSetting("loadTabsOnStart").toBool();
+
+    if ( loadTabs )
+    {
+        if ( !loadTabConfiguration() )
+        {
+            addNewPlaylist("Safri", Core::ICore::createPlaylist());
+        }
+    }
+    else
     {
         addNewPlaylist("Safri", Core::ICore::createPlaylist());
     }
+
+
 
     //newTabWidget = addNewPlaylist("Safri", Core::ICore::createPlaylist());
     //addNewPlaylist("Wusel", newTabWidget);
@@ -105,7 +118,15 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
     model = new PlaylistModel(playlist, view);
     view->setModel(model);
     connect(view, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(playlistViewDoubleClicked(QModelIndex)));
-    int index = tabWidget->addTab(view, name);
+
+    QWidget* wrapperWidget = new QWidget();
+
+    wrapperWidget->setProperty("ident", "PlaylistFrame");
+
+    wrapperWidget->setLayout( new QHBoxLayout() );
+    wrapperWidget->layout()->addWidget(view);
+
+    int index = tabWidget->addTab(wrapperWidget, name);
 
     tabWidget->setCurrentIndex(index);
 
@@ -257,11 +278,14 @@ void TabbedPlaylistWidget::onTabWidgetCostumContextMenuRequested(const QPoint &p
 
 void TabbedPlaylistWidget::splitTabWidgetView(PlaylistTabWidget *tabWidget, int index)
 {
-    PlaylistView* playlistView = qobject_cast<PlaylistView*>( tabWidget->widget(index) );
+    PlaylistView* playlistView = qobject_cast<PlaylistView*>( tabWidget->widget(index)->findChildren<PlaylistView*>().at(0) );
     PlaylistTabWidget* newTab = addNewTabWidget();
 
+    QWidget* wrapper = tabWidget->widget(index);
     tabWidget->removeTab( index );
-    newTab->addTab( playlistView, playlistView->getName() );
+
+    // add playlistView with original wrapperWidget
+    newTab->addTab( wrapper, playlistView->getName() );
 
     if (currentPlayingListView == playlistView)
     {

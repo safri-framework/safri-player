@@ -8,7 +8,27 @@ TabbedPlaylistSettingsWidget::TabbedPlaylistSettingsWidget(Core::ISettingsModule
     ui(new Ui::TabbedPlaylistSettingsWidget), settingsModule(settingsModule)
 {
     ui->setupUi(this);
-    ui->checkSaveTabsOnClose->setChecked( settingsModule->getSetting("saveTabsOnClose").toBool() );
+
+    bool saveTabsOnClose = settingsModule->getSetting("saveTabsOnClose").toBool();
+    bool loadTabsOnStart = settingsModule->getSetting("loadTabsOnStart").toBool();
+
+    if (saveTabsOnClose)
+    {
+        ui->radioSaveTabsOnClose->setChecked(true);
+    }
+    else
+    {
+        if (loadTabsOnStart)
+        {
+            ui->radioLoadTabsOnStart->setChecked(true);
+        }
+        else
+        {
+            ui->radioEmptyPlaylistOnStart->setChecked(true);
+        }
+    }
+
+    //ui->checkSaveTabsOnClose->setChecked( settingsModule->getSetting("saveTabsOnClose").toBool() );
 }
 
 TabbedPlaylistSettingsWidget::~TabbedPlaylistSettingsWidget()
@@ -18,7 +38,7 @@ TabbedPlaylistSettingsWidget::~TabbedPlaylistSettingsWidget()
 
 QString TabbedPlaylistSettingsWidget::getTitle()
 {
-    return "Tabbed Playlist";
+    return "Playliste";
 }
 
 QIcon TabbedPlaylistSettingsWidget::getIcon()
@@ -28,7 +48,27 @@ QIcon TabbedPlaylistSettingsWidget::getIcon()
 
 void TabbedPlaylistSettingsWidget::transferSettings()
 {
-    settingsModule->setSetting("saveTabsOnClose", ui->checkSaveTabsOnClose->isChecked() );
+    //settingsModule->setSetting("saveTabsOnClose", ui->checkSaveTabsOnClose->isChecked() );
+
+    if ( ui->radioSaveTabsOnClose->isChecked() )
+    {
+        settingsModule->setSetting("saveTabsOnClose", true );
+        settingsModule->setSetting("loadTabsOnStart", true );
+    }
+    else
+    {
+        settingsModule->setSetting("saveTabsOnClose", false );
+
+        if ( ui->radioLoadTabsOnStart->isChecked() )
+        {
+            settingsModule->setSetting("loadTabsOnStart", true );
+        }
+        else
+        {
+            settingsModule->setSetting("loadTabsOnStart", false );
+        }
+    }
+
 }
 
 bool TabbedPlaylistSettingsWidget::isModified()

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>459</width>
     <height>300</height>
    </rect>
   </property>
@@ -15,10 +15,36 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="checkSaveTabsOnClose">
-     <property name="text">
-      <string>Tabs beim Beenden speichern</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Tabs</string>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="radioSaveTabsOnClose">
+        <property name="text">
+         <string>Tabs und Playlisten beim Beenden automatisch speichern</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioLoadTabsOnStart">
+        <property name="text">
+         <string>Beim Start gespeicherte Tabs und Playlisten laden</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioEmptyPlaylistOnStart">
+        <property name="text">
+         <string>Beim Start leere Playliste anzeigen</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>

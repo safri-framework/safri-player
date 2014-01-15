@@ -31,8 +31,11 @@ class PlaylistView : public QTreeView
         void setSectionVisibilityFromSettings(QString selectedHeaders);
         void saveSectionVisibilitySettings();
 
+        void saveSectionOrderSettings();
         void setSectionOrderFromSettings(QString sectionOrder);
 
+        // DEBUGGING
+        QString sectionNameFromLogicalIndex(int logicalIndex);
 
 
         void saveHeaderState();
@@ -40,6 +43,7 @@ class PlaylistView : public QTreeView
 
         QPoint startDragPosition;
         bool dragStarted;
+        bool restoringSectionOrder;
         QString name;
         PlaylistHeaderView* headerView;
 
@@ -67,6 +71,7 @@ class PlaylistView : public QTreeView
 
         void onCustomContextMenuRequested(const QPoint &pos);
         void onSectionVisibilityChanged(int logicalIndex);
+        void onSectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex);
         void onSettingsChanged(QString setting);
 
 protected:

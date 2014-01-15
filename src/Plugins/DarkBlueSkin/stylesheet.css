@@ -20,6 +20,11 @@ QListWidget
     show-decoration-selected:1;
 }
 
+QListWidget::item
+{
+
+}
+
 QListView::item, QTableView::item
 {
     min-height:35px;

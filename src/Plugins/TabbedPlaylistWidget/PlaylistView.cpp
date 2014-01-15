@@ -13,7 +13,7 @@
 #include "PlaylistHeaderView.h"
 
 PlaylistView::PlaylistView(QString name, QWidget *parent) :
-    QTreeView(parent), name(name)
+    QTreeView(parent), name(name), restoringSectionOrder(false)
 {
     this->setHeaderHidden(false);
     this->setAcceptDrops(true);
@@ -39,7 +39,8 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
 
     headerView = new PlaylistHeaderView(this);
 
-    connect(headerView, SIGNAL( sectionVisibilityChanged(int) ), this, SLOT( onSectionVisibilityChanged(int) ) );
+    connect(headerView, SIGNAL( sectionVisibilityChanged(int) ),    this, SLOT( onSectionVisibilityChanged(int) ) );
+    connect(headerView, SIGNAL( sectionMoved(int,int,int) ),        this, SLOT( onSectionMoved(int,int,int) ) );
 
     setHeader( headerView );
     headerView->setSectionsMovable(true);
@@ -172,9 +173,15 @@ void PlaylistView::setModel(QAbstractItemModel *model)
     //this->header()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
-    QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
 
-    setSectionVisibilityFromSettings(selectedHeaders);
+    if (settings)
+    {
+        QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
+        QString sectionOrder = settings->getSetting("sectionOrder").toString();
+
+        setSectionVisibilityFromSettings(selectedHeaders);
+        setSectionOrderFromSettings(sectionOrder);
+    }
 
     //restoreHeaderState();
 }
@@ -230,8 +237,83 @@ void PlaylistView::saveSectionVisibilitySettings()
     Core::ICore::settingsManager()->saveSettings();
 }
 
+void PlaylistView::saveSectionOrderSettings()
+{
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+
+    QString sectionOrder = "";
+
+    for (int i = 1; i < headerView->count(); i++)
+    {
+        if ( !sectionOrder.isEmpty() )
+        {
+            sectionOrder += ";";
+        }
+
+        //qDebug() << "logicalIndex " << QString::number(i) << " (" << sectionNameFromLogicalIndex(i) << ")  is at visualIndex " << QString::number(header()->visualIndex(i));
+        sectionOrder += QString::number( header()->logicalIndex(i) );
+    }
+
+    //qDebug() << "SAVING SECTION ORDER: " << sectionOrder;
+
+    settings->setSetting("sectionOrder", sectionOrder);
+    Core::ICore::settingsManager()->saveSettings();
+}
+
 void PlaylistView::setSectionOrderFromSettings(QString sectionOrder)
 {
+    //qDebug() << "START RESTORE SECTION ORDER";
+    restoringSectionOrder = true;
+    QStringList sectionOrderList = sectionOrder.split(";", QString::SkipEmptyParts);
+    int visIndex, section;
+
+    if ( headerView->count() >= 0)
+    {
+        headerView->setSectionHidden(0, false);
+
+        for (int i = 0; i < sectionOrderList.size(); i++)
+        {
+            section = sectionOrderList.at(i).toInt();
+            visIndex = header()->visualIndex(section);
+
+            //qDebug() << "Move section " <<  QString::number(section) << "(" << sectionNameFromLogicalIndex(section)
+            //         << ") from pos " << QString::number(visIndex) << "to Pos: " << QString::number(i+1);
+
+            header()->moveSection(visIndex, i+1);
+        }
+    }
+    restoringSectionOrder = false;
+    //qDebug() << "END RESTORE SECTION ORDER";
+}
+
+QString PlaylistView::sectionNameFromLogicalIndex(int logicalIndex)
+{
+    switch (logicalIndex)
+    {
+        case 1:
+            return "#";
+
+        case 2:
+            return "Titel";
+
+        case 3:
+            return "Interpret";
+
+        case 4:
+            return "Album";
+
+        case 5:
+            return "Genre";
+
+        case 6:
+            return "Jahr";
+
+        case 7:
+            return "Länge";
+
+        default:
+            return "";
+    }
 }
 
 void PlaylistView::deleteSelectedSongs()
@@ -275,6 +357,19 @@ void PlaylistView::keyPressEvent(QKeyEvent *event)
         default:
             break;
     }
+
+    if ( event->matches(QKeySequence::Cut) )
+    {
+        cutSelectedSongsToClipboard();
+    }
+    else if ( event->matches(QKeySequence::Copy) )
+    {
+        copySelectedSongsToClipboard();
+    }
+    else if ( event->matches(QKeySequence::Paste) )
+    {
+        pasteSongsFromClipboard();
+    }
 }
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
@@ -314,15 +409,23 @@ void PlaylistView::selectIndexes(QItemSelection &newSelection)
 void PlaylistView::onCustomContextMenuRequested(const QPoint &pos)
 {
     QMenu* contextMenu = new QMenu("Kontext menü", this);
-    QAction* deleteAction = new QAction("Löschen", contextMenu);
-    QAction* cutAction = new QAction("Ausschneiden", contextMenu);
-    QAction* copyAction = new QAction("Kopieren", contextMenu);
-    QAction* pasteAction = new QAction("Einfügen", contextMenu);
+    QAction* deleteAction = new QAction("Löschen",      contextMenu);
+    QAction* cutAction =    new QAction("Ausschneiden", contextMenu);
+    QAction* copyAction =   new QAction("Kopieren",     contextMenu);
+    QAction* pasteAction =  new QAction("Einfügen",     contextMenu);
 
-    connect(deleteAction, SIGNAL( triggered() ), this, SLOT( deleteSelectedSongs() ) );
-    connect(copyAction, SIGNAL( triggered() ), this, SLOT( copySelectedSongsToClipboard() ) );
-    connect(pasteAction, SIGNAL( triggered() ), this, SLOT( pasteSongsFromClipboard() ) );
-    connect(cutAction, SIGNAL( triggered() ), this, SLOT( cutSelectedSongsToClipboard() ) );
+    connect(deleteAction,   SIGNAL( triggered() ), this, SLOT( deleteSelectedSongs() ) );
+    connect(copyAction,     SIGNAL( triggered() ), this, SLOT( copySelectedSongsToClipboard() ) );
+    connect(pasteAction,    SIGNAL( triggered() ), this, SLOT( pasteSongsFromClipboard() ) );
+    connect(cutAction,      SIGNAL( triggered() ), this, SLOT( cutSelectedSongsToClipboard() ) );
+
+    // if the mouse is not over an valid index on context menu request
+    if ( ! indexAt(pos).isValid() )
+    {
+        // we deselect all indexes, because we want to paste songs
+        // at the end of the list if we haven't clicked on a certain (valid) index
+        selectionModel()->clear();
+    }
 
     QModelIndexList indexes = selectionModel()->selectedRows(0);
     if (indexes.size() < 1)
@@ -385,13 +488,38 @@ void PlaylistView::pasteSongsFromClipboard()
     QModelIndexList indexes = selectionModel()->selectedRows(0);
     QModelIndex parentIndex = QModelIndex();
 
-    if (indexes.size() == 1)
+    // if some index is selected
+    if (indexes.size() > 0)
     {
-        // paste below the selected index
-        parentIndex = indexes.at(0);
+        // paste above the current index
+        parentIndex = selectionModel()->currentIndex();
     }
+    // if no index is selected we paste at the end
 
-     model()->dropMimeData(mimeData, Qt::CopyAction, 0, 0, parentIndex );
+    model()->dropMimeData(mimeData, Qt::CopyAction, 0, 0, parentIndex );
+
+    /*
+    int urlCount = mimeData->urls().size();
+    int modelRowCount = model()->rowCount();
+
+    if ( !parentIndex.isValid() )
+    {
+        QModelIndex top = model()->index(modelRowCount - urlCount, 0);
+        QModelIndex bottom = model()->index(modelRowCount - 1, 0);
+        QItemSelection selection = QItemSelection(top, bottom);
+        this->selectIndexes(selection);
+    }
+    else
+    {
+        int bottomRow = selectionModel()->currentIndex().row() - 2;
+        int topRow = bottomRow - urlCount + 1;
+
+        QModelIndex top = model()->index(topRow, 0);
+        QModelIndex bottom = model()->index(bottomRow, 0);
+        QItemSelection selection = QItemSelection(top, bottom);
+        this->selectIndexes(selection);
+    }
+    */
 }
 
 
@@ -403,9 +531,29 @@ void PlaylistView::onSectionVisibilityChanged(int logicalIndex)
     //saveHeaderState();
 }
 
+void PlaylistView::onSectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex)
+{
+    // we're only want to store manual triggerd section moves
+    if (restoringSectionOrder)
+    {
+        // cause we're curently restoring the section order
+        // from settings (which causes the QHeaderView triggering
+        // the sectionMoved signal) this is an unwanted recursion
+        // so just return here
+        return;
+    }
+
+    //qDebug() << "SECTION MOVED: logicalIndex = " << QString::number(logicalIndex)
+    //         << "(" << sectionNameFromLogicalIndex(logicalIndex) << ")  oldVisualIndex = "
+    //         << QString::number(oldVisualIndex) << "  newVisualIndex = "
+    //         << QString::number(newVisualIndex);
+
+    saveSectionOrderSettings();
+}
+
 void PlaylistView::saveHeaderState()
 {
-    qDebug() << "SAVE HEADER STATE";
+    //qDebug() << "SAVE HEADER STATE";
     Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
 
     if ( settings != 0)
@@ -419,7 +567,7 @@ void PlaylistView::saveHeaderState()
 
 void PlaylistView::restoreHeaderState()
 {
-    qDebug() << "RESTORE HEADER STATE";
+    //qDebug() << "RESTORE HEADER STATE";
     Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
 
     if ( settings != 0)
@@ -432,16 +580,23 @@ void PlaylistView::restoreHeaderState()
 
 void PlaylistView::onSettingsChanged(QString setting)
 {
+    Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
+
     if ( setting == "headerState" )
     {
         restoreHeaderState();
     }
     if ( setting == "selectedHeaders" )
     {
-        Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.playlist");
         QString selectedHeaders = settings->getSetting("selectedHeaders").toString();
 
         setSectionVisibilityFromSettings(selectedHeaders);
+    }
+    if ( setting == "sectionOrder" )
+    {
+        QString sectionOrder = settings->getSetting("sectionOrder").toString();
+
+        setSectionOrderFromSettings(sectionOrder);
     }
 }
 
