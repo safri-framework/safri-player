@@ -4,15 +4,16 @@
 #include "pluginspecviewer.h"
 
 #include <QDebug>
+#include <QProcess>
 
 using namespace PluginSystem;
 
-PluginViewer::PluginViewer(QList<PluginSystem::PluginSpec *> plugins, QWidget *parent) :
-    QDialog(parent), ui(new Ui::PluginViewer), plugins(plugins)
+PluginViewer::PluginViewer(QList<PluginSystem::PluginSpec *> plugins,QHash<QString, bool> config, QWidget *parent) :
+    QDialog(parent), ui(new Ui::PluginViewer), plugins(plugins),config(config)
 {
     ui->setupUi(this);
 
-    PluginviewerModel* model = new PluginviewerModel(plugins, this);
+    PluginviewerModel* model = new PluginviewerModel(plugins, config, this);
     ui->pluginTableView->setModel(model);
 }
 
@@ -34,4 +35,10 @@ void PluginSystem::PluginViewer::on_btnDetails_clicked()
 
     PluginSpecViewer *viewer = new PluginSpecViewer(pluginSpec, this);
     viewer->show();
+}
+
+void PluginSystem::PluginViewer::on_pushButton_clicked()
+{
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }

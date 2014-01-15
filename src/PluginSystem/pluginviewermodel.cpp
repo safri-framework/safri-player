@@ -1,9 +1,10 @@
 #include "pluginviewermodel.h"
-
+#include "pluginmanager.h"
+#include <QDebug>
 using namespace PluginSystem;
 
-PluginviewerModel::PluginviewerModel(QList<PluginSpec *> plugins, QObject *parent) :
-    QAbstractTableModel(parent), plugins(plugins)
+PluginviewerModel::PluginviewerModel(QList<PluginSpec *> plugins, QHash<QString, bool> config,QObject *parent) :
+    QAbstractTableModel(parent), plugins(plugins), config(config)
 {
 }
 
@@ -27,7 +28,7 @@ int PluginSystem::PluginviewerModel::columnCount(const QModelIndex &parent) cons
     }
     else
     {
-        return 3;
+        return 4;
     }
 }
 
@@ -52,6 +53,14 @@ QVariant PluginSystem::PluginviewerModel::data(const QModelIndex &index, int rol
                     return QVariant();
             }
         }
+        if(role == Qt::CheckStateRole)
+        {
+            if(index.column() == 3)
+            {
+                QString string = plugins.at(index.row())->getVendor()+"."+plugins.at(index.row())->getName();
+                return config.value(string, false) ? Qt::Checked : Qt::Unchecked;
+            }
+        }
     }
 
     return QVariant();
@@ -71,6 +80,8 @@ QVariant PluginviewerModel::headerData(int section, Qt::Orientation orientation,
 
             case 2:
                 return "Anbieter";
+            case 3:
+                return "Enabled";
 
             default:
                 return QVariant();
@@ -78,4 +89,37 @@ QVariant PluginviewerModel::headerData(int section, Qt::Orientation orientation,
     }
 
     return QVariant();
+}
+
+bool PluginviewerModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (!index.isValid())
+        return false;
+    if (role == Qt::CheckStateRole)
+    {
+        if ((Qt::CheckState)value.toInt() == Qt::Checked)
+        {
+            QString string = plugins.at(index.row())->getVendor()+"."+plugins.at(index.row())->getName();
+            PluginManager::instance()->setPluginEnabled(string, true);
+            config.remove(string);
+            config.insert(string, true);
+            return true;
+        }
+        else
+        {
+            QString string = plugins.at(index.row())->getVendor()+"."+plugins.at(index.row())->getName();
+            PluginManager::instance()->setPluginEnabled(string, false);
+            config.remove(string);
+            config.insert(string, false);
+            return true;
+        }
+    }
+    return false;
+}
+
+Qt::ItemFlags PluginviewerModel::flags(const QModelIndex &index) const
+{
+    if(index.column() == 3)
+        return Qt::ItemIsUserCheckable | QAbstractTableModel::flags(index);
+    return QAbstractTableModel::flags(index);
 }

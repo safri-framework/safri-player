@@ -68,6 +68,11 @@ namespace PluginSystem
 
             bool loadPlugins();
             void showPluginViewer();
+            QWidget* getPluginViewer();
+            bool isPluginEnabled(QString pluginID);
+
+            //will return false if enabling/disabling Plugin will fail
+            bool setPluginEnabled(QString pluginID, bool enabled);
 
         signals:
 
@@ -84,6 +89,7 @@ namespace PluginSystem
             QString corePluginName;
             QList<PluginSpec*> plugins;
             QMap<QString, PluginSpec*> pluginMap;
+            QHash<QString, bool> pluginConfig;
 
             QString selectedPluginsFile;
     };

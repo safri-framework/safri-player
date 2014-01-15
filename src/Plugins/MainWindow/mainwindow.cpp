@@ -74,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("Safri-Player");
     this->show();
     qDebug() << "KONSTRUKTOR MainWindow";
+
 }
 
 MainWindow::~MainWindow()
@@ -274,7 +275,9 @@ void MainWindow::showSidebar(bool visible)
 
 void MainWindow::on_actionPlugins_show_triggered()
 {
-    PluginSystem::PluginManager::instance()->showPluginViewer();
+    QWidget* viewer = PluginSystem::PluginManager::instance()->getPluginViewer();
+    viewer->setStyleSheet(this->styleSheet());
+    viewer->show();
 }
 
 void MainWindow::closeSidebar(int l)

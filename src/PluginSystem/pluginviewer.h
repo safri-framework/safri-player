@@ -19,7 +19,7 @@ namespace PluginSystem
         Q_OBJECT
 
         public:
-            explicit PluginViewer(QList<PluginSpec*> plugins, QWidget *parent = 0);
+            explicit PluginViewer(QList<PluginSpec*> plugins, QHash<QString, bool> config, QWidget *parent = 0);
             ~PluginViewer();
 
     private slots:
@@ -27,9 +27,12 @@ namespace PluginSystem
 
         void on_btnDetails_clicked();
 
+        void on_pushButton_clicked();
+
     private:
             Ui::PluginViewer *ui;
             QList<PluginSpec*> plugins;
+            QHash<QString, bool> config;
     };
 }
 

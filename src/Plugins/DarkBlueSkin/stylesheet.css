@@ -20,7 +20,7 @@ QListWidget
     show-decoration-selected:1;
 }
 
-QListView::item
+QListView::item, QTableView::item
 {
     min-height:35px;
     max-height:35px;
@@ -539,7 +539,7 @@ PlaylistView
 
 
 
-SongTreeView
+SongTreeView, QTableView
 {
     border:none; /*2px solid rgba(255,255,255,25);*/
     background-color: rgba(0, 0, 0, 15);

@@ -106,6 +106,7 @@ bool PluginManager::loadPlugins()
         qDebug() << "selectedPlugin: " << pluginToLoad;
         if (!pluginToLoad.startsWith('#'))
         {
+            pluginConfig.insert(pluginToLoad, true);
             pluginSpec = pluginMap.value(pluginToLoad);
             if ( !(pluginSpec && loadPlugin(pluginSpec) ) )
             {
@@ -120,6 +121,8 @@ bool PluginManager::loadPlugins()
                 disablePluginViewer = true;
             }
         }
+        else
+            pluginConfig.insert(pluginToLoad.remove("#"), false);
 
         pluginToLoad = in.readLine();
     }
@@ -136,9 +139,89 @@ bool PluginManager::loadPlugins()
 
 void PluginManager::showPluginViewer()
 {
-    PluginViewer* viewer = new PluginViewer(this->pluginMap.values());
-    //viewer->setVisible(true);
-    viewer->show();
+    getPluginViewer()->show();
+}
+
+QWidget *PluginManager::getPluginViewer()
+{
+    return new PluginViewer(this->pluginMap.values(), this->pluginConfig);
+}
+
+bool PluginManager::isPluginEnabled(QString pluginID)
+{
+    QFile selectedPlugins(selectedPluginsFile);
+    if (!selectedPlugins.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "could not open file";
+        return false;
+    }
+
+    QTextStream  in(&selectedPlugins);
+    QString currentLine;
+    currentLine = in.readLine();
+    while (!currentLine.isNull())
+    {
+        if(currentLine.contains(pluginID))
+        {
+            if(currentLine.startsWith("#"))
+                return false;
+            else
+                return true;
+        }
+        currentLine = in.readLine();
+    }
+}
+
+bool PluginManager::setPluginEnabled(QString pluginID, bool enabled)
+{
+    QFile selectedPlugins(selectedPluginsFile);
+    if (!selectedPlugins.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        qDebug() << "could not open file";
+        return false;
+    }
+
+    pluginID +='\n';
+    QTextStream  in(&selectedPlugins);
+    QString file;
+    file = in.readAll();
+    if(!file.contains(pluginID))
+    {
+        file.append(enabled ? pluginID : "#"+pluginID);
+    }
+    else
+    {
+        if(file.contains("#"+pluginID))
+        {
+            if(!enabled)
+            {
+                selectedPlugins.close();
+                return true;
+            }
+            else
+            {
+                file.replace("#"+pluginID, pluginID);
+            }
+        }
+        else
+        {
+            if(enabled)
+            {
+                selectedPlugins.close();
+                return true;
+            }
+            else
+            {
+                file.replace(pluginID,"#"+pluginID);
+            }
+        }
+    }
+
+    selectedPlugins.close();
+    selectedPlugins.open(QIODevice::ReadWrite | QIODevice::Text| QIODevice::Truncate);
+    selectedPlugins.write(file.toUtf8());
+    selectedPlugins.close();
+    return true;
 }
 
 bool PluginManager::loadPlugin(PluginSpec *pluginSpec)
