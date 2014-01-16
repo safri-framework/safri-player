@@ -331,7 +331,7 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionSettings_triggered()
 {
-    Core::ICore::showSettingsDialog();
+    Core::ICore::showSettingsDialog(this);
 }
 
 void MainWindow::objectAddedToObjectPool(QObject *object)

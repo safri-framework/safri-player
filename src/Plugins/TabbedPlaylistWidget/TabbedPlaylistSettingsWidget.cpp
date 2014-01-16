@@ -43,7 +43,7 @@ QString TabbedPlaylistSettingsWidget::getTitle()
 
 QIcon TabbedPlaylistSettingsWidget::getIcon()
 {
-    return QIcon();
+    return QIcon(":/icons/ressources/Song_16.png");
 }
 
 void TabbedPlaylistSettingsWidget::transferSettings()

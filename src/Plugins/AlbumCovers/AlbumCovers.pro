@@ -41,3 +41,6 @@ OTHER_FILES += \
 
 FORMS += \
     CoverSettingsWidget.ui
+
+RESOURCES += \
+    ressources.qrc

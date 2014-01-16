@@ -20,7 +20,7 @@ QString CollectionControllerSettingsDialog::getTitle()
 
 QIcon CollectionControllerSettingsDialog::getIcon()
 {
-    return QIcon(":/icons/ressources/collection_icon.png");
+    return QIcon(":/icons/ressources/Collection_16.png");
 }
 
 void CollectionControllerSettingsDialog::transferSettings()

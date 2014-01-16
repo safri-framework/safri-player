@@ -57,7 +57,7 @@ namespace Core
             static IMediaBackend*               getBackendForMimeType(QString mimeType);
             static IMediaCollection*            createMediaCollection(QString type, QString collectionName, QUrl url = QUrl());
             Controller::AssetController*        assetController();
-            static void                         showSettingsDialog();
+            static void                         showSettingsDialog(QWidget *parent = 0);
             static ISafriSkin*                  skin();
             static void                         close();
 

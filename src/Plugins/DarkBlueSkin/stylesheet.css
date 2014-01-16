@@ -25,6 +25,11 @@ QListWidget::item
 
 }
 
+QRadioButton::hover
+{
+    background-color: transparent;
+}
+
 QListView::item, QTableView::item
 {
     min-height:35px;

@@ -206,9 +206,9 @@ Controller::AssetController *ICore::assetController()
     return m_assetController;
 }
 
-void ICore::showSettingsDialog()
+void ICore::showSettingsDialog(QWidget* parent)
 {
-    SettingsManagerDialog dialog(ICore::settingsManager());
+    SettingsManagerDialog dialog(ICore::settingsManager(), parent);
     dialog.setStyleSheet(skin()->getStyleSheet());
     if ( dialog.exec() == QDialog::Accepted )
     {
