@@ -3,38 +3,35 @@ QWidget[type="frame"]
     background-color:#d3d3d3;
 }
 
+
 QWidget[type="centralWidget"]
 {
 
 }
 
-QMainWindow
-{
 
+QScrollBar:horizontal
+{
+  border: none;
+  background: white;
+  height: 11px;
+  margin: 0px;
 }
 
-  QScrollBar:horizontal {
-      border: none;
-      background: white;
-      height: 11px;
-      margin: 0px;
-  }
-
-  QScrollBar::handle:horizontal {
+QScrollBar::handle:horizontal
+{
     border-image: url(:border_images/SAFRI_UI/scrollbar_handle_horizontal.png) 0px 5px 0px 5px;
     border-width: 0px 5px 0px 5px;
     margin-bottom:1px;
-  }
+}
 
 
-  QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal  {
-
-      background: white;
-      height: 0px;
-      subcontrol-origin: margin;
-  }
-
-
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
+{
+  background: white;
+  height: 0px;
+  subcontrol-origin: margin;
+}
 
 
 QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
@@ -45,25 +42,21 @@ QPushButton[type="tiny"],QPushButton:focus[type="tiny"]
     max-width:26px;
     padding-left: 2px;
     border-image: url(:border_images/SAFRI_UI/tiny_button_normal1.png);
-
-
 }
+
+
 QPushButton:hover[type="tiny"]
 {
     border-image: url(:border_images/SAFRI_UI/tiny_button_hover_2.png);
-
-
 }
+
+
 QPushButton:pressed[type="tiny"],QPushButton:checked[type="tiny"]
 {
     border-image: url(:border_images/SAFRI_UI/tiny_button_pressed.png);
-
-
 }
-/*
 
 
-*/
 QComboBox
 {
     min-height: 21px;
@@ -101,9 +94,7 @@ QMenuBar
     stop: 0 #686868, stop: 0.5 #545454 stop: 0.51 #494949 stop: 1.0 #4b4b4b);
     padding-left: 77px;
     color: #DFDFDF;
-
 }
-
 
 
 QMenuBar::item
@@ -114,6 +105,7 @@ QMenuBar::item
 
 }
 
+
 QMenuBar::item:selected
 {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -123,92 +115,88 @@ QMenuBar::item:selected
     border-width:0 1px 0 1px 0;
     border-style:solid;
     border-color: black;
-
 }
 
 
+QScrollBar:vertical
+{
+    border: none;
+    background: white;
+    width: 11px;
+    margin: 20px 0px 0px 0px;
+}
 
 
-  QScrollBar:vertical {
-      border: none;
-      background: white;
-      width: 11px;
-      margin: 20px 0px 0px 0px;
-
-  }
-  QScrollBar::handle:vertical {
+QScrollBar::handle:vertical
+{
     border-image: url(:border_images/SAFRI_UI/scrollbar_handle.png) 5px 0px 5px 0px;
     border-width: 5px 0px 5px 0px;
     margin-right:1px;
     margin-bottom:1px;
-  }
-
-
-  QScrollBar::add-line:vertical {
-
-    border-bottom: none;
-      background: red;
-      height: 0px;
-      subcontrol-position: bottom;
-
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar::sub-line:vertical {
-      border-bottom: 1px solid #818181;
-      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-      stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
-      height: 19px;
-      subcontrol-position: top;
-      subcontrol-origin: margin;
-  }
-  /*
-  QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-      border: 2px solid grey;
-      width: 3px;
-      height: 3px;
-      background: white;
-  }
-*/
-  QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-      background: none;
-  }
-
-
-
-QHeaderView
-{
-    min-height:20;
-    max-height:20;
 }
+
+
+QScrollBar::add-line:vertical
+{
+    border-bottom: none;
+    background: red;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+
+QScrollBar::sub-line:vertical
+{
+    border-bottom: 1px solid #818181;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+    height: 19px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
+}
+
+
+PlaylistView QHeaderView
+{
+    border-top: 1px solid #3f3f3f;
+}
+
 
 QHeaderView::section
 {
-   /* f1f1f1 0.5 e4e4e4 d9d9d9 */
-
-padding-left:10px;
+    padding-left:10px;
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                    stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
-border-top: none;
-border-right: 1px solid #818181;
-border-bottom: 1px solid #818181;
-border-left:none;
-font-size:13px;
-min-height:19;
-max-height:19;
-
-
+            stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+    border-top: none;
+    border-right: 1px solid #818181;
+    border-bottom: 1px solid #818181;
+    border-left:none;
+    font-size:13px;
+    min-height:19;
+    max-height:19;
 }
+
+
 QHeaderView::section:last, QHeaderView::section:only-one
 {
-border-right: none;
+    border-right: none;
+}
 
+QTableView
+{
+    border: none;
 }
 
 QLineEdit[type="search"]
 {
     border-image: url(:border_images/SAFRI_UI/search_normal.png) 0px 10px 0px 25px;
-
     border-width:0px 10px 0px 25px;
     min-height:21px;
     max-height:21px;
@@ -241,12 +229,6 @@ QToolBar[type="playlistToolbar"] QToolButton
     border:none;
 
 }
-QWidget[place="widget_left"][type="frame"]
-{
-
-
-
-}
 
 QSplitter:handle
 {
@@ -269,13 +251,9 @@ QWebView
 }
 
 
-
-
-
 PlayerWidget
 {
     background-color:red;
-
 }
 
 
@@ -295,7 +273,6 @@ QPushButton[place="menu_left"][type="menu_button"]
     max-height:70px;
     margin-left:11px;
     margin-bottom: -1px;
-
     border-image: url(:buttons/SAFRI_UI/tab_normal.png);
 }
 
@@ -307,19 +284,13 @@ QPushButton[place="menu_left"][type="menu_button_last"]
     min-height:70px;
     max-height:70px;
     margin-left:11px;
-
     border-image: url(:buttons/SAFRI_UI/tab_normal.png);
-
-
 }
-
 
 
 QPushButton:checked[place="menu_left"][type="menu_button"]
 {
-
-border-image: url(:buttons/SAFRI_UI/tab_selected.png);
-
+    border-image: url(:buttons/SAFRI_UI/tab_selected.png);
 }
 
 
@@ -331,33 +302,10 @@ QPushButton:checked[place="menu_left"][type="menu_button_last"]
 
 QWidget[place="webview_frame"]
 {
-
-        border-width: 1px;
-        border-style: solid;
-        border-color: grey;
-
+    border-width: 1px;
+    border-style: solid;
+    border-color: grey;
 }
-
-/*
-
-QWidget[place="left_widget"][type="nav_bar"]
-{
-        border: 1px solid grey;
-        border-radius: 10px;
-        padding: 5px;
-        background: qradialgradient(cx: 0.3, cy: -0.4,
-        fx: 0.3, fy: -0.4,
-        radius: 1, stop: 0 #F0F0F0, stop: 1 white);
-        min-width: 80px;
-}
-
-
-QPushButton[type="nav_bar_button"][place="left_widget"]
-{
-        background-color: transparent;
-}
-
-*/
 
 
 QWidget[type="treeView"]
@@ -365,12 +313,12 @@ QWidget[type="treeView"]
     border: none;
 }
 
+
 QWidget[type="treeViewFrame"]
 {
     border: 1px solid #3f3f3f;
     padding:1px;
 }
-
 
 
 /*
@@ -387,7 +335,6 @@ QComboBox[place="left_widget"]
 */
 
 
-
 QTabBar::tab
 {
     min-height: 25px;
@@ -396,14 +343,16 @@ QTabBar::tab
     font-size: 12px;
 }
 
-QWidget[ident="playlist"]
+QWidget[ident="PlaylistFrame"]
 {
     border: 1px solid #3f3f3f;
 }
 
+
 PlaylistView, SongTreeView
 {
     font-size:12px;
+    border: 1px solid #3f3f3f;
 }
 
 QTabBar::tab::selected
@@ -418,10 +367,9 @@ QTabBar::tab::selected
     border-style:solid;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-   stop: 0 #EDEDED, stop: 1.0 #D0D0D0);
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #EDEDED, stop: 1.0 #D0D0D0);
 }
-
 
 QTabBar
 {
@@ -464,60 +412,12 @@ QPushButton[type="addTabButton"]:pressed
     image: url(:border_images/SAFRI_UI/add_tab_pressed.png)
 }
 
-/*
-QTabBar::tab[type="playingTab"]
-{
-    background: red;
-}
-*/
+
 QTabWidget
 {
     background: none;
-    border: 0px;
-}
-/*
-QTabBar QToolBar
-{
-    margin-left: 20px;
-}
 
-QTabBar QToolButton
-{
-     border: none;
-     background-image: url(:border_images/Ressources/background.png);
+    border:none;
 }
-
-QTabBar QToolButton::left-arrow
-{
-    min-height: 10px;
-    max-height: 10px;
-    min-width: 15px;
-    image: url(:icons/Ressources/tab_left_arrow.png)
-}
-
-QTabBar QToolButton::right-arrow
-{
-    min-height: 10px;
-    max-height: 10px;
-    min-width: 15px;
-    image: url(:icons/Ressources/tab_right_arrow.png)
-}
-
-QTabBar QToolButton::left-arrow:hover
-{
-    background-color: rgba(255, 255, 255, 5%);
-}
-
-QTabBar QToolButton::right-arrow:hover
-{
-    background-color: rgba(255, 255, 255, 5%);
-}
-
-QTabBar::tear
-{
-     image: none;
-}
-
-*/
 
 

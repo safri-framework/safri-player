@@ -122,9 +122,11 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
     QWidget* wrapperWidget = new QWidget();
 
     wrapperWidget->setProperty("ident", "PlaylistFrame");
-
-    wrapperWidget->setLayout( new QHBoxLayout() );
-    wrapperWidget->layout()->addWidget(view);
+    QHBoxLayout* layout = new QHBoxLayout();
+    wrapperWidget->setLayout( layout);
+    layout->setSpacing(0);
+    layout->setContentsMargins(1,0,1,1);
+    layout->addWidget(view);
 
     int index = tabWidget->addTab(wrapperWidget, name);
 

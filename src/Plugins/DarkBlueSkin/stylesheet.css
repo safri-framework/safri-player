@@ -246,6 +246,11 @@ QWidget[ident="playlist"]
     border: none;
 }
 
+QWidget[ident="PlaylistFrame"]
+{
+    background:transparent;
+    border-top: none;
+}
 
 QWidget[type="frame"]
 {
@@ -412,15 +417,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
   }
 
 
-QWidget[ident="playlistFrame"]
+QWidget[ident="PlaylistFrame"]
 {
-    border-left: 3px solid #2F3A42;
-    margin-left: 3px;
+    background-image: url(:border_images/Ressources/background.png);
 }
 
 QWidget[type="playlistWidget"]
 {
-margin-left: 3px;
+    margin-left: 3px;
 }
 
 QComboBox

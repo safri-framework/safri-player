@@ -15,6 +15,8 @@ PluginViewer::PluginViewer(QList<PluginSystem::PluginSpec *> plugins,QHash<QStri
 
     PluginviewerModel* model = new PluginviewerModel(plugins, config, this);
     ui->pluginTableView->setModel(model);
+    ui->pluginTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 }
 
 PluginViewer::~PluginViewer()

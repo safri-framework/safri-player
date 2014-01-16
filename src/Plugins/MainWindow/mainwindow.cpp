@@ -164,9 +164,6 @@ void MainWindow::showTestPlaylist()
     songs.append(testMp32);
 
     QSharedPointer<Core::IPlaylist> playList = Core::ICore::createPlaylist();
-
-    //playList->insertMediaAt(0, songs);
-
     Core::ICore::guiController()->getPlaylistWidget()->showPlaylist(playList);
 }
 
@@ -185,11 +182,6 @@ void MainWindow::sideBarButtonClicked(bool checked)
 void MainWindow::changePlayerWidget()
 {
     IPlayerWidget* playerWidget = guiController->getPlayerWidget();
-
-    //playerWidget->setParent(ui->player_frame->layout());
-    //qDebug()<< "Nullpointer: " << ui->player_frame->layout();
-
-
     if(playerWidget->getPreferedPosition() == IPlayerWidget::UNDER_PLAYLIST )
     {
         ui->playerWidget->layout()->addWidget(playerWidget);
@@ -198,9 +190,6 @@ void MainWindow::changePlayerWidget()
     {
         ui->playerWidget_bottom->layout()->addWidget(playerWidget);
     }
-
-    //ui->player_frame->layout()->addWidget(playerWidget);
-    //playerWidget->show();
 }
 
 void MainWindow::changePlaylistWidget()
@@ -268,7 +257,6 @@ void MainWindow::showSidebar(bool visible)
         lastSplitterSize.append(splitter->sizes());
         closeSidebarTimeline->setFrameRange(splitter->sizes().at(0), 0);
         closeSidebarTimeline->start();
-
     }
 
 }

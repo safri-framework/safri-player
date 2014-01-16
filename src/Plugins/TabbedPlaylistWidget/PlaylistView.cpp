@@ -7,10 +7,11 @@
 #include <QDebug>
 #include <QMenu>
 #include <QClipboard>
-
+#include <QScrollBar>
 #include "Interfaces/ICore.h"
 #include "Settings/SettingsManager.h"
 #include "PlaylistHeaderView.h"
+#include <QHBoxLayout>
 
 PlaylistView::PlaylistView(QString name, QWidget *parent) :
     QTreeView(parent), name(name), restoringSectionOrder(false)
@@ -36,6 +37,7 @@ PlaylistView::PlaylistView(QString name, QWidget *parent) :
 
     Core::SettingsModule* settingsModule = Core::ICore::settingsManager()->getModule("org.safri.playlist");
     connect( settingsModule, SIGNAL( settingsChanged(QString) ), this, SLOT( onSettingsChanged(QString) ) );
+    this->verticalScrollBar()->setProperty("ident", "playlist");
 
     headerView = new PlaylistHeaderView(this);
 
