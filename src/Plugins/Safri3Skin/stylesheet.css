@@ -156,6 +156,17 @@ QScrollBar::sub-line:vertical
     subcontrol-origin: margin;
 }
 
+PlaylistView QScrollBar::sub-line:vertical
+{
+
+ border-top: 1px solid #3f3f3f;
+    border-bottom: 1px solid #818181;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+    stop: 0 #f1f1f1, stop: 0.5 #e4e4e4 stop: 0.51 #d9d9d9 stop: 1.0 #d9d9d9);
+    height: 18px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
