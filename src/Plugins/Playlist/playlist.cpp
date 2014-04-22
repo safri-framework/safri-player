@@ -64,7 +64,7 @@ Media* Playlist::getNextMedia()
     checkCurrentMediaTransaction();
 
     int nextMedia = currentMedia;
-    if (!(shuffle))
+    if (!shuffle)
     {
        if (nextMedia < mediaList.size()-1)
        {
@@ -123,21 +123,15 @@ Media* Playlist::getPreviousMedia()
 
 void Playlist::setShuffle(bool value)
 {    
-    if(shuffle != value)
+    Q_EMIT PlaylistEdited();
+    shuffle = value;
+    shuffleCounter = 0;
+    shuffleHistory.clear();
+    if (value && mediaList.size() > 0)
     {
-        Q_EMIT PlaylistEdited();
-        shuffle = value;
-        if (value && mediaList.size() > 0)
-        {
-            shuffleHistory.clear();
-            shuffleHistory.append(mediaList);
-            if(currentMedia >= 0) shuffleHistory.removeAt(currentMedia);
-            shuffleHistory = shufflePlaylist(shuffleHistory);
-        }
-        else
-        {
-            shuffleHistory.clear();
-        }
+        shuffleHistory.append(mediaList);
+        if(currentMedia >= 0) shuffleHistory.removeAt(currentMedia);
+        shuffleHistory = shufflePlaylist(shuffleHistory);
     }
 }
 

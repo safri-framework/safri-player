@@ -127,7 +127,6 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
     layout->setSpacing(0);
     layout->setContentsMargins(1,0,1,1);
     layout->addWidget(view);
-
     int index = tabWidget->addTab(wrapperWidget, name);
 
     tabWidget->setCurrentIndex(index);
@@ -137,7 +136,13 @@ PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, QSharedPoi
 
 bool TabbedPlaylistWidget::isCurrentPlayingView(QObject *listView)
 {
-    return currentPlayingListView == listView;
+    PlaylistView* view = qobject_cast<PlaylistView*>(listView);
+    if(view)
+    {
+        return currentPlayingListView == listView;
+    }
+    else
+        qDebug()<<"no View";
 }
 
 void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
@@ -154,7 +159,7 @@ void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
 
             Core::Media* media = playlist->getCurrentMedia();
 
-            PlaylistTabWidget *tabWidget = qobject_cast<PlaylistTabWidget*>(senderView->parent()->parent());
+            PlaylistTabWidget *tabWidget = qobject_cast<PlaylistTabWidget*>(senderView->parent()->parent()->parent());
             if (tabWidget != 0)
             {
                 removeCurrentTabIcon();
@@ -162,6 +167,8 @@ void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
                 currentPlaylistIndex = currentPlaylistTabWidget->indexOf(senderView);
                 currentPlayingListView = senderView;
             }
+            else
+                qDebug()<<"ERROR";
 
             Core::IPlaybackController* playbackConntroller = Core::ICore::playbackController();
             playbackConntroller->stopAction()->trigger();

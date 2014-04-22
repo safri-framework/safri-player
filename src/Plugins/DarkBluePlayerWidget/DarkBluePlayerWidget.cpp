@@ -13,7 +13,7 @@
 #include "CoreSupply/AssetController.h"
 #include "math.h"
 #include "Settings/SettingsManager.h"
-
+#include <QAction>
 
 DarkBluePlayerWidget::DarkBluePlayerWidget(QWidget *parent) :
     IPlayerWidget(parent),
@@ -219,7 +219,10 @@ void DarkBluePlayerWidget::changePlaybackController()
 
 void DarkBluePlayerWidget::shuffleToggled(bool value)
 {
-    playbackController->getPlaylist()->setShuffle(value);
+    if(!playbackController->getPlaylist().isNull())
+    {
+       playbackController->shuffleAction()->setChecked(value);
+    }
 }
 
 void DarkBluePlayerWidget::mediaChanged(Core::Media* media)
