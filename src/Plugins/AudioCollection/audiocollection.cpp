@@ -433,9 +433,9 @@ Genre *AudioCollection::newGenre(QString name)
 }
 
 
-Song *AudioCollection::newSong(QString name, int year, QUrl url)
+Song *AudioCollection::newSong(QString mime, QString name, int year, QString url)
 {
-    Song* song = new Song(newSongID(), name, year, url.toLocalFile(), this);
+    Song* song = new Song(mime, newSongID(), name, year, url, this);
     insertSong(song);
     return song;
 }
@@ -604,12 +604,18 @@ Media* AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
         QString albumArtistName = mediaInfo.getMediaInfo(InfoAlbumArtist).toString();
         QString albumName = mediaInfo.getMediaInfo(InfoAlbum).toString();
         QString genreName = mediaInfo.getMediaInfo(InfoGenre).toString();
+        QString mime = mediaInfo.getMediaInfo(InfoMime).toString();
 
+        QString file = mediaInfo.getURL().toLocalFile();
+        if (file.isEmpty())
+        {
+            file = mediaInfo.getMediaInfo(InfoURL).toString();
+        }
 
-        song = audioCollection->getSongByPath( mediaInfo.getURL().toLocalFile() );
+        song = audioCollection->getSongByPath( file );
         if(!song) //Song doesn't already exists
         {
-            song = audioCollection->newSong(mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt(), mediaInfo.getURL());
+            song = audioCollection->newSong(mime, mediaInfo.getMediaInfo(InfoTitle).toString(), mediaInfo.getMediaInfo(InfoYear).toInt(), file);
             if(audioCollection->getAlbumArtistsByName(albumArtistName).size() > 0) //Artist already exists!
             {
                albumArtist = audioCollection->getAlbumArtistsByName(albumArtistName).at(0);

@@ -38,7 +38,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         int length;
         int bitRate;
 
-        Q_UNUSED(bitRate)
+        Q_UNUSED(bitRate);
 
         const char * encodedName = filename.constData();
         TagLib::FileRef ref = TagLib::FileRef( encodedName );
@@ -95,6 +95,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
         container.setMediaInfo(InfoYear, year);
+        container.setMediaInfo(InfoMime, "audio/mpeg");
         container.setMediaInfo(InfoAlbumArtist, albumartist);
         //container.setMediaInfo(InfoFile);
         Q_EMIT mediaTagged(container);

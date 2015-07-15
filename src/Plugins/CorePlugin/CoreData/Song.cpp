@@ -18,23 +18,23 @@ QUrl Song::getURL()
 QString Song::getMimeType()
 {
     // TODO: read MimeType from database
-    return "audio/mpeg";
+    return mime;
 }
 
-Song::Song(int sID, QString sName, int year, QString filename, QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year), track(-1), length(-1)
+Song::Song(QString mime, int sID, QString sName, int year, QString filename, QObject *parent) :
+    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year), track(-1), length(-1), mime(mime)
 {
 
 }
 
-Song::Song(int sID, QString sName, int year,  QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), year(year), track(-1), length(-1)
+Song::Song(QString mime, int sID, QString sName, int year,  QObject *parent) :
+    Media(sID, sName, DataItem::SONG, parent), year(year), track(-1), length(-1), mime(mime)
 {
 
 }
 
-Song::Song(int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent):
-    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year), track(1), length(-1)
+Song::Song(QString mime, int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent):
+    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year), track(1), length(-1), mime(mime)
 {
 
 }

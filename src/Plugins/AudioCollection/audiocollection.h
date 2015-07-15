@@ -53,7 +53,7 @@ class AudioCollection : public Core::IAudioCollection
         Core::Song* getSongByID(int id);
         QList<Core::Song*> getSongsByName(QString name);
         Core::Song* getSongByPath(QString path);
-        Core::Song* newSong(QString name, int year, QUrl url);
+        Core::Song* newSong(QString mime, QString name, int year, QString url);
         void removeSong(Song* song);
 
         QList<Core::Artist*> getArtists();
@@ -127,8 +127,6 @@ class AudioCollection : public Core::IAudioCollection
         int currentGenreID;
         int currentSongID;
         int currentAlbumArtistID;
-
-
 };
 
 #endif // AUDIOCOLLECTION_H

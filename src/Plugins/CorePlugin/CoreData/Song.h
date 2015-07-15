@@ -19,9 +19,9 @@ namespace Core
     {
         Q_OBJECT
         public:
-            explicit Song(int sID, QString sName, int year,  QObject *parent);
-            explicit Song(int sID, QString sName, int year,  QString filename, QObject *parent);
-            explicit Song(int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent);
+            explicit Song(QString mime, int sID, QString sName, int year,  QObject *parent);
+            explicit Song(QString mime, int sID, QString sName, int year,  QString filename, QObject *parent);
+            explicit Song(QString mime, int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent);
 
         signals:
 
@@ -42,6 +42,7 @@ namespace Core
             void            setAlbumArtist(AlbumArtist* albumartist);
             void            setTrack(int track);
             void            setLength(int length);
+
 
             /**
                 \brief      Moves the song to a new artist and makes the
@@ -74,6 +75,7 @@ namespace Core
             Album* album;
             Genre* genre;
             QString filename;
+            QString mime;
             int year;
             int track;
             int length;

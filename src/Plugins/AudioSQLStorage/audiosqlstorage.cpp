@@ -401,7 +401,9 @@ bool AudioSQLStorage::loadSongs()
         length = query.value(lengthIndex).toInt();
         filename = query.value(filenameIndex).toString();
 
-        song = new Song(id, name, year, filename, audioCollection);
+
+        // TODO -> mime in DB auslagern!!
+        song = new Song("audio/mpeg", id, name, year, filename, audioCollection);
         song->setLength(length);
 
         artist = audioCollection->getArtistByID(artistID);

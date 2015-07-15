@@ -177,7 +177,7 @@ QString Controller::CollectionController::getStorageTypeByFilename(QUrl filename
 
 void Controller::CollectionController::objectAddedToObjectPool(QObject *object)
 {
-    Q_UNUSED(object)
+    Q_UNUSED(object);
     IMediaCollection* mediaCollection = qobject_cast<IMediaCollection*>(object);
     if(mediaCollection)
     {

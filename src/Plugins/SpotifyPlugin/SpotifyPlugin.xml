@@ -1,0 +1,15 @@
+<SafriPlugin name="SpotifyPlugin" version="0.1">
+
+    <vendor>Safri</vendor>
+
+    <copyright>Sa &amp; Fri</copyright>
+    <license>GNU</license>
+    <description>Spotify Plugin</description>
+    <url>www.safri-player.org</url>
+    <category>RocknRoll</category>
+
+    <dependencyList>
+        <dependency name="" version="">
+    </dependencyList>
+
+</SafriPlugin>

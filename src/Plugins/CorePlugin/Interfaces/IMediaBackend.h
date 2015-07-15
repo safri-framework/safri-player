@@ -36,7 +36,6 @@ namespace Core
             virtual QStringList getSupportedMimeTypes() = 0;
 
         signals:
-
             void internalBackendStateChanged(Core::IMediaBackend::BackendState state);
             void update(int currentTime);
             void mediaFinished();

@@ -69,6 +69,7 @@ void PlaybackController::obtainMediaBackendForMedia(Core::Media *media)
             connect(mediaBackend, SIGNAL(hasSeekableMedia(bool)), this, SIGNAL(hasSeekableMedia(bool)));
             connect(mediaBackend, SIGNAL(hasVolumeAdjustableMedia(bool)), this, SIGNAL(hasVolumeAdjustableMedia(bool)));
             connect(mediaBackend, SIGNAL(internalBackendStateChanged(Core::IMediaBackend::BackendState)), this, SLOT(backendStateChanged(Core::IMediaBackend::BackendState)));
+            qDebug()<<"backend fount.";
         }
     }
 }

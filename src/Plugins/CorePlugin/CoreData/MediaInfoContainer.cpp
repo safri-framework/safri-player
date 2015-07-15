@@ -23,7 +23,10 @@ QVariant MediaInfoContainer::getMediaInfo(MediaInfoType type)
 {
     QVariant value =  infoMap.value(type);
     if(!value.isValid())
-        return tr("Unbekannt");
+        if(type == InfoMime)
+            return "audio/mpeg";
+        else
+            return tr("Unbekannt");
     return value;
 }
 

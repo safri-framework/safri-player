@@ -187,7 +187,6 @@ void PhononBackend::mediaStatusChanged(QMediaPlayer::MediaStatus status)
     switch (status)
     {
         case QMediaPlayer::LoadedMedia:
-
                 break;
 
         case QMediaPlayer::EndOfMedia:

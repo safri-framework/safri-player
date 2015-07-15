@@ -69,6 +69,7 @@ void LastFMInfoResolver::getAlbumInfo(QString album, QString artist, QString typ
     url.addQueryItem("api_key", lastFMUsr);
     url.addQueryItem("artist",artist);
     url.addQueryItem("album", album);
+    qDebug()<<url.toString();
     Q_EMIT newRequest(url.toString(), type);
 }
 
@@ -122,9 +123,8 @@ void LastFMInfoResolver::coverRequestCallBack()
 
 void LastFMInfoResolver::fetchCover(QString url)
 {
-    QNetworkReply* reply = manager->get(QNetworkRequest( url ));
-    reply->
-    connect(reply, SIGNAL(finished()),  this, SLOT(fetchCoverCallback()));
+    QNetworkReply* reply = manager->get( QNetworkRequest( url ) );
+    connect( reply, SIGNAL( finished() ), SLOT( fetchCoverCallback()));
 }
 
 
@@ -143,6 +143,7 @@ void LastFMInfoResolver::fetchCoverCallback()
         QPixmap image; //= new QPixmap();
         image.loadFromData(reply->readAll());
         setInfo(QVariant(image));
+        qDebug()<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (((( = ";
     }
     else
     {

@@ -144,8 +144,8 @@ void MainWindow::addPlugin(Core::ISideBarPlugin *plugin)
 
 void MainWindow::showTestPlaylist()
 {
-    Core::Song *testMp31 = new Core::Song(1, "Test", 2012, "/home/sascha/hold_the_line.mp3", this);
-    Core::Song *testMp32 = new Core::Song(2, "Test", 2012, "D:/Musik/Musik/Red Hot Chili Peppers/Red Hot Chili Peppers - Live/Live At Slane Castle (Audio DVD)/Parallel Universe.mp3", this);
+    Core::Song *testMp31 = new Core::Song("audio/mpeg", 1, "Test", 2012, "/home/sascha/hold_the_line.mp3", this);
+    Core::Song *testMp32 = new Core::Song("audio/mpeg",2, "Test", 2012, "D:/Musik/Musik/Red Hot Chili Peppers/Red Hot Chili Peppers - Live/Live At Slane Castle (Audio DVD)/Parallel Universe.mp3", this);
 
     Core::Artist *artist = new Core::Artist(1, "Artist Foo", this);
     Core::Album  *album = new Core::Album(1, "Album Foo", this);
@@ -307,7 +307,11 @@ void MainWindow::on_actionAdd_folder_triggered()
     {
         qDebug()<<directory;
 
-        Core::ICollectionController *cc = Core::ICore::collectionController();
+        Core::ICollectionController *cc = 0;
+        cc = Core::ICore::collectionController();
+
+        if(!cc)
+            return;
         QList<Core::IMediaTagger*> taggers = PluginSystem::PluginManager::instance()->getObjects<Core::IMediaTagger>();
 
         QList<Core::IMediaCollection*> collections = cc->getCollections("org.safri.collection.audio");

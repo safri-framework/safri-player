@@ -22,7 +22,6 @@ namespace Core
             virtual void tagMedia(QUrl media) = 0;
 
         signals:
-
             void mediaTagged(MediaInfoContainer info);
             void unknownMedia(QUrl media);
     };

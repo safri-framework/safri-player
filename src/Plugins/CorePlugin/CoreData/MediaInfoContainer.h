@@ -24,6 +24,7 @@ namespace Core
         InfoFileSize,
         InfoBitRate,
         InfoURL,
+        InfoMime,
         InfoTemporary
     };
 

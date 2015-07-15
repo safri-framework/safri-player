@@ -138,6 +138,7 @@ void AlbumCoversAssetService::infoSlot()
         {
             DataItem* item = req->getRelatedItem();
             QString path = item->getMediaCollection()->getAssetFolderPath("AlbumCoversPreview").toString()+"/"+QString::number(item->getID()) + ".jpg";
+            qDebug()<<path;
             QString hiresPath = item->getMediaCollection()->getAssetFolderPath("AlbumCoversHires").toString()+"/"+QString::number(item->getID()) + ".jpg";
             if(saveHiresCovers)
                 cover.save(hiresPath, "jpg", 60);

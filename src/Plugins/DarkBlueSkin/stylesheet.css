@@ -1,6 +1,6 @@
 QMainWindow
 {
-    background-image: url(:border_images/Ressources/mainwindow_background.png);
+    background-image: url(:border_images/Ressources/MainWindow_background.png);
     background-color: none;
 }
 
@@ -15,7 +15,7 @@ QLineEdit
 
 QListWidget
 {
-    background-image: url(:border_images/Ressources/mainwindow_background.png);
+    background-image: url(:border_images/Ressources/MainWindow_background.png);
     border:1px solid black;
     show-decoration-selected:1;
 }
@@ -552,6 +552,12 @@ PlaylistView
  }
 
 
+QTreeView
+{
+
+    border:none;
+    background-color: rgba(0, 0, 0, 15);
+}
 
 SongTreeView, QTableView
 {
