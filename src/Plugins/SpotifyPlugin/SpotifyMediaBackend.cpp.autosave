@@ -14,7 +14,7 @@ int SpotifyMediaBackend::getTotalTime()
 {
     if(_session->hasCurrentTrack())
         return _session->currentTrack()->duration();
-
+    
     return -1;
 }
 
