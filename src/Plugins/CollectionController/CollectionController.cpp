@@ -121,7 +121,7 @@ bool Controller::CollectionController::saveCollections()
     return result;
 }
 
-Media *Controller::CollectionController::findMediaByURL(const QUrl &filename)
+Media *Controller::CollectionController::findMediaByURL(const QUrl &filename, bool appendToTempCollection)
 {
     QList<IMediaCollection*> allCollections = m_collectionMap.values();
     Media* foundMedia = 0;
@@ -138,13 +138,15 @@ Media *Controller::CollectionController::findMediaByURL(const QUrl &filename)
         }
     }
 
+    if(!appendToTempCollection)
+        return 0;
 
     bool first = false;
     if(!m_tempAudioCollection)
     {
         IMediaCollection* mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio","not in Database");
         m_tempAudioCollection = qobject_cast<Core::IAudioCollection*>(mediaCollection);
-       objectAddedToObjectPool(m_tempAudioCollection);
+        objectAddedToObjectPool(m_tempAudioCollection);
         first = true;
     }
 

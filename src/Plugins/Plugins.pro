@@ -9,7 +9,7 @@ SUBDIRS += SafriMPC
 
 SUBDIRS += CorePlugin \
     SpotifyPlugin
-#SUBDIRS += DarkBluePlayerWidget
+SUBDIRS += DarkBluePlayerWidget
 SUBDIRS += M3UPlaylistStorage
 
 SUBDIRS += Playlist
@@ -19,11 +19,11 @@ SUBDIRS += PlayerWidget
 SUBDIRS += MainWindow
 SUBDIRS += GUIController
 SUBDIRS += SidebarPluginTest
-#SUBDIRS += PlaylistWidget
+SUBDIRS += PlaylistWidget
 SUBDIRS += SongtreeWidget
-#SUBDIRS += PlayerWidgetII
+SUBDIRS += PlayerWidgetII
 #SUBDIRS += SafriMobileGuiQML
-#SUBDIRS += ProgressSidebarWidget
+SUBDIRS += ProgressSidebarWidget
 SUBDIRS += LastFMInfoResolver
 SUBDIRS += AlbumCovers
 SUBDIRS += AudioCollection

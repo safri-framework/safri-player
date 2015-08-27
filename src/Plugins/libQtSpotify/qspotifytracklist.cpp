@@ -40,10 +40,11 @@
 
 
 #include "qspotifytracklist.h"
-
+#include <QDebug>
 #include "qspotifysession.h"
 #include "qspotifyplayqueue.h"
 #include <QModelIndex>
+#include "CoreData/MediaInfoContainerList.h"
 
 QSpotifyTrackList::QSpotifyTrackList(QObject *parent, bool reverse)
     : ListModelBase<QSpotifyTrack>(parent)
@@ -73,6 +74,7 @@ QSpotifyTrackList::QSpotifyTrackList(QObject *parent, bool reverse)
     m_roles[ArtistObjectRole] = "artistObject";
     m_roles[OfflineStatusRole] = "offlineStatus";
     m_roles[RawPtrRole] = "rawPtr";
+    m_roles[ContainerRole] = "container";
 }
 
 QVariant QSpotifyTrackList::data(const QModelIndex &index, int role) const
@@ -113,6 +115,13 @@ QVariant QSpotifyTrackList::data(const QModelIndex &index, int role) const
         return track->seen();
     case CreatorRole:
         return track->creator();
+    case ContainerRole:
+    {
+        qDebug()<<track->infoContainer().toJson();
+        Core::MediaInfoContainerList list;
+        list.addMediaInfoContainer(track->infoContainer());
+        return list.toJson();
+    }
     case CreationDateRole:
         return track->creationDate();
         // TODO
@@ -213,6 +222,18 @@ void QSpotifyTrackList::playLast()
         playTrackAtIndex(m_shuffleList.last());
     else
         playTrackAtIndex(m_reverse ? nextAvailable(-1) : previousAvailable(count()));
+}
+
+QString QSpotifyTrackList::getTracklistAsContainer()
+{
+    qDebug()<<count();
+    Core::MediaInfoContainerList list;
+    for(int i = 0; i < count(); i++)
+    {
+        auto track = m_dataList.at(i);
+        list.addMediaInfoContainer(track->infoContainer());
+    }
+    return list.toJson();
 }
 
 void QSpotifyTrackList::playCurrentTrack()

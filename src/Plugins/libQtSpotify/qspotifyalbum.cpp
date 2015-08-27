@@ -59,10 +59,31 @@ QSpotifyAlbum::QSpotifyAlbum(sp_album *album)
     connect(this, SIGNAL(dataChanged()), this, SIGNAL(albumDataChanged()));
     sp_album_add_ref(album);
     m_sp_album = album;
+
+    connect(this, SIGNAL(isLoadedChanged()), this, SLOT(loadTrackInfo()));
+}
+
+void QSpotifyAlbum::loadTrackInfo()
+{
+    QSpotifyAlbumBrowse* browse = new QSpotifyAlbumBrowse(this);
+    connect(browse, SIGNAL(busyChanged()), this, SLOT(trackInfoLoaded()));
+    browse->setAlbum(shared_from_this());
+}
+
+void QSpotifyAlbum::trackInfoLoaded()
+{
+    QSpotifyAlbumBrowse* browse = qobject_cast<QSpotifyAlbumBrowse*>(sender());
+    if(!browse || browse->busy())
+        return;
+
+qDebug()<<" TRACK INFO ";
+    m_trackInfo = browse->infoContainerList();
+   browse->deleteLater();
 }
 
 QSpotifyAlbum::~QSpotifyAlbum()
 {
+    qDebug()<<"DESTRUKTION";
     if (m_sp_album)
         sp_album_release(m_sp_album);
 }
@@ -70,6 +91,11 @@ QSpotifyAlbum::~QSpotifyAlbum()
 bool QSpotifyAlbum::isLoaded()
 {
     return sp_album_is_loaded(m_sp_album);
+}
+
+QString QSpotifyAlbum::getMediaInfoContainer()
+{
+    return m_trackInfo;
 }
 
 QSpotifyAlbumBrowse *QSpotifyAlbum::browse()

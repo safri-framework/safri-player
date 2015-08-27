@@ -36,3 +36,4 @@ FORMS += \
     pluginviewer.ui \
     pluginspecviewer.ui
 
+INCLUDEPATH += -L/usr/include/i386-linux-gnu/c++/4.7/

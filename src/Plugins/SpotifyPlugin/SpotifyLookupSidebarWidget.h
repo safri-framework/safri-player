@@ -5,6 +5,7 @@
 #include <QObject>
 #include "Interfaces/ISideBarPlugin.h"
 #include "SpotifySearch.h"
+#include <QtQuickWidgets/QQuickWidget>
 
 using namespace Core;
 
@@ -24,7 +25,8 @@ public:
 private:
     SpotifySearch* _search;
     QPushButton* _button;
-
+    QQuickWidget* _quickview;
+ QWidget* _widget;
 signals:
 
 public slots:

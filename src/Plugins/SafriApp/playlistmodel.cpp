@@ -3,6 +3,7 @@
 #include "CoreData/Song.h"
 #include "CoreData/Item.h"
 #include "CoreData/Media.h"
+#include <QDataStream>
 #include <QDebug>
 #include "Songtree/SongTreeItem.h"
 #include <QSize>

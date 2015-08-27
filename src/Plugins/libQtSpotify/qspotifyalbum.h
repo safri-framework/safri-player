@@ -86,6 +86,7 @@ public:
 
     sp_album *spalbum() const { return m_sp_album; }
 
+    Q_INVOKABLE QString getMediaInfoContainer();
     Q_INVOKABLE QSpotifyAlbumBrowse *browse();
 
 Q_SIGNALS:
@@ -106,6 +107,7 @@ private:
     Type m_type;
     QString m_sectionType;
     QString m_coverId;
+    QString m_trackInfo;
 
     friend class QSpotifySession;
     friend class QSpotifyTrack;
@@ -114,6 +116,11 @@ private:
     friend class QSpotifyToplist;
 
     friend class QSpotifyCacheManager;
+    QSpotifyAlbumBrowse* _browse;
+
+private slots:
+    void loadTrackInfo();
+    void trackInfoLoaded();
 };
 
 #endif // QSPOTIFYALBUM_H

@@ -19,13 +19,15 @@ public:
         YearRole,
         TypeRole,
         SectionTypeRole,
-        CoverIdRole
+        CoverIdRole,
+        ContainerRole
     };
 
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const { return m_roles; }
 
     Q_INVOKABLE QSpotifyAlbumBrowse *albumBrowse(const int idx);
+    Q_INVOKABLE bool appendToCurrentPlaylist(const int idx);
 
 private:
     QHash<int, QByteArray> m_roles;

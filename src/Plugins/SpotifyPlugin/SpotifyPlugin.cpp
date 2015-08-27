@@ -12,6 +12,7 @@ bool SpotifyPlugin::initialize(QStringList &arguments)
 {
     Q_UNUSED(arguments)
     SpotifyLookupSidebarWidget* widget = new SpotifyLookupSidebarWidget();
+
     addObject(widget);
     addObject(new SpotifyMediaBackend());
     return true;

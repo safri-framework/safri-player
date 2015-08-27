@@ -43,17 +43,18 @@
 #define QSPOTIFYALBUMBROWSE_H
 
 #include <memory>
-
+#include "CoreData/MediaInfoContainerList.h"
 #include <QtCore/QStringList>
 
 class QSpotifyAlbum;
 class QSpotifyTrackList;
 class QSpotifyArtist;
 struct sp_albumbrowse;
-
+#include <QObject>
 class QSpotifyAlbumBrowse : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString infoContainerList READ infoContainerList NOTIFY tracksChanged)
     Q_PROPERTY(int trackCount READ trackCount NOTIFY tracksChanged)
     Q_PROPERTY(int totalDuration READ totalDuration NOTIFY tracksChanged)
     Q_PROPERTY(QSpotifyArtist* artistObject READ artistObject NOTIFY tracksChanged)
@@ -61,6 +62,8 @@ class QSpotifyAlbumBrowse : public QObject
     Q_PROPERTY(bool hasMultipleArtists READ hasMultipleArtists NOTIFY albumChanged)
     Q_PROPERTY(QStringList review READ review NOTIFY tracksChanged)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+  //  Q_PROPERTY(type name READ name WRITE setName NOTIFY nameChanged)
+
 public:
     QSpotifyAlbumBrowse(QObject *parent = 0);
     ~QSpotifyAlbumBrowse();
@@ -69,6 +72,7 @@ public:
     void setAlbum(std::shared_ptr<QSpotifyAlbum> album);
 
     Q_INVOKABLE QSpotifyTrackList *tracks() const { return m_albumTracks; }
+    Q_INVOKABLE QString infoContainerList();
     int trackCount() const;
     int totalDuration() const;
     QSpotifyArtist *artistObject() const { return m_artistObject; }
@@ -110,6 +114,9 @@ private:
 
     friend class QSpotifyPlaylist;
     friend class QSpotifyUser;
+
+private slots:
+    void test();
 };
 
 #endif // QSPOTIFYALBUMBROWSE_H

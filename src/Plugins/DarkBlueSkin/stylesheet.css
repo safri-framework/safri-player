@@ -48,7 +48,7 @@ QListView::item:selected
 
 QLineEdit[type="search"]
 {
-    border-image:url(:border_images/Ressources/search_edit.png) 4 4 4 30;
+    border-image:url(:border_images/search) 4 4 4 30;
     border-width:4px;
     border-left:30px;
     color: #FFFFFF;
@@ -74,12 +74,12 @@ QPushButton:pressed
 
 QDialog
 {
-    background: url(:border_images/Ressources/background.png);
+    background: url(:border_images/background);
 }
 
 QLineEdit:focus[type="search"]
 {
-    border-image:url(:border_images/Ressources/search_edit_active.png) 4 4 4 30;
+    border-image:url(:border_images/search_active) 4 4 4 30;
     color: black;
 }
 
@@ -265,7 +265,7 @@ QWidget[type="frame"]
 
 QWidget[place="menu_left"][type="frame"]
 {
-    background-image: url(:border_images/Ressources/sidebar_background.png);
+    background-image: url(:border_images/sidebarBackground);
     min-width: 100px;
     max-width: 100px;
     border-right: 3px solid rgba(62, 75, 84, 100%);
@@ -275,7 +275,7 @@ QWidget[place="menu_left"][type="frame"]
 QSplitter
 {
     height: 10px;
-    background-image: url(:border_images/Ressources/background.png);
+    background-image: url(:border_images/background);
 
 }
 
@@ -424,7 +424,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 
 QWidget[ident="PlaylistFrame"]
 {
-    background-image: url(:border_images/Ressources/background.png);
+    background-image: url(:border_images/background);
 }
 
 QWidget[type="playlistWidget"]

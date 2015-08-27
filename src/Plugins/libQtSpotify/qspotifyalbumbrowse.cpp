@@ -47,7 +47,7 @@
 #include <QtCore/QMutex>
 
 #include <libspotify/api.h>
-
+#include <QDebug>
 #include "qspotifyalbum.h"
 #include "qspotifyplaylist.h"
 #include "qspotifyplayqueue.h"
@@ -78,6 +78,7 @@ QSpotifyAlbumBrowse::QSpotifyAlbumBrowse(QObject *parent)
     , m_busy(false)
 {
     m_albumTracks = new QSpotifyTrackList(this);
+    connect(this, SIGNAL(tracksChanged()), this, SLOT(test()));
 }
 
 QSpotifyAlbumBrowse::~QSpotifyAlbumBrowse()
@@ -113,6 +114,12 @@ void QSpotifyAlbumBrowse::setAlbum(std::shared_ptr<QSpotifyAlbum> album)
     m_sp_albumbrowse = sp_albumbrowse_create(QSpotifySession::instance()->spsession(), m_album->spalbum(), callback_albumbrowse_complete, nullptr);
     Q_ASSERT(m_sp_albumbrowse);
     g_albumBrowseObjects.insert(m_sp_albumbrowse, this);
+}
+
+QString QSpotifyAlbumBrowse::infoContainerList()
+{
+
+   return tracks()->getTracklistAsContainer();
 }
 
 int QSpotifyAlbumBrowse::trackCount() const
@@ -167,6 +174,11 @@ void QSpotifyAlbumBrowse::processData()
 
         emit tracksChanged();
     }
+}
+
+void QSpotifyAlbumBrowse::test()
+{
+    qDebug()<<trackCount();
 }
 
 int QSpotifyAlbumBrowse::totalDuration() const

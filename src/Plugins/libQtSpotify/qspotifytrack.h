@@ -43,7 +43,7 @@
 #define QSPOTIFYTRACK_H
 
 #include <memory>
-
+#include "CoreData/MediaInfoContainer.h"
 #include <QtCore/QDateTime>
 #include <QtCore/QVector>
 
@@ -134,6 +134,8 @@ public:
     void updateSeen(bool s);
 
     void destroy();
+
+    Core::MediaInfoContainer infoContainer();
 
 public Q_SLOTS:
     void pause();

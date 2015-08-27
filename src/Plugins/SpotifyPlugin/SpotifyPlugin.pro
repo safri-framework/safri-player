@@ -10,7 +10,7 @@ TEMPLATE = lib
 PROVIDER = safri
 include(../../SafriPlugin.pri)
 include(../libQtSpotify/libQtSpotify.pri)
-QT += widgets quick
+QT += widgets quick quickwidgets
 INCLUDEPATH += ../CorePlugin
 LIBS += -L"../../../bin/plugins/safri" -lCore
 
@@ -19,13 +19,15 @@ DEFINES += SPOTIFYPLUGIN_LIBRARY
 SOURCES += SpotifyPlugin.cpp \
     SpotifyLookupSidebarWidget.cpp \
     SpotifySearch.cpp \
-    SpotifyMediaBackend.cpp
+    SpotifyMediaBackend.cpp \
+    SpotifySafriHelper.cpp
 
 HEADERS += SpotifyPlugin.h\
         spotifyplugin_global.h \
     SpotifyLookupSidebarWidget.h \
     SpotifySearch.h \
-    SpotifyMediaBackend.h
+    SpotifyMediaBackend.h \
+    SpotifySafriHelper.h
 
 unix {
     target.path = /usr/lib
@@ -33,7 +35,11 @@ unix {
 }
 
 OTHER_FILES += \
-    spotifyplugin.json
+    spotifyplugin.json \
+    main.qml
 //
 FORMS += \
     SpotifySearch.ui
+
+RESOURCES += \
+    resources.qrc

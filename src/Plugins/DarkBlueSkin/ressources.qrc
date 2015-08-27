@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>Ressources/Album_16.png</file>
-        <file>Ressources/Artist_16.png</file>
-        <file>Ressources/Collection_16.png</file>
-        <file>Ressources/Genre_16.png</file>
-        <file>Ressources/Song_16.png</file>
+        <file alias="album">Ressources/Album_16.png</file>
+        <file alias="artist">Ressources/Artist_16.png</file>
+        <file alias="collection">Ressources/Collection_16.png</file>
+        <file alias="genre">Ressources/Genre_16.png</file>
+        <file alias="song">Ressources/Song_16.png</file>
         <file>Ressources/close_button.png</file>
         <file>Ressources/add_tab_button.png</file>
         <file>Ressources/tab_left_arrow.svg</file>
@@ -16,11 +16,12 @@
         <file>Ressources/playlist_playing_indicator.png</file>
         <file>Ressources/note_highlight.png</file>
         <file>Ressources/note_passive.png</file>
-        <file>Ressources/no_cover.png</file>
+        <file alias="noCover">Ressources/no_cover.png</file>
+        <file alias="triangleIndication">Ressources/dropdown_icon.png</file>
     </qresource>
     <qresource prefix="/border_images">
-        <file>Ressources/sidebar_background.png</file>
-        <file>Ressources/background.png</file>
+        <file alias="sidebarBackground">Ressources/sidebar_background.png</file>
+        <file alias="background">Ressources/background.png</file>
         <file>Ressources/menubar_background.png</file>
         <file>Ressources/listheader_background.png</file>
         <file>Ressources/scrollbar_handle.png</file>
@@ -31,8 +32,8 @@
         <file>Ressources/mainwindow_background.png</file>
         <file>Ressources/scrollBar_horizontal.png</file>
         <file>Ressources/scrollBar_vertical.png</file>
-        <file>Ressources/search_edit.png</file>
-        <file>Ressources/search_edit_active.png</file>
+        <file alias="search">Ressources/search_edit.png</file>
+        <file alias="search_active">Ressources/search_edit_active.png</file>
         <file>Ressources/tree_closed.png</file>
         <file>Ressources/tree_closed_hover.png</file>
         <file>Ressources/tree_opened.png</file>

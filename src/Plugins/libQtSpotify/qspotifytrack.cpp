@@ -320,6 +320,21 @@ void QSpotifyTrack::destroy()
     deleteLater();
 }
 
+Core::MediaInfoContainer QSpotifyTrack::infoContainer()
+{
+    Core::MediaInfoContainer container;
+    container.setMediaInfo(Core::InfoArtist, artists());
+    container.setMediaInfo(Core::InfoAlbum, album());
+    container.setMediaInfo(Core::InfoMimeType, "spotify");
+    container.setMediaInfo(Core::InfoTitle, name());
+    container.setMediaInfo(Core::InfoTrack, discIndex());
+    container.setMediaInfo(Core::InfoLength, duration()/1000);
+    container.setMediaInfo(Core::InfoYear, creationDate());
+    container.setMediaInfo(Core::InfoURL, uriLink());
+    container.setMediaInfo(Core::InfoAlbumArtist, artists());
+    return container;
+}
+
 void QSpotifyTrack::setSeen(bool s)
 {
     if (!m_playlist)

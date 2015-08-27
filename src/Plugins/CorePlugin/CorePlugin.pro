@@ -72,7 +72,8 @@ SOURCES += CorePlugin.cpp \
     Interfaces/IPlaylistStorage.cpp \
     CoreSupply/NotificationController.cpp \
     CoreSupply/Notification.cpp \
-    CoreSupply/ProgressNotification.cpp
+    CoreSupply/ProgressNotification.cpp \
+    CoreData/MediaInfoContainerList.cpp
 
 HEADERS += CorePlugin.h\
         CorePlugin_global.h \
@@ -138,7 +139,8 @@ HEADERS += CorePlugin.h\
     Interfaces/IPlaylistStorage.h \
     CoreSupply/NotificationController.h \
     CoreSupply/Notification.h \
-    CoreSupply/ProgressNotification.h
+    CoreSupply/ProgressNotification.h \
+    CoreData/MediaInfoContainerList.h
 
 OTHER_FILES += \
     Core.xml \

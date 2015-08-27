@@ -17,7 +17,7 @@ SpotifySearch::SpotifySearch(QWidget *parent) :
 {
     ui->setupUi(this);
     _session = QSpotifySession::instance();
-    _session->login("LOGIN", "PASS");
+    _session->login("X", "X");
 
     connect(_session, SIGNAL(isLoggedInChanged()), this, SLOT(loggedIn()));
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
@@ -84,7 +84,7 @@ bool SpotifySearch::addTrack(std::shared_ptr<QSpotifyTrack> ptr)
     MediaInfoContainer container;
     container.setMediaInfo(InfoArtist, ptr->artists());
     container.setMediaInfo(InfoAlbum, ptr->album());
-    container.setMediaInfo(InfoMime, "spotify");
+    container.setMediaInfo(InfoMimeType, "spotify");
     container.setMediaInfo(InfoTitle, ptr->name());
     container.setMediaInfo(InfoTrack, ptr->discIndex());
     container.setMediaInfo(InfoLength, ptr->duration()/1000);

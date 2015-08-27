@@ -7,6 +7,8 @@
 #include <QSharedPointer>
 #include <QMimeData>
 #include <QItemSelection>
+#include "Interfaces/ICore.h"
+#include "Interfaces/IMediaCollection.h"
 
 namespace Core { class Song; }
 
@@ -40,6 +42,7 @@ private slots:
         QVariant dataSongDisplayRole(Core::Song* song, int column) const;
         QSharedPointer<Core::IPlaylist> playlist;
         int getDropRow(const QModelIndex& index, int i);
+        Core::IMediaCollection* _collection;
 
     signals:
         void sizeHintChanged(QModelIndex index);

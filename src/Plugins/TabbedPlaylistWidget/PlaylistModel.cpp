@@ -3,15 +3,19 @@
 #include "CoreData/Song.h"
 #include "CoreData/Item.h"
 #include "CoreData/Media.h"
+#include "CoreData/MediaInfoContainer.h"
 #include "Interfaces/ICore.h"
 #include "Interfaces/ICollectionController.h"
 #include <QDebug>
+#include <QDataStream>
+#include "CoreData/MediaInfoContainerList.h"
 #include "Songtree/SongTreeItem.h"
 #include <QSize>
 
+using namespace Core;
 
-PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent) :
-    QAbstractTableModel(parent), playlist(playlist)
+PlaylistModel::PlaylistModel(QSharedPointer<IPlaylist> playlist, QObject *parent) :
+    QAbstractTableModel(parent), playlist(playlist), _collection(ICore::createMediaCollection("org.safri.collection.audio","tmp"))
 {
     connect(playlist.data(), SIGNAL(MediaInserted(int,int)), this, SLOT(songsInserted(int,int)));
     connect(playlist.data(), SIGNAL(MediaDataChanged(int)), this, SLOT(songDataChanged(int)));
@@ -46,30 +50,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     Q_UNUSED(action)
     Q_UNUSED(row)
     Q_UNUSED(column)
-    QList<Core::Media*> mediaList;
-
-    /*
-    switch (action)
-    {
-        case Qt::MoveAction:
-            qDebug() << "MoveAction";
-            break;
-        case Qt::CopyAction:
-            qDebug() << "CopyAction";
-            break;
-    }
-    */
-
-    /*
-    qDebug()<<"DROP";
-
-    QStringList formats = data->formats();
-
-    for (int i = 0; i < formats.size(); i++)
-    {
-        qDebug() << formats.at(i) << " - " << data->data(formats.at(i));
-    }
-    */
+    QList<Media*> mediaList;
 
     if( data->hasFormat("MediaFromPlaylist") )
     {
@@ -145,13 +126,13 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             }
             else
             {
-                QList<Core::Item*> draggedItems;
+                QList<Item*> draggedItems;
 
                 while (!stream.atEnd())
                 {
                     qint64 pointer = 0;
                     stream  >> pointer >> draggedFromRow ;
-                    Core::Item* mediaItem = (Core::Item*) pointer;
+                    Item* mediaItem = (Item*) pointer;
                     draggedItems.append(mediaItem);
                     draggedRows.append(draggedFromRow);
                     //qDebug()<< pointer << draggedFromRow;
@@ -178,11 +159,11 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return true;
     }
 
-    if ( ( data->hasFormat("Item") ) || data->hasUrls() )
+    QList<Item*> draggedItems;
+    if ( ( data->hasFormat("Item") ) || data->hasUrls() || data->hasFormat("MediaInfoContainer") )
     {
         // inserting either "real dragged Items" or constructed Items by their URLs
 
-        QList<Core::Item*> draggedItems;
 
         if ( data->hasFormat("Item") )
         {
@@ -195,23 +176,35 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
                 qint64 pointer = 0;
                 stream  >> pointer ;
-                Core::SongTreeItem* treeItem =(Core::SongTreeItem*) pointer;
-                draggedItems.append(static_cast<Core::Item*>(treeItem));
+                SongTreeItem* treeItem =(SongTreeItem*) pointer;
+                draggedItems.append(static_cast<Item*>(treeItem));
                 qDebug()<<pointer;
+            }
+        }
+        else if(data->hasFormat("MediaInfoContainer"))
+        {
+            QByteArray encodedData = data->data("MediaInfoContainer");
+            qDebug()<< "++++++++++++++++++++++++"<<QString(encodedData).toUtf8();
+            MediaInfoContainerList list;
+            list.fromJson(QString::fromUtf8(encodedData));
+            for(int i = 0; i < list.size();i++)
+            {
+                MediaInfoContainer container = list.getContainerAt(i);
+                draggedItems.append(_collection->addMedia(container));
             }
         }
         else
         {
             // construction Items by their URLs
             QList<QUrl> urls = data->urls();
-            Core::Media* media;
+            Media* media;
 
-            Core::ICollectionController* collectionController = Core::ICore::collectionController();
+            ICollectionController* collectionController = ICore::collectionController();
 
             for (int i = 0; i < urls.size(); i++)
             {
                 qDebug() << "DROP url: " << urls.at(i);
-                media = collectionController->findMediaByURL( urls.at(i) );
+                media = collectionController->findMediaByURL( urls.at(i), false);
 
                 if (media)
                 {
@@ -219,17 +212,17 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                     qDebug()<<draggedItems.size();
                     qDebug() << draggedItems.at(0)->getMedia().size();
                 }
+                else
+                {
+
+                    MediaInfoContainer info(urls.at(i));
+                    info.setMediaInfo(InfoTitle, urls.at(i).fileName());
+                    draggedItems.append(_collection->addMedia(info));
+
+                }
             }
-
         }
 
-
-/*
-        for ( int i = 0; i < draggedItems.size(); i++)
-        {
-
-        }
-*/
         int row = parent.row();
         int insertPos = -1;
 
@@ -260,10 +253,10 @@ QStringList PlaylistModel::mimeTypes() const
 {
     QStringList types = QAbstractItemModel::mimeTypes();
     types << "text/uri-list";
+    types << "MediaInfoContainer";
 
     return types;
 }
-
 
 
 void PlaylistModel::positionOfActuallyPlayingSongChanged(int from, int to)
@@ -314,7 +307,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     qDebug() << "Index Count: " << indexes.size();
 
     mimeData = QAbstractItemModel::mimeData(indexes);
-    Core::Media* mediaAtIndex;
+    Media* mediaAtIndex;
     foreach (QModelIndex index, indexes)
     {
         qDebug() << "Process Model Index";
@@ -423,8 +416,8 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    Core::Media* media;
-    Core::Song* song;
+    Media* media;
+    Song* song;
 
     if ( (playlist == 0) || (!index.isValid()) )
     {
@@ -435,7 +428,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 
 
-    if (media->getType() != Core::DataItem::SONG)
+    if (media->getType() != DataItem::SONG)
     {
         if(role == Qt::DisplayRole)
         {
@@ -454,7 +447,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 
 
-    song = qobject_cast<Core::Song*>(media);
+    song = qobject_cast<Song*>(media);
     if (!song)
     {
         return QVariant();
@@ -484,12 +477,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QSharedPointer<Core::IPlaylist> PlaylistModel::getPlaylist()
+QSharedPointer<IPlaylist> PlaylistModel::getPlaylist()
 {
     return playlist;
 }
 
-QVariant PlaylistModel::dataSongDisplayRole(Core::Song *song, int column) const
+QVariant PlaylistModel::dataSongDisplayRole(Song *song, int column) const
 {
 
     int length;

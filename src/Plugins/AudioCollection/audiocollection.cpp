@@ -604,7 +604,7 @@ Media* AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
         QString albumArtistName = mediaInfo.getMediaInfo(InfoAlbumArtist).toString();
         QString albumName = mediaInfo.getMediaInfo(InfoAlbum).toString();
         QString genreName = mediaInfo.getMediaInfo(InfoGenre).toString();
-        QString mime = mediaInfo.getMediaInfo(InfoMime).toString();
+        QString mime = mediaInfo.getMediaInfo(InfoMimeType).toString();
 
         QString file = mediaInfo.getURL().toLocalFile();
         if (file.isEmpty())

@@ -29,7 +29,7 @@ namespace Controller
         IMediaCollection*                               getMediaCollection(QUrl filename);
         virtual IMediaCollection*                       getMediaCollectionByHash(QString hash);
         virtual bool                                    saveCollections();
-        virtual Core::Media*                            findMediaByURL(const QUrl &filename);
+        virtual Core::Media*                            findMediaByURL(const QUrl &filename, bool appendToTempCollection = true);
 
     private slots:
 

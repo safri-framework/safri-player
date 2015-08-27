@@ -41,7 +41,7 @@
 
 #ifndef QSPOTIFYSEARCH_H
 #define QSPOTIFYSEARCH_H
-
+#include <QDebug>
 #include <QtCore/QObject>
 
 #include <libspotify/api.h>

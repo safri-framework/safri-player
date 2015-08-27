@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main">main.qml</file>
+        <file>AlbumView.qml</file>
+        <file>Colors.qml</file>
+        <file>Helpers.js</file>
+        <file>SpotifyImage.qml</file>
+        <file>Expander.qml</file>
+        <file>PictureItemDelegate.qml</file>
+        <file>CoverFlow.qml</file>
+        <file>TrackList.qml</file>
+        <file>SearchEdit.qml</file>
+        <file>AlbumOverviewPage.qml</file>
+        <file>ViewLoader.qml</file>
+        <file>SearchPage.qml</file>
+        <file>ExpandableContainer.qml</file>
+        <file>Test.qml</file>
+        <file>ExpandableItem.qml</file>
+        <file>Expandable.qml</file>
+        <file>ArtistOverviewPage.qml</file>
+        <file>Icon.qml</file>
+        <file alias="iconfont">Assets/fontello.ttf</file>
+    </qresource>
+</RCC>

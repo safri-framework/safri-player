@@ -6,7 +6,7 @@
 
 
 
-QT       += core gui widgets
+QT       += core gui widgets xml
 
 TARGET = Safri-Player
 CONFIG   += console
@@ -30,6 +30,7 @@ INSTALLS += deployment
 }
 
 INCLUDEPATH += ../PluginSystem
+INCLUDEPATH += -L/usr/include/i386-linux-gnu/c++/4.7/
 LIBS += -lPluginSystem -L../../lib
 
 SOURCES += main.cpp
@@ -61,3 +62,5 @@ RESOURCES += \
 OTHER_FILES += \
     selectedplugins.lst \
     safri-config.xml
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/src/Safri-Player/android

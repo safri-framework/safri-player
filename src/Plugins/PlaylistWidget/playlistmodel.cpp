@@ -6,7 +6,7 @@
 #include <QDebug>
 #include "Songtree/SongTreeItem.h"
 #include <QSize>
-
+#include <QDataStream>
 
 PlaylistModel::PlaylistModel(QSharedPointer<Core::IPlaylist> playlist, QObject *parent) :
     QAbstractTableModel(parent), playlist(playlist)

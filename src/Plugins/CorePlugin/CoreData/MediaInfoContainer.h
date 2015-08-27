@@ -6,6 +6,8 @@
 #include <QUrl>
 #include <QMap>
 #include <QVariant>
+//#include "MediaInfoContainerList.h"
+
 
 namespace Core
 {
@@ -24,26 +26,31 @@ namespace Core
         InfoFileSize,
         InfoBitRate,
         InfoURL,
-        InfoMime,
-        InfoTemporary
+        InfoTemporary,
+        NONE
     };
 
     class COREPLUGINSHARED_EXPORT MediaInfoContainer : public QObject
     {
+        friend class MediaInfoContainterList;
+
         Q_OBJECT
+
         public:
-
             explicit MediaInfoContainer(QUrl mediaUrl = QUrl(), QObject* parent = 0);
-            MediaInfoContainer(MediaInfoContainer &other);
-
+            MediaInfoContainer(const MediaInfoContainer &other);
             void setMediaInfo(MediaInfoType type, QVariant info);
             QVariant getMediaInfo(MediaInfoType type);
             QUrl getURL();
+            QString toJson();
+            QVariantMap infoMap;
+            static MediaInfoContainer fromJson(QString json);
 
         private:
-
+           static QString typeToString(MediaInfoType type);
+           static MediaInfoType stringToType(QString string);
             QUrl mediaUrl;
-            QMap<MediaInfoType, QVariant> infoMap;
+
     };
 }
 

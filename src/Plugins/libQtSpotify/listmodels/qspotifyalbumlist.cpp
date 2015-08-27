@@ -1,6 +1,8 @@
 #include "qspotifyalbumlist.h"
-
+#include <qdebug.h>
 #include "../qspotifyalbumbrowse.h"
+#include "../SpotifyPlugin/SpotifySafriHelper.h"
+
 
 QSpotifyAlbumList::QSpotifyAlbumList(QObject *parent) :
     ListModelBase<QSpotifyAlbum>(parent)
@@ -12,6 +14,7 @@ QSpotifyAlbumList::QSpotifyAlbumList(QObject *parent) :
     m_roles[TypeRole] = "type";
     m_roles[SectionTypeRole] = "sectionType";
     m_roles[CoverIdRole] = "coverId";
+      m_roles[ContainerRole] = "container";
 }
 
 QVariant QSpotifyAlbumList::data(const QModelIndex &index, int role) const
@@ -35,7 +38,10 @@ QVariant QSpotifyAlbumList::data(const QModelIndex &index, int role) const
     case SectionTypeRole:
         return album->sectionType();
     case CoverIdRole:
-        return album->coverId();
+        return album->coverId();        
+    case ContainerRole:
+        return album->getMediaInfoContainer();
+
     default:
         return QVariant();
     }
@@ -43,7 +49,14 @@ QVariant QSpotifyAlbumList::data(const QModelIndex &index, int role) const
 
 QSpotifyAlbumBrowse *QSpotifyAlbumList::albumBrowse(const int idx)
 {
+    qDebug()<<"ALBUM BROWSE" << idx;
     auto browse = new QSpotifyAlbumBrowse();
+    if( idx >= 0 && m_dataList.size() > idx)
     browse->setAlbum(m_dataList.at(idx));
     return browse;
+}
+
+bool QSpotifyAlbumList::appendToCurrentPlaylist(const int idx)
+{
+    SpotifySafriHelper::instance()->appendToCurrentPlaylist(data(index(idx), ContainerRole).toString());
 }

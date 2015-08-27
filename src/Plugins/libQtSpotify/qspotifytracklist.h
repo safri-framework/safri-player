@@ -47,6 +47,10 @@
 
 #include "shared_ptr.h"
 #include "listmodels/listmodelbase.h"
+#include "Interfaces/ICore.h"
+#include "CoreData/Song.h"
+#include "CoreData/MediaInfoContainerList.h"
+
 
 class QSpotifyTrackList : public ListModelBase<QSpotifyTrack>
 {
@@ -73,7 +77,8 @@ public:
         AlbumObjectRole,
         ArtistObjectRole,
         OfflineStatusRole,
-        RawPtrRole
+        RawPtrRole,
+        ContainerRole
     };
 
     QSpotifyTrackList(QObject *parent = nullptr, bool reverse = false);
@@ -87,7 +92,7 @@ public:
     bool next();
     bool previous();
     void playLast();
-
+    Q_INVOKABLE QString getTracklistAsContainer();
     int totalDuration() const;
 
     bool isShuffle() const { return m_shuffle; }
@@ -122,6 +127,7 @@ private:
     int previousAvailable(int i);
 
     QHash<int, QByteArray> m_roles;
+
 
     bool m_reverse;
 

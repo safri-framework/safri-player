@@ -95,7 +95,7 @@ void TaglibMediaTagger::tagMedia(QUrl media)
         container.setMediaInfo(InfoTrack, track);
         container.setMediaInfo(InfoLength, length);
         container.setMediaInfo(InfoYear, year);
-        container.setMediaInfo(InfoMime, "audio/mpeg");
+        container.setMediaInfo(InfoMimeType, "audio/mpeg");
         container.setMediaInfo(InfoAlbumArtist, albumartist);
         //container.setMediaInfo(InfoFile);
         Q_EMIT mediaTagged(container);

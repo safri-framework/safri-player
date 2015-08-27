@@ -119,6 +119,7 @@ private:
 
     bool m_topHitsReady;
     bool m_dataReady;
+
 };
 
 #endif // QSPOTIFYARTISTBROWSE_H
