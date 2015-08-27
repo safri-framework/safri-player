@@ -15,7 +15,7 @@ SpotifyLookupSidebarWidget::SpotifyLookupSidebarWidget()
    // QQuickWindow::setDefaultAlphaBuffer(true);
     _quickview = new QQuickWidget();
     registerQmlTypes();
-    _quickview->setSource(QUrl("/home/frime/SAFRI/trunk/src/Plugins/SpotifyPlugin/main.qml"));
+    _quickview->setSource(QUrl("qrc:/main"));
     _quickview->setResizeMode(QQuickWidget::SizeRootObjectToView);
     connect(_button, SIGNAL(clicked(bool)), this, SIGNAL(show(bool)));
     _quickview->engine()->addImageProvider("spotify", new QSpotifyImageProvider());

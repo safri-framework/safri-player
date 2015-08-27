@@ -1,11 +1,15 @@
 #include "SpotifySearch.h"
 #include "ui_SpotifySearch.h"
 #include <QDebug>
-
+#include "Interfaces/ICore.h"
 #include "Interfaces/ICore.h"
 #include "Interfaces/IMediaCollection.h"
 #include "iplugin.h"
 #include "pluginmanager.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QVariantMap>
+#include <QTextStream>
 
 #define HANDLE_SIZE = sizeof(sp_track)
 
@@ -16,9 +20,8 @@ SpotifySearch::SpotifySearch(QWidget *parent) :
     _search(new QSpotifySearch(this))
 {
     ui->setupUi(this);
+    login();
     _session = QSpotifySession::instance();
-    _session->login("X", "X");
-
     connect(_session, SIGNAL(isLoggedInChanged()), this, SLOT(loggedIn()));
     connect(this->ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
     connect(_search, SIGNAL(resultsChanged()), this, SLOT(resultsChanged()));
@@ -29,6 +32,50 @@ SpotifySearch::SpotifySearch(QWidget *parent) :
 SpotifySearch::~SpotifySearch()
 {
     delete ui;
+}
+
+bool SpotifySearch::login()
+{
+    QString loginFile = ICore::storageDirectory() + "/spotifylogin.json";
+    if(QFile::exists(loginFile))
+    {
+        QFile file(loginFile);
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QVariantMap map = QJsonDocument::fromJson(file.readAll()).toVariant().toMap();
+            QString login = map["user"].toString();
+            QString pass  = map["password"].toString();
+            QSpotifySession::instance()->login(login, pass);
+            return true;
+        }
+        else
+        {
+            qDebug()<<" COULD NOT OPEN FILE";
+            return false;
+        }
+    }
+    else
+    {
+        writeLoginData("","");
+    }
+    return false;
+}
+
+bool SpotifySearch::writeLoginData(QString login, QString pass)
+{
+    QString loginFile = ICore::storageDirectory() + "/spotifylogin.json";
+    QFile file(loginFile);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&file);
+        QVariantMap map;
+        map.insert("user", login);
+        map.insert("password",pass);
+        stream << QJsonDocument::fromVariant(map).toJson();
+        file.close();
+        return true;
+    }
+    return false;
 }
 
 void SpotifySearch::search()
@@ -42,7 +89,7 @@ void SpotifySearch::search()
 
 void SpotifySearch::loggedIn()
 {
-        qDebug()<<"Online!!!!";
+    qDebug()<<"Online!";
 }
 
 void SpotifySearch::resultsChanged()
@@ -67,7 +114,6 @@ void SpotifySearch::resultsChanged()
 
 void SpotifySearch::browseFinished()
 {
-    qDebug()<<"BUSY?";
     QSpotifyAlbumBrowse* browse = qobject_cast<QSpotifyAlbumBrowse*>(sender());
     if(browse && !browse->busy())
     {
@@ -88,10 +134,10 @@ bool SpotifySearch::addTrack(std::shared_ptr<QSpotifyTrack> ptr)
     container.setMediaInfo(InfoTitle, ptr->name());
     container.setMediaInfo(InfoTrack, ptr->discIndex());
     container.setMediaInfo(InfoLength, ptr->duration()/1000);
-
     container.setMediaInfo(InfoYear, ptr->creationDate());
     container.setMediaInfo(InfoURL, ptr->uriLink());
-
     container.setMediaInfo(InfoAlbumArtist, ptr->artists());
+
     _collection->addMedia(container);
+    return true;
 }

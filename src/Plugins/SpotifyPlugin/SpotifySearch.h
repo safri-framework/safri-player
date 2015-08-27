@@ -23,7 +23,8 @@ private:
     QSpotifySession* _session;
     QSpotifySearch* _search;
     IMediaCollection* _collection;
-
+    bool login();
+    bool writeLoginData(QString login, QString pass);
     bool addTrack(std::shared_ptr<QSpotifyTrack> ptr);
 
 private slots:
