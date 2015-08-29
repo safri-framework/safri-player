@@ -37,6 +37,8 @@ DataItem::DATA_ITEM_TYPE AlbumCoversAssetService::getSupportedDataType()
 
 void AlbumCoversAssetService::updateCovers(QString res)
 {
+    Q_UNUSED( res )
+
     ICollectionController* collController = ICore::collectionController();
 
     // get Collections

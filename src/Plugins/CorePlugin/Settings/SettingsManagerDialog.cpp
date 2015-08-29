@@ -7,9 +7,8 @@
 
 using namespace Core;
 
-SettingsManagerDialog::SettingsManagerDialog(SettingsManager *settingsManager, QWidget *parent) :
-    QDialog(parent), settingsManager(settingsManager),
-    ui(new Ui::SettingsManagerDialog)
+SettingsManagerDialog::SettingsManagerDialog(SettingsManager *settingsManager, QWidget *parent)
+    : QDialog(parent), ui(new Ui::SettingsManagerDialog), settingsManager(settingsManager), settingsModuleWidgets()
 {
     ui->setupUi(this);
 

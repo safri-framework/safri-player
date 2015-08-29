@@ -22,19 +22,19 @@ QString Song::getMimeType()
 }
 
 Song::Song(QString mime, int sID, QString sName, int year, QString filename, QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), filename(filename), year(year), track(-1), length(-1), mime(mime)
+    Media(sID, sName, DataItem::SONG, parent), interpret(0), albumArtist(0), album(0), genre(0), filename(filename), year(year), track(-1), length(-1), mime(mime)
 {
 
 }
 
 Song::Song(QString mime, int sID, QString sName, int year,  QObject *parent) :
-    Media(sID, sName, DataItem::SONG, parent), year(year), track(-1), length(-1), mime(mime)
+    Media(sID, sName, DataItem::SONG, parent), interpret(0), albumArtist(0), album(0), genre(0), filename(), year(year), track(-1), length(-1), mime(mime)
 {
 
 }
 
 Song::Song(QString mime, int sID, QString sName, int year,  QString filename, bool temporary, QObject *parent):
-    Media(sID, sName, DataItem::SONG, temporary, parent), filename(filename), year(year), track(1), length(-1), mime(mime)
+    Media(sID, sName, DataItem::SONG, temporary, parent), interpret(0), albumArtist(0), album(0), genre(0), filename(filename), year(year), track(1), length(-1), mime(mime)
 {
 
 }

@@ -60,6 +60,7 @@ void Widget::setVolumeEnabled(bool value)
 
 void Widget::showLoadingIndicator(QString msg)
 {
+    Q_UNUSED( msg )
     this->ui->time_label->hide();
     this->ui->loaderLabel->show();
     if(!loaderGif)
@@ -246,7 +247,7 @@ void Widget::shuffleActionChecked(bool checked)
 
 void Widget::on_repeat_toggled(bool checked)
 {
-
+    Q_UNUSED( checked )
 }
 
 void Widget::volumeChanged(int volume)

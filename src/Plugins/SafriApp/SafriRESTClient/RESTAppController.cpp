@@ -58,6 +58,7 @@ RESTAppController::~RESTAppController()
 
 QAbstractItemModel *RESTAppController::getSongtreeModel(TREE_HIERARCHY hierarchy)
 {
+    Q_UNUSED( hierarchy )
     songtree = new RESTSongtree(restClient);
     songtreeModel = new RESTSongtreeModel(songtree->getRoot());
 

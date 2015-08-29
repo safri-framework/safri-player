@@ -269,6 +269,7 @@ void DarkBluePlayerWidget::mediaChanged(Core::Media* media)
 
 bool DarkBluePlayerWidget::eventFilter(QObject *obj, QEvent *event)
 {
+    Q_UNUSED( obj )
     if(event->type() == QEvent::Resize)
     {
             playerControl->move(window->width()/2-74, window->height()-93);

@@ -25,7 +25,9 @@ using namespace Core;
 ICore* ICore::m_instance = 0;
 
 ICore::ICore()
-    : m_playbackController(0), m_audioBackend(0), m_playlistFactory(0), m_guiController(0), m_collectionController(0), m_skin(0)
+    : m_audioBackend(0), m_playlistFactory(0), m_settingsManager(0), m_assetController(0), m_mediaBackends(),
+      m_collectionFactories(), m_skin(0), m_playbackController(0), m_guiController(0), m_infoController(0),
+      m_collectionController(0), m_notificationController(0)
 {
     qDebug() << "ICore()";
     connect(PluginSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)), this, SLOT(objectAddedToObjectPool(QObject*)));

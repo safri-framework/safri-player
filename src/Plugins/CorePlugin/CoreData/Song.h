@@ -75,10 +75,11 @@ namespace Core
             Album* album;
             Genre* genre;
             QString filename;
-            QString mime;
+
             int year;
             int track;
             int length;
+            QString mime;
     };
 }
 

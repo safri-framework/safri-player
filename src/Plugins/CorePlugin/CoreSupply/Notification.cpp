@@ -3,7 +3,7 @@
 using namespace Core;
 
 Notification::Notification(NotificationType type, QString text, QObject *parent) :
-    QObject(parent), type(type), description(text)
+    QObject(parent), description(text), type(type)
 {
 }
 

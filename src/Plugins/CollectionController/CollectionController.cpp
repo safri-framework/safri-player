@@ -142,6 +142,7 @@ Media *Controller::CollectionController::findMediaByURL(const QUrl &filename, bo
         return 0;
 
     bool first = false;
+    Q_UNUSED( first )
     if(!m_tempAudioCollection)
     {
         IMediaCollection* mediaCollection = Core::ICore::createMediaCollection("org.safri.collection.audio","not in Database");

@@ -30,4 +30,5 @@ void CoverSettingsWidget::transferSettings()
 
 bool CoverSettingsWidget::isModified()
 {
+    return false;
 }

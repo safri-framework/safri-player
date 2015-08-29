@@ -14,7 +14,7 @@
 #include <QHBoxLayout>
 
 PlaylistView::PlaylistView(QString name, QWidget *parent) :
-    QTreeView(parent), name(name), restoringSectionOrder(false)
+    QTreeView(parent), startDragPosition(), dragStarted(false), restoringSectionOrder(false), name(name), headerView(0)
 {
     this->setHeaderHidden(false);
     this->setAcceptDrops(true);
@@ -535,6 +535,9 @@ void PlaylistView::onSectionVisibilityChanged(int logicalIndex)
 
 void PlaylistView::onSectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex)
 {
+    Q_UNUSED( logicalIndex )
+    Q_UNUSED( oldVisualIndex )
+    Q_UNUSED( newVisualIndex )
     // we're only want to store manual triggerd section moves
     if (restoringSectionOrder)
     {
@@ -604,6 +607,7 @@ void PlaylistView::onSettingsChanged(QString setting)
 
 void PlaylistView::focusOutEvent(QFocusEvent *event)
 {
+    Q_UNUSED( event )
     //this->selectionModel()->clearSelection();
     //event->
 }

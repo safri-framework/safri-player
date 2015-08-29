@@ -223,9 +223,10 @@ QString QSpotifyTrack::albumCoverId() const
 
 QString QSpotifyTrack::uriLink() const
 {
-
     char string[2048];
     int size = sp_link_as_string(sp_link_create_from_track(sptrack(), 0), string, 2048);
+    Q_UNUSED( size )
+
     QString qstring(string);
     return qstring;
 }

@@ -585,7 +585,6 @@ Media* AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
     bool newArtist = false;
     bool newAlbum  = false;
     bool newGenre  = false;
-    bool newAlbumArtist = false;
 
     AudioCollection* audioCollection = this;
     bool isTemporary = false; //  functionality can be added here, if needed
@@ -639,7 +638,8 @@ Media* AudioCollection::addMedia(MediaInfoContainer &mediaInfo)
                 albumArtist->addAlbum(album);
                 album->setAlbumArtist(albumArtist);
                 newAlbum = true;
-                newAlbumArtist = true;
+                // not used
+                // newAlbumArtist = true;
             }
 
             if(getArtistsByName(artistName).size() > 0)

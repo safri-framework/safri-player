@@ -28,11 +28,9 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     ui(new Ui::TabbedPlaylistWidget), currentPlaylistTabWidget(0), currentPlayingListView(0), newTabCount(1), currentState(Core::NODATA)
 {
     ui->setupUi(this);
-    PlaylistTabWidget* newTabWidget;
 
     connect(Core::ICore::playbackController(), SIGNAL(stateChanged(Core::playState)), this, SLOT(playbackControllerStateChanged(Core::playState)));
     connect(Core::ICore::instance(), SIGNAL( aboutToClose() ), this, SLOT( onClose() ) );
-
 
     Core::SettingsModule* settings = Core::ICore::settingsManager()->getModule("org.safri.tabbedplaylist");
     bool loadTabs = settings->getSetting("loadTabsOnStart").toBool();
@@ -49,8 +47,7 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
         addNewPlaylist("Safri", Core::ICore::createPlaylist());
     }
 
-
-
+    //PlaylistTabWidget* newTabWidget;
     //newTabWidget = addNewPlaylist("Safri", Core::ICore::createPlaylist());
     //addNewPlaylist("Wusel", newTabWidget);
     //addNewPlaylist("Dusel", newTabWidget);
@@ -73,7 +70,7 @@ TabbedPlaylistWidget::~TabbedPlaylistWidget()
 
 void TabbedPlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
-
+    Q_UNUSED(playlist)
 }
 
 void TabbedPlaylistWidget::showCurrentPlaylist()
@@ -83,17 +80,17 @@ void TabbedPlaylistWidget::showCurrentPlaylist()
 
 QSharedPointer<Core::IPlaylist> TabbedPlaylistWidget::newPlaylist()
 {
-
+    return QSharedPointer<Core::IPlaylist>( Core::ICore::createPlaylist() );
 }
 
 void TabbedPlaylistWidget::isAnimated(bool animated)
 {
-
+    Q_UNUSED( animated )
 }
 
 void TabbedPlaylistWidget::itemsSelected(QList<Core::Item*> selection)
 {
-
+    Q_UNUSED( selection )
 }
 
 PlaylistTabWidget *TabbedPlaylistWidget::addNewPlaylist(QString name, PlaylistTabWidget *tabWidget)
@@ -143,6 +140,8 @@ bool TabbedPlaylistWidget::isCurrentPlayingView(QObject *listView)
     }
     else
         qDebug()<<"no View";
+
+    return false;
 }
 
 void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
@@ -157,7 +156,8 @@ void TabbedPlaylistWidget::playlistViewDoubleClicked(const QModelIndex &index)
             QSharedPointer<Core::IPlaylist> playlist = playlistModel->getPlaylist();
             playlist->setCurrentMedia(index.row());
 
-            Core::Media* media = playlist->getCurrentMedia();
+            // Unused
+            // Core::Media* media = playlist->getCurrentMedia();
 
             PlaylistTabWidget *tabWidget = qobject_cast<PlaylistTabWidget*>(senderView->parent()->parent()->parent());
             if (tabWidget != 0)

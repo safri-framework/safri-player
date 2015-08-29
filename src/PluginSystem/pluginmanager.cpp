@@ -170,6 +170,8 @@ bool PluginManager::isPluginEnabled(QString pluginID)
         }
         currentLine = in.readLine();
     }
+
+    return false;
 }
 
 bool PluginManager::setPluginEnabled(QString pluginID, bool enabled)

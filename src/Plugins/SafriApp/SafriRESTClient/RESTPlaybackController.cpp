@@ -304,6 +304,7 @@ void RESTPlaybackController::previousActionSlot()
 
 void RESTPlaybackController::shuffleActionSlot(bool value)
 {
+    Q_UNUSED( value )
 }
 
 // ****************** BEGIN NETWORK HANDLING ******************

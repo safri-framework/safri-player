@@ -65,12 +65,12 @@ void SpotifyMediaBackend::stop()
 
 void SpotifyMediaBackend::setVolume(int percent)
 {
-
+    Q_UNUSED( percent )
 }
 
 int SpotifyMediaBackend::getVolume()
 {
-
+    return 0;
 }
 
 QStringList SpotifyMediaBackend::getSupportedMimeTypes()

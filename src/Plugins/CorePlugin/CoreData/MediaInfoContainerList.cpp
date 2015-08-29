@@ -19,13 +19,15 @@ QString Core::MediaInfoContainerList::toJson()
 
 bool Core::MediaInfoContainerList::fromJson(QString json)
 {
-    MediaInfoContainer container;
     QJsonParseError error;
     QVariantList list = QJsonDocument::fromJson(json.toUtf8(), &error).toVariant().toList();
     if(error.error == QJsonParseError::NoError)
     {
         _list = list;
+        return true;
     }
+
+    return false;
 }
 
 int Core::MediaInfoContainerList::size()

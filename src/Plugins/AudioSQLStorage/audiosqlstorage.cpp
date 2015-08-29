@@ -41,14 +41,14 @@ Core::IMediaCollection *AudioSQLStorage::loadMediaCollection()
         {
             qDebug() << "Could not create database!";
             sqlStorage->close();
-            return false;
+            return 0;
         }
 
         if ( !checkIfDatabaseExists() )
         {
             qDebug() << "Database tables don't exists. givig up...";
             sqlStorage->close();
-            return false;
+            return 0;
         }
     }
 

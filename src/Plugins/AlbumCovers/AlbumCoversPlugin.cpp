@@ -8,6 +8,8 @@ AlbumCoversPlugin::AlbumCoversPlugin()
 
 bool AlbumCoversPlugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED( arguments );
+
     AlbumCoversAssetService* service = new AlbumCoversAssetService();
     CoverSettingsWidget* settingsWidget = new CoverSettingsWidget();
     connect(settingsWidget, SIGNAL(updateCovers()), service, SLOT(updateCovers()));

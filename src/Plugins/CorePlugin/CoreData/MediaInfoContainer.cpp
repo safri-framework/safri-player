@@ -4,13 +4,13 @@
 using namespace Core;
 
 MediaInfoContainer::MediaInfoContainer(QUrl mediaUrl, QObject *parent)
-    : QObject(parent), mediaUrl(mediaUrl)
+    : QObject(parent), infoMap(), mediaUrl(mediaUrl)
 {
 
 }
 
 MediaInfoContainer::MediaInfoContainer(const MediaInfoContainer &other)
-    : QObject( other.parent() ), mediaUrl(other.mediaUrl), infoMap(other.infoMap)
+    : QObject( other.parent() ), infoMap(other.infoMap), mediaUrl(other.mediaUrl)
 {
 
 }
@@ -86,7 +86,10 @@ QString MediaInfoContainer::typeToString(MediaInfoType type)
             return "URL";
         case InfoYear:
             return "Year";
+        default:
+            return "NONE";
     }
+    return "NONE";
 }
 
 MediaInfoType MediaInfoContainer::stringToType(QString string)

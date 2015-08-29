@@ -6,13 +6,13 @@
 #include "ProgressCircle.h"
 PlayerControl::PlayerControl(QWidget *parent) :
     QWidget(parent),
-    nextCurrentlyPressed(false),
-    previousCurrentlyPressed(false),
-    playPauseCurrentlyPressed(false),
+    next(0), nextPressed(0), previous(0), previousPressed(0), playing(0), playingPressed(0), pause(0), pausePressed(0), progress(0),
+    nextCurrentlyPressed(false), previousCurrentlyPressed(false), playPauseCurrentlyPressed(false),
     isPlaying(false),
-    showSpinner(false),
     showProgress(false),
-    count(0)
+    showSpinner(false),
+    rotation(0), rotation2(0), rotation3(0),
+    count(0), progressAngle(0)
 {
     next            = new QImage(":/control/Ressources/control/next_normal.png");
     nextPressed     = new QImage(":/control/Ressources/control/next_pressed.png");
@@ -38,6 +38,8 @@ PlayerControl::PlayerControl(QWidget *parent) :
 void PlayerControl::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
+
+    Q_UNUSED( event )
 
     if(!nextCurrentlyPressed)
         painter.drawImage(75,27, *next);
