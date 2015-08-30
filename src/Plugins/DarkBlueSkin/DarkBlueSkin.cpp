@@ -62,12 +62,12 @@ QString DarkBlueSkin::getStyleSheet()
 
 QStyledItemDelegate *DarkBlueSkin::getSongTreeItemDelegate()
 {
-
+    return 0;
 }
 
 QStyledItemDelegate *DarkBlueSkin::getPlaylistItemDelegate()
 {
-
+    return 0;
 }
 
 void DarkBlueSkin::paintCurrentSongRowInPlaylist(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -109,17 +109,19 @@ QString DarkBlueSkin::getName()
 
 QSize DarkBlueSkin::playlistRowSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED( index )
     return QSize(option.rect.width(), 30);
 }
 
 void DarkBlueSkin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    Q_UNUSED( index )
     if(option.features && QStyleOptionViewItem::Alternate)
         painter->fillRect(option.rect, QColor(255,255,255,7));
 }
 
 QSize DarkBlueSkin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-       return QSize(option.rect.width(), 25);
+    Q_UNUSED( index )
+    return QSize(option.rect.width(), 25);
 }

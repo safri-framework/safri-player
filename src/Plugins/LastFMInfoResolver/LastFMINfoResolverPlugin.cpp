@@ -4,6 +4,7 @@ using namespace Plugins;
 
 bool LastFMInfoResolverPlugin::initialize(QStringList &arguments)
 {
+    Q_UNUSED( arguments )
     addObject(new LastFMInfoResolver());
     return true;
 }

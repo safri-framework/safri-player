@@ -138,6 +138,7 @@ QModelIndexList PlaylistView::selectedIndexes() const
 
 void PlaylistView::keyPressEvent(QKeyEvent *event)
 {
+    Q_UNUSED( event )
     /*
     if (event->key() == Qt::Key_Delete)
     {
@@ -152,6 +153,7 @@ void PlaylistView::keyPressEvent(QKeyEvent *event)
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 {
+    Q_UNUSED( event )
     if(dragStarted)
     {
 

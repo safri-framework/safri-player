@@ -8,6 +8,7 @@ SongTreeView::SongTreeView(QWidget *parent) :
 
 void SongTreeView::focusOutEvent(QFocusEvent *event)
 {
+    Q_UNUSED( event )
     qDebug()<<"FOCUS OUT";
     this->selectionModel()->clearSelection();
 }

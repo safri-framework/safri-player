@@ -101,5 +101,7 @@ void Safri3Skin::paintTreeItem(QPainter *painter, const QStyleOptionViewItem &op
 
 QSize Safri3Skin::treeViewSizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    Q_UNUSED( option )
+    Q_UNUSED( index )
+    return QSize();
 }

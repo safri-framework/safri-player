@@ -36,6 +36,7 @@ void NotificationWidget::showNotification(Notification *notification)
 
 void NotificationWidget::notificationFinished(bool success)
 {
+    Q_UNUSED( success )
     ProgressNotification* notification = qobject_cast<ProgressNotification*>(sender());
     if(notification)
     {
