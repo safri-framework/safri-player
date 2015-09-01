@@ -17,7 +17,7 @@
 using namespace SafriRESTClient;
 
 RESTPlaylist::RESTPlaylist(RESTClient *restClient, QObject *parent) :
-    QObject(parent), client(restClient), songList(), currentMediaPosition(-1), m_valid(false), versionCheckTimer(new QTimer(this)), displayedPlaylistVersion(-1)
+    QObject(parent), client(restClient), songList(), currentMediaPosition(-1), displayedPlaylistVersion(-1), m_valid(false), versionCheckTimer(new QTimer(this))
 {
    // requestCurrentPlaylist();
     connect(versionCheckTimer, SIGNAL(timeout()), this, SLOT(versionTimeoutSlot()));

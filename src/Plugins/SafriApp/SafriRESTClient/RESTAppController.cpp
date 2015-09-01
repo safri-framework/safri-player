@@ -20,7 +20,7 @@
 using namespace SafriRESTClient;
 
 RESTAppController::RESTAppController(QObject *parent) :
-    IAppController(parent), playlist(0), playlistModel(0), songtree(0), songtreeModel(0)
+    IAppController(parent), songtree(0), songtreeModel(0), playlist(0), playlistModel(0)
 {
     // first we store a pointer to the original playback controller
     localPlaybackController = Core::ICore::playbackController();

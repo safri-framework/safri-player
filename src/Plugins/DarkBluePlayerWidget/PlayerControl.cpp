@@ -143,12 +143,12 @@ void PlayerControl::setPlaying(bool val)
 
 void PlayerControl::timeout()
 {
-    count = ++count %6;
-    rotation = ++rotation%360;
+    count = (count+1) %6;
+    rotation = (rotation+1)%360;
     if (count % 2 == 0)
-        rotation2 = ++rotation2%360;
+        rotation2 = (rotation2+1)%360;
     if (count % 3 == 0)
-        rotation3 = ++rotation3%360;
+        rotation3 = (rotation3+1)%360;
 
     repaint();
 }

@@ -95,7 +95,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QAbstractItemModel* plModel;
         QQmlContext* context;
         QSharedPointer<Core::IPlaylist> playList;
-        bool signalConnectionsInitialized;
+
 
         QMetaObject::Connection playbackController_StateChanged;
         QMetaObject::Connection playbackController_Update;
@@ -106,6 +106,7 @@ class SAFRIAPPSHARED_EXPORT ViewController: public QObject
         QMetaObject::Connection playbackController_volChanged;
 
         float tmpVolDiff;
+        bool signalConnectionsInitialized;
         float currentVol;
         QQuickView *view;
         bool isInitialized;

@@ -91,10 +91,11 @@ namespace SafriRESTClient
             QAction *m_pauseAction;
             QAction *m_playAction;
 
-            RESTClient* client;
             QTimer* statusTimer;
-            int mediaTotalTime;
+            RESTClient* client;
             int currentTime;
+            int mediaTotalTime;
+
             int volume;
 
             Core::Media* currentMedia;

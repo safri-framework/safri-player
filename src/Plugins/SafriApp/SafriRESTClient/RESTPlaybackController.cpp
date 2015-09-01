@@ -16,7 +16,7 @@ using namespace Core;
 using namespace SafriRESTClient;
 
 RESTPlaybackController::RESTPlaybackController(RESTClient *restClient, QObject *parent) :
-    statusTimer(new QTimer(this)), client(restClient), currentState(Core::NODATA), currentTime(0), mediaTotalTime(-1)
+    currentState(Core::NODATA), statusTimer(new QTimer(this)), client(restClient),  currentTime(0), mediaTotalTime(-1)
 {
     this->setParent(parent);
 

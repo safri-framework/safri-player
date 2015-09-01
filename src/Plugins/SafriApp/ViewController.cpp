@@ -25,13 +25,13 @@
 
 ViewController::ViewController(IAppController *appController, QObject* parent): QObject(parent),
     appController(appController),
+    dialogController(0),
     model(0),
     plModel(0),
     signalConnectionsInitialized(false),
+    currentVol(100),
     view(0),
-    isInitialized(false),
-    dialogController(0),
-    currentVol(100)
+    isInitialized(false)
 {
     view = new QQuickView();
     connect(view, SIGNAL(statusChanged(QQuickView::Status)), this, SLOT(QMLStatusChanged(QQuickView::Status)));

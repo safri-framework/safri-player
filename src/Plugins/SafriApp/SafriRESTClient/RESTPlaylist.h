@@ -61,12 +61,11 @@ namespace SafriRESTClient
 
 
         private:
-
             RESTClient* client;
             QList<Core::MediaInfoContainer*> songList;
             int currentMediaPosition;
-            bool m_valid;
             double displayedPlaylistVersion;
+            bool m_valid;
             void requestCurrentPlaylist();
             static const int VERSION_TIMER_INTERVAL = 1000;
             QTimer* versionCheckTimer;

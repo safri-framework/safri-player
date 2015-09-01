@@ -21,7 +21,7 @@
 #include "playlistmodel.h"
 
 LocalAppController::LocalAppController(QObject *parent) :
-    IAppController(parent), songTree(0), playlist(0), playlistModel(0), treeHierarchy(0), model(0), coverModel(0), coverSongTree(0)
+    IAppController(parent), playlist(0), playlistModel(0), treeHierarchy(0), model(0), coverModel(0), songTree(0), coverSongTree(0)
 {
 
     playlistModel = new PlaylistModel(Core::ICore::createPlaylist(), this);

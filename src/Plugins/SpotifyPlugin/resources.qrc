@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file alias="main">main.qml</file>
         <file>AlbumView.qml</file>
-        <file>Colors.qml</file>
         <file>Helpers.js</file>
         <file>SpotifyImage.qml</file>
         <file>Expander.qml</file>

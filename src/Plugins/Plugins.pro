@@ -5,7 +5,7 @@ CONFIG += ordered
 
 
 
-SUBDIRS += SafriMPC
+#SUBDIRS += SafriMPC
 
 SUBDIRS += CorePlugin \
     SpotifyPlugin

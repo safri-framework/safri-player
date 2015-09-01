@@ -37,16 +37,18 @@ class LocalAppController : public IAppController
     private:
 
         QList<Core::ITreeItemType*>*                createTreeHierachy(TREE_HIERARCHY hierarchy);
-        SongTreeModel*                              model;
-        SongTreeModel*                              coverModel;
-        Core::SongTree*                             coverSongTree;
-        Core::SongTree*                             songTree;
-
-
-
         QSharedPointer<Core::IPlaylist>             playlist;
         PlaylistModel*                              playlistModel;
         QList<Core::ITreeItemType *> *              treeHierarchy;
+        SongTreeModel*                              model;
+        SongTreeModel*                              coverModel;
+        Core::SongTree*                             songTree;
+        Core::SongTree*                             coverSongTree;
+
+
+
+
+
 
 
     private slots:
