@@ -47,7 +47,12 @@
 
 #include <QtCore/QDebug>
 
-#include <libspotify/api.h>
+#ifdef __APPLE__
+ #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
+
 
 #include "qspotifyalbum.h"
 #include "qspotifyartist.h"

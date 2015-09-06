@@ -2,9 +2,9 @@
 #define MEDIAINFOCONTAINERLIST_H
 
 #include <QObject>
-#include "MediaInfoContainer.h"
-#include "../CorePlugin_global.h"
 
+#include "../CorePlugin_global.h"
+#include "MediaInfoContainer.h"
 
 namespace Core
 {

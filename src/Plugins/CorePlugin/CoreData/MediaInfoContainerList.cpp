@@ -2,6 +2,7 @@
 #include <QVariantList>
 #include <QJsonDocument>
 
+
 Core::MediaInfoContainerList::MediaInfoContainerList(QObject *parent) :
     QObject(parent)
 {

@@ -28,7 +28,7 @@ private:
     bool addTrack(std::shared_ptr<QSpotifyTrack> ptr);
 
 private slots:
-    void tagTracklist(QSpotifyTrackList* list);
+    //void tagTracklist(QSpotifyTrackList* list);
     void search();
     void loggedIn();
     void resultsChanged();

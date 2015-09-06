@@ -20,7 +20,7 @@ signals:
     
 public slots:
     void rotate();
-    void setRotaion(int speed);
+  //  void setRotaion(int speed);
 
 protected:
     void paintEvent(QPaintEvent *);

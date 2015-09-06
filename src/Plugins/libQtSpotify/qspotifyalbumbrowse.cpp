@@ -46,7 +46,13 @@
 #include <QtCore/QHash>
 #include <QtCore/QMutex>
 
-#include <libspotify/api.h>
+#ifdef __APPLE__
+ #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
+
+
 #include <QDebug>
 #include "qspotifyalbum.h"
 #include "qspotifyplaylist.h"

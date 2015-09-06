@@ -225,7 +225,7 @@ void Playlist::deleteMedia(int value)
     // to remove the playing icon from the playlist
     // so temporarily we set the current playing song to -1
 
-    else if ( (value == currentMedia) )
+    else if ( value == currentMedia )
     {
         // but when the current playing song finished we want the
         // playlist to continues with the next song that was actualy after

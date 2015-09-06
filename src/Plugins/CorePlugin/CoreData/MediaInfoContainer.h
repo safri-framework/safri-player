@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QMap>
 #include <QVariant>
+#include <QVariantMap>
 //#include "MediaInfoContainerList.h"
 
 

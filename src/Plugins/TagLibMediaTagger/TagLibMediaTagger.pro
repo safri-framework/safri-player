@@ -37,8 +37,9 @@ android {
     macx {
         INCLUDEPATH += /opt/local/include
         LIBS += -L"/opt/local/lib"
-        LIBS += -ltag
+        LIBS += -ltag_c
     }
+
 
     !macx{
         unix {

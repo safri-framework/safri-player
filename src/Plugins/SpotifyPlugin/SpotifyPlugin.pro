@@ -20,14 +20,14 @@ SOURCES += SpotifyPlugin.cpp \
     SpotifyLookupSidebarWidget.cpp \
     SpotifySearch.cpp \
     SpotifyMediaBackend.cpp \
-    SpotifySafriHelper.cpp
+    SpotifySafriHelper.cpp \
 
 HEADERS += SpotifyPlugin.h\
         spotifyplugin_global.h \
     SpotifyLookupSidebarWidget.h \
+    SpotifySafriHelper.h \
     SpotifySearch.h \
-    SpotifyMediaBackend.h \
-    SpotifySafriHelper.h
+    SpotifyMediaBackend.h
 
 unix {
     target.path = /usr/lib
@@ -35,11 +35,25 @@ unix {
 }
 
 OTHER_FILES += \
-    spotifyplugin.json \
-    main.qml
-//
-FORMS += \
-    SpotifySearch.ui
+    spotifyplugin.json
 
 RESOURCES += \
     resources.qrc
+
+FORMS += \
+    SpotifySearch.ui
+CONFIG += c++11
+
+
+macx
+{
+    QMAKE_LFLAGS += -F/Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal
+    INCLUDEPATH += /Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal/libspotify.framework
+    LIBS += -framework libspotify
+}
+
+unix
+{
+
+
+}

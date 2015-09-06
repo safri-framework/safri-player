@@ -9,7 +9,7 @@ using namespace Core;
 AbstractInfoResolver::AbstractInfoResolver(QObject *parent) :
     IInfoResolver(parent), running(false), workerThread(0), timeOutThreshold(15000)
 {
-    QMutex fifoMutex();
+    QMutex fifoMutex;
     timoutTimer = new QTimer(this);
     timoutTimer->setSingleShot(true);
     timoutTimer->setInterval(timeOutThreshold);

@@ -69,10 +69,10 @@ ARCH = $$QMAKE_HOST.arch
 equals(ARCH, armv7l) {
 message(arm build)
     INCLUDEPATH += ../libspotify/include
-    LIBS += -L$$PWD/../libspotify/lib -lspotify
+ #   LIBS += -L$$PWD/../libspotify/lib -lspotify
     DEFINES += ARM_BUILD
 } else {
     message(non-arm build)
-    INCLUDEPATH += ../libspotify_emu/include
-    LIBS += -L$$PWD/../libspotify_emu/lib -lspotify
+ #   INCLUDEPATH += ../libspotify_emu/include
+  #  LIBS += -L$$PWD/../libspotify_emu/lib -lspotify
 }

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Dialogs 1.0
 import Qt.labs.folderlistmodel 1.0
 

@@ -1,4 +1,4 @@
-//import QtQuick 2.0
+//import QtQuick 2.2
 //import QtQuick.Layouts 1.1
 //Rectangle
 //{
@@ -35,7 +35,7 @@
 
 
 import QtQuick.Layouts 1.0
-import QtQuick 2.0
+import QtQuick 2.2
 
 Item {
     width: 300; height: 600

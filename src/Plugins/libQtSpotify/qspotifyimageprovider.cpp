@@ -44,7 +44,12 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtGui/QPainter>
 
-#include <libspotify/api.h>
+#ifdef __APPLE__
+ #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
+
 
 #include "qspotifysession.h"
 

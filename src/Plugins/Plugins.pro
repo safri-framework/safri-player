@@ -7,8 +7,8 @@ CONFIG += ordered
 
 #SUBDIRS += SafriMPC
 
-SUBDIRS += CorePlugin \
-    SpotifyPlugin
+SUBDIRS += CorePlugin
+SUBDIRS += SpotifyPlugin
 SUBDIRS += DarkBluePlayerWidget
 SUBDIRS += M3UPlaylistStorage
 

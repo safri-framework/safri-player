@@ -4,7 +4,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QString>
 
-#include <libspotify/api.h>
+#ifdef __APPLE__
+  #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
 
 extern const QEvent::Type NotifyMainThreadEventType;
 extern const QEvent::Type ConnectionErrorEventType;

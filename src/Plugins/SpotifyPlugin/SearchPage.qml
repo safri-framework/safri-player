@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import "Helpers.js" as Helpers
 import QtQuick.Layouts 1.1
 import QtSpotify 1.0

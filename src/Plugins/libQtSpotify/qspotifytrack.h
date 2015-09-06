@@ -47,7 +47,11 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QVector>
 
-#include <libspotify/api.h>
+#ifdef __APPLE__
+ #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
 
 #include "qspotifyobject.h"
 

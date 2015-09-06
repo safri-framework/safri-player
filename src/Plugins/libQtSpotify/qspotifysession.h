@@ -44,7 +44,12 @@
 
 #include <QtCore/QObject>
 #include <QtMultimedia/QAudio>
-#include <libspotify/api.h>
+
+#ifdef __APPLE__
+  #include <Headers/api.h>
+#elif
+    #include <libspotify/api.h>
+#endif
 
 #include "shared_ptr.h"
 
