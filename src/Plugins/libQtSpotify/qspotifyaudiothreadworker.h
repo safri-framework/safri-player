@@ -10,7 +10,7 @@
 
 #ifdef __APPLE__
  #include <Headers/api.h>
-#elif
+#else
     #include <libspotify/api.h>
 #endif
 

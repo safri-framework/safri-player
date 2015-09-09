@@ -29,10 +29,7 @@ HEADERS += SpotifyPlugin.h\
     SpotifySearch.h \
     SpotifyMediaBackend.h
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+
 
 OTHER_FILES += \
     spotifyplugin.json
@@ -45,15 +42,14 @@ FORMS += \
 CONFIG += c++11
 
 
-macx
+macx:
 {
-    QMAKE_LFLAGS += -F/Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal
-    INCLUDEPATH += /Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal/libspotify.framework
-    LIBS += -framework libspotify
+#    QMAKE_LFLAGS += -F/Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal
+#    INCLUDEPATH += /Users/friedemann/Downloads/libspotify-12.1-2.51-Darwin-universal/libspotify.framework
+#    LIBS += -framework libspotify
 }
 
-unix
+unix:!macxr
 {
-
-
+    LIBS += -L$$PWD/../libspotify/lib -lspotify
 }
