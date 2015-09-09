@@ -17,7 +17,7 @@ Rectangle
     visible: Stack.status == Stack.Active
     Stack.onStatusChanged: if(Stack.status == Stack.Inactive)browse.destroy()
 
-    Rectangle{color: green; width: 20; height: 20; MouseArea{anchors.fill: parent;onClicked: stackView.pop()}}
+    Rectangle{color: "green"; width: 20; height: 20; MouseArea{anchors.fill: parent;onClicked: stackView.pop()}}
     ColumnLayout
     {
         id:layout

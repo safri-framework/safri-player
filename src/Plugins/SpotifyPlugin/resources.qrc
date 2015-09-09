@@ -19,5 +19,6 @@
         <file>ArtistOverviewPage.qml</file>
         <file>Icon.qml</file>
         <file alias="iconfont">Assets/fontello.ttf</file>
+        <file>TestDelegate.qml</file>
     </qresource>
 </RCC>

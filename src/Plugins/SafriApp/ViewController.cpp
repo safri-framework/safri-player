@@ -364,7 +364,7 @@ void ViewController::setupSongtreeModel(IAppController::TREE_HIERARCHY hierarchy
 void ViewController::restSettingsChanged(QString setting)
 {
     Core::SettingsModule *restSettings = Core::ICore::settingsManager()->getModule("org.safri.restapi");
-    QObject* textField;
+    QObject* textField = 0;
 
     if (setting == "host")
     {

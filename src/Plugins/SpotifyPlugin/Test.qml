@@ -1,131 +1,32 @@
-//import QtQuick 2.2
-//import QtQuick.Layouts 1.1
-//Rectangle
-//{
-//    width: 100
-//    height: 62
-//    color: "grey"
-//    ExpandableContainer
-//    {
-//        anchors.fill: parent
-//        Expandable
-//        {
-//            Rectangle{color:"green"; Layout.fillWidth: true;Layout.fillHeight: true}
-//            expandedHeight: 200
-//            fixHeight: true
-
-
-//        }
-
-//        Expandable
-//        {
-//            Rectangle{color:"blue"; Layout.fillWidth: true;Layout.fillHeight: true}
-//            expandedHeight:  200
-//        }
-
-//        Expandable
-//        {
-//            Rectangle{color:"red"; Layout.fillWidth: true; Layout.fillHeight: true}
-//            expandedHeight: 200
-//        }
-//    }
-
-//}
-
-
-
 import QtQuick.Layouts 1.0
 import QtQuick 2.2
 
 Item {
     width: 300; height: 600
 
-    DropArea {
-        width: 100; height: 100; anchors.centerIn: parent
-
-        Rectangle {
-            anchors.fill: parent
-            color: parent.containsDrag ? "red" : "green"
-        }
-
-        onEntered: print("entered");
-        onExited: print("exited");
-        onDropped: print("dropped");
-    }
-
-    Rectangle {
-        x: 15; y: 15; width: 30; height: 30; color: "blue"
-
-        // I've added this property for simplicity's sake.
-        property bool dragActive: dragArea.drag.active
-
-        // This can be used to get event info for drag starts and
-        // stops instead of onDragStarted/onDragFinished, since
-        // those will neer be called if we don't use Drag.active
-        onDragActiveChanged: {
-            if (dragActive) {
-                print("drag started")
-               // Drag.start();
-            } else {
-                print("drag finished")
-               // Drag.drop();
-            }
-        }
-
-        Drag.active: dragActive
-        Drag.dragType: Drag.Automatic
-       Drag.mimeData: {"hallo":"welt"}
-        // These are now handled above.
-        //Drag.onDragStarted: print("drag started");
-        //Drag.onDragFinished: print("drag finished");
-
-        MouseArea {
-            id: dragArea
-            anchors.fill: parent
-            drag.target: parent
-        }
-    }
-
-
-    Rectangle
+    ColumnLayout
     {
-       // anchors.fill: parent
-        color: "green"
-        width: 40
-        height: 40
-        id: draggable
-        Drag.active: mouseArea.drag.active
-      //  Drag.hotSpot.x: 0
-      //  Drag.hotSpot.y: 0
-    //    Drag.onDragStarted:  Drag.mimeData = { "MediaInfoContainer": container }
+        width: parent.width
+        height: parent.height
 
-
-        Drag.dragType: Drag.Automatic
-        MouseArea
+        TestDelegate
         {
-//            RowLayout
-//            {
-//                width: parent.width
-//                height: 40
-
-//                spacing: 0
-//                Icon{ icon: icons.play;height: parent.height}
-//                Icon{ icon: icons.addtolist;height: parent.height}
-//                Item{Layout.fillWidth: true}
-//                Icon{ icon: icons.star;height: parent.height }
-//            }
-
-          //  drag.onActiveChanged: print(drag.active+" ACTIVE?")
-          //  preventStealing: true
-          //  hoverEnabled: true
-            anchors.fill: parent
-            id: mouseArea
-            drag.target: draggable
-           // onClicked: root.clicked()
-            //propagateComposedEvents: true
+            width: 30
+            height: 30
+            jsonContainer:"[\n    {\n        \"Album\": \"Redeemer of Souls (Deluxe)\",\n        \"AlbumArtist\": \"Judas Priest\",\n        \"Artist\": \"Judas Priest\",\n        \"Length\": 267,\n        \"MimeType\": \"spotify\",\n        \"Title\": \"Dragonaut\",\n        \"Track\": 1,\n        \"URL\": \"spotify:track:422SlzzovLoyhA5QAirMim\",\n        \"Year\": null\n    },\n    {\n        \"Album\": \"Redeemer of Souls (Deluxe)\",\n        \"AlbumArtist\": \"Judas Priest\",\n        \"Artist\": \"Judas Priest\",\n        \"Length\": 239,\n        \"MimeType\": \"spotify\",\n        \"Title\": \"Redeemer of Souls\",\n        \"Track\": 2,\n        \"URL\": \"spotify:track:19PjuOGInOfKNhU210HVNO\",\n        \"Year\": null\n    },\n    {\n        \"Album\": \"Redeemer of Souls (Deluxe)\",\n        \"AlbumArtist\": \"Judas Priest\",\n        \"Artist\": \"Judas Priest\",\n        \"Length\": 364,\n        \"MimeType\": \"spotify\",\n        \"Title\": \"Halls of Valhalla\",\n        \"Track\": 3,\n        \"URL\": \"spotify:track:4zX2bEgFHUIZV8rR3qsLor\",\n        \"Year\": null\n    }\n]"
         }
 
+        TestDelegate
+        {
+            width: 30
+            height: 30
+            jsonContainer: "[\n    {\n        \"Album\": \"Redeemer of Souls (Deluxe)\",\n        \"AlbumArtist\": \"Judas Priest\",\n        \"Artist\": \"Judas Priest\",\n        \"Length\": 295,\n        \"MimeType\": \"spotify\",\n        \"Title\": \"Sword of Damocles\",\n        \"Track\": 4,\n        \"URL\": \"spotify:track:5i3HwQkEMoKiO1eBGCuUx1\",\n        \"Year\": null\n    },\n    {\n        \"Album\": \"Redeemer of Souls (Deluxe)\",\n        \"AlbumArtist\": \"Judas Priest\",\n        \"Artist\": \"Judas Priest\",\n        \"Length\": 236,\n        \"MimeType\": \"spotify\",\n        \"Title\": \"March of the Damned\",\n        \"Track\": 5,\n        \"URL\": \"spotify:track:1Sooku2g8u0vBZHIApKwL1\",\n        \"Year\": null\n    }\n]"
+        }
 
-
+        TestDelegate
+        {
+            width: 30
+            height: 30
+        }
     }
 }

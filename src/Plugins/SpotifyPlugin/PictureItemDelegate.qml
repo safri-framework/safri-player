@@ -10,8 +10,9 @@ Rectangle
     property int spacing: 0
     property string text
     property string jsonContainer
-
+    property alias hovered: mouseArea.containsMouse
     signal clicked()
+    signal hover()
     signal appendToPlaylistClicked()
 
     width: cellWidth
@@ -29,41 +30,40 @@ Rectangle
         x:spacing
         y:spacing
 
+
+        MouseArea
+        {
+            RowLayout
+            {
+                width: parent.width
+                height: 40
+                spacing: 0
+                Icon{ icon: icons.play;height: parent.height}
+                Icon{ icon: icons.addtolist;height: parent.height; onClicked: root.appendToPlaylistClicked()}
+                Item{Layout.fillWidth: true}
+                Icon{ icon: icons.star;height: parent.height }
+                visible: mouseArea.containsMouse
+            }
+
+            hoverEnabled: true
+            anchors.fill: parent
+            id: mouseArea
+            drag.target: draggable
+            onClicked: root.clicked()
+
+        }
+
         Item
         {
             anchors.fill: parent
-
-            MouseArea
-            {
-                RowLayout
-                {
-                    width: parent.width
-                    height: 40
-                    spacing: 0
-                    Icon{ icon: icons.play;height: parent.height}
-                    Icon{ icon: icons.addtolist;height: parent.height; onClicked: root.appendToPlaylistClicked()}
-                    Item{Layout.fillWidth: true}
-                    Icon{ icon: icons.star;height: parent.height }
-                    visible: mouseArea.containsMouse
-                }
-
-
-                preventStealing: true
-                hoverEnabled: true
-                anchors.fill: parent
-                id: mouseArea
-                drag.target: draggable
-                onClicked: root.clicked()
-                propagateComposedEvents: true
-            }
-
-
             id: draggable
             Drag.active: mouseArea.drag.active
+         //   Drag.onActiveChanged: console.log(container)
             Drag.hotSpot.x: 0
             Drag.hotSpot.y: 0
-            Drag.onDragStarted:  Drag.mimeData = { "MediaInfoContainer": container }
+            Drag.mimeData: { "MediaInfoContainer": jsonContainer  }
             Drag.dragType: Drag.Automatic
+            Drag.onDragFinished: console.log("FINISH DRAG")
         }
 
         Rectangle
@@ -88,7 +88,7 @@ Rectangle
                 color: "#000000";
                 smooth: true;
                 source: imageShadowWrapper;
-                visible: mouseArea.containsMouse
+              //  visible: mouseArea.containsMouse
             }
 
             Item
@@ -121,23 +121,6 @@ Rectangle
             anchors.bottom: parent.bottom
             color:Helpers.transparentColor("000000",10)
 
-//            SpotifyImage
-//            {
-//                spotifyId: spotifyPictureID
-//                //defaultImage: "qrc:/icons/noCover"
-//                id: effectImage
-//                anchors.bottom: parent.bottom
-//                width: albumSize
-//                height: albumSize
-//            }
-
-//            BrightnessContrast
-//            {
-
-//                source: parent
-//                anchors.fill: parent
-//                brightness: -0.4
-//            }
             Text
             {
                 anchors.fill:  parent

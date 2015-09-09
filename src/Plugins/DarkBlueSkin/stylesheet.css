@@ -103,7 +103,7 @@ QTabBar QToolBar
 QTabBar QToolButton
 { /* the scroll buttons are tool buttons */
      border: none;
-     background-image: url(:border_images/Ressources/background.png);
+     background-image: url(:border_images/background);
 }
 
 QTabBar QToolButton::left-arrow
@@ -223,7 +223,7 @@ QMenuBar::item:pressed
 
 QMenu
 {
-   background-image: url(:border_images/Ressources/background.png);
+   background-image: url(:border_images/background);
    color:#FFFFFF;
 }
 
@@ -247,7 +247,7 @@ QMenu::item:pressed, QMenu::item:selected
 
 QWidget[ident="playlist"]
 {
-    background-image: url(:border_images/Ressources/background.png);
+    background-image: url(:border_images/background);
     border: none;
 }
 
@@ -259,7 +259,7 @@ QWidget[ident="PlaylistFrame"]
 
 QWidget[type="frame"]
 {
-    background-image: url(:border_images/Ressources/background.png);
+    background-image: url(:border_images/background);
 }
 
 

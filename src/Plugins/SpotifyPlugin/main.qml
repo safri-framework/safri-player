@@ -7,17 +7,22 @@ Rectangle
 {
     id: main
 
+    anchors.fill:parent
+    width: 400
+    height: 600
+
     color:"transparent"
-    Image {
+    Image
+    {
         id: name
         source: "qrc:/border_images/background"
-       anchors.fill: parent
-    fillMode: Image.Tile
+        anchors.fill: parent
+        fillMode: Image.Tile
 
     }
 
 
-        Icon{icon: "";id: icon}
+      //  Icon{icon: "";id: icon}
 
 
 

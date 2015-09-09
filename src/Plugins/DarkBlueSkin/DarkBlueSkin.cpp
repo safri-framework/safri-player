@@ -6,12 +6,19 @@
 DarkBlueSkin::DarkBlueSkin()
 {
     QFile file;
+    #ifdef __APPLE__
+     file.setFileName(":stylesheet/stylesheet_mac.css");
+         qApp->setStyle("windows");
+    #elif
     file.setFileName(":stylesheet/stylesheet.css");
+    qApp->setStyle("macintosh");
+    #endif
+
     file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String( file.readAll() );
     file.close();
     style = styleSheet;
-    qApp->setStyle("macintosh");
+
 
     iconMap.insert("ArtistType", new QIcon(":icons/artist"));
     iconMap.insert("AlbumType", new QIcon(":icons/album"));

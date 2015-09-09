@@ -28,7 +28,7 @@ void FileSystemInserter::start()
 {
     Q_EMIT mediaInsertionStarted(collection);
 
-    Core::ProgressNotification* progressNotification;
+    Core::ProgressNotification* progressNotification = 0;
 
     QFileInfo fileInfo(mediaUrlToInsert.toString());
 

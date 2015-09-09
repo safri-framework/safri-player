@@ -36,3 +36,6 @@ OTHER_FILES += \
 
 RESOURCES += \
     ressources.qrc
+
+DISTFILES += \
+    stylesheet_mac.css

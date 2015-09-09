@@ -184,6 +184,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         else if(data->hasFormat("MediaInfoContainer"))
         {
             QByteArray encodedData = data->data("MediaInfoContainer");
+           // qDebug()<<QString::fromUtf8(encodedData);
             MediaInfoContainerList list;
             list.fromJson(QString::fromUtf8(encodedData));
             for(int i = 0; i < list.size();i++)

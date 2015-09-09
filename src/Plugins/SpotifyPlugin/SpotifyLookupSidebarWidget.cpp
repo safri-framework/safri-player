@@ -2,6 +2,7 @@
 #include <QVariant>
 #include <QtWidgets/QPushButton>
 #include "../libQtSpotify/QtSpotify"
+
 #include "../libQtSpotify/qspotify_qmlplugin.h"
 
 SpotifyLookupSidebarWidget::SpotifyLookupSidebarWidget()
@@ -12,23 +13,18 @@ SpotifyLookupSidebarWidget::SpotifyLookupSidebarWidget()
     _button->setProperty("style", QVariant("tabStyle"));
     _button->setCheckable(true);
     _search = new SpotifySearch();
-   // QQu ickWindow::setDefaultAlphaBuffer(true);
-    _quickview = new QQuickWidget();
+    _quickview = new QQuickView(0);
     registerQmlTypes();
     _quickview->setSource(QUrl("qrc:/main"));
-    _quickview->setResizeMode(QQuickWidget::SizeRootObjectToView);
     connect(_button, SIGNAL(clicked(bool)), this, SIGNAL(show(bool)));
+    _quickviewWrapper = QWidget::createWindowContainer(_quickview);
     _quickview->engine()->addImageProvider("spotify", new QSpotifyImageProvider());
-    //_quickview->setStyleSheet("background-color:\"transparent\";");
-   // _quickview->setAttribute(Qt::WA_AlwaysStackOnTop);
-   // _quickview->setClearColor(Qt::transparent);
     _quickview->raise();
-
 }
 
 QWidget *SpotifyLookupSidebarWidget::getSideBarWidget()
 {
-    return _quickview;
+ return _quickviewWrapper;
 }
 
 QString SpotifyLookupSidebarWidget::getName()
