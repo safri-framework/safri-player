@@ -3,16 +3,12 @@ import "Helpers.js" as Helpers
 
 ListView
 {
-
-
-
     id:root
     orientation: ListView.Horizontal
     highlightFollowsCurrentItem: false
     property int selectedIndex: 0
     onSelectedIndexChanged: gotoIndex(selectedIndex)
     onModelChanged: selectedIndex = 0
-
 
     QtObject
     {
@@ -50,8 +46,9 @@ ListView
         anchors.verticalCenter: parent.verticalCenter
         visible: selectedIndex != 0
         width: 30
-        color:  leftArea.containsMouse ? Helpers.transparentColor("000000",50):"transparent"//Helpers.transparentColor("000000",0)
+        color:  leftArea.containsMouse ? Helpers.transparentColor("000000",50):"transparent"
         anchors.left: parent.left
+
         Rectangle
         {
             width: 30
@@ -61,6 +58,7 @@ ListView
             visible: root.icon
             color:"transparent"
             opacity: 1
+
             Image
             {
                 anchors.centerIn: parent
@@ -69,8 +67,8 @@ ListView
         }
         MouseArea
         {
-             id: leftArea
-             hoverEnabled: true
+            id: leftArea
+            hoverEnabled: true
             anchors.fill: parent
             onClicked: if(selectedIndex-1 >= 0) {selectedIndex = selectedIndex -1}
         }
@@ -84,6 +82,7 @@ ListView
         visible: selectedIndex != count-1 && count > 0
         color:  rightArea.containsMouse ? Helpers.transparentColor("000000",50):"transparent"//Helpers.transparentColor("000000",0)
         anchors.right: parent.right
+
         Rectangle
         {
             width: 30
@@ -93,12 +92,14 @@ ListView
             visible: root.icon
             color:"transparent"
             opacity: 1
+
             Image
             {
                 anchors.centerIn: parent
                 source: "qrc:/icons/triangleIndication"
             }
         }
+
         MouseArea
         {
             hoverEnabled: true

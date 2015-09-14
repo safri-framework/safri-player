@@ -28,7 +28,7 @@ public:
 
     Q_INVOKABLE QSpotifyAlbumBrowse *albumBrowse(const int idx);
     Q_INVOKABLE bool appendToCurrentPlaylist(const int idx);
-
+    Q_INVOKABLE bool play(const int idx);
 private:
     QHash<int, QByteArray> m_roles;
 };

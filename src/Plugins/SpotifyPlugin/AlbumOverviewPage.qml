@@ -17,7 +17,7 @@ Rectangle
     visible: Stack.status == Stack.Active
     Stack.onStatusChanged: if(Stack.status == Stack.Inactive)browse.destroy()
 
-    Rectangle{color: "green"; width: 20; height: 20; MouseArea{anchors.fill: parent;onClicked: stackView.pop()}}
+
     ColumnLayout
     {
         id:layout
@@ -29,22 +29,44 @@ Rectangle
             Layout.fillWidth: true
             color: Helper.transparentColor("000000", 10)
 
-              //  anchors.fill: parent
-                SpotifyImage
-                {
-                    id:cover
-                    height: parent.height
-                    width: height
-                    spotifyId: coverID
-                }
+            RowLayout
+            {
+                anchors.fill: parent
 
                 Rectangle
                 {
-                    anchors.left: cover.right
-                    anchors.right: parent.right
-                    height: parent.height
-                    anchors.leftMargin: 10
-                    color:"transparent"
+                    Rectangle
+                    {
+                        width: 30
+                        height: 30
+                        anchors.centerIn: parent
+                        rotation: 90
+                        visible: root.icon
+                        color:"transparent"
+                        opacity: 1
+
+                        Image
+                        {
+                            anchors.centerIn: parent
+                            source: "qrc:/icons/triangleIndication"
+                        }
+                    }
+                    Layout.fillHeight: true
+                    width: 30;
+                    color: mouseArea_back.containsMouse ? Helper.transparentColor("000000", 10) : "transparent"
+                    MouseArea
+                    {
+                        id:mouseArea_back
+                        hoverEnabled: true
+                        anchors.fill: parent;
+                        onClicked: stackView.pop()
+                    }
+                }
+                Item
+                {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
                     Column
                     {
                        anchors.centerIn: parent
@@ -52,9 +74,11 @@ Rectangle
                        height: artistLabel.height + albumLabel.height
                         Text
                         {
+                            horizontalAlignment:Text.AlignRight
                             id: artistLabel
                             text: artist
                             color:"white"
+                            width:parent.width
                             font.pixelSize:  14
                             opacity: 0.6
                             Component.onCompleted: if(renderType == Text.NativeRendering) console.log("native")
@@ -62,6 +86,7 @@ Rectangle
                         Text
                         {
                             id: albumLabel
+                            horizontalAlignment:Text.AlignRight
                             wrapMode: Text.WordWrap
                             width:parent.width
                             text: albumName
@@ -70,6 +95,21 @@ Rectangle
                             renderType: Text.NativeRendering
                         }
                     }
+                }
+                Item
+                {
+                    id: coverWrapper
+                    height: parent.height
+                    width: height
+                    anchors.right: parent.right
+                    SpotifyImage
+                    {
+                        anchors.fill: parent
+                        anchors.margins: 5
+                        id:cover
+                        spotifyId: coverID
+                    }
+                }
             }
         }
         TrackList

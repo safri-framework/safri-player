@@ -39,12 +39,12 @@ TabbedPlaylistWidget::TabbedPlaylistWidget(QWidget *parent) :
     {
         if ( !loadTabConfiguration() )
         {
-            addNewPlaylist("Safri", Core::ICore::createPlaylist());
+            addNewPlaylist("Playlist", Core::ICore::createPlaylist());
         }
     }
     else
     {
-        addNewPlaylist("Safri", Core::ICore::createPlaylist());
+        addNewPlaylist("Playlist", Core::ICore::createPlaylist());
     }
 
     //PlaylistTabWidget* newTabWidget;
@@ -71,6 +71,7 @@ TabbedPlaylistWidget::~TabbedPlaylistWidget()
 void TabbedPlaylistWidget::showPlaylist(QSharedPointer<Core::IPlaylist> playlist)
 {
     Q_UNUSED(playlist)
+    //addNewPlaylist("New", playlist);
 }
 
 void TabbedPlaylistWidget::showCurrentPlaylist()

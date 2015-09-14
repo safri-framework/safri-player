@@ -10,10 +10,12 @@ Rectangle
     property int spacing: 0
     property string text
     property string jsonContainer
+    property bool showStarIcon: false
     property alias hovered: mouseArea.containsMouse
     signal clicked()
     signal hover()
     signal appendToPlaylistClicked()
+    signal playClicked()
 
     width: cellWidth
     height: cellHeight
@@ -38,10 +40,10 @@ Rectangle
                 width: parent.width
                 height: 40
                 spacing: 0
-                Icon{ icon: icons.play;height: parent.height}
+                Icon{ icon: icons.play;height: parent.height; onClicked: root.playClicked()}
                 Icon{ icon: icons.addtolist;height: parent.height; onClicked: root.appendToPlaylistClicked()}
                 Item{Layout.fillWidth: true}
-                Icon{ icon: icons.star;height: parent.height }
+                Icon{ icon: icons.star;height: parent.height; visible: root.showStarIcon }
                 visible: mouseArea.containsMouse
             }
 

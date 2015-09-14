@@ -58,6 +58,10 @@ QSpotifyAlbumBrowse *QSpotifyAlbumList::albumBrowse(const int idx)
 
 bool QSpotifyAlbumList::appendToCurrentPlaylist(const int idx)
 {
-    SpotifySafriHelper::instance()->appendToCurrentPlaylist(data(index(idx), ContainerRole).toString());
-    return true;
+    return SpotifySafriHelper::instance()->appendToCurrentPlaylist(data(index(idx), ContainerRole).toString());
+}
+
+bool QSpotifyAlbumList::play(const int idx)
+{
+    return SpotifySafriHelper::instance()->play(data(index(idx), ContainerRole).toString());
 }

@@ -12,6 +12,26 @@ ListView
     Rectangle
     {
 
+    MouseArea
+    {
+        hoverEnabled: true
+        anchors.fill: parent
+        id: mouseArea
+        drag.target: draggable
+        onClicked: root.clicked()
+    }
+
+    Item
+    {
+        anchors.fill: parent
+        id: draggable
+        Drag.active: mouseArea.drag.active
+        Drag.hotSpot.x: 0
+        Drag.hotSpot.y: 0
+        Drag.mimeData: { "MediaInfoContainer": container  }
+        Drag.dragType: Drag.Automatic
+    }
+
         width: root.width
         height: 30
         color: (index % 2) == 0 ? "transparent" : Helpers.transparentColor("000000", 10)

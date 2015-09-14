@@ -315,9 +315,12 @@ void QSpotifyTrack::destroy()
     // Even if we still are playing we are destroyed so we shouldn't stop the new music
     m_isCurrentPlayingTrack = false;
     // We don't care about signals if we are scheduled to be destroyed
-    disconnect(QSpotifySession::instance(), SIGNAL(currentTrackChanged()), this, SLOT(onSessionCurrentTrackChanged()));
-    disconnect(this, SIGNAL(dataChanged()), this, SIGNAL(trackDataChanged()));
-    disconnect(QSpotifySession::instance(), SIGNAL(offlineModeChanged()), this, SLOT(onSessionOfflineModeChanged()));
+    if(!QSpotifySession::m_cleaned)
+    {
+        disconnect(QSpotifySession::instance(), SIGNAL(currentTrackChanged()), this, SLOT(onSessionCurrentTrackChanged()));
+        disconnect(this, SIGNAL(dataChanged()), this, SIGNAL(trackDataChanged()));
+        disconnect(QSpotifySession::instance(), SIGNAL(offlineModeChanged()), this, SLOT(onSessionOfflineModeChanged()));
+    }
     deleteLater();
 }
 

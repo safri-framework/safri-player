@@ -92,6 +92,7 @@ class QSpotifySession : public QObject
     Q_ENUMS(OfflineError)
     Q_ENUMS(StreamingQuality)
 public:
+    static bool m_cleaned;
     enum ConnectionStatus {
         LoggedOut = SP_CONNECTION_STATE_LOGGED_OUT,
         LoggedIn = SP_CONNECTION_STATE_LOGGED_IN,

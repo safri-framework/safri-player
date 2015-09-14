@@ -60,6 +60,7 @@ GridView
                     )}
         onHoveredChanged: jsonContainer = container
         onAppendToPlaylistClicked: root.model.appendToCurrentPlaylist(index)
+        onPlayClicked: root.model.play(index)
     }
 }
 

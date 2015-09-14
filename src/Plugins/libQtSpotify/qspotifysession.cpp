@@ -78,6 +78,8 @@
 static QSpotifyAudioThreadWorker *g_audioWorker;
 static int lastFrameSize = 0;
 
+bool QSpotifySession::m_cleaned = false;
+
 QSpotifySession *QSpotifySession::m_instance = nullptr;
 
 static void SP_CALLCONV callback_logged_in(sp_session *, sp_error error)
@@ -358,10 +360,11 @@ void QSpotifySession::init()
 
 QSpotifySession::~QSpotifySession()
 {
-   // qDebug() << "QSpotifySession::cleanUp";
+    qDebug() << "QSpotifySession::cleanUp";
     if (m_sp_session)
         sp_session_release(m_sp_session);
     free(dataPath);
+    m_cleaned = true;
 }
 
 QSpotifySession *QSpotifySession::instance()
@@ -486,13 +489,11 @@ bool QSpotifySession::event(QEvent *e)
         e->accept();
         return true;
     } else if (e->type() == SendImageRequestEventType) {
-        qDebug() << "Send image request";
         QSpotifyRequestImageEvent *ev = static_cast<QSpotifyRequestImageEvent *>(e);
         sendImageRequest(ev->imageId());
         e->accept();
         return true;
     } else if (e->type() == ReceiveImageRequestEventType) {
-        qDebug() << "Receive image request";
         QSpotifyReceiveImageEvent *ev = static_cast<QSpotifyReceiveImageEvent *>(e);
         receiveImageResponse(ev->image());
         e->accept();

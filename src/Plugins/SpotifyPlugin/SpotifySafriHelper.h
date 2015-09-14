@@ -6,6 +6,8 @@
 #include "CoreData/MediaInfoContainerList.h"
 #include "Interfaces/ICore.h"
 #include "Interfaces/IPlaylist.h"
+#include "Interfaces/IGUIController.h"
+#include "Interfaces/IPlaylistWidget.h"
 #include <QObject>
 
 using namespace Core;
@@ -17,6 +19,7 @@ class SpotifySafriHelper : public QObject
 public:
     static SpotifySafriHelper* instance();
     bool appendToCurrentPlaylist(QString mediaInfoContainer);
+    bool play(QString mediaInfoContainer);
 
 signals:
 
