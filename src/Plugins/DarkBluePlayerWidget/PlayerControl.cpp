@@ -32,7 +32,7 @@ PlayerControl::PlayerControl(QWidget *parent) :
     QTimer* rotationTimer = new QTimer(this);
     rotationTimer->setInterval(5);
     connect(rotationTimer, SIGNAL(timeout()), this, SLOT(timeout()));
-    rotationTimer->start();
+    //rotationTimer->start();
 }
 
 void PlayerControl::paintEvent(QPaintEvent *event)

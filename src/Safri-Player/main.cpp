@@ -14,41 +14,14 @@
 #include <QPainter>
 #include <QTreeView>
 #include <QStyleOption>
-class Style_tweaks : public QProxyStyle
-{
-    public:
 
-        void drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
-        {
-            Q_UNUSED(textRole)
-            QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text);
-        }
-        void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
-        {
-            /* do not draw focus rectangles - this permits modern styling */
-            if (element == QStyle::PE_FrameFocusRect)
-                return;
-
-            if(element == QStyle::PE_IndicatorItemViewItemDrop)
-            {
-                if(!widget->property("indicator").isValid())
-                    return;
-
-                painter->setPen(qApp->palette().color(QPalette::Light));
-                painter->drawLine(0, option->rect.y(), option->rect.x()+option->rect.width(), option->rect.y());
-                return;
-            }
-
-            QProxyStyle::drawPrimitive(element, option, painter, widget);
-        }
-};
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("Safri-Player");
-    a.setStyle(new Style_tweaks());
+   //
 
     qDebug() << "\n\nSafri-Player Version: " << SAFRI_VERSION << "";
 

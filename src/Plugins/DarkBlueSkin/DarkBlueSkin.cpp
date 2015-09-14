@@ -2,14 +2,48 @@
 #include <QFile>
 #include <QApplication>
 #include "Songtree/SongTreeItem.h"
+#include <QProxyStyle>
+
+class Style_tweaks : public QProxyStyle
+{
+    public:
+
+        Style_tweaks(QString str):QProxyStyle(str)
+        {
+
+        }
+        void drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
+        {
+            Q_UNUSED(textRole)
+            QProxyStyle::drawItemText(painter, rect, flags, pal, enabled, text);
+        }
+        void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+        {
+            /* do not draw focus rectangles - this permits modern styling */
+            if (element == QStyle::PE_FrameFocusRect)
+                return;
+
+            if(element == QStyle::PE_IndicatorItemViewItemDrop)
+            {
+                if(!widget->property("indicator").isValid())
+                    return;
+
+                painter->setPen(qApp->palette().color(QPalette::Light));
+                painter->drawLine(0, option->rect.y(), option->rect.x()+option->rect.width(), option->rect.y());
+                return;
+            }
+
+            QProxyStyle::drawPrimitive(element, option, painter, widget);
+        }
+};
 
 DarkBlueSkin::DarkBlueSkin()
 {
     QFile file;
     #ifdef __APPLE__
      file.setFileName(":stylesheet/stylesheet_mac.css");
-         qApp->setStyle("windows");
-    #elif
+         qApp->setStyle(new Style_tweaks("windows"));
+    #else
     file.setFileName(":stylesheet/stylesheet.css");
     qApp->setStyle("macintosh");
     #endif
