@@ -35,7 +35,6 @@ void SpotifyMediaBackend::seek(int ms)
 void SpotifyMediaBackend::play(QUrl url)
 {
     std::shared_ptr<QSpotifyTrack> track;
-    //connect(track.get(), SIGNAL())
     QString test = url.toString().remove("file:");
     qDebug()<<test;
 
@@ -82,7 +81,6 @@ QStringList SpotifyMediaBackend::getSupportedMimeTypes()
 
 void SpotifyMediaBackend::updateTrackPos()
 {
-    qDebug()<<"TRACKPOS";
     Q_EMIT update(_session->currentTrackPosition());
 }
 

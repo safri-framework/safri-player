@@ -21,4 +21,8 @@
         <file alias="iconfont">Assets/fontello.ttf</file>
         <file>TestDelegate.qml</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="spotify_enabled">Assets/spotify_icon_enabled.png</file>
+        <file alias="spotify_disabled">Assets/spotify_icon_disabled.png</file>
+    </qresource>
 </RCC>

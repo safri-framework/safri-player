@@ -2,14 +2,18 @@
 #include <QVariant>
 #include <QtWidgets/QPushButton>
 #include "../libQtSpotify/QtSpotify"
-
+#include <QIcon>
 #include "../libQtSpotify/qspotify_qmlplugin.h"
 
 SpotifyLookupSidebarWidget::SpotifyLookupSidebarWidget()
 
 {
     _button = new QPushButton();
-    _button->setText("Spotify");
+
+    QIcon* spotIcon = new QIcon();
+    spotIcon->addPixmap(QPixmap(":/icons/spotify_enabled"), QIcon::Normal, QIcon::On);
+    spotIcon->addPixmap(QPixmap(":/icons/spotify_disabled"),QIcon::Normal, QIcon::Off);
+   _button->setIcon(*spotIcon);
     _button->setProperty("style", QVariant("tabStyle"));
     _button->setCheckable(true);
     _search = new SpotifySearch();

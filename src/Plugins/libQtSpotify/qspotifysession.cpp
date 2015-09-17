@@ -365,6 +365,7 @@ QSpotifySession::~QSpotifySession()
         sp_session_release(m_sp_session);
     free(dataPath);
     m_cleaned = true;
+    qDebug() << "QSpotifySession::cleanUp finished";
 }
 
 QSpotifySession *QSpotifySession::instance()

@@ -1,12 +1,12 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import "Helpers.js" as Helpers
+
 Rectangle
 {
     id:root
     color:expanded? Helpers.transparentColor("000000",8) :"transparent"
     width: parent.width
-
 
     property alias text: label.text
     default property alias content: layout.children
@@ -18,20 +18,17 @@ Rectangle
     property int index
     Behavior on height{NumberAnimation{easing.type: Easing.OutQuad; duration:p.animationDuration}}
     property alias reallyExpanded: p.reallyExpaneded
-   // property var layoutWrapper: layoutwrapper
-
-    NumberAnimation
-    {
-        id: heightAnimation
-        duration: p.animationDuration
-    }
 
     function expandTo(height)
     {
         p.contentVisible = true
     }
 
-
+    NumberAnimation
+    {
+        id: heightAnimation
+        duration: p.animationDuration
+    }
 
     QtObject
     {
