@@ -7,7 +7,6 @@
 class Style_tweaks : public QProxyStyle
 {
     public:
-
         Style_tweaks(QString str):QProxyStyle(str)
         {
 
@@ -45,7 +44,7 @@ DarkBlueSkin::DarkBlueSkin()
          qApp->setStyle(new Style_tweaks("windows"));
     #else
     file.setFileName(":stylesheet/stylesheet.css");
-    qApp->setStyle("macintosh");
+    qApp->setStyle(new Style_tweaks("macintosh"));
     #endif
 
     file.open(QFile::ReadOnly);
